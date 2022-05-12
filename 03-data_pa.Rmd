@@ -1,0 +1,11 @@
+# Presence-absence data
+
+Bla bla bla
+
+## Download presence data
+
+Download from GBIF OBIS. See code sent by Guillem (LectureAnisakis_10_2021.R)
+
+## Create pseudo-absence data
+
+See code from ANICHO (mantaining some space around presences) and from BONICHO (randomly)

@@ -1,0 +1,11 @@
+# Environmental data
+
+Bla bla bla
+
+## Download from public repositories
+
+Download from Bio-oracle. See code sent by Guillem (LectureAnisakis_10_2021.R)
+
+## Operations with rasters
+
+We can complete this a bit more later on, though not necessary right now

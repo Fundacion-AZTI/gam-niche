@@ -1,0 +1,7 @@
+# Prepare final dataset
+
+Bla bla bla
+
+## Merge environmental and presence-absence data
+
+## Exploratory plots
