@@ -1,0 +1,151 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Species distribution models (SDM)},
+  pdfauthor={AZTI},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+
+\title{Species distribution models (SDM)}
+\author{AZTI}
+\date{2022-05-12}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{about}{%
+\chapter{About}\label{about}}
+
+This is a short tutorial for constructing species distribution models in R. It describes the whole process from downloading OBIS and GBIF data, generating pseudo-absence data, including environmental data, fitting the model, validating the model and generating the resulting maps for visualization.
+
+The code is available in the {[}\url{https://github.com/Fundacion-AZTI/SDM}{]} repository and the book is available in
+
+\hypertarget{introduction}{%
+\chapter{Introduction}\label{introduction}}
+
+Some introduction about SDMs
+
+\hypertarget{data-preparation}{%
+\chapter{Data preparation}\label{data-preparation}}
+
+Bla bla bla
+
+\hypertarget{download-presence-data}{%
+\section{Download presence data}\label{download-presence-data}}
+
+\hypertarget{create-pseudo-absence-data}{%
+\section{Create pseudo-absence data}\label{create-pseudo-absence-data}}
+
+\hypertarget{download-environmental-data}{%
+\section{Download environmental data}\label{download-environmental-data}}
+
+\hypertarget{final-data-set}{%
+\section{Final data set}\label{final-data-set}}
+
+\hypertarget{model-fit}{%
+\chapter{Model fit}\label{model-fit}}
+
+Some introduction about SDMs
+
+\hypertarget{generalised-linear-models}{%
+\section{Generalised linear models}\label{generalised-linear-models}}
+
+\hypertarget{generalised-additive-models}{%
+\section{Generalised additive models}\label{generalised-additive-models}}
+
+\hypertarget{shape-constrained-generalised-additive-models}{%
+\section{Shape-constrained generalised additive models}\label{shape-constrained-generalised-additive-models}}
+
+One citation is \citep{citores_etal_2020}
+
+\hypertarget{model-selection}{%
+\chapter{Model selection}\label{model-selection}}
+
+Bla bla
+
+\hypertarget{model-validation}{%
+\chapter{Model validation}\label{model-validation}}
+
+Bla bla
+
+\hypertarget{prediction-and-maps}{%
+\chapter{Prediction and maps}\label{prediction-and-maps}}
+
+predict from fitted models and produce maps
+
+  \bibliography{references.bib}
+
+\end{document}

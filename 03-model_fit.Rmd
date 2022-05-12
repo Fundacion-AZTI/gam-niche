@@ -1,0 +1,11 @@
+# Model fit
+
+Some introduction about SDMs
+
+## Generalised linear models
+
+## Generalised additive models
+
+## Shape-constrained generalised additive models
+
+One citation is [@citores_etal_2020]
