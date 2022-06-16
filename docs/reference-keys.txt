@@ -1,4 +1,3 @@
-about
 introduction
 libraries
 presence-absence-data

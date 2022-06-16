@@ -12,7 +12,7 @@ link-citations: yes
 github-repo: Fundacion-AZTI/SDM
 ---
 
-# About
+# About {-}
 
 This is a short tutorial for constructing species distribution models in R. It describes the whole process from downloading OBIS and GBIF data, generating pseudo-absence data, including environmental data, fitting the model, validating the model and generating the resulting maps for visualization.  
 
