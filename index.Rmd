@@ -7,13 +7,17 @@ documentclass: book
 bibliography:
 - references.bib
 description: |
-  This is a short tutorial about constructing species distribution models in R, with special emphasis on shape-constrained generalised additive models.  
+  This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models.  
 link-citations: yes
 github-repo: Fundacion-AZTI/SDM
 ---
 
 # About {-}
 
-This is a short tutorial for constructing species distribution models in R. It describes the whole process from downloading OBIS and GBIF data, generating pseudo-absence data, including environmental data, fitting the model, validating the model and generating the resulting maps for visualization.  
+This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models. 
 
 The code is available in [AZTI's github repository](https://github.com/Fundacion-AZTI/SDM) repository and the book is readily available [here](https://fundacion-azti.github.io/SDM/).
+
+To cite this book, please use: 
+
+BLA BLA BLA

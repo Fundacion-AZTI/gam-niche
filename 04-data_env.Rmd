@@ -5,8 +5,255 @@ Bla bla bla
 ## Download from public repositories
 
 Download from Bio-oracle. 
-Guillem le pasa el código a Mireia, que lo sube a github
+
+```{r, eval=F}
+### Download Environmental data from Bio-oracle
+
+# for mapping ...
+library(maptools)
+library(rgrass7)
+library(raster)
+library(sp)
+library(ggplot2)
+library(maps)
+
+# libraries for bio-oracle
+library(rgdal)
+library(sdmpredictors) 
+library(leaflet)
+
+# http://bio-oracle.org/code.php
+install.packages("sdmpredictors")
+#install.packages("leaflet")
+
+# Load package 
+library(sdmpredictors)
+
+# Species Data example from GBIF
+mydata <- occ_data(scientificName = "Anisakis", hasCoordinate = TRUE)$data  # 02/10/2021 416 obs x 150 var
+mydata.gbif <- subset(mydata, select=c(acceptedScientificName,genus,specificEpithet,decimalLatitude,decimalLongitude,year,month,day))
+mydata.gbif.ll <- cbind(mydata.gbif$decimalLongitude, mydata.gbif$decimalLatitude)
+mydata.gbif.ll <- as.data.frame(mydata.gbif.ll)
+names(mydata.gbif.ll) <- c("Lon", "Lat")
+
+# Explore datasets in the package 
+list_datasets()
+list_layers("Bio-ORACLE")
+mytab <- list_layers("Bio-ORACLE")
+
+## Download specific layers to the current directory 
+
+myBioracle.layers <- load_layers(c("BO_chlomean", "BO_damean", "BO_salinity", "BO_sstmean", "BO_sstrange", "BO_bathymean")) 
+#save(myBioracle.layers, file="myBioracle.layers.Rdata")
+#load(file="myBioracle.layers.Rdata") # creo que no funciona
+myBioracle.layers
+
+# Check layer statistics 
+layer_stats("myBioracle.layers") 
+
+# Crop raster to fit the North East Atlantic window for estimating SST range
+# lat: 36.49 to 67.00  
+# lon: -16.000 to 9.000
+my.NEatlantic.ext <- extent(-100, 45, -90, 90) # xmin, xmax, ymin, ymax
+myBioracle.layers.cropNEatlantic <- crop(myBioracle.layers, my.NEatlantic.ext) 
+my.colors = colorRampPalette(c("#5E85B8","#EDF0C0","#C13127")) 
+plot(myBioracle.layers.cropNEatlantic,col=my.colors(1000),axes=F, box=F)
+summary(myBioracle.layers.cropNEatlantic)
+
+# Generate a nice color ramp and plot the map 
+my.colors = colorRampPalette(c("#5E85B8","#EDF0C0","#C13127")) 
+
+plot(myBioracle.layers.cropNEatlantic,col=my.colors(1000),axes=F, box=F)
+
+image(log(myBioracle.layers.cropNEatlantic$BO_chlomean),col=my.colors(1000),axes=T, ylab=NA,xlab=NA, main="Chl (log scale)", cex.main=2)
+map("world",add=T, fill=T, col="white",lwd=0.1); box()
+
+image(log(myBioracle.layers.cropNEatlantic$BO_damean),col=my.colors(1000),axes=T, ylab=NA,xlab=NA,main="Diffuse Attenuation", cex.main=2)
+map("world",add=T, fill=T, col="white",lwd=0.1); box()
+
+image(myBioracle.layers.cropNEatlantic$BO_salinity,col=my.colors(1000),axes=T, ylab=NA,xlab=NA,main="Salinity", cex.main=2)
+map("world",add=T, fill=T, col="white",lwd=0.1); box()
+
+image(myBioracle.layers.cropNEatlantic$BO_sstmean,col=my.colors(1000),axes=T, ylab=NA,xlab=NA,main="SST mean", cex.main=2)
+map("world",add=T, fill=T, col="white",lwd=0.1); box()
+
+image(myBioracle.layers.cropNEatlantic$BO_sstrange,col=my.colors(1000),axes=T, ylab=NA,xlab=NA,main="SST range", cex.main=2)
+map("world",add=T, fill=T, col="white",lwd=0.1); box()
+
+image(myBioracle.layers.cropNEatlantic$BO_bathymean,col=my.colors(1000),axes=T, ylab=NA,xlab=NA,main="Depth", cex.main=2)
+map("world",add=T, fill=T, col="white",lwd=0.1); box()
+
+
+### Extract environmental values from layers 
+
+mydata1.env <- raster::extract(x=myBioracle.layers,y=mydata.gbif.ll, df=T) # sin buffer (se extrae solo los puntos)
+
+# con Bilinear extraigo los sites de los 4 nearest cells 
+mydata1.env.bil <- raster::extract(x=myBioracle.layers,y=mydata.gbif.ll, method="bilinear", na.rm=TRUE, df=T) # 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)
+
+mydata.all <- cbind(mydata.gbif.ll, mydata1.env.bil)
+
+summary(mydata.all) # 448 sites : 84 are NAs
+
+
+```
+
+We can also download the bathymetry from the `marmap` library
+
+```{r, eval=F}
+library(marmap)
+
+bathy <- getNOAA.bathy(lon1=-11,lon2=0,lat1=41,lat2=51, resolution = 1, 
+                       keep=FALSE, antimeridian=FALSE)
+bathy.df <- fortify(bathy) # LI: maybe this is not needed here
+
+df$Depth <- get.depth(bathy, df[,c("Lon","Lat")], locator=F)$depth
+
+```
 
 ## Operations with rasters (maybe not needed)
 
 We can complete this a bit more later on, though not necessary right now
+
+for example, given a raster, we can calculate gradients in the vertical or depth at which the max is found
+
+```{r, eval=F}
+
+# Auxiliary functions ------------------------------------------------------
+
+# Taken from: 
+# https://gis.stackexchange.com/questions/114723/subset-netcdf-based-on-last-valid-variable-by-level
+
+# deepestValid: function to that, for each cell,  
+# - returns NA in case all depth level values are NA
+# - returns the value of the last available depth level in case no NA occur
+# - else returns the value of the last non-NA depth level
+
+deepestValid <- function(x) {
+  na <- is.na(x)
+  if (all(na)) {
+    return(NA)
+  } else if (all(!na)) {
+    return(x[length(x)])
+  } else {
+    first_na <- which(na)[1]
+    last_valid <- first_na - 1
+    return(x[last_valid])
+  }
+}
+
+# read the data files using the library raster
+
+b1 <- brick(file.path(hdata.dir, paste0("thetao_",dd, " 12:00:00.nc")))
+b2 <- brick(file.path(hdata.dir, paste0("so_",dd, " 12:00:00.nc")))
+b3 <- brick(file.path(hdata.dir, paste0("mlotst_",dd, " 12:00:00.nc")))
+b4 <- brick(file.path(hdata.dir, paste0("chl_",dd, " 12:00:00.nc")))
+b5 <- brick(file.path(hdata.dir, paste0("o2_",dd, " 12:00:00.nc"))) 
+
+# temperature at surface (exactly at 0.49m)
+# see names(b1)
+
+bb1a <- b1[[1]] 
+names(bb1a) <- "TEMP0m"  
+
+# temperature at 100m (layer 22, which is at 92.33m) or at the deepest available 
+# see names(b1)
+
+bb1b <- calc(subset(b1, 1:22), fun=deepestValid)
+names(bb1b) <- "TEMP100m" 
+
+# salinity at surface (exactly at 0.49m)
+# see names(b2)
+
+bb2 <- b2[[1]] 
+names(bb2) <- "so1"  
+
+# logarithm of ocean mixed layer thickness (m)
+
+bb3 <- b3[[1]]
+bb3 <- log(bb3)
+# or equivalently:
+# bb3 <- calc(bb3, fun=function(x) {log(x)})
+names(bb3) <- "logmlotst1"
+
+# logarithm of the chlorophyll integrated until 100m (layer 22, which is at 92.33m) or at the deepest available 
+# see names(b4)
+
+b4 <- subset(b4, 1:22) # take only values in the first 22 layers corresponding up to depth 100m 
+depth.lev <- as.numeric(as.character(sapply(names(b4), substring, first=2))) # extract depth values from layer names
+depth.lev <- c(0, depth.lev)
+w <- diff(depth.lev) 
+bb4 <- calc(b4, function(x){sum(x*w, na.rm=T)}) # compute integrated value
+bb4 <- log(bb4)
+names(bb4) <- "logCHL100m"
+
+# oxygen integrated until 100m (layer 22, which is at 92.33m) or at the deepest available 
+# see names(b5)
+
+b5 <- subset(b5, 1:22) # take only values in the first 22 layers corresponding up to depth 100m
+depth.lev <- as.numeric(as.character(sapply(names(b5), substring, first=2))) # extract depth values from layer names
+depth.lev <- c(0, depth.lev)
+w <- diff(depth.lev)
+bb5 <- calc(b5, function(x){sum(x*w, na.rm=T)}) # compute integrated value
+names(bb5) <- "O100m"
+
+# unique stack (because they all have the same extent and resolution)
+
+b <- stack(bb1a, bb1b, bb2, bb3, bb4, bb5)
+
+# Step 2: Add bathymetry --------------------------------------------------
+
+# get the extent of the raster to extract the corresponding bathymetry
+
+e <- extent(b)
+
+# load bathymetry of the area (get wider limits)
+# resolution = 5 (resolucion en minutos, corresponde a 1/12 º) 
+
+# mybathy <- getNOAA.bathy(lon1=floor(e@xmin), lon2=ceiling(e@xmax), lat1=floor(e@ymin), lat2=ceiling(e@ymax), 
+#                          resolution=1, keep=F) 
+# save(mybathy, file="mybathy.RData")
+
+load(file.path("mybathy.RData"))
+     
+# transform to data frame
+
+pred.dat <- raster::as.data.frame(b, xy=T)
+
+# include bathymetry into the prediction data frame
+
+pred.dat$DEPTH <- get.depth(mybathy, pred.dat[ ,c("x","y")], locator=F)$depth
+pred.dat$DEPTH[pred.dat$DEPTH>=0] <- NA
+pred.dat$logDEPTH<-log(-pred.dat$DEPTH)
+
+# transform the bathymetry to raster format 
+
+b7 <- rasterFromXYZ(pred.dat[,c("x","y","logDEPTH")]) 
+names(b7) <- "logDEPTH"
+
+# include the bathymetry raster into the prediction stack
+
+b <- stack(b, b7)
+
+
+# Step 3: Create latitude, longitude and doy rasters ----------------------
+# these are needed to predict according to the spatio-temporal model
+
+b8 <- b9 <- b10 <- b[[1]] # create rasters with same structure
+
+b8[] <- coordinates(b8)[,1] #longitude  
+names(b8) <- "LON"
+
+b9[] <- coordinates(b8)[,2] #latitude  
+names(b9) <- "LAT"
+
+b10[] <- doy # day of the year
+names(b10) <- "DOY"
+
+# include longitude, latitude and day of the year into the prediction stack, 
+# they are needed for the spatio-temporal model prediction
+
+b <- stack(b, b8, b9, b10)
+
+```
+

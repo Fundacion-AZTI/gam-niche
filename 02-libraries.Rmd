@@ -1,3 +1,13 @@
 # Libraries
 
 Load libraries that will be used
+
+```{r}
+library("scam")
+```
+
+Note that all the libraries must be installed. If some library is not installed, run: 
+
+```{r}
+install.packages("scam")
+```

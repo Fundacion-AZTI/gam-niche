@@ -12,9 +12,11 @@ Prevalence 50%
 
 See code from ANICHO (mantaining some space around presences). Leire C.
 
+Ref [@barbetmassin_etal_2012]
+
 Copio aqui el codigo de anicho tal cual, luego lo limpiaré para este caso:
 
-```{r}
+```{r, eval=F}
 # Script information ------------------------------------------------------
 
 # Title: Generate pseudo-absences for IM-18-ANICHO
