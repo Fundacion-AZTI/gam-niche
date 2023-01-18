@@ -2,6 +2,6 @@
 
 Bla bla bla
 
-## Merge environmental and presence-absence data
+## Extract environmental data associated to presence-absence data
 
 ## Exploratory plots

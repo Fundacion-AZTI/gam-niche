@@ -6,8 +6,8 @@
 ]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -33,14 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Species distribution models (SDM)},
-  pdfauthor={AZTI},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -69,15 +61,23 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{plainnat}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Species distribution models (SDM)},
+  pdfauthor={AZTI},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Species distribution models (SDM)}
 \author{AZTI}
-\date{2022-06-16}
+\date{2023-01-18}
 
 \begin{document}
 \maketitle
@@ -112,12 +112,14 @@ Bla bla bla
 \hypertarget{download-presence-data}{%
 \section{Download presence data}\label{download-presence-data}}
 
-Download from GBIF OBIS. See code sent by Guillem (LectureAnisakis\_10\_2021.R)
+Download from GBIF OBIS. Mireia
 
 \hypertarget{create-pseudo-absence-data}{%
 \section{Create pseudo-absence data}\label{create-pseudo-absence-data}}
 
-See code from ANICHO (mantaining some space around presences) and from BONICHO (randomly)
+Prevalence 50\%
+
+See code from ANICHO (mantaining some space around presences). Leire C.
 
 \hypertarget{environmental-data}{%
 \chapter{Environmental data}\label{environmental-data}}
@@ -127,10 +129,11 @@ Bla bla bla
 \hypertarget{download-from-public-repositories}{%
 \section{Download from public repositories}\label{download-from-public-repositories}}
 
-Download from Bio-oracle. See code sent by Guillem (LectureAnisakis\_10\_2021.R)
+Download from Bio-oracle.
+Guillem le pasa el código a Mireia, que lo sube a github
 
-\hypertarget{operations-with-rasters}{%
-\section{Operations with rasters}\label{operations-with-rasters}}
+\hypertarget{operations-with-rasters-maybe-not-needed}{%
+\section{Operations with rasters (maybe not needed)}\label{operations-with-rasters-maybe-not-needed}}
 
 We can complete this a bit more later on, though not necessary right now
 
@@ -139,36 +142,27 @@ We can complete this a bit more later on, though not necessary right now
 
 Bla bla bla
 
-\hypertarget{merge-environmental-and-presence-absence-data}{%
-\section{Merge environmental and presence-absence data}\label{merge-environmental-and-presence-absence-data}}
+\hypertarget{extract-environmental-data-associated-to-presence-absence-data}{%
+\section{Extract environmental data associated to presence-absence data}\label{extract-environmental-data-associated-to-presence-absence-data}}
 
 \hypertarget{exploratory-plots}{%
 \section{Exploratory plots}\label{exploratory-plots}}
 
-\hypertarget{model-fit}{%
-\chapter{Model fit}\label{model-fit}}
-
-Some introduction about SDMs
-
-\hypertarget{generalised-linear-models}{%
-\section{Generalised linear models}\label{generalised-linear-models}}
-
-\hypertarget{generalised-additive-models}{%
-\section{Generalised additive models}\label{generalised-additive-models}}
-
-\hypertarget{shape-constrained-generalised-additive-models}{%
-\section{Shape-constrained generalised additive models}\label{shape-constrained-generalised-additive-models}}
+\hypertarget{shape-constrained-generalized-additive-models}{%
+\chapter{Shape Constrained-Generalized Additive Models}\label{shape-constrained-generalized-additive-models}}
 
 One citation is \citep{citores_etal_2020}
 
-\hypertarget{using-scam}{%
-\subsection{using scam}\label{using-scam}}
+Mention there is an alternative using \texttt{mboost} that won't be further developed here.
 
-\hypertarget{using-mboost}{%
-\subsection{using mboost}\label{using-mboost}}
+\hypertarget{model-fit}{%
+\section{Model fit}\label{model-fit}}
 
 \hypertarget{model-selection}{%
-\chapter{Model selection}\label{model-selection}}
+\section{Model selection}\label{model-selection}}
+
+\hypertarget{model-selection-1}{%
+\chapter{Model selection}\label{model-selection-1}}
 
 Bla bla
 

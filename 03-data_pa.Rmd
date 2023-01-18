@@ -4,8 +4,13 @@ Bla bla bla
 
 ## Download presence data
 
-Download from GBIF OBIS. See code sent by Guillem (LectureAnisakis_10_2021.R)
+Download from GBIF OBIS. Mireia
 
 ## Create pseudo-absence data
 
-See code from ANICHO (mantaining some space around presences) and from BONICHO (randomly)
+Prevalence 50%
+
+See code from ANICHO (mantaining some space around presences). Leire C.
+
+
+

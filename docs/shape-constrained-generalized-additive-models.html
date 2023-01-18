@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Species distribution models (SDM)</title>
+  <title>Chapter 6 Shape Constrained-Generalized Additive Models | Species distribution models (SDM)</title>
   <meta name="description" content="This is a short tutorial about constructing species distribution models in R, with special emphasis on shape-constrained generalised additive models." />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Species distribution models (SDM)" />
+  <meta property="og:title" content="Chapter 6 Shape Constrained-Generalized Additive Models | Species distribution models (SDM)" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a short tutorial about constructing species distribution models in R, with special emphasis on shape-constrained generalised additive models." />
   <meta name="github-repo" content="Fundacion-AZTI/SDM" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Species distribution models (SDM)" />
+  <meta name="twitter:title" content="Chapter 6 Shape Constrained-Generalized Additive Models | Species distribution models (SDM)" />
   
   <meta name="twitter:description" content="This is a short tutorial about constructing species distribution models in R, with special emphasis on shape-constrained generalised additive models." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="introduction.html"/>
+<link rel="prev" href="prepare-final-dataset.html"/>
+<link rel="next" href="model-selection-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -146,24 +146,31 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Species distribution models (SDM)</h1>
-<p class="author"><em>AZTI</em></p>
-<p class="date"><em>2023-01-18</em></p>
+<div id="shape-constrained-generalized-additive-models" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Shape Constrained-Generalized Additive Models<a href="shape-constrained-generalized-additive-models.html#shape-constrained-generalized-additive-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>One citation is <span class="citation">(<a href="#ref-citores_etal_2020" role="doc-biblioref">Citores et al. 2020</a>)</span></p>
+<p>Mention there is an alternative using <code>mboost</code> that won’t be further developed here.</p>
+<div id="model-fit" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Model fit<a href="shape-constrained-generalized-additive-models.html#model-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="about" class="section level1 unnumbered hasAnchor">
-<h1>About<a href="index.html#about" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>This is a short tutorial for constructing species distribution models in R. It describes the whole process from downloading OBIS and GBIF data, generating pseudo-absence data, including environmental data, fitting the model, validating the model and generating the resulting maps for visualization.</p>
-<p>The code is available in <a href="https://github.com/Fundacion-AZTI/SDM">AZTI’s github repository</a> repository and the book is readily available <a href="https://fundacion-azti.github.io/SDM/">here</a>.</p>
+<div id="model-selection" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Model selection<a href="shape-constrained-generalized-additive-models.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-citores_etal_2020" class="csl-entry">
+Citores, L., L. Ibaibarriaga, D. J. Lee, M. J. Brewer, M. Santos, and G. Chust. 2020. <span>“Modelling Species Presence–Absence in the Ecological Niche Theory Framework Using Shape-Constrained Generalized Additive Models.”</span> <em>Ecological Modelling</em> 418: 108926.
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="prepare-final-dataset.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-selection-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -194,7 +201,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-model_fit.Rmd",
 "text": "Edit"
 },
 "history": {

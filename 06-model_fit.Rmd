@@ -1,15 +1,10 @@
-# Model fit
-
-Some introduction about SDMs
-
-## Generalised linear models
-
-## Generalised additive models
-
-## Shape-constrained generalised additive models
+# Shape Constrained-Generalized Additive Models
 
 One citation is [@citores_etal_2020]
 
-### using scam
+Mention there is an alternative using `mboost` that won't be further developed here.  
 
-### using mboost
+## Model fit
+
+## Model selection
+

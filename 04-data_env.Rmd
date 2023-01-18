@@ -4,8 +4,9 @@ Bla bla bla
 
 ## Download from public repositories
 
-Download from Bio-oracle. See code sent by Guillem (LectureAnisakis_10_2021.R)
+Download from Bio-oracle. 
+Guillem le pasa el código a Mireia, que lo sube a github
 
-## Operations with rasters
+## Operations with rasters (maybe not needed)
 
 We can complete this a bit more later on, though not necessary right now
