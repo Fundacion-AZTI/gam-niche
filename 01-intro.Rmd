@@ -1,4 +1,12 @@
 # Introduction
 
-Some introduction about SDMs
+Species distribution models (SDMs) are numerical tools that combine observations of species occurrence or abundance at known locations with information on the environmental and/or spatial characteristics of those locations [@elith_etal_2009]. They are also known as ... 
+
+A wide variety of methods have been used ... 
+
+Reviews of SDM literature include ... 
+
+One of the common problems is that, the fitted models do not agree with the ecological niche theory...  
+
+This book provides a tutorial on how to use shape-constrained generalized additive models to build SDMs. We follow the key steps in good modeling practice of SDMs [@elith_etal_2009]. We first start by downloading presence data from GBIF/OBIS datasets and we create pseudo-absence data. Then, we download data on environmental covariates and we extract their value at each of the presence/pseudo-absence data points. Based on this dataset, we conduct an exploratory analysis that will help us deciding on the best modelling approach. We fit the model to the dataset and we evaluate the quality of the fit and the realism of the fitted response function. We select a threshold value to transform the continuous probability predictions into binary responses and we validate the model using a k-fold approach. Finally, we show the predicted maps.      
 

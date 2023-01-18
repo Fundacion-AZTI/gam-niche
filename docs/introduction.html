@@ -118,13 +118,12 @@ div.csl-indent {
 <li class="chapter" data-level="6.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>6.1</b> Model fit</a></li>
 <li class="chapter" data-level="6.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="model-selection-1.html"><a href="model-selection-1.html"><i class="fa fa-check"></i><b>7</b> Model selection</a></li>
-<li class="chapter" data-level="8" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>8</b> Model validation</a>
+<li class="chapter" data-level="7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>7</b> Model validation</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>8.1</b> Optimum threshold</a></li>
-<li class="chapter" data-level="8.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>8.2</b> k-fold validation</a></li>
+<li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
+<li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>9</b> Prediction and maps</a></li>
+<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -148,8 +147,18 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="introduction" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Some introduction about SDMs</p>
+<p>Species distribution models (SDMs) are numerical tools that combine observations of species occurrence or abundance at known locations with information on the environmental and/or spatial characteristics of those locations <span class="citation">(<a href="#ref-elith_etal_2009" role="doc-biblioref">Elith and Leathwick 2009</a>)</span>. They are also known as …</p>
+<p>A wide variety of methods have been used …</p>
+<p>Reviews of SDM literature include …</p>
+<p>One of the common problems is that, the fitted models do not agree with the ecological niche theory…</p>
+<p>This book provides a tutorial on how to use shape-constrained generalized additive models to build SDMs. We follow the key steps in good modeling practice of SDMs <span class="citation">(<a href="#ref-elith_etal_2009" role="doc-biblioref">Elith and Leathwick 2009</a>)</span>. We first start by downloading presence data from GBIF/OBIS datasets and we create pseudo-absence data. Then, we download data on environmental covariates and we extract their value at each of the presence/pseudo-absence data points. Based on this dataset, we conduct an exploratory analysis that will help us deciding on the best modelling approach. We fit the model to the dataset and we evaluate the quality of the fit and the realism of the fitted response function. We select a threshold value to transform the continuous probability predictions into binary responses and we validate the model using a k-fold approach. Finally, we show the predicted maps.</p>
 
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-elith_etal_2009" class="csl-entry">
+Elith, Jane, and John R. Leathwick. 2009. <span>“Species Distribution Models: Ecological Explanation and Prediction Across Space and Time.”</span> Journal Article. <em>Annual Review of Ecology, Evolution, and Systematics</em> 40 (1): 677–97. <a href="https://doi.org/10.1146/annurev.ecolsys.110308.120159">https://doi.org/10.1146/annurev.ecolsys.110308.120159</a>.
+</div>
 </div>
             </section>
 

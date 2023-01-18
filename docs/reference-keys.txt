@@ -12,7 +12,6 @@ exploratory-plots
 shape-constrained-generalized-additive-models
 model-fit
 model-selection
-model-selection-1
 model-validation
 optimum-threshold
 k-fold-validation
