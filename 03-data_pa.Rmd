@@ -12,5 +12,442 @@ Prevalence 50%
 
 See code from ANICHO (mantaining some space around presences). Leire C.
 
+Copio aqui el codigo de anicho tal cual, luego lo limpiaré para este caso:
+
+```{r}
+# Script information ------------------------------------------------------
+
+# Title: Generate pseudo-absences for IM-18-ANICHO
+# Last modified by Leire Ibaibarriaga (libaibarriaga@azti.es) and Leire Citores (lcitores@azti.es)
+
+# Load libraries ----------------------------------------------------------
+
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(here)
+library(ggridges)
+
+library(maps)        # some basic country maps
+library(mapdata)     # higher resolution maps
+library(mapproj)
+library(marmap)      # access global topography data
+library(mapplots)    # ices rectangles
+library(sf)
+library(gridExtra)
+library(lubridate)
+
+# general settings for ggplot (black-white background, larger base_size)
+
+theme_set(theme_bw(base_size = 16))
+
+# Set directories ---------------------------------------------------------
+
+# final data set created by Nerea Goikoetxea after combining logboook and VMS data are in:
+# \\dok\nas\K\AZTIMAR\PROYECTOS\Funcionamiento de los ecosistemas marinos\IM-18-ANICHO\Cruce logbooks vs VMS\Data\df_2010_2019_DEF.csv
+# note that these data do not have yet the environmental variables. We have to repeat the process including the pseudo-absences 
+# because some dates were wrong in the previous file (anicho_landings_final_FECHASMAL.csv)
+
+data.dir <- here("data")
+
+# Data frame with environmental variables ---------------------------------
+
+# read data-file
+
+df <- read.csv(file.path(data.dir,"df_2010_2019_DEF.csv"), header=T, sep=";", dec=",")
+
+dim(df) # 26336 rows and 11 columns
+head(df)
+tail(df)
+summary(df)
+
+# change the names
+
+names(df) <- c("CODEUEBUQUE","FECHA_CAPT","DOY","WEEK","MONTH","YEAR","LAND","OK","PESO_ANE","LAT","LON")
+  
+# format
+
+df$FECHA_CAPT <- as.Date(df$FECHA_CAPT, format="%Y-%m-%d")
+
+# check duplicates in all the columns
+
+dupli <- duplicated(df)
+table(dupli) # there are 13 duplicated rows!!
+df[dupli, ] # this shows only the rows that are duplicated (ie the second/third/... time they appear)
+
+dupli <- duplicated(df) | duplicated(df, fromLast=T) # to see the duplicates and the first time they appear
+table(dupli) # 26, ie each duplicated row appears twice 
+df[dupli, ]
+
+# LIC: tras hablar con Lucia parece que aunque parezcan replicados, son datos oficiales de SGPM y
+# tendrian que ser correctos. Asi que los agrupo y sumo la variable PESO
+
+df <- df %>% 
+  group_by_at(vars(-PESO_ANE)) %>% 
+  summarise(PESO_ANE=sum(PESO_ANE)) 
+dim(df) # 26085 observations
+
+# select only points from March to July
+
+df <- subset(df, MONTH %in% c(3:7)) # 25036 observations
+dim(df) # 25036 observations
+
+# Depth, ICES statistical rectangles etc ----------------------------------
+
+
+# read shapefile with ices divisions
+
+ices.areas.shp <- st_read("C:/use/proyectos/IM-18-ANICHO/datos/ICES_shapefiles/ICES_areas")
+st_crs(ices.areas.shp)
+wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
+ices.areas.shp <- st_transform(ices.areas.shp, wgs) 
+
+ices.rect.shp <- st_read("C:/use/proyectos/IM-18-ANICHO/datos/ICES_shapefiles/ICES_rectangles")
+st_crs(ices.rect.shp)
+wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
+ices.rect.shp <- st_transform(ices.rect.shp, wgs)
+
+ices.rectareas.shp <- st_read("C:/use/proyectos/IM-18-ANICHO/datos/ICES_shapefiles/ICES_StatRec_mapto_ICES_Areas")
+st_crs(ices.rectareas.shp)
+wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
+ices.rectareas.shp <- st_transform(ices.rectareas.shp, wgs)
+
+# get bathymetry data
+
+bathy <- getNOAA.bathy(lon1=-18,lon2=0,lat1=41,lat2=51, resolution = 1, 
+                       keep=FALSE, antimeridian=FALSE)
+class(bathy)
+autoplot(bathy)
+bathy.df <- fortify(bathy)
+class(bathy.df)
+str(bathy.df)
+
+# add Depth from marmap according to Lon and Lat
+
+idx <- which(!is.na(df$LON) & !is.na(df$LAT) & df$LON > -18 & df$LON < 0 & df$LAT >41 & df$LAT < 51)
+df$DEPTH <- NA
+df$DEPTH[idx] <- get.depth(bathy, df[idx,c("LON","LAT")], locator=F)$depth
+
+# Maps --------------------------------------------------------------------
+
+# basic map data
+
+global <- map_data("worldHires")
+
+# basic ggplot
+
+p0 <- ggplot() + 
+  geom_contour(data=bathy.df, aes(x,y,z=z), breaks=c(-100, -200), col="grey")+
+  annotation_map(map=global, fill="grey")+
+  geom_sf(data=fortify(ices.areas.shp[1]), fill=NA)+
+  scale_x_continuous(minor_breaks = seq(-10, 0, 1), breaks = seq(-10, 0, 1))+   # ices rectangles
+  scale_y_continuous(minor_breaks = seq(42, 50, 0.5), breaks=seq(42, 50, 1))+   # ices rectangles
+  coord_sf(xlim=c(-10,0), ylim=c(42,50))+
+  xlab("")+
+  ylab("")
+print(p0)
+
+# EGSP: Transformation to UTM ---------------------------------------------
+
+# function to find your UTM. Taken from Nerea Goikoetxea
+
+lonlat2UTM = function(lonlat) {
+  utm = (floor((lonlat[1] + 180) / 6) %% 60) + 1
+  if(lonlat[2] > 0) {
+    utm + 32600
+  } else{
+    utm + 32700
+  }
+}
+
+EPSG_2_UTM <- lonlat2UTM(c(mean(df$LON), mean(df$LAT))) 
+EPSG_2_UTM # 32630 --> UTM zone 30N; 
+#           WGS84 Bounds: -6.0000, 0.0000, 0.0000, 84.0000
+#           Projected Bounds: 166021.4431, 0.0000, 833978.5569, 9329005.1825
+
+# Visualize areas for generating pseudo-absences ---------------------------
+
+# check class
+class(ices.rectareas.shp)
+
+# select multipolygon object from the shapefile
+aux1 <- ices.areas.shp[ices.areas.shp$Area_27 %in% c("8.b", "8.c"), ]
+
+# create a polygon for intersection with ices areas, so that we can select from 6ÂºW to the east
+
+aux2 <- st_sfc(st_polygon( list(rbind(c(-6, 40), c(-6, 50), c(1, 50), c(1,40), c(-6, 40)))))
+aux2 <- st_set_crs(aux2, "+proj=longlat +datum=WGS84 +ellps=WGS84") 
+wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
+aux2 <- st_transform(aux2, wgs) 
+
+# create a polygon for union with ices areas, so that we can add two rectangles from 4ÂºW to the east
+
+aux3 <- st_sfc(st_polygon( list(rbind(c(-4, 44), c(-4, 46), c(-2, 46), c(-2,44), c(-4, 44)))))
+# aux3 <- st_sfc(st_polygon( list(rbind(c(-4, 44.5), c(-4, 45.5), c(-2, 45.5), c(-2,44.5), c(-4, 44.5)))))
+aux3 <- st_set_crs(aux3, "+proj=longlat +datum=WGS84 +ellps=WGS84") 
+wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
+aux3 <- st_transform(aux3, wgs) 
+
+# transform the catch data points into sf and add the CRS
+
+df.sf <- st_as_sf(df, coords=c("LON","LAT"))
+df.sf <- st_set_crs(df.sf, "+proj=longlat +datum=WGS84 +ellps=WGS84") 
+wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
+df.sf <- st_transform(df.sf, wgs) 
+
+# transform to UTMs (in m)
+
+aux1.utm <- st_transform(aux1, EPSG_2_UTM)
+aux2.utm <- st_transform(aux2, EPSG_2_UTM)
+aux3.utm <- st_transform(aux3, EPSG_2_UTM)
+df.sf.utm <- st_transform(df.sf, EPSG_2_UTM)
+
+# convex hull of presence data
+# df_buff <- st_convex_hull(st_union(df.sf.utm))
+# plot(df_buff)
+
+# create buffers of 10km (10000) around the points and join the resulting polygons
+
+buffer <- st_buffer(df.sf.utm, dist=10000)
+buffer <- st_union(buffer)
+plot(buffer)
+
+# intersect the ices divisions and the squares
+
+aux <- st_intersection(x=st_union(st_union(aux1.utm), aux3.utm), y=aux2.utm)
+plot(aux, col=2)
+plot(buffer, add=T)
+
+# intersect the result with the buffers around the catch data points
+aux0 <- st_difference(aux, buffer)
+plot(aux0, col=2)
+
+# ggplot for all data
+
+p <- p0 +
+  geom_sf(data=aux0, fill="red", alpha=0.3)+
+  coord_sf(xlim=c(-10,0), ylim=c(42,50))
+ggsave(file.path("plots","pseudo",paste0("area_pseudo_all.png")), p, device="png")
+
+# # randomly sample inside the new polygon
+# 
+# kk <-  st_sample(aux0, size=100, type="random")
+# 
+# # plot
+# 
+# p <- p0 +
+#   geom_sf(data=aux0, col="red", alpha=0.3)+
+#   geom_sf(data=fortify(kk))+
+#   coord_sf(xlim=c(-10,0), ylim=c(42,50))
+# print(p)
+# 
+# # extract coordinates as data.frame
+# 
+# st_coordinates(kk)
+
+# loop to calculate area to generate pseudo-absences by year
+
+for (yy in sort(unique(df$YEAR))){
+  df.sub <- subset(df.sf.utm, YEAR==yy)
+  if (nrow(df.sub)>0){
+    buffer.sub <- st_buffer(df.sub, dist=10000)
+    buffer.sub <- st_union(buffer.sub)
+    aux0.sub <- st_difference(aux, buffer.sub)
+    p <- p0 +
+      geom_sf(data=aux0.sub, fill="red", alpha=0.3)+
+      #geom_sf(data=df.sub)+
+      coord_sf(xlim=c(-6,0), ylim=c(43,46))
+    ggsave(file.path("plots","pseudo",paste0("area_pseudo_",yy,".png")), p, device="png")
+  }
+}
+
+# loop to calculate area to generate pseudo-absences by month and year
+
+for (yy in sort(unique(df$YEAR))){
+  for (mm in seq(3,7,by=1)){
+    df.sub <- subset(df.sf.utm, YEAR==yy & MONTH==mm)
+    if (nrow(df.sub)>0){
+      buffer.sub <- st_buffer(df.sub, dist=10000)
+      buffer.sub <- st_union(buffer.sub)
+      aux0.sub <- st_difference(aux, buffer.sub)
+      p <- p0 +
+        geom_sf(data=aux0.sub, fill="red", alpha=0.3)+
+        #geom_sf(data=df.sub)+
+        coord_sf(xlim=c(-6,0), ylim=c(43,46))
+      ggsave(file.path("plots","pseudo",paste0("area_pseudo_",yy,"_",mm,".png")), p, device="png")
+    }    
+  }
+}
+
+# Remove points outside ices 8b, 8c or in land ----------------------------
+
+# number of points within the study area
+
+df.in <- st_intersects(df.sf.utm, aux, sparse=FALSE)
+df$INSIDE <- df.in[,1]
+mean(df$INSIDE) # 0.9743969 points inside the area of study
+
+table(df$INSIDE)
+table(df$DEPTH>0)
+table(df$INSIDE, df$DEPTH>0)
+
+p <- p0 +
+  geom_point(data=subset(df, INSIDE==1 & DEPTH <=0), aes(x=LON, y=LAT), col="red", alpha=0.3)+
+  coord_sf(xlim=c(-10,0), ylim=c(43,46))+
+  ggtitle("Points inside area with Depth<=0")
+  ggsave(file.path("plots","pseudo",paste0("points_inside_depthneg.png")), p, device="png")
+
+p <- p0 +
+  geom_point(data=subset(df, INSIDE==1 & DEPTH >0), aes(x=LON, y=LAT), col="red", alpha=0.3)+
+  coord_sf(xlim=c(-10,0), ylim=c(43,46))+
+  ggtitle("Points inside area with Depth>0")
+  ggsave(file.path("plots","pseudo",paste0("points_inside_depthpos.png")), p, device="png")
+
+p <- p0 +
+  geom_point(data=subset(df, INSIDE==0 & DEPTH <= 0), aes(x=LON, y=LAT), col="red", alpha=0.3)+
+  coord_sf(xlim=c(-10,0), ylim=c(43,46))+
+  ggtitle("Points outside area with Depth<=0")
+  ggsave(file.path("plots","pseudo",paste0("points_outside_depthneg.png")), p, device="png")
+
+p <- p0 +
+  geom_point(data=subset(df, INSIDE==0 & DEPTH > 0), aes(x=LON, y=LAT), col="red", alpha=0.3)+
+  coord_sf(xlim=c(-10,0), ylim=c(43,46))+
+#  coord_sf(xlim=c(-10,0), ylim=c(42,50))+
+  ggtitle("Points outside area with Depth>0")
+  ggsave(file.path("plots","pseudo",paste0("points_outside_depthpos.png")), p, device="png")
+
+# So, we keep only the points INSIDE the area with DEPTH<0
+
+df <- subset(df, INSIDE==1 & DEPTH <= 0)
+dim(df) # 24147 observations
+
+# remove the columns that are not going to be used
+
+df$LAND <- df$OK <- df$INSIDE <- NULL
+
+# Generate pseudo-absences -------------------------------------------------
+
+# we will use the positive database to generate the pseudo-absences
+
+dfpos <- subset(df, PESO_ANE>0)
+nbpoints <- nrow(dfpos) # 23678 out of 24147 are positive observations (98%)
+
+# we compute again the buffer but only for the positive data points
+
+# transform the catch data points into sf and add the CRS
+
+dfpos.sf <- st_as_sf(dfpos, coords=c("LON","LAT"))
+dfpos.sf <- st_set_crs(dfpos.sf, "+proj=longlat +datum=WGS84 +ellps=WGS84") 
+wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
+dfpos.sf <- st_transform(dfpos.sf, wgs) 
+dfpos.sf.utm <- st_transform(dfpos.sf, EPSG_2_UTM) # transform to UTMs (in m)
+
+# Generate the pseudo-absence data frame
+
+pseudo <- matrix(data=NA, nrow=nbpoints, ncol=10)
+pseudo <- data.frame(pseudo)
+names(pseudo) <- c("CODEUEBUQUE","FECHA_CAPT","DOY","WEEK","MONTH","YEAR","LAT","LON","PESO_ANE","DEPTH")
+
+# set the seed
+
+set.seed(1)
+
+# sample the date
+
+pseudo$FECHA_CAPT <- sample(x=dfpos$FECHA_CAPT, size=nbpoints, replace = TRUE)
+pseudo$FECHA_CAPT <- as.Date(pseudo$FECHA_CAPT, format="%Y-%m-%d")
+pseudo$DOY <- yday(pseudo$FECHA_CAPT)
+pseudo$WEEK <- week(pseudo$FECHA_CAPT)
+pseudo$MONTH <- month(pseudo$FECHA_CAPT)
+pseudo$YEAR <- year(pseudo$FECHA_CAPT)
+
+# loop by month and year
+
+for (yy in sort(unique(dfpos$YEAR))){
+  for (mm in sort(unique(dfpos$MONTH))){
+    idx <- which(pseudo$YEAR==yy & pseudo$MONTH==mm) 
+    if (length(idx)>0){
+      df.sub <- subset(dfpos.sf.utm, YEAR==yy & MONTH==mm)
+      buffer.sub <- st_buffer(df.sub, dist=10000)
+      buffer.sub <- st_union(buffer.sub)
+      aux0.sub <- st_difference(aux, buffer.sub)
+      rp.sf <- st_sample(aux0.sub, size=length(idx), type="random") # randomly sample points
+      rp.sf <- st_transform(rp.sf, 4326)
+      rp <- as.data.frame(st_coordinates(rp.sf)) # transform to lat&lon and extract coordinates as data.frame
+      pseudo$LON[idx] <- rp$X
+      pseudo$LAT[idx] <- rp$Y
+      p <- p0 +
+        geom_sf(data=aux0.sub, fill=2, alpha=0.3)+
+        geom_sf(data=df.sub, col=4, alpha=0.3)+
+        geom_sf(data=rp.sf, col=1, shape=4)+
+        coord_sf(xlim=c(-6,0), ylim=c(43,46))+
+        ggtitle(paste("ANE",yy,mm)) 
+      ggsave(file.path("plots","pseudo",paste0("pseudo_",yy,"_",mm,".png")), p, device="png")
+    }  
+  }
+}
+
+
+# complete the rest of columns
+
+pseudo$CODEUEBUQUE <- "ESPxxxxxxxxx" # generic name to distinguish the pseudo-absence data
+pseudo$PESO_ANE <- 0
+pseudo$DEPTH <- get.depth(bathy, pseudo[ ,c("LON","LAT")], locator=F)$depth
+
+# there might be still some locations with Depth>0 
+summary(pseudo$DEPTH)
+sum(pseudo$DEPTH>0)  # 197 obs
+mean(pseudo$DEPTH>0) # 0.008316447 very small proportion
+
+# transform to sf object (lat&lon) to plot
+
+pseudo.sf <- st_as_sf(pseudo, coords=c("LON","LAT"))
+pseudo.sf <- st_set_crs(pseudo.sf, "+proj=longlat +datum=WGS84 +ellps=WGS84") 
+wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
+pseudo.sf <- st_transform(pseudo.sf, wgs) 
+
+p <- p0 +
+  geom_sf(data=pseudo.sf, aes(col=(DEPTH>0)), col="red", alpha=0.3)+
+  coord_sf(xlim=c(-6,0), ylim=c(42,46))
+  #  coord_sf(xlim=c(-10,0), ylim=c(42,50))+
+print(p)
+
+# plot all pseudo-absences
+
+p <- p0 +
+  geom_sf(data=aux0, fill=2, alpha=0.3)+
+  geom_sf(data=dfpos.sf, col=4, alpha=0.3)+
+  geom_sf(data=pseudo.sf, col=1, shape=4, alpha=0.3)+
+  coord_sf(xlim=c(-6,0), ylim=c(43,46))
+print(p)
+ggsave(file.path("plots","pseudo","pseudo_all.png"), p, device="png")
+
+# plot pseudo-absences by year
+
+p <- p0 +
+  geom_sf(data=aux0, fill=2, alpha=0.3)+
+  geom_sf(data=dfpos.sf, col=4, alpha=0.3)+
+  geom_sf(data=pseudo.sf, col=1, shape=4, alpha=0.3)+
+  coord_sf(xlim=c(-6,0), ylim=c(43,46))+
+  facet_wrap(~YEAR)
+print(p)
+ggsave(file.path("plots","pseudo","pseudo_all_by_year.png"), p, device="png")
+
+
+# Save the final dataset including the pseudo-absences --------------------
+
+head(df)
+head(pseudo)
+
+# Join the two data sets and save the final dataset
+
+dat <- rbind(df, pseudo)
+write.table(dat, file=file.path("data","dfpseudo_ane_2010_2019.csv"), row.names=F, sep=";", dec=".")
+
+# End of script -----------------------------------------------------------
+
+
+
+```
 
 
