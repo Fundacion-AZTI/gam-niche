@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Presence-absence data
 
 Bla bla bla
@@ -5,6 +10,223 @@ Bla bla bla
 ## Download presence data
 
 Download from GBIF OBIS. Mireia
+
+```{r, eval=F}
+# Script information ------------------------------------------------------
+
+# Title: Download OBIS/GBIF occurrence data used in H2020 Mission Atlantic (No 862428) Project Task 3.4.
+# Last modified by Mireia Valle (github profile: MireiaValle, email: mvalle@azti.es) based on original code for sourcing OBIS and GBIF from Guillem Chust (email: gchust@azti.es) and some adaptations from Eduardo Ramirez. 
+
+# Load libraries 
+---------------------------------
+  
+# Specific libraries to get the occurrence data
+#install.packages("robis") # https://cran.r-project.org/web/packages/robis/robis.pdf
+library(robis)
+library (rgbif)
+
+# Libraries for Spatial data 
+library(rgdal)
+library(sf) # shapes
+
+# Library for plotting
+library(ggplot2)
+
+# Libraries for reading data
+library(data.table)
+library(dplyr)
+library(tidyr)
+
+# outliers
+library(CoordinateCleaner)
+
+# Library for reproducible workflow
+library(here)
+
+
+# STUDY AREA
+---------------------------------
+
+##NOTA interna: En el código de MISSION uso el shapefile de FAO que lo tengo descargado en el ordenador, hay que añadir la info para la descarga manual o el código para la descarga con R. Para MISSION elimino el Black Sea del área de estudio. 
+  
+# el enlace para la descarga del shapefile es el siguiente: 
+ 
+# http://www.fao.org/fishery/geoserver/fifao/ows?service=WFS&request=GetFeature&version=1.0.0&typeName=fifao:FAO_AREAS_CWP&outputFormat=SHAPE-ZIP")
+
+# Load FAO (spatial multipolygon)
+FAO<- readOGR(here::here("data", "spatial", "FAO_AREAS.shp"))
+
+#Selecting Atlantic FAO regions
+FAO_Atl <- FAO[FAO$OCEAN=="Atlantic",]
+
+#Plot Atlantic FAO regions
+plot(FAO_Atl)
+
+#remove Black Sea subarea
+
+Black_Sea <- FAO_Atl[FAO_Atl$ID=="20",]
+
+plot(Black_Sea)
+
+## Find the 'difference', i.e. reverse of st_intersection
+
+# transform to sf object
+Black_Sea.sf <- st_as_sf(Black_Sea)
+
+FAO_Atl.sf <- st_as_sf(FAO_Atl)
+
+# remove the black see
+FAO_Atl_no_black_sea <- st_difference(FAO_Atl.sf,Black_Sea.sf) %>%   dplyr::select (F_AREA)
+
+#transform to spatial polygons dataframe
+FAO_Atl_no_black_sea <- sf:::as_Spatial(FAO_Atl_no_black_sea)
+
+plot(FAO_Atl_no_black_sea)
+
+# DOWNLOAD DATA FROM OBIS AND GBIF DATASETS AND MERGE 
+---------------------------------  
+  
+# en la reunión decidimos hacer pruebas con: Thunnus alalunga, Thunnus obesus, Xiphias gladius y Thunnus albacares
+  
+## Find data by scientific name in the datasets OBIS/GBIF
+  
+  # Get data from OBIS
+  mydata.obis<-robis::occurrence(scientificname="Thunnus alalunga")
+
+  # Get data from GBIF
+  mydata.gbif<-occ_data(scientificName="Thunnus alalunga", hasCoordinate = TRUE, limit=100000)$data
+  
+  # Select columns of interest from downloaded data
+  
+  #check names in for obis data
+  names(mydata.obis)
+  
+  #select columns of interest
+  mydata.obis <-  mydata.obis %>%
+                  dplyr::select("scientificName",
+                   "decimalLongitude",
+                   "decimalLatitude",
+                   "date_year",
+                   "month",
+                   "day",
+                   "eventDate",
+                   "depth",
+                   "bathymetry",
+                   "occurrenceStatus",
+                   "sst")
+  
+  # check names for gbif data
+  names(mydata.gbif)
+  
+  #select columns of interest
+  mydata.gbif <- mydata.gbif %>%
+                  dplyr::select("acceptedScientificName",
+                   "decimalLongitude",
+                   "decimalLatitude",
+                   "year",
+                   "month",
+                   "day",
+                   "eventDate",
+                   "depth")
+  
+  ## Add new field and rename some columns from mydata.gbif dataframe in order to have the same columns and be able to join both tables
+  
+  mydata.gbif <- mydata.gbif %>% 
+    dplyr::rename(scientificName= "acceptedScientificName") %>% 
+    dplyr::rename(date_year = "year") %>% 
+    dplyr::mutate(bathymetry= NA) %>% 
+    dplyr::mutate(occurrenceStatus=1) %>% 
+    dplyr::mutate(sst= NA)
+
+  ## Join data from OBIS and GBIF 
+  mydata.fus<-rbind(mydata.obis,mydata.gbif)
+  
+  ## assign unique scientific name 
+  mydata.fus <- mydata.fus %>% 
+    dplyr::mutate(scientificName= paste(mydata.obis$scientificName[1]))
+  
+# CLEAN RAW DATA 
+---------------------------------    
+  
+  #### give date format to eventDate and fill out month and date_year columns
+  mydata.fus$eventDate <- as.Date(mydata.fus$eventDate)
+  mydata.fus$date_year <- as.numeric(mydata.fus$date_year)
+  mydata.fus$month <- as.numeric(mydata.fus$month)
+
+  ### mutate occurrenceStatus column giving value of 1 to presences and 0 to absences
+  mydata.fus <- mydata.fus %>% 
+    mutate(occurrenceStatus = ifelse(occurrenceStatus== "NA", NA, occurrenceStatus)) %>%
+    mutate(occurrenceStatus = ifelse(occurrenceStatus== "Present", 1, occurrenceStatus)) %>% 
+    mutate(occurrenceStatus = ifelse(occurrenceStatus== "present", 1, occurrenceStatus)) %>% 
+    mutate(occurrenceStatus = ifelse(occurrenceStatus== "Presente", 1, occurrenceStatus)) %>% 
+    mutate(occurrenceStatus = ifelse(occurrenceStatus== "Presence", 1, occurrenceStatus)) %>% 
+    mutate(occurrenceStatus = ifelse(occurrenceStatus== "P", 1, occurrenceStatus)) %>% 
+    mutate(occurrenceStatus = ifelse(occurrenceStatus== "Q", 1, occurrenceStatus))
+
+  ### Assign 1 value to all retrieved points 
+  
+  #NOTA INTERNA: replace_na me da error por eso asigno directamente 1 a todos los puntos
+  mydata.fus <- mydata.fus  %>% 
+    dplyr::mutate(occurrenceStatus = 1)
+
+# REMOVING OUTLIERS
+---------------------------------  
+
+  # find outliers based on distance method
+  out.dist <- cc_outl(x=mydata.fus,
+                lon = "decimalLongitude", lat = "decimalLatitude",
+                species = "scientificName",
+                method="distance", tdi=1000, # distance method with tdi=1000km
+                thinning=T, thinning_res=0.5,
+                value="flagged") 
+
+  # remove outliers from the data
+  
+  mydata.fus <- mydata.fus[out.dist, ]
+  
+# REMOVE DUPLICATES
+---------------------------------  
+date <- (cbind(mydata.fus$decimalLongitude,mydata.fus$decimalLatitude,mydata.fus$eventDate))
+
+mydata.fus<-mydata.fus[!duplicated(date),]
+
+# PREPARE DATA TO USE FAO ATLANTIC REGION MASK
+---------------------------------    
+    
+  # Prepare coordinate format and projection to be able to use FAO zone masks
+  dat <- data.frame(cbind(mydata.fus$decimalLongitude,mydata.fus$decimalLatitude))
+  ptos<-as.data.table(dat,keep.columnnames=TRUE)
+  
+  coordinates(ptos) <- ~ X1 + X2
+  
+  proj4string(ptos) <-proj4string(FAO)
+  
+  ## Select only occurrences from FAO Atlantic
+  match2<-data.frame(subset(mydata.fus,!is.na(over(ptos, FAO_Atl_no_black_sea)[,1])))
+  
+  ## Extract the FAO area of each point
+  match3<-data.frame(subset(over(ptos, FAO_Atl_no_black_sea), !is.na(over(ptos, FAO_Atl_no_black_sea)[,1])))
+  
+  data_fus_Atl<-cbind(F_AREA=match3$F_AREA,match2)
+
+# SAVE OCCURRENCE DATA
+---------------------------------    
+
+#NOTA INTERNA: quiero guardar el RData en la carpeta data/occurrences con el nombre de la especies sin espacios para no machar los RData en caso de que hagamos más de una especie pero no lo consigo. 
+
+save(data_fus_Atl, file = here::here("data/occurrences/occ.RData"))
+
+  
+# PLOT OCCURRENCES MAP
+---------------------------------   
+ggplot() +
+   geom_path(data = FAO_Atl_no_black_sea, 
+             aes(x = long, y = lat, group = group),
+             color = 'gray', size = .2) +
+   geom_point(data=data_fus_Atl, aes(x=decimalLongitude, y=decimalLatitude,colour= occurrenceStatus)) 
+  
+```
+
 
 ## Create pseudo-absence data
 
