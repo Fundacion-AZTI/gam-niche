@@ -1,8 +1,190 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
 # Model validation
 
 Bla bla 
 
+
+### Loading required libraries
+
+```{r, eval=F}
+library(scam)
+#library(mgcv)
+library(plotmo)
+library(rgdal)
+library(ggplot2)
+library(dplyr)
+library(fields) #imageplot
+library(maps) #map world
+library(raster)
+library(RColorBrewer)#color palette
+library(tidyverse)
+library(R.utils) #loadToEnv
+
+#SDMTools - install RTools and follow: https://cran.r-project.org/bin/windows/Rtools/
+#install.packages("remotes")
+#remotes::install_version("SDMTools", "1.1-221.2")
+library(SDMTools)
+library(dismo)
+
+#plots
+library(ggplot2)
+library(ggpubr)
+library(hrbrthemes) # theme_ipsum
+```
+
 ## Optimum threshold
 
+```{r, eval=F}
+#NOTA INTERNA: aquí hay que cargar el RData del modelo, cargo el que se crea con el 06-model_fit para poder correr el código
+
+#Load SC-GAM model
+
+load(here::here ("models", "selected_model.Rdata"))
+
+#Load species PA data
+
+load(here::here ("data", "outputs_for_modelling", "PA.Rdata"))
+data <- SP11 #NOTA INTERNA: así se llama el RData de la anchoa
+
+  # Predict 
+  scgam.pred <- predict(selected_model, newdata=data, type="response")
+  
+  # Add the prediction to the table
+  data$scgam.pred <- as.vector(scgam.pred)
+  head(data)
+
+  ## Optimizing the threshold probability
+  obs <- data$status
+  predSCGAM_P <- data$scgam.pred
+  
+  # threshold optimizing
+  myoptim <- optim.thresh (obs,predSCGAM_P)
+  myoptim
+
+```
+
+
 ## k-fold validation
+
+## VALIDATION  --------------------
+# https://rpubs.com/mlibxmda/SDMPartOne
+
+Create a df to save validation results
+```{r, eval=F}
+validation_summary <- matrix(NA, ncol = 6, nrow = 1)
+```
+
+
+```{r, eval=F}
+  # select the threshold that maximizes the sum of sensitivity and specificity (Jimenez-Valverde and Lobo, 2017)
+  myThreshold <- as.numeric((myoptim[["max.sensitivity+specificity"]])) 
+  
+  # In case, the result is a range (instead of a single value), we select the mean value of the range 
+
+  if(length(myThreshold)>1){
+    print(paste("Note that the threshold is the mean of the range:", myThreshold))
+    myThreshold <- mean (myThreshold) 
+  } 
+  
+  # accuracy values with all observations
+  accuracy (obs, predSCGAM_P, threshold=myThreshold)
+  
+  # create confusion matrix with all observations
+  confusion.matrix(obs, predSCGAM_P, threshold=myThreshold)
+  
+  # isolate the formula  
+  v_summary <- summary(selected_model)
+  
+  formula <- v_summary[["formula"]]
+  
+  # Generating K Groups of presences for k-fold cross-validation
+  
+  # cross-validation using k-fold
+  k <- 5 # Number of groups
+  
+  # Separate Presences and absences into 2 different objects
+  Pres   <- subset(data, status==1)
+  Aus  <- subset(data, status==0)
+
+  # separate the presences and the absences into the k groups
+  # LI: I think we could alternatively do it in one go (i.e. without separating presences and absences) using the argument status: kfold(data, k, by=data$status)
+  
+  groups <- kfold(Pres, k)   
+  head(groups)
+  groups2 <- kfold(Aus, k)
+  head (groups2)
+  
+  # initialise the confusion matrix and the accuracy table: 
+  myCM <- NULL 
+  myACC <- NULL
+
+  # loop for each group k
+  
+  for (j in 1:k) {
+    
+    print(paste("Results k-fold validation: group ", j))
+    
+    # Preparation of Tabla of Training Sites
+    presencias_Training <- Pres[groups != j,]
+    ausencias_Training <- Aus[groups2 != j,]
+    
+    # Join the two tables
+    puntos_Training <- rbind(presencias_Training, ausencias_Training)
+    
+    # Model fit
+    sp <- unique(selected_model$sp)
+    
+    sp <- as.data.frame(sp)
+    
+    selected_model.sp.j <- scam (formula, family=binomial(link="logit"), 
+                        data=puntos_Training, sp=c(sp$sp))
+    summary(selected_model.sp.j)
+    
+    # Predict Model
+    muestra_validacion <- Pres[groups == j,]     # valores de predict donde las observaciones son presencias
+    muestra2_validacion <- Aus [groups2 == j,]   # valores de predict donde las observaciones son ausencias
+    puntos_validacion<-rbind(muestra_validacion, muestra2_validacion)
+    
+    selected_model.sp.j.pred <- predict(selected_model.sp.j, newdata=puntos_validacion, type="response")
+    puntos_validacion$Pred <- selected_model.sp.j.pred
+    
+    # Confussion matrix and accuracy table for fold j
+    obs <- puntos_validacion$status
+    predSCGAM <- puntos_validacion$Pred
+    # print(confusion.matrix(obs, predSCGAM, threshold=myThreshold))
+    # print(accuracy(obs, predSCGAM, threshold=myThreshold))
+    myCM <- rbind(myCM, as.numeric(confusion.matrix(obs, predSCGAM, threshold=myThreshold))) # columns are: obs0pred0, obs0pred1, obs1pred0, obs1pred1
+    myACC <- rbind(myACC, accuracy(obs, predSCGAM, threshold=myThreshold))
+  } # end of loop for j
+  
+  # save threshold
+  Threshold <- myThreshold
+  
+  # Mean values across k-folds
+  mean_AUC <- mean(myACC$AUC)
+  mean_Omision <- mean(myACC$omission.rate)
+  mean_sensitivity <- mean(myACC$sensitivity)
+  mean_specificity <- mean(myACC$specificity)
+  mean_Prop.Corr <- mean(myACC$prop.correct)  
+  
+  # add mean values to the validation summary table for species
+  validation_summary[1,]<-c(Threshold,
+                            mean_AUC,
+                            mean_Omision,
+                            mean_sensitivity,
+                            mean_specificity,
+                            mean_Prop.Corr)
+  
+  validation_summary.df <- as.data.frame(validation_summary)
+
+  names (validation_summary.df) <- c("Threshold", "mean_AUC", "mean_Omision", "mean_sensitivity","mean_specificity", "mean_Prop.Corr")
+
+  head(validation_summary.df)
+```
 
