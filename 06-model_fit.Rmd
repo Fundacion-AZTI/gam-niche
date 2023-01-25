@@ -93,9 +93,6 @@ sapply(model_SCGAM$smod, function(x) summary(x)$dev.expl)
 lapply(model_SCGAM$smod, formula)
 lapply(model_SCGAM$smod, summary)
 
-selected_model <- model_SCGAM$smod[[length(model_SCGAM$smod)]]
-selected_model$sp
-
 # see specifically the summary and the plots of the final model after the selection
 # note that it is the last element of the list of models
 
@@ -104,11 +101,13 @@ summary(selected_model)
 scam.check(selected_model)
 plot(selected_model)
 plotmo(selected_model,level = 0.95, pt.col=8)
-```
 
+#Select the last model of the list which is the best model according to AIC and plevel criteria
+selected_model <- model_SCGAM$smod[[length(model_SCGAM$smod)]]
+selected_model$sp
 
-```{r, eval=F}
 # Save the model
 
-save(model_SCGAM, file = here::here("models/selected_model.RData"))
+save(selected_model, file = here::here("models/selected_model.RData"))
+
 ```
