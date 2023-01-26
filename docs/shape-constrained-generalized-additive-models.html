@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-01-18" />
+<meta name="date" content="2023-01-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="prepare-final-dataset.html"/>
-<link rel="next" href="model-validation.html"/>
+<link rel="next" href="source-the-function-for-forward-selection-of-the-variables-developed-by-libaibarriaga-criterium-aic-and-pvalue.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -179,15 +179,24 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
 <ul>
+<li class="chapter" data-level="6.0.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#loading-required-libraries"><i class="fa fa-check"></i><b>6.0.1</b> Loading required libraries</a></li>
 <li class="chapter" data-level="6.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>6.1</b> Model fit</a></li>
 <li class="chapter" data-level="6.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>7</b> Model validation</a>
+<li class="chapter" data-level="7" data-path="source-the-function-for-forward-selection-of-the-variables-developed-by-libaibarriaga-criterium-aic-and-pvalue.html"><a href="source-the-function-for-forward-selection-of-the-variables-developed-by-libaibarriaga-criterium-aic-and-pvalue.html"><i class="fa fa-check"></i><b>7</b> Source the function for forward selection of the variables developed by libaibarriaga criterium: AIC and pvalue</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
-<li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
+<li class="chapter" data-level="7.1" data-path="source-the-function-for-forward-selection-of-the-variables-developed-by-libaibarriaga-criterium-aic-and-pvalue.html"><a href="source-the-function-for-forward-selection-of-the-variables-developed-by-libaibarriaga-criterium-aic-and-pvalue.html#preparing-data"><i class="fa fa-check"></i><b>7.1</b> preparing data</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a></li>
+<li class="chapter" data-level="8" data-path="check-results.html"><a href="check-results.html"><i class="fa fa-check"></i><b>8</b> check results</a></li>
+<li class="chapter" data-level="9" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>9</b> Model validation</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="model-validation.html"><a href="model-validation.html#loading-required-libraries-1"><i class="fa fa-check"></i><b>9.0.1</b> Loading required libraries</a></li>
+<li class="chapter" data-level="9.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>9.1</b> Optimum threshold</a></li>
+<li class="chapter" data-level="9.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>9.2</b> k-fold validation</a></li>
+<li class="chapter" data-level="9.3" data-path="model-validation.html"><a href="model-validation.html#validation"><i class="fa fa-check"></i><b>9.3</b> VALIDATION ——————–</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="httpsrpubs.html"><a href="httpsrpubs.html"><i class="fa fa-check"></i><b>10</b> https://rpubs.com/mlibxmda/SDMPartOne</a></li>
+<li class="chapter" data-level="11" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>11</b> Prediction and maps</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -213,12 +222,47 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 6</span> Shape Constrained-Generalized Additive Models<a href="shape-constrained-generalized-additive-models.html#shape-constrained-generalized-additive-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>One citation is <span class="citation">(<a href="#ref-citores_etal_2020" role="doc-biblioref">Citores et al. 2020</a>)</span></p>
 <p>Mention there is an alternative using <code>mboost</code> that won’t be further developed here.</p>
+<div id="loading-required-libraries" class="section level3 hasAnchor" number="6.0.1">
+<h3><span class="header-section-number">6.0.1</span> Loading required libraries<a href="shape-constrained-generalized-additive-models.html#loading-required-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="shape-constrained-generalized-additive-models.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scam)</span>
+<span id="cb13-2"><a href="shape-constrained-generalized-additive-models.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#library(mgcv)</span></span>
+<span id="cb13-3"><a href="shape-constrained-generalized-additive-models.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotmo)</span>
+<span id="cb13-4"><a href="shape-constrained-generalized-additive-models.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgdal)</span>
+<span id="cb13-5"><a href="shape-constrained-generalized-additive-models.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-6"><a href="shape-constrained-generalized-additive-models.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-7"><a href="shape-constrained-generalized-additive-models.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fields) <span class="co">#imageplot</span></span>
+<span id="cb13-8"><a href="shape-constrained-generalized-additive-models.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps) <span class="co">#map world</span></span>
+<span id="cb13-9"><a href="shape-constrained-generalized-additive-models.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
+<span id="cb13-10"><a href="shape-constrained-generalized-additive-models.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)<span class="co">#color palette</span></span>
+<span id="cb13-11"><a href="shape-constrained-generalized-additive-models.html#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="shape-constrained-generalized-additive-models.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SDMTools - install RTools and follow: https://cran.r-project.org/bin/windows/Rtools/</span></span>
+<span id="cb13-13"><a href="shape-constrained-generalized-additive-models.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;remotes&quot;)</span></span>
+<span id="cb13-14"><a href="shape-constrained-generalized-additive-models.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#remotes::install_version(&quot;SDMTools&quot;, &quot;1.1-221.2&quot;)</span></span>
+<span id="cb13-15"><a href="shape-constrained-generalized-additive-models.html#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SDMTools)</span>
+<span id="cb13-16"><a href="shape-constrained-generalized-additive-models.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dismo)</span>
+<span id="cb13-17"><a href="shape-constrained-generalized-additive-models.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div>
+</div>
 <div id="model-fit" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Model fit<a href="shape-constrained-generalized-additive-models.html#model-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="shape-constrained-generalized-additive-models.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#NOTA INTERNA: aquí hay que cargar el RData de presencias y pseudoausencias que creemos en 05_data_final de momento he copido los datos de PA de la anchoa para poder correr el código. Habrá que cambiar status por el nomnbre de la columna de presencia-pseudoausencia y el nombre de las variables, en este caso lo hacemos para la anchoa con todas las variables que tenemos: </span></span>
+<span id="cb14-2"><a href="shape-constrained-generalized-additive-models.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="shape-constrained-generalized-additive-models.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Load presence-absence dataset of the species</span></span>
+<span id="cb14-4"><a href="shape-constrained-generalized-additive-models.html#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="shape-constrained-generalized-additive-models.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;outputs_for_modelling&quot;</span>, <span class="st">&quot;PA.Rdata&quot;</span>))</span>
+<span id="cb14-6"><a href="shape-constrained-generalized-additive-models.html#cb14-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> SP11 <span class="co">#NOTA INTERNA: así se llama el RData de la anchoa</span></span>
+<span id="cb14-7"><a href="shape-constrained-generalized-additive-models.html#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="shape-constrained-generalized-additive-models.html#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="shape-constrained-generalized-additive-models.html#cb14-9" aria-hidden="true" tabindex="-1"></a>raw_model <span class="ot">&lt;-</span> <span class="fu">scam</span> (status <span class="sc">~</span>  <span class="fu">s</span>(temp.v, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>, <span class="at">m=</span><span class="dv">2</span>)<span class="sc">+</span> <span class="fu">s</span>(sal.v, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>, <span class="at">m=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">s</span>(nit.v, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>, <span class="at">m=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">s</span>(npp.v, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>, <span class="at">m=</span><span class="dv">2</span>)<span class="sc">+</span> <span class="fu">s</span>(dist_seabed.v, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>, <span class="at">m=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">s</span>(mld_relative_position.v, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>, <span class="at">m=</span><span class="dv">2</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data)</span>
+<span id="cb14-10"><a href="shape-constrained-generalized-additive-models.html#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="shape-constrained-generalized-additive-models.html#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="shape-constrained-generalized-additive-models.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Check raw model which contains all variables</span></span>
+<span id="cb14-13"><a href="shape-constrained-generalized-additive-models.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(raw_model)</span>
+<span id="cb14-14"><a href="shape-constrained-generalized-additive-models.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">scam.check</span>(raw_model)</span>
+<span id="cb14-15"><a href="shape-constrained-generalized-additive-models.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(raw_model)</span>
+<span id="cb14-16"><a href="shape-constrained-generalized-additive-models.html#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(raw_model,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
 </div>
 <div id="model-selection" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Model selection<a href="shape-constrained-generalized-additive-models.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-
 </div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -233,7 +277,7 @@ Citores, L., L. Ibaibarriaga, D. J. Lee, M. J. Brewer, M. Santos, and G. Chust. 
         </div>
       </div>
 <a href="prepare-final-dataset.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-validation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="source-the-function-for-forward-selection-of-the-variables-developed-by-libaibarriaga-criterium-aic-and-pvalue.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
