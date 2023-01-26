@@ -1,3 +1,73 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Prediction and maps
 
 predict from fitted models and produce maps
+
+### Loading required libraries
+
+```{r, eval=F}
+
+library(rgdal)
+library(ggplot2)
+library(dplyr)
+library(fields) #imageplot
+library(maps) #map world
+library(raster)
+library(RColorBrewer)#color palette
+library(tidyverse)
+```
+
+# Projection
+
+```{r, eval=F}
+
+#Load raster stack containing all variables
+
+depth_set_0 <- brick(here::here ("data/outputs_for_modelling/set_0_m.tif"))
+
+
+# Transform raster stack to table
+
+v_table <- as.data.frame(depth_set_0, xy=TRUE)
+
+#names
+
+names (v_table) <- c("x", 
+                        "y", 
+                         "temp.v", 
+                         "sal.v",
+                         "nit.v",
+                         "do.v", 
+                         "dist_seabed.v", 
+                         "mld_relative_position.v", 
+                         "npp.v")
+
+#Load SC-GAM model
+
+load(here::here ("models", "selected_model.Rdata"))
+
+# predicting 
+
+predict <- predict(selected_model,newdata=v_table,type ="response",se.fit=T)            
+
+probabilities_predict<-cbind(v_table,predict)
+
+summary(probabilities_predict)
+
+ probabilities_predict.r <- probabilities_predict %>%
+    dplyr::select (x, y, fit) %>%
+   rasterFromXYZ()
+
+```
+
+
+# Mapping
+
+```{r, eval=F}
+plot(probabilities_predict.r)
+```
+
