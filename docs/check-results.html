@@ -220,28 +220,28 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="check-results" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">Chapter 8</span> check results<a href="check-results.html#check-results" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="check-results.html#cb18-1" aria-hidden="true" tabindex="-1"></a>model_SCGAM<span class="sc">$</span>svars</span>
-<span id="cb18-2"><a href="check-results.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, AIC)</span>
-<span id="cb18-3"><a href="check-results.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, <span class="cf">function</span>(x) <span class="fu">summary</span>(x)<span class="sc">$</span>dev.expl)</span>
-<span id="cb18-4"><a href="check-results.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span>
-<span id="cb18-5"><a href="check-results.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span>
-<span id="cb18-6"><a href="check-results.html#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="check-results.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># see specifically the summary and the plots of the final model after the selection</span></span>
-<span id="cb18-8"><a href="check-results.html#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># note that it is the last element of the list of models</span></span>
-<span id="cb18-9"><a href="check-results.html#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="check-results.html#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="check-results.html#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(selected_model)</span>
-<span id="cb18-12"><a href="check-results.html#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scam.check</span>(selected_model)</span>
-<span id="cb18-13"><a href="check-results.html#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(selected_model)</span>
-<span id="cb18-14"><a href="check-results.html#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(selected_model,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span>
-<span id="cb18-15"><a href="check-results.html#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-16"><a href="check-results.html#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Select the last model of the list which is the best model according to AIC and plevel criteria</span></span>
-<span id="cb18-17"><a href="check-results.html#cb18-17" aria-hidden="true" tabindex="-1"></a>selected_model <span class="ot">&lt;-</span> model_SCGAM<span class="sc">$</span>smod[[<span class="fu">length</span>(model_SCGAM<span class="sc">$</span>smod)]]</span>
-<span id="cb18-18"><a href="check-results.html#cb18-18" aria-hidden="true" tabindex="-1"></a>selected_model<span class="sc">$</span>sp</span>
-<span id="cb18-19"><a href="check-results.html#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-20"><a href="check-results.html#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the model</span></span>
-<span id="cb18-21"><a href="check-results.html#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-22"><a href="check-results.html#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(selected_model, <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;models/selected_model.RData&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="check-results.html#cb19-1" aria-hidden="true" tabindex="-1"></a>model_SCGAM<span class="sc">$</span>svars</span>
+<span id="cb19-2"><a href="check-results.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, AIC)</span>
+<span id="cb19-3"><a href="check-results.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, <span class="cf">function</span>(x) <span class="fu">summary</span>(x)<span class="sc">$</span>dev.expl)</span>
+<span id="cb19-4"><a href="check-results.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span>
+<span id="cb19-5"><a href="check-results.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span>
+<span id="cb19-6"><a href="check-results.html#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="check-results.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># see specifically the summary and the plots of the final model after the selection</span></span>
+<span id="cb19-8"><a href="check-results.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># note that it is the last element of the list of models</span></span>
+<span id="cb19-9"><a href="check-results.html#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="check-results.html#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="check-results.html#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(selected_model)</span>
+<span id="cb19-12"><a href="check-results.html#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scam.check</span>(selected_model)</span>
+<span id="cb19-13"><a href="check-results.html#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(selected_model)</span>
+<span id="cb19-14"><a href="check-results.html#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(selected_model,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span>
+<span id="cb19-15"><a href="check-results.html#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="check-results.html#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Select the last model of the list which is the best model according to AIC and plevel criteria</span></span>
+<span id="cb19-17"><a href="check-results.html#cb19-17" aria-hidden="true" tabindex="-1"></a>selected_model <span class="ot">&lt;-</span> model_SCGAM<span class="sc">$</span>smod[[<span class="fu">length</span>(model_SCGAM<span class="sc">$</span>smod)]]</span>
+<span id="cb19-18"><a href="check-results.html#cb19-18" aria-hidden="true" tabindex="-1"></a>selected_model<span class="sc">$</span>sp</span>
+<span id="cb19-19"><a href="check-results.html#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="check-results.html#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the model</span></span>
+<span id="cb19-21"><a href="check-results.html#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="check-results.html#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(selected_model, <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;models/selected_model.RData&quot;</span>))</span></code></pre></div>
 
 </div>
             </section>

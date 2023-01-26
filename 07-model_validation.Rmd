@@ -10,7 +10,7 @@ editor_options:
 Bla bla 
 
 
-### Loading required libraries
+Loading required libraries
 
 ```{r, eval=F}
 library(scam)
@@ -72,8 +72,7 @@ data <- SP11 #NOTA INTERNA: así se llama el RData de la anchoa
 
 ## k-fold validation
 
-## VALIDATION  --------------------
-# https://rpubs.com/mlibxmda/SDMPartOne
+VALIDATION: https://rpubs.com/mlibxmda/SDMPartOne
 
 Create a df to save validation results
 ```{r, eval=F}

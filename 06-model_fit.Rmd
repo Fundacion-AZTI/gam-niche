@@ -9,7 +9,7 @@ One citation is [@citores_etal_2020]
 
 Mention there is an alternative using `mboost` that won't be further developed here.  
 
-### Loading required libraries
+Loading required libraries
 
 ```{r, eval=F}
 library(scam)
@@ -56,13 +56,13 @@ plotmo(raw_model,level = 0.95, pt.col=8)
 
 ## Model selection
 
-# Source the function for forward selection of the variables developed by libaibarriaga criterium: AIC and pvalue
+Source the function for forward selection of the variables developed by libaibarriaga criterium: AIC and pvalue
 
 ```{r, eval=F}
 source(here::here ("function","function_scam_selection_optimized.R"))
 ```
 
-## preparing data
+preparing data
 ```{r, eval=F}
 # selecting the variables to be used in the model 
 
@@ -75,7 +75,7 @@ vars <- c("temp.v",
           "npp.v")
 ```
 
-#Code to build SC-GAM model default sp= NULL, k = 8 and plevel  = 0.05
+Code to build SC-GAM model default sp= NULL, k = 8 and plevel  = 0.05
 ```{r, eval=F}
 
   # apply the model selection function (no limits in the number of terms)
@@ -85,7 +85,7 @@ vars <- c("temp.v",
 
 ```
 
-# check results
+check results
 ```{r, eval=F}
 model_SCGAM$svars
 sapply(model_SCGAM$smod, AIC)
