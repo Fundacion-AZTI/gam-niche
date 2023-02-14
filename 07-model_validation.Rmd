@@ -49,8 +49,9 @@ load(here::here ("models", "selected_model.Rdata"))
 
 #Load species PA data
 
-load(here::here ("data", "outputs_for_modelling", "PA.Rdata"))
-data <- SP11 #NOTA INTERNA: así se llama el RData de la anchoa
+#load(here::here ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
+#data <- dat.all #NOTA INTERNA: así se llama el RData 
+data<-selected_model$model
 
   # Predict 
   scgam.pred <- predict(selected_model, newdata=data, type="response")
@@ -60,7 +61,7 @@ data <- SP11 #NOTA INTERNA: así se llama el RData de la anchoa
   head(data)
 
   ## Optimizing the threshold probability
-  obs <- data$status
+  obs <- data$occurrenceStatus
   predSCGAM_P <- data$scgam.pred
   
   # threshold optimizing
@@ -106,18 +107,10 @@ validation_summary <- matrix(NA, ncol = 6, nrow = 1)
   
   # cross-validation using k-fold
   k <- 5 # Number of groups
-  
-  # Separate Presences and absences into 2 different objects
-  Pres   <- subset(data, status==1)
-  Aus  <- subset(data, status==0)
 
-  # separate the presences and the absences into the k groups
-  # LI: I think we could alternatively do it in one go (i.e. without separating presences and absences) using the argument status: kfold(data, k, by=data$status)
+  #generate groups
+  groups<-kfold(data, k, by=data$status)
   
-  groups <- kfold(Pres, k)   
-  head(groups)
-  groups2 <- kfold(Aus, k)
-  head (groups2)
   
   # initialise the confusion matrix and the accuracy table: 
   myCM <- NULL 
@@ -129,20 +122,15 @@ validation_summary <- matrix(NA, ncol = 6, nrow = 1)
     
     print(paste("Results k-fold validation: group ", j))
     
-    # Preparation of Tabla of Training Sites
-    presencias_Training <- Pres[groups != j,]
-    ausencias_Training <- Aus[groups2 != j,]
-    
-    # Join the two tables
-    puntos_Training <- rbind(presencias_Training, ausencias_Training)
+    # Preparation of Training Sites
+
+    puntos_Training <- data[groups != j,]
     
     # Model fit
-    sp <- unique(selected_model$sp)
-    
-    sp <- as.data.frame(sp)
+    sp <- selected_model$sp
     
     selected_model.sp.j <- scam (formula, family=binomial(link="logit"), 
-                        data=puntos_Training, sp=c(sp$sp))
+                        data=puntos_Training, sp=c(sp))
     summary(selected_model.sp.j)
     
     # Predict Model
@@ -154,7 +142,7 @@ validation_summary <- matrix(NA, ncol = 6, nrow = 1)
     puntos_validacion$Pred <- selected_model.sp.j.pred
     
     # Confussion matrix and accuracy table for fold j
-    obs <- puntos_validacion$status
+    obs <- puntos_validacion$occurrenceStatus
     predSCGAM <- puntos_validacion$Pred
     # print(confusion.matrix(obs, predSCGAM, threshold=myThreshold))
     # print(accuracy(obs, predSCGAM, threshold=myThreshold))
@@ -184,6 +172,6 @@ validation_summary <- matrix(NA, ncol = 6, nrow = 1)
 
   names (validation_summary.df) <- c("Threshold", "mean_AUC", "mean_Omision", "mean_sensitivity","mean_specificity", "mean_Prop.Corr")
 
-  head(validation_summary.df)
+  validation_summary.df
 ```
 
