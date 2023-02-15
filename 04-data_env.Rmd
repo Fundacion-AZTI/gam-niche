@@ -28,9 +28,6 @@ library(leaflet)
 #install.packages("sdmpredictors")
 #install.packages("leaflet")
 
-#load data
-load("C:/use/GitHub/SDM/data/pseudoabs/PAdata.RData")
-
 # Explore datasets in the package 
 list_datasets()
 list_layers("Bio-ORACLE")
@@ -39,22 +36,7 @@ mytab <- list_layers("Bio-ORACLE")
 ## Download specific layers to the current directory 
 
 myBioracle.layers <- load_layers(c("BO_chlomean", "BO_damean", "BO_salinity", "BO_sstmean", "BO_sstrange", "BO_bathymean")) 
-#save(myBioracle.layers, file="myBioracle.layers.Rdata")
-#load(file="myBioracle.layers.Rdata") # creo que no funciona
-myBioracle.layers
-
-### Extract environmental values from layers 
-
-mydata1.env <- raster::extract(x=myBioracle.layers,y=dat[,c("LON","LAT")], df=T) # sin buffer (se extrae solo los puntos)
-
-# con Bilinear extraigo los sites de los 4 nearest cells 
-mydata1.env.bil <- raster::extract(x=myBioracle.layers,y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) # 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)
-
-dat.all <- cbind(dat, mydata1.env.bil)
-
-summary(dat.all) # 95414 sites : 649 are NAs
-
-save(list="dat.all",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
+save(myBioracle.layers, file="data/env/myBioracle.layers.Rdata")
 
 
 ```

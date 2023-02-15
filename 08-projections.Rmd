@@ -27,43 +27,46 @@ library(tidyverse)
 
 #Load raster stack containing all variables
 
-depth_set_0 <- myBioracle.layers
-ea<-intersect(myBioracle.layers,FAO_Atl_no_black_sea)
+load(here::here ("data","env", "myBioracle.layers.Rdata"))
+
+#load area plygon
+load("C:/use/GitHub/SDM/data/spatial/total_area.RData")
 
 # Transform raster stack to table
 
-v_table <- as.data.frame(depth_set_0, xy=TRUE)
+env_dataframe <- as.data.frame(myBioracle.layers, xy=TRUE)
+ptos<-env_dataframe[,c("x","y")]
+
+coordinates(ptos) <- ~ x + y
+proj4string(ptos) <-proj4string(FAO_Atl_no_black_sea)
+  
+## Select only occurrences from FAO Atlantic
+env_dataframe<-data.frame(subset(env_dataframe,!is.na(over(ptos, FAO_Atl_no_black_sea)[,1])))
+
+save(env_dataframe,file="data/env/env_dataframe.Rdata")
 
 #Load SC-GAM model
 
-load(here::here ("models", "selected_model.Rdata"))
+load(here::here ("models", "model.Rdata"))
 
 # predicting 
 
 predict <- predict(selected_model,newdata=v_table,type ="response",se.fit=T)            
 
-probabilities_predict<-cbind(v_table,predict)
+env_dataframe$fit<-predict$fit
+env_dataframe$se.fit<-predict$se.fit
 
-summary(probabilities_predict)
+summary(env_dataframe)
 
-area<-st_union(st_as_sf(FAO_Atl_no_black_sea))
-pred_sf<-st_as_sf(probabilities_predict,coords=c("x","y"))
-pred_sf<-st_set_crs(pred_sf,crs(area))
-
-pred_atl<-st_intersection(pred_sf,area)
-
- probabilities_predict.r <- probabilities_predict %>%
+probabilities_predict.r <- env_dataframe %>%
     dplyr::select (x, y, fit) %>%
    rasterFromXYZ()
-
 ```
 
 
 # Mapping
 
 ```{r, eval=F}
-plot(pred_atl[,"fit"])
-ggplot()+geom_sf(data=pred_atl,aes(col="fit"))
 plot(probabilities_predict.r)
 ```
 

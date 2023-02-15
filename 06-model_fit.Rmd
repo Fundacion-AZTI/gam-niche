@@ -37,26 +37,22 @@ library(stringr)
 ```{r, eval=F}
 #NOTA INTERNA: aquí hay que cargar el RData de presencias y pseudoausencias que creemos en 05_data_final de momento he copido los datos de PA de la anchoa para poder correr el código. Habrá que cambiar status por el nomnbre de la columna de presencia-pseudoausencia y el nombre de las variables, en este caso lo hacemos para la anchoa con todas las variables que tenemos: 
 
-#Load presence-absence dataset of the species
-set.seed(1)
+#Load presence-absence with env data dataset
 load(here::here ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
-#use only 50% of data (to get results faster)
-data <- dat.all[sample(1:dim(dat.all)[1],floor(dim(dat.all)[1]*0.5)),] 
+data<-subset(dat.all,BO_bathymean<0)
 
-raw_model_damean <- scam (occurrenceStatus ~  s(BO_sstmean, k=8,bs="cv", m=2)+ s(BO_salinity, k=8,bs="cv", m=2)+ s(BO_damean, k=8,bs="cv", m=2)+ s(BO_sstrange, k=8,bs="cv", m=2) + s(BO_bathymean, k=5, bs="cv",m=2), family=binomial(link="logit"), data=data,sp=rep(0.00001,5))
+model <- scam (occurrenceStatus ~   s(BO_salinity, k=8,bs="cv", m=2)+ s(BO_chlomean, k=8,bs="cv", m=2)+ s(BO_sstrange, k=8,bs="cv", m=2)+ s(BO_bathymean, k=8,m=2), family=binomial(link="logit"), data=data,sp=rep(0.00001,5))
 
-raw_model_chlomean <- scam (occurrenceStatus ~  s(BO_sstmean, k=8,bs="cv", m=2)+ s(BO_salinity, k=8,bs="cv", m=2)+ s(BO_chlomean, k=8,bs="cv", m=2)+ s(BO_sstrange, k=8,bs="cv", m=2) + s(BO_bathymean, k=5, bs="cv",m=2), family=binomial(link="logit"), data=data,sp=rep(0.00001,5))
 
-AIC(raw_model_chlomean);AIC(raw_model_damean)
-summary(raw_model_chlomean)$dev.expl;summary(raw_model_damean)$dev.expl
+#Check model which contains all variables
+summary(model)
+scam.check(model)
+plot(model)
+plotmo(model,level = 0.95, pt.col=8)
 
-raw_model<-raw_model_chlomean
-
-#Check raw model which contains all variables
-summary(raw_model)
-scam.check(raw_model)
-plot(raw_model)
-plotmo(raw_model,level = 0.95, pt.col=8)
+# Save the model
+selected_model<-model
+save(selected_model, file = ("models/model.RData"))
 ```
 
 

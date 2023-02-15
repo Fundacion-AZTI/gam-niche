@@ -45,7 +45,7 @@ library(hrbrthemes) # theme_ipsum
 
 #Load SC-GAM model
 
-load(here::here ("models", "selected_model.Rdata"))
+load(here::here ("models", "model.Rdata"))
 
 #Load species PA data
 
@@ -134,9 +134,7 @@ validation_summary <- matrix(NA, ncol = 6, nrow = 1)
     summary(selected_model.sp.j)
     
     # Predict Model
-    muestra_validacion <- Pres[groups == j,]     # valores de predict donde las observaciones son presencias
-    muestra2_validacion <- Aus [groups2 == j,]   # valores de predict donde las observaciones son ausencias
-    puntos_validacion<-rbind(muestra_validacion, muestra2_validacion)
+    puntos_validacion<-data[groups == j,]
     
     selected_model.sp.j.pred <- predict(selected_model.sp.j, newdata=puntos_validacion, type="response")
     puntos_validacion$Pred <- selected_model.sp.j.pred
@@ -173,5 +171,7 @@ validation_summary <- matrix(NA, ncol = 6, nrow = 1)
   names (validation_summary.df) <- c("Threshold", "mean_AUC", "mean_Omision", "mean_sensitivity","mean_specificity", "mean_Prop.Corr")
 
   validation_summary.df
+  
+  save(validation_summary.df, file = here::here("models/validation_summary.RData"))
 ```
 

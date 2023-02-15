@@ -4,4 +4,25 @@ Bla bla bla
 
 ## Extract environmental data associated to presence-absence data
 
+```{r, eval=F}
+
+#load data
+load("C:/use/GitHub/SDM/data/outputs_for_modelling/PAdata.RData")
+load(file="data/env/myBioracle.layers.Rdata") 
+
+
+### Extract environmental values from layers 
+
+# con Bilinear extraigo los sites de los 4 nearest cells 
+mydata1.env.bil <- raster::extract(x=myBioracle.layers,y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) # 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)
+
+# merge with pa data
+dat.all <- cbind(dat, mydata1.env.bil)
+
+summary(dat.all) # 23198 sites : 114 are NAs
+
+save(list="dat.all",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
+
+```
+
 ## Exploratory plots

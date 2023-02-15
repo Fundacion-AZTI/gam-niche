@@ -203,7 +203,7 @@ mydata.fus<-mydata.fus[!duplicated(date),]
   
   coordinates(ptos) <- ~ X1 + X2
   
-  proj4string(ptos) <-proj4string(FAO)
+  proj4string(ptos) <-proj4string(FAO_Atl_no_black_sea)
   
   ## Select only occurrences from FAO Atlantic
   match2<-data.frame(subset(mydata.fus,!is.na(over(ptos, FAO_Atl_no_black_sea)[,1])))
@@ -212,13 +212,17 @@ mydata.fus<-mydata.fus[!duplicated(date),]
   match3<-data.frame(subset(over(ptos, FAO_Atl_no_black_sea), !is.na(over(ptos, FAO_Atl_no_black_sea)[,1])))
   
   data_fus_Atl<-cbind(F_AREA=match3$F_AREA,match2)
+  
+  #only years from 2000 to 2014
+  
+  df0<- subset(data_fus_Atl, date_year<2015 & date_year>1999)
 
 # SAVE OCCURRENCE DATA
 ---------------------------------    
 
 #NOTA INTERNA: quiero guardar el RData en la carpeta data/occurrences con el nombre de la especies sin espacios para no machar los RData en caso de que hagamos más de una especie pero no lo consigo. 
 
-save(data_fus_Atl, file = here::here("data/occurrences/occ.RData"))
+save(df0, file = here::here("data/occurrences/occ.RData"))
 save(FAO_Atl_no_black_sea, file = here::here("data/spatial/total_area.RData"))
 
   
@@ -228,7 +232,7 @@ ggplot() +
    geom_path(data = FAO_Atl_no_black_sea, 
              aes(x = long, y = lat, group = group),
              color = 'gray', size = .2) +
-   geom_point(data=data_fus_Atl, aes(x=decimalLongitude, y=decimalLatitude,colour= occurrenceStatus)) 
+   geom_point(data=df0, aes(x=decimalLongitude, y=decimalLatitude,colour= occurrenceStatus)) 
   
 ```
 
@@ -286,8 +290,11 @@ load("C:/use/GitHub/SDM/data/occurrences/occ.RData")
 #map Atlantic without black sea
 load("C:/use/GitHub/SDM/data/spatial/total_area.RData")
 
+# Remove points in land ----------------------------
+
+df0<-subset(df0,bathymetry>0)
+
 #convert to spatial point data frame
-df0 <- data_fus_Atl
 names(df0)[3:6]<-c("LON","LAT","YEAR","MONTH") ; df<-df0
 coordinates(df)<- ~LON+LAT
 crs(df)<-crs(FAO_Atl_no_black_sea)
@@ -299,7 +306,7 @@ df.sf<-st_as_sf(df)
 ggplot(Atl.sf) + geom_sf() + geom_sf(data=st_union(df.sf))
 
 
-dim(df) # 47707    10
+dim(df) # 16615    10
 head(df)
 tail(df)
 summary(df)
@@ -329,11 +336,17 @@ lonlat2UTM = function(lonlat) {
 }
 
 EPSG_2_UTM <- lonlat2UTM(c(mean(df$LON), mean(df$LAT))) 
-EPSG_2_UTM # 32625
+EPSG_2_UTM # 32621
 
 # transform to UTMs (in m)
 aux <- st_transform(Atl.sf, EPSG_2_UTM)
 df.sf.utm <- st_transform(df.sf, EPSG_2_UTM)
+
+# number of points within the study area
+
+df.in <- st_intersects(df.sf.utm, aux, sparse=FALSE)
+df$INSIDE <- df.in[,1]
+mean(df$INSIDE) # 100% points inside the area of study
 
 # create buffers of 10km (10000) around the points and join the resulting polygons
 
@@ -361,62 +374,6 @@ p<-p0 + geom_sf(data=aux0,fill=2)
 
 ggsave(file.path("plots","pseudo",paste0("area_pseudo_all.png")), p, device="png")
 
-# # randomly sample inside the new polygon
-# 
-# kk <-  st_sample(aux0, size=100, type="random")
-# 
-# # plot
-# 
-# p <- p0 +
-#   geom_sf(data=aux0, col="red", alpha=0.3)+
-#   geom_sf(data=fortify(kk))+
-#   coord_sf(xlim=c(-10,0), ylim=c(42,50))
-# print(p)
-# 
-# # extract coordinates as data.frame
-# 
-# st_coordinates(kk)
-
-# loop to calculate area to generate pseudo-absences by year
-
-for (yy in sort(unique(df$YEAR))){
-  print(yy)
-  df.sub <- subset(df.sf.utm, YEAR==yy)
-  if (nrow(df.sub)>0){
-    buffer.sub <- st_buffer(df.sub, dist=100000)
-    buffer.sub <- st_union(buffer.sub)
-    aux0.sub <- st_difference(aux, buffer.sub)
-    p <- p0 +
-      geom_sf(data=buffer.sub, fill="blue")
-    ggsave(file.path("plots","pseudo",paste0("area_buffer_",yy,".png")), p, device="png")
-  }
-}
-
-# loop to calculate area to generate pseudo-absences by month and year
-
-for (yy in sort(unique(df$YEAR))){
-  for (mm in sort(unique(df$MONTH))){
-    print(paste(yy,mm))
-    df.sub <- subset(df.sf.utm, YEAR==yy & MONTH==mm)
-    if (nrow(df.sub)>0){
-      buffer.sub <- st_buffer(df.sub, dist=100000)
-      buffer.sub <- st_union(buffer.sub)
-      aux0.sub <- st_difference(aux, buffer.sub)
-      p <- p0 +
-        geom_sf(data=aux0.sub, fill="red")
-      ggsave(file.path("plots","pseudo",paste0("area_pseudo_",yy,"_",mm,".png")), p, device="png")
-    }    
-  }
-}
-
-
-# Remove points outside ices 8b, 8c or in land ----------------------------
-
-# number of points within the study area
-
-df.in <- st_intersects(df.sf.utm, aux, sparse=FALSE)
-df$INSIDE <- df.in[,1]
-mean(df$INSIDE) # 100% points inside the area of study
 
 # Generate pseudo-absences -------------------------------------------------
 
@@ -456,38 +413,6 @@ geom_sf(data=rp.sf, col=1, shape=4,size=0.5)+
   coord_sf(xlim=c(-98,-79), ylim=c(15,31))+
 ggtitle(paste(unique(df$scientificName),"all"))
 ggsave(file.path("plots","pseudo",paste0("pseudo_","all_zoom",".png")), p, device="png")
-  
-
-# loop by month and year
-#fill years and months and in the presence data frame
-pseudo$YEAR<-df0$YEAR
-pseudo$MONTH<-df0$MONTH
-df.sf.utm$MONTH[is.na(df.sf.utm$MONTH)]<-"missingM"
-pseudo$MONTH[is.na(pseudo$MONTH)]<-"missingM"
-
-for (yy in sort(unique(df$YEAR))[-c(1:21)]){
-  for (mm in c(sort(unique(df$MONTH)),"missingM")){
-    print(paste(yy,mm))
-    idx <- which(pseudo$YEAR==yy & pseudo$MONTH==mm) 
-    if (length(idx)>0){
-      df.sub <- subset(df.sf.utm, YEAR==yy & MONTH==mm)
-      buffer.sub <- st_buffer(df.sub, dist=100000)
-      buffer.sub <- st_union(buffer.sub)
-      aux0.sub <- st_difference(aux, buffer.sub)
-      rp.sf <- st_sample(aux0.sub, size=length(idx), type="random") # randomly sample points
-      rp.sf <- st_transform(rp.sf, 4326)
-      rp <- as.data.frame(st_coordinates(rp.sf)) # transform to lat&lon and extract coordinates as data.frame
-      pseudo$LON[idx] <- rp$X
-      pseudo$LAT[idx] <- rp$Y
-      p <- p0 +
-        geom_sf(data=aux0.sub, fill=2, alpha=0.3)+
-        geom_sf(data=df.sub, col=4, alpha=0.3)+
-        geom_sf(data=rp.sf, col=1, shape=4)+
-        ggtitle(paste(unique(df$scientificName),yy,mm))
-      ggsave(file.path("plots","pseudo",paste0("pseudo_",yy,"_",mm,".png")), p, device="png")
-    }  
-  }
-}
 
 
 # complete the rest of columns
@@ -495,37 +420,9 @@ for (yy in sort(unique(df$YEAR))[-c(1:21)]){
 pseudo$scientificName <- df0$scientificName
 pseudo$occurrenceStatus  <- 0
 
-# transform to sf object (lat&lon) to plot
-
-pseudo.sf <- st_as_sf(pseudo, coords=c("LON","LAT"))
-pseudo.sf <- st_set_crs(pseudo.sf, "+proj=longlat +datum=WGS84 +ellps=WGS84") 
-wgs<-"+proj=longlat +datum=WGS84 +ellps=WGS84"
-pseudo.sf <- st_transform(pseudo.sf, wgs) 
-
-# plot all pseudo-absences
-
-p <- p0 +
-  geom_sf(data=aux0, fill=2, alpha=0.3)+
-  geom_sf(data=df.sf, col=4, alpha=0.3)+
-  geom_sf(data=pseudo.sf, col=1, shape=4, size=0.5)
-print(p)
-ggsave(file.path("plots","pseudo","pseudo_all2.png"), p, device="png")
-
-# plot pseudo-absences by year
-
-p <- p0 +
-  geom_sf(data=aux0, fill=2, alpha=0.3)+
-  geom_sf(data=dfpos.sf, col=4, alpha=0.3)+
-  geom_sf(data=pseudo.sf, col=1, shape=4, alpha=0.3)+
-  coord_sf(xlim=c(-6,0), ylim=c(43,46))+
-  facet_wrap(~YEAR)
-print(p)
-ggsave(file.path("plots","pseudo","pseudo_all_by_year.png"), p, device="png")
-
-
 # Save the final dataset including the pseudo-absences --------------------
 
-head(df)
+head(df0)
 head(pseudo)
 
 # Join the two data sets and save the final dataset
