@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Prepare final dataset
 
 Bla bla bla
@@ -25,4 +30,157 @@ save(list="dat.all",file=file.path("data","outputs_for_modelling",file="PAdata_w
 
 ```
 
+## Variable correlation 
+
+#Nota interna: copio el script de analísis VIF para las variables superficiales del proyecto MISSION
+
+### Script information
+
+With this script we assess the correlation between environmental variables based on Variance Inflation Factor (VIF) by depth set 
+
+Project: IM-20-MISSION
+
+### Loading required libraries
+
+```{r}
+library(rgdal) # to read shp
+library(raster) # to work with rasters
+library (here) # Libraries for reproducible workflow
+library (sp)     # to perform raster
+library(HH) #to calculate for VIF (Variance Inflation Factor)
+library(ggplot2)# plots
+library(gridExtra)# multiple plots
+library(dplyr)
+library(RColorBrewer)#plotting colors
+library(fields)#ploting images
+library(marmap)#ploting world
+library(maptools)#mapping
+```
+
+### Loading variable set for 0 m depth
+
+```{r}
+set_0_m <- brick(here::here("data", "outputs_for_modelling","set_0_m.tif"))
+```
+
+#### Analysis of Variance Inflation Factor (VIF) 
+
+VIF is a measure of the amount of multicollinearity in regression analysis
+
+VIF equal to 1 = variables are not correlated
+VIF between 1 and 5 = variables are moderately correlated 
+VIF greater than 5 = variables are highly correlated
+
+If you found high multicollinearity between two variables, you don’t need both of them in your model.
+
+```{r}
+#### Transforming from stack to table
+
+v_table_0_m <- as.data.frame(set_0_m, xy=TRUE)
+
+##### See a summary of the table
+
+summary(v_table_0_m)
+
+#names
+
+names (v_table_0_m) <- c("x", 
+                        "y", 
+                         "temp_0", 
+                         "sal_0",
+                         "nit_0",
+                         "do_0", 
+                         #"rel_dist_0", 
+                         "dist_seabed_0", 
+                         "mld_rel_0", 
+                         "npp_0")
+
+# remove xy for vif calculation
+
+v_table_0_m_cor <- v_table_0_m %>% 
+  dplyr::select (-x, -y)
+
+##### get vif results
+
+resultado.vif <- vif(v_table_0_m_cor)
+resultado.vif
+
+#remove Dissolved Oxigen (do) because is higly correlated to temperature
+
+v_table_0_m_cor <- v_table_0_m_cor %>% 
+  dplyr::select (-do_0)
+
+##### get new vif results
+
+resultado.vif <- vif(v_table_0_m_cor)
+resultado.vif
+```
+
 ## Exploratory plots
+
+```{r}
+####Leo archivos de especies de peces SP
+
+load(here::here ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
+
+data<-subset(dat.all,BO_bathymean<0)
+
+occ <- data %>% 
+  dplyr::filter(data$occurrenceStatus == 1)
+
+abs <- data %>% 
+  dplyr::filter(data$occurrenceStatus == 0)
+
+#NOTA INTERNA: El número de ausencias es mayor que las presencias, creo que tiene que ver con haber elimanado los datos de batimetrías menores que 0
+  
+##Salvo el pdf
+pdf(file=here::here("results", "factsheets_env.pdf"), paper="a4", width=, height=12,compress=T)
+
+
+  par(mfrow=c(3,3)) 
+  
+  names (data)
+
+  #### 1 BO_bathymean: En plot1 una distribucion de densidad de presencias y ausencias vs bathymetry
+  
+  dens_occ<-density(occ$BO_bathymean,na.rm=T)
+  dens_abs<-density(abs$BO_bathymean,na.rm=T)
+
+  plot(dens_occ,xlab="BO_bathymean", ylab="dens", main = "",col="red")
+  lines(dens_abs,xlab="BO_bathymean", ylab="dens", main = "",col="blue")
+
+  legend("topleft",legend=c("Occurrences", "Pseudoabsences"),
+         col=c("red", "blue"),pch=0.1, cex=0.8,box.lty=0,xpd=TRUE)
+  
+  ### NOTA INTERNA: hacer los plots para el resto de variables
+
+  #2. "BO_chlomean"  
+  dens_occ<-density(occ$BO_chlomean,na.rm=T)
+  dens_abs<-density(abs$BO_chlomean,na.rm=T)
+
+  plot(dens_occ,xlab="BO_chlomean", ylab="dens", main = "",col="red")
+  lines(dens_abs,xlab="BO_chlomean", ylab="dens", main = "",col="blue")
+  
+  #NOTA INTERNA: HAY QUE JUGAR CON LAS ESCALAS
+
+  legend("topright",legend=c("Occurrences", "Pseudoabsences"),
+         col=c("red", "blue"),pch=0.1, cex=0.8,box.lty=0,xpd=TRUE)  
+  #3. "BO_damean"      
+  
+  #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
+  
+  #4. "BO_salinity" 
+  
+   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
+  
+  #5. "BO_sstmean" 
+  
+   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
+  
+  #6. "BO_sstrange" 
+  
+   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
+
+ dev.off()
+```
+
