@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Environmental data | Species distribution models (SDM)</title>
   <meta name="description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Environmental data | Species distribution models (SDM)" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-01-26" />
+<meta name="date" content="2023-02-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -165,17 +165,23 @@ div.csl-indent {
 <li class="chapter" data-level="3" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>3</b> Presence-absence data</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>3.1</b> Download presence data</a></li>
-<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.2</b> Create pseudo-absence data</a></li>
+<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#find-the-difference-i.e.-reverse-of-st_intersection"><i class="fa fa-check"></i><b>3.2</b> Find the ‘difference’, i.e. reverse of st_intersection</a></li>
+<li class="chapter" data-level="3.3" data-path="presence-absence-data.html"><a href="presence-absence-data.html#find-data-by-scientific-name-in-the-datasets-obisgbif"><i class="fa fa-check"></i><b>3.3</b> Find data by scientific name in the datasets OBIS/GBIF</a></li>
+<li class="chapter" data-level="3.4" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.4</b> Create pseudo-absence data</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>4</b> Environmental data</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>4.1</b> Download from public repositories</a></li>
-<li class="chapter" data-level="4.2" data-path="environmental-data.html"><a href="environmental-data.html#operations-with-rasters-maybe-not-needed"><i class="fa fa-check"></i><b>4.2</b> Operations with rasters (maybe not needed)</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>5</b> Prepare final dataset</a>
 <ul>
+<li class="chapter" data-level="5.0.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#loading-required-libraries"><i class="fa fa-check"></i><b>5.0.1</b> Loading required libraries</a></li>
 <li class="chapter" data-level="5.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>5.1</b> Extract environmental data associated to presence-absence data</a></li>
-<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots"><i class="fa fa-check"></i><b>5.2</b> Exploratory plots</a></li>
+<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variable-correlation"><i class="fa fa-check"></i><b>5.2</b> Variable correlation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#script-information"><i class="fa fa-check"></i><b>5.2.1</b> Script information</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots"><i class="fa fa-check"></i><b>5.3</b> Exploratory plots</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
 <ul>
@@ -187,7 +193,10 @@ div.csl-indent {
 <li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
 <li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a></li>
+<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#loading-required-libraries-1"><i class="fa fa-check"></i><b>8.0.1</b> Loading required libraries</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -215,241 +224,57 @@ div.csl-indent {
 <div id="download-from-public-repositories" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Download from public repositories<a href="environmental-data.html#download-from-public-repositories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Download from Bio-oracle.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="environmental-data.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Download Environmental data from Bio-oracle</span></span>
-<span id="cb11-2"><a href="environmental-data.html#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="environmental-data.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># for mapping ...</span></span>
-<span id="cb11-4"><a href="environmental-data.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptools)</span>
-<span id="cb11-5"><a href="environmental-data.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgrass7)</span>
-<span id="cb11-6"><a href="environmental-data.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
-<span id="cb11-7"><a href="environmental-data.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
-<span id="cb11-8"><a href="environmental-data.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb11-9"><a href="environmental-data.html#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)</span>
-<span id="cb11-10"><a href="environmental-data.html#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="environmental-data.html#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># libraries for bio-oracle</span></span>
-<span id="cb11-12"><a href="environmental-data.html#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgdal)</span>
-<span id="cb11-13"><a href="environmental-data.html#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sdmpredictors) </span>
-<span id="cb11-14"><a href="environmental-data.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
-<span id="cb11-15"><a href="environmental-data.html#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="environmental-data.html#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># http://bio-oracle.org/code.php</span></span>
-<span id="cb11-17"><a href="environmental-data.html#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sdmpredictors&quot;</span>)</span>
-<span id="cb11-18"><a href="environmental-data.html#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;leaflet&quot;)</span></span>
-<span id="cb11-19"><a href="environmental-data.html#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-20"><a href="environmental-data.html#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Load package </span></span>
-<span id="cb11-21"><a href="environmental-data.html#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sdmpredictors)</span>
-<span id="cb11-22"><a href="environmental-data.html#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-23"><a href="environmental-data.html#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Species Data example from GBIF</span></span>
-<span id="cb11-24"><a href="environmental-data.html#cb11-24" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">occ_data</span>(<span class="at">scientificName =</span> <span class="st">&quot;Anisakis&quot;</span>, <span class="at">hasCoordinate =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>data  <span class="co"># 02/10/2021 416 obs x 150 var</span></span>
-<span id="cb11-25"><a href="environmental-data.html#cb11-25" aria-hidden="true" tabindex="-1"></a>mydata.gbif <span class="ot">&lt;-</span> <span class="fu">subset</span>(mydata, <span class="at">select=</span><span class="fu">c</span>(acceptedScientificName,genus,specificEpithet,decimalLatitude,decimalLongitude,year,month,day))</span>
-<span id="cb11-26"><a href="environmental-data.html#cb11-26" aria-hidden="true" tabindex="-1"></a>mydata.gbif.ll <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mydata.gbif<span class="sc">$</span>decimalLongitude, mydata.gbif<span class="sc">$</span>decimalLatitude)</span>
-<span id="cb11-27"><a href="environmental-data.html#cb11-27" aria-hidden="true" tabindex="-1"></a>mydata.gbif.ll <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(mydata.gbif.ll)</span>
-<span id="cb11-28"><a href="environmental-data.html#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata.gbif.ll) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Lon&quot;</span>, <span class="st">&quot;Lat&quot;</span>)</span>
-<span id="cb11-29"><a href="environmental-data.html#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-30"><a href="environmental-data.html#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore datasets in the package </span></span>
-<span id="cb11-31"><a href="environmental-data.html#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="fu">list_datasets</span>()</span>
-<span id="cb11-32"><a href="environmental-data.html#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="fu">list_layers</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>)</span>
-<span id="cb11-33"><a href="environmental-data.html#cb11-33" aria-hidden="true" tabindex="-1"></a>mytab <span class="ot">&lt;-</span> <span class="fu">list_layers</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>)</span>
-<span id="cb11-34"><a href="environmental-data.html#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-35"><a href="environmental-data.html#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="do">## Download specific layers to the current directory </span></span>
-<span id="cb11-36"><a href="environmental-data.html#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-37"><a href="environmental-data.html#cb11-37" aria-hidden="true" tabindex="-1"></a>myBioracle.layers <span class="ot">&lt;-</span> <span class="fu">load_layers</span>(<span class="fu">c</span>(<span class="st">&quot;BO_chlomean&quot;</span>, <span class="st">&quot;BO_damean&quot;</span>, <span class="st">&quot;BO_salinity&quot;</span>, <span class="st">&quot;BO_sstmean&quot;</span>, <span class="st">&quot;BO_sstrange&quot;</span>, <span class="st">&quot;BO_bathymean&quot;</span>)) </span>
-<span id="cb11-38"><a href="environmental-data.html#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co">#save(myBioracle.layers, file=&quot;myBioracle.layers.Rdata&quot;)</span></span>
-<span id="cb11-39"><a href="environmental-data.html#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="co">#load(file=&quot;myBioracle.layers.Rdata&quot;) # creo que no funciona</span></span>
-<span id="cb11-40"><a href="environmental-data.html#cb11-40" aria-hidden="true" tabindex="-1"></a>myBioracle.layers</span>
-<span id="cb11-41"><a href="environmental-data.html#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-42"><a href="environmental-data.html#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Check layer statistics </span></span>
-<span id="cb11-43"><a href="environmental-data.html#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="fu">layer_stats</span>(<span class="st">&quot;myBioracle.layers&quot;</span>) </span>
-<span id="cb11-44"><a href="environmental-data.html#cb11-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-45"><a href="environmental-data.html#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Crop raster to fit the North East Atlantic window for estimating SST range</span></span>
-<span id="cb11-46"><a href="environmental-data.html#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="co"># lat: 36.49 to 67.00  </span></span>
-<span id="cb11-47"><a href="environmental-data.html#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="co"># lon: -16.000 to 9.000</span></span>
-<span id="cb11-48"><a href="environmental-data.html#cb11-48" aria-hidden="true" tabindex="-1"></a>my.NEatlantic.ext <span class="ot">&lt;-</span> <span class="fu">extent</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="dv">45</span>, <span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>) <span class="co"># xmin, xmax, ymin, ymax</span></span>
-<span id="cb11-49"><a href="environmental-data.html#cb11-49" aria-hidden="true" tabindex="-1"></a>myBioracle.layers.cropNEatlantic <span class="ot">&lt;-</span> <span class="fu">crop</span>(myBioracle.layers, my.NEatlantic.ext) </span>
-<span id="cb11-50"><a href="environmental-data.html#cb11-50" aria-hidden="true" tabindex="-1"></a>my.colors <span class="ot">=</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;#5E85B8&quot;</span>,<span class="st">&quot;#EDF0C0&quot;</span>,<span class="st">&quot;#C13127&quot;</span>)) </span>
-<span id="cb11-51"><a href="environmental-data.html#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(myBioracle.layers.cropNEatlantic,<span class="at">col=</span><span class="fu">my.colors</span>(<span class="dv">1000</span>),<span class="at">axes=</span>F, <span class="at">box=</span>F)</span>
-<span id="cb11-52"><a href="environmental-data.html#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myBioracle.layers.cropNEatlantic)</span>
-<span id="cb11-53"><a href="environmental-data.html#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-54"><a href="environmental-data.html#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a nice color ramp and plot the map </span></span>
-<span id="cb11-55"><a href="environmental-data.html#cb11-55" aria-hidden="true" tabindex="-1"></a>my.colors <span class="ot">=</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;#5E85B8&quot;</span>,<span class="st">&quot;#EDF0C0&quot;</span>,<span class="st">&quot;#C13127&quot;</span>)) </span>
-<span id="cb11-56"><a href="environmental-data.html#cb11-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-57"><a href="environmental-data.html#cb11-57" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(myBioracle.layers.cropNEatlantic,<span class="at">col=</span><span class="fu">my.colors</span>(<span class="dv">1000</span>),<span class="at">axes=</span>F, <span class="at">box=</span>F)</span>
-<span id="cb11-58"><a href="environmental-data.html#cb11-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-59"><a href="environmental-data.html#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(<span class="fu">log</span>(myBioracle.layers.cropNEatlantic<span class="sc">$</span>BO_chlomean),<span class="at">col=</span><span class="fu">my.colors</span>(<span class="dv">1000</span>),<span class="at">axes=</span>T, <span class="at">ylab=</span><span class="cn">NA</span>,<span class="at">xlab=</span><span class="cn">NA</span>, <span class="at">main=</span><span class="st">&quot;Chl (log scale)&quot;</span>, <span class="at">cex.main=</span><span class="dv">2</span>)</span>
-<span id="cb11-60"><a href="environmental-data.html#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="st">&quot;world&quot;</span>,<span class="at">add=</span>T, <span class="at">fill=</span>T, <span class="at">col=</span><span class="st">&quot;white&quot;</span>,<span class="at">lwd=</span><span class="fl">0.1</span>); <span class="fu">box</span>()</span>
-<span id="cb11-61"><a href="environmental-data.html#cb11-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-62"><a href="environmental-data.html#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(<span class="fu">log</span>(myBioracle.layers.cropNEatlantic<span class="sc">$</span>BO_damean),<span class="at">col=</span><span class="fu">my.colors</span>(<span class="dv">1000</span>),<span class="at">axes=</span>T, <span class="at">ylab=</span><span class="cn">NA</span>,<span class="at">xlab=</span><span class="cn">NA</span>,<span class="at">main=</span><span class="st">&quot;Diffuse Attenuation&quot;</span>, <span class="at">cex.main=</span><span class="dv">2</span>)</span>
-<span id="cb11-63"><a href="environmental-data.html#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="st">&quot;world&quot;</span>,<span class="at">add=</span>T, <span class="at">fill=</span>T, <span class="at">col=</span><span class="st">&quot;white&quot;</span>,<span class="at">lwd=</span><span class="fl">0.1</span>); <span class="fu">box</span>()</span>
-<span id="cb11-64"><a href="environmental-data.html#cb11-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-65"><a href="environmental-data.html#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(myBioracle.layers.cropNEatlantic<span class="sc">$</span>BO_salinity,<span class="at">col=</span><span class="fu">my.colors</span>(<span class="dv">1000</span>),<span class="at">axes=</span>T, <span class="at">ylab=</span><span class="cn">NA</span>,<span class="at">xlab=</span><span class="cn">NA</span>,<span class="at">main=</span><span class="st">&quot;Salinity&quot;</span>, <span class="at">cex.main=</span><span class="dv">2</span>)</span>
-<span id="cb11-66"><a href="environmental-data.html#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="st">&quot;world&quot;</span>,<span class="at">add=</span>T, <span class="at">fill=</span>T, <span class="at">col=</span><span class="st">&quot;white&quot;</span>,<span class="at">lwd=</span><span class="fl">0.1</span>); <span class="fu">box</span>()</span>
-<span id="cb11-67"><a href="environmental-data.html#cb11-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-68"><a href="environmental-data.html#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(myBioracle.layers.cropNEatlantic<span class="sc">$</span>BO_sstmean,<span class="at">col=</span><span class="fu">my.colors</span>(<span class="dv">1000</span>),<span class="at">axes=</span>T, <span class="at">ylab=</span><span class="cn">NA</span>,<span class="at">xlab=</span><span class="cn">NA</span>,<span class="at">main=</span><span class="st">&quot;SST mean&quot;</span>, <span class="at">cex.main=</span><span class="dv">2</span>)</span>
-<span id="cb11-69"><a href="environmental-data.html#cb11-69" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="st">&quot;world&quot;</span>,<span class="at">add=</span>T, <span class="at">fill=</span>T, <span class="at">col=</span><span class="st">&quot;white&quot;</span>,<span class="at">lwd=</span><span class="fl">0.1</span>); <span class="fu">box</span>()</span>
-<span id="cb11-70"><a href="environmental-data.html#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-71"><a href="environmental-data.html#cb11-71" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(myBioracle.layers.cropNEatlantic<span class="sc">$</span>BO_sstrange,<span class="at">col=</span><span class="fu">my.colors</span>(<span class="dv">1000</span>),<span class="at">axes=</span>T, <span class="at">ylab=</span><span class="cn">NA</span>,<span class="at">xlab=</span><span class="cn">NA</span>,<span class="at">main=</span><span class="st">&quot;SST range&quot;</span>, <span class="at">cex.main=</span><span class="dv">2</span>)</span>
-<span id="cb11-72"><a href="environmental-data.html#cb11-72" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="st">&quot;world&quot;</span>,<span class="at">add=</span>T, <span class="at">fill=</span>T, <span class="at">col=</span><span class="st">&quot;white&quot;</span>,<span class="at">lwd=</span><span class="fl">0.1</span>); <span class="fu">box</span>()</span>
-<span id="cb11-73"><a href="environmental-data.html#cb11-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-74"><a href="environmental-data.html#cb11-74" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(myBioracle.layers.cropNEatlantic<span class="sc">$</span>BO_bathymean,<span class="at">col=</span><span class="fu">my.colors</span>(<span class="dv">1000</span>),<span class="at">axes=</span>T, <span class="at">ylab=</span><span class="cn">NA</span>,<span class="at">xlab=</span><span class="cn">NA</span>,<span class="at">main=</span><span class="st">&quot;Depth&quot;</span>, <span class="at">cex.main=</span><span class="dv">2</span>)</span>
-<span id="cb11-75"><a href="environmental-data.html#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="st">&quot;world&quot;</span>,<span class="at">add=</span>T, <span class="at">fill=</span>T, <span class="at">col=</span><span class="st">&quot;white&quot;</span>,<span class="at">lwd=</span><span class="fl">0.1</span>); <span class="fu">box</span>()</span>
-<span id="cb11-76"><a href="environmental-data.html#cb11-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-77"><a href="environmental-data.html#cb11-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-78"><a href="environmental-data.html#cb11-78" aria-hidden="true" tabindex="-1"></a><span class="do">### Extract environmental values from layers </span></span>
-<span id="cb11-79"><a href="environmental-data.html#cb11-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-80"><a href="environmental-data.html#cb11-80" aria-hidden="true" tabindex="-1"></a>mydata1.env <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(<span class="at">x=</span>myBioracle.layers,<span class="at">y=</span>mydata.gbif.ll, <span class="at">df=</span>T) <span class="co"># sin buffer (se extrae solo los puntos)</span></span>
-<span id="cb11-81"><a href="environmental-data.html#cb11-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-82"><a href="environmental-data.html#cb11-82" aria-hidden="true" tabindex="-1"></a><span class="co"># con Bilinear extraigo los sites de los 4 nearest cells </span></span>
-<span id="cb11-83"><a href="environmental-data.html#cb11-83" aria-hidden="true" tabindex="-1"></a>mydata1.env.bil <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(<span class="at">x=</span>myBioracle.layers,<span class="at">y=</span>mydata.gbif.ll, <span class="at">method=</span><span class="st">&quot;bilinear&quot;</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>, <span class="at">df=</span>T) <span class="co"># 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)</span></span>
-<span id="cb11-84"><a href="environmental-data.html#cb11-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-85"><a href="environmental-data.html#cb11-85" aria-hidden="true" tabindex="-1"></a>mydata.all <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mydata.gbif.ll, mydata1.env.bil)</span>
-<span id="cb11-86"><a href="environmental-data.html#cb11-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-87"><a href="environmental-data.html#cb11-87" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mydata.all) <span class="co"># 448 sites : 84 are NAs</span></span></code></pre></div>
-<p>We can also download the bathymetry from the <code>marmap</code> library</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="environmental-data.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marmap)</span>
-<span id="cb12-2"><a href="environmental-data.html#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="environmental-data.html#cb12-3" aria-hidden="true" tabindex="-1"></a>bathy <span class="ot">&lt;-</span> <span class="fu">getNOAA.bathy</span>(<span class="at">lon1=</span><span class="sc">-</span><span class="dv">11</span>,<span class="at">lon2=</span><span class="dv">0</span>,<span class="at">lat1=</span><span class="dv">41</span>,<span class="at">lat2=</span><span class="dv">51</span>, <span class="at">resolution =</span> <span class="dv">1</span>, </span>
-<span id="cb12-4"><a href="environmental-data.html#cb12-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">keep=</span><span class="cn">FALSE</span>, <span class="at">antimeridian=</span><span class="cn">FALSE</span>)</span>
-<span id="cb12-5"><a href="environmental-data.html#cb12-5" aria-hidden="true" tabindex="-1"></a>bathy.df <span class="ot">&lt;-</span> <span class="fu">fortify</span>(bathy) <span class="co"># LI: maybe this is not needed here</span></span>
-<span id="cb12-6"><a href="environmental-data.html#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="environmental-data.html#cb12-7" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Depth <span class="ot">&lt;-</span> <span class="fu">get.depth</span>(bathy, df[,<span class="fu">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)], <span class="at">locator=</span>F)<span class="sc">$</span>depth</span></code></pre></div>
-</div>
-<div id="operations-with-rasters-maybe-not-needed" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Operations with rasters (maybe not needed)<a href="environmental-data.html#operations-with-rasters-maybe-not-needed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We can complete this a bit more later on, though not necessary right now</p>
-<p>for example, given a raster, we can calculate gradients in the vertical or depth at which the max is found</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="environmental-data.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Auxiliary functions ------------------------------------------------------</span></span>
-<span id="cb13-2"><a href="environmental-data.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="environmental-data.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Taken from: </span></span>
-<span id="cb13-4"><a href="environmental-data.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># https://gis.stackexchange.com/questions/114723/subset-netcdf-based-on-last-valid-variable-by-level</span></span>
-<span id="cb13-5"><a href="environmental-data.html#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="environmental-data.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deepestValid: function to that, for each cell,  </span></span>
-<span id="cb13-7"><a href="environmental-data.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># - returns NA in case all depth level values are NA</span></span>
-<span id="cb13-8"><a href="environmental-data.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># - returns the value of the last available depth level in case no NA occur</span></span>
-<span id="cb13-9"><a href="environmental-data.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># - else returns the value of the last non-NA depth level</span></span>
-<span id="cb13-10"><a href="environmental-data.html#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="environmental-data.html#cb13-11" aria-hidden="true" tabindex="-1"></a>deepestValid <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb13-12"><a href="environmental-data.html#cb13-12" aria-hidden="true" tabindex="-1"></a>  na <span class="ot">&lt;-</span> <span class="fu">is.na</span>(x)</span>
-<span id="cb13-13"><a href="environmental-data.html#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">all</span>(na)) {</span>
-<span id="cb13-14"><a href="environmental-data.html#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)</span>
-<span id="cb13-15"><a href="environmental-data.html#cb13-15" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">all</span>(<span class="sc">!</span>na)) {</span>
-<span id="cb13-16"><a href="environmental-data.html#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x[<span class="fu">length</span>(x)])</span>
-<span id="cb13-17"><a href="environmental-data.html#cb13-17" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb13-18"><a href="environmental-data.html#cb13-18" aria-hidden="true" tabindex="-1"></a>    first_na <span class="ot">&lt;-</span> <span class="fu">which</span>(na)[<span class="dv">1</span>]</span>
-<span id="cb13-19"><a href="environmental-data.html#cb13-19" aria-hidden="true" tabindex="-1"></a>    last_valid <span class="ot">&lt;-</span> first_na <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb13-20"><a href="environmental-data.html#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x[last_valid])</span>
-<span id="cb13-21"><a href="environmental-data.html#cb13-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb13-22"><a href="environmental-data.html#cb13-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-23"><a href="environmental-data.html#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-24"><a href="environmental-data.html#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># read the data files using the library raster</span></span>
-<span id="cb13-25"><a href="environmental-data.html#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-26"><a href="environmental-data.html#cb13-26" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fu">brick</span>(<span class="fu">file.path</span>(hdata.dir, <span class="fu">paste0</span>(<span class="st">&quot;thetao_&quot;</span>,dd, <span class="st">&quot; 12:00:00.nc&quot;</span>)))</span>
-<span id="cb13-27"><a href="environmental-data.html#cb13-27" aria-hidden="true" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="fu">brick</span>(<span class="fu">file.path</span>(hdata.dir, <span class="fu">paste0</span>(<span class="st">&quot;so_&quot;</span>,dd, <span class="st">&quot; 12:00:00.nc&quot;</span>)))</span>
-<span id="cb13-28"><a href="environmental-data.html#cb13-28" aria-hidden="true" tabindex="-1"></a>b3 <span class="ot">&lt;-</span> <span class="fu">brick</span>(<span class="fu">file.path</span>(hdata.dir, <span class="fu">paste0</span>(<span class="st">&quot;mlotst_&quot;</span>,dd, <span class="st">&quot; 12:00:00.nc&quot;</span>)))</span>
-<span id="cb13-29"><a href="environmental-data.html#cb13-29" aria-hidden="true" tabindex="-1"></a>b4 <span class="ot">&lt;-</span> <span class="fu">brick</span>(<span class="fu">file.path</span>(hdata.dir, <span class="fu">paste0</span>(<span class="st">&quot;chl_&quot;</span>,dd, <span class="st">&quot; 12:00:00.nc&quot;</span>)))</span>
-<span id="cb13-30"><a href="environmental-data.html#cb13-30" aria-hidden="true" tabindex="-1"></a>b5 <span class="ot">&lt;-</span> <span class="fu">brick</span>(<span class="fu">file.path</span>(hdata.dir, <span class="fu">paste0</span>(<span class="st">&quot;o2_&quot;</span>,dd, <span class="st">&quot; 12:00:00.nc&quot;</span>))) </span>
-<span id="cb13-31"><a href="environmental-data.html#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-32"><a href="environmental-data.html#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co"># temperature at surface (exactly at 0.49m)</span></span>
-<span id="cb13-33"><a href="environmental-data.html#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co"># see names(b1)</span></span>
-<span id="cb13-34"><a href="environmental-data.html#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-35"><a href="environmental-data.html#cb13-35" aria-hidden="true" tabindex="-1"></a>bb1a <span class="ot">&lt;-</span> b1[[<span class="dv">1</span>]] </span>
-<span id="cb13-36"><a href="environmental-data.html#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bb1a) <span class="ot">&lt;-</span> <span class="st">&quot;TEMP0m&quot;</span>  </span>
-<span id="cb13-37"><a href="environmental-data.html#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-38"><a href="environmental-data.html#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="co"># temperature at 100m (layer 22, which is at 92.33m) or at the deepest available </span></span>
-<span id="cb13-39"><a href="environmental-data.html#cb13-39" aria-hidden="true" tabindex="-1"></a><span class="co"># see names(b1)</span></span>
-<span id="cb13-40"><a href="environmental-data.html#cb13-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-41"><a href="environmental-data.html#cb13-41" aria-hidden="true" tabindex="-1"></a>bb1b <span class="ot">&lt;-</span> <span class="fu">calc</span>(<span class="fu">subset</span>(b1, <span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>), <span class="at">fun=</span>deepestValid)</span>
-<span id="cb13-42"><a href="environmental-data.html#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bb1b) <span class="ot">&lt;-</span> <span class="st">&quot;TEMP100m&quot;</span> </span>
-<span id="cb13-43"><a href="environmental-data.html#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-44"><a href="environmental-data.html#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="co"># salinity at surface (exactly at 0.49m)</span></span>
-<span id="cb13-45"><a href="environmental-data.html#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="co"># see names(b2)</span></span>
-<span id="cb13-46"><a href="environmental-data.html#cb13-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-47"><a href="environmental-data.html#cb13-47" aria-hidden="true" tabindex="-1"></a>bb2 <span class="ot">&lt;-</span> b2[[<span class="dv">1</span>]] </span>
-<span id="cb13-48"><a href="environmental-data.html#cb13-48" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bb2) <span class="ot">&lt;-</span> <span class="st">&quot;so1&quot;</span>  </span>
-<span id="cb13-49"><a href="environmental-data.html#cb13-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-50"><a href="environmental-data.html#cb13-50" aria-hidden="true" tabindex="-1"></a><span class="co"># logarithm of ocean mixed layer thickness (m)</span></span>
-<span id="cb13-51"><a href="environmental-data.html#cb13-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-52"><a href="environmental-data.html#cb13-52" aria-hidden="true" tabindex="-1"></a>bb3 <span class="ot">&lt;-</span> b3[[<span class="dv">1</span>]]</span>
-<span id="cb13-53"><a href="environmental-data.html#cb13-53" aria-hidden="true" tabindex="-1"></a>bb3 <span class="ot">&lt;-</span> <span class="fu">log</span>(bb3)</span>
-<span id="cb13-54"><a href="environmental-data.html#cb13-54" aria-hidden="true" tabindex="-1"></a><span class="co"># or equivalently:</span></span>
-<span id="cb13-55"><a href="environmental-data.html#cb13-55" aria-hidden="true" tabindex="-1"></a><span class="co"># bb3 &lt;- calc(bb3, fun=function(x) {log(x)})</span></span>
-<span id="cb13-56"><a href="environmental-data.html#cb13-56" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bb3) <span class="ot">&lt;-</span> <span class="st">&quot;logmlotst1&quot;</span></span>
-<span id="cb13-57"><a href="environmental-data.html#cb13-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-58"><a href="environmental-data.html#cb13-58" aria-hidden="true" tabindex="-1"></a><span class="co"># logarithm of the chlorophyll integrated until 100m (layer 22, which is at 92.33m) or at the deepest available </span></span>
-<span id="cb13-59"><a href="environmental-data.html#cb13-59" aria-hidden="true" tabindex="-1"></a><span class="co"># see names(b4)</span></span>
-<span id="cb13-60"><a href="environmental-data.html#cb13-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-61"><a href="environmental-data.html#cb13-61" aria-hidden="true" tabindex="-1"></a>b4 <span class="ot">&lt;-</span> <span class="fu">subset</span>(b4, <span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>) <span class="co"># take only values in the first 22 layers corresponding up to depth 100m </span></span>
-<span id="cb13-62"><a href="environmental-data.html#cb13-62" aria-hidden="true" tabindex="-1"></a>depth.lev <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(<span class="fu">sapply</span>(<span class="fu">names</span>(b4), substring, <span class="at">first=</span><span class="dv">2</span>))) <span class="co"># extract depth values from layer names</span></span>
-<span id="cb13-63"><a href="environmental-data.html#cb13-63" aria-hidden="true" tabindex="-1"></a>depth.lev <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, depth.lev)</span>
-<span id="cb13-64"><a href="environmental-data.html#cb13-64" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">diff</span>(depth.lev) </span>
-<span id="cb13-65"><a href="environmental-data.html#cb13-65" aria-hidden="true" tabindex="-1"></a>bb4 <span class="ot">&lt;-</span> <span class="fu">calc</span>(b4, <span class="cf">function</span>(x){<span class="fu">sum</span>(x<span class="sc">*</span>w, <span class="at">na.rm=</span>T)}) <span class="co"># compute integrated value</span></span>
-<span id="cb13-66"><a href="environmental-data.html#cb13-66" aria-hidden="true" tabindex="-1"></a>bb4 <span class="ot">&lt;-</span> <span class="fu">log</span>(bb4)</span>
-<span id="cb13-67"><a href="environmental-data.html#cb13-67" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bb4) <span class="ot">&lt;-</span> <span class="st">&quot;logCHL100m&quot;</span></span>
-<span id="cb13-68"><a href="environmental-data.html#cb13-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-69"><a href="environmental-data.html#cb13-69" aria-hidden="true" tabindex="-1"></a><span class="co"># oxygen integrated until 100m (layer 22, which is at 92.33m) or at the deepest available </span></span>
-<span id="cb13-70"><a href="environmental-data.html#cb13-70" aria-hidden="true" tabindex="-1"></a><span class="co"># see names(b5)</span></span>
-<span id="cb13-71"><a href="environmental-data.html#cb13-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-72"><a href="environmental-data.html#cb13-72" aria-hidden="true" tabindex="-1"></a>b5 <span class="ot">&lt;-</span> <span class="fu">subset</span>(b5, <span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>) <span class="co"># take only values in the first 22 layers corresponding up to depth 100m</span></span>
-<span id="cb13-73"><a href="environmental-data.html#cb13-73" aria-hidden="true" tabindex="-1"></a>depth.lev <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(<span class="fu">sapply</span>(<span class="fu">names</span>(b5), substring, <span class="at">first=</span><span class="dv">2</span>))) <span class="co"># extract depth values from layer names</span></span>
-<span id="cb13-74"><a href="environmental-data.html#cb13-74" aria-hidden="true" tabindex="-1"></a>depth.lev <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, depth.lev)</span>
-<span id="cb13-75"><a href="environmental-data.html#cb13-75" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">diff</span>(depth.lev)</span>
-<span id="cb13-76"><a href="environmental-data.html#cb13-76" aria-hidden="true" tabindex="-1"></a>bb5 <span class="ot">&lt;-</span> <span class="fu">calc</span>(b5, <span class="cf">function</span>(x){<span class="fu">sum</span>(x<span class="sc">*</span>w, <span class="at">na.rm=</span>T)}) <span class="co"># compute integrated value</span></span>
-<span id="cb13-77"><a href="environmental-data.html#cb13-77" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bb5) <span class="ot">&lt;-</span> <span class="st">&quot;O100m&quot;</span></span>
-<span id="cb13-78"><a href="environmental-data.html#cb13-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-79"><a href="environmental-data.html#cb13-79" aria-hidden="true" tabindex="-1"></a><span class="co"># unique stack (because they all have the same extent and resolution)</span></span>
-<span id="cb13-80"><a href="environmental-data.html#cb13-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-81"><a href="environmental-data.html#cb13-81" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">stack</span>(bb1a, bb1b, bb2, bb3, bb4, bb5)</span>
-<span id="cb13-82"><a href="environmental-data.html#cb13-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-83"><a href="environmental-data.html#cb13-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Add bathymetry --------------------------------------------------</span></span>
-<span id="cb13-84"><a href="environmental-data.html#cb13-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-85"><a href="environmental-data.html#cb13-85" aria-hidden="true" tabindex="-1"></a><span class="co"># get the extent of the raster to extract the corresponding bathymetry</span></span>
-<span id="cb13-86"><a href="environmental-data.html#cb13-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-87"><a href="environmental-data.html#cb13-87" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">extent</span>(b)</span>
-<span id="cb13-88"><a href="environmental-data.html#cb13-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-89"><a href="environmental-data.html#cb13-89" aria-hidden="true" tabindex="-1"></a><span class="co"># load bathymetry of the area (get wider limits)</span></span>
-<span id="cb13-90"><a href="environmental-data.html#cb13-90" aria-hidden="true" tabindex="-1"></a><span class="co"># resolution = 5 (resolucion en minutos, corresponde a 1/12 º) </span></span>
-<span id="cb13-91"><a href="environmental-data.html#cb13-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-92"><a href="environmental-data.html#cb13-92" aria-hidden="true" tabindex="-1"></a><span class="co"># mybathy &lt;- getNOAA.bathy(lon1=floor(e@xmin), lon2=ceiling(e@xmax), lat1=floor(e@ymin), lat2=ceiling(e@ymax), </span></span>
-<span id="cb13-93"><a href="environmental-data.html#cb13-93" aria-hidden="true" tabindex="-1"></a><span class="co">#                          resolution=1, keep=F) </span></span>
-<span id="cb13-94"><a href="environmental-data.html#cb13-94" aria-hidden="true" tabindex="-1"></a><span class="co"># save(mybathy, file=&quot;mybathy.RData&quot;)</span></span>
-<span id="cb13-95"><a href="environmental-data.html#cb13-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-96"><a href="environmental-data.html#cb13-96" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span>(<span class="st">&quot;mybathy.RData&quot;</span>))</span>
-<span id="cb13-97"><a href="environmental-data.html#cb13-97" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb13-98"><a href="environmental-data.html#cb13-98" aria-hidden="true" tabindex="-1"></a><span class="co"># transform to data frame</span></span>
-<span id="cb13-99"><a href="environmental-data.html#cb13-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-100"><a href="environmental-data.html#cb13-100" aria-hidden="true" tabindex="-1"></a>pred.dat <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">as.data.frame</span>(b, <span class="at">xy=</span>T)</span>
-<span id="cb13-101"><a href="environmental-data.html#cb13-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-102"><a href="environmental-data.html#cb13-102" aria-hidden="true" tabindex="-1"></a><span class="co"># include bathymetry into the prediction data frame</span></span>
-<span id="cb13-103"><a href="environmental-data.html#cb13-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-104"><a href="environmental-data.html#cb13-104" aria-hidden="true" tabindex="-1"></a>pred.dat<span class="sc">$</span>DEPTH <span class="ot">&lt;-</span> <span class="fu">get.depth</span>(mybathy, pred.dat[ ,<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;y&quot;</span>)], <span class="at">locator=</span>F)<span class="sc">$</span>depth</span>
-<span id="cb13-105"><a href="environmental-data.html#cb13-105" aria-hidden="true" tabindex="-1"></a>pred.dat<span class="sc">$</span>DEPTH[pred.dat<span class="sc">$</span>DEPTH<span class="sc">&gt;=</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb13-106"><a href="environmental-data.html#cb13-106" aria-hidden="true" tabindex="-1"></a>pred.dat<span class="sc">$</span>logDEPTH<span class="ot">&lt;-</span><span class="fu">log</span>(<span class="sc">-</span>pred.dat<span class="sc">$</span>DEPTH)</span>
-<span id="cb13-107"><a href="environmental-data.html#cb13-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-108"><a href="environmental-data.html#cb13-108" aria-hidden="true" tabindex="-1"></a><span class="co"># transform the bathymetry to raster format </span></span>
-<span id="cb13-109"><a href="environmental-data.html#cb13-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-110"><a href="environmental-data.html#cb13-110" aria-hidden="true" tabindex="-1"></a>b7 <span class="ot">&lt;-</span> <span class="fu">rasterFromXYZ</span>(pred.dat[,<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;y&quot;</span>,<span class="st">&quot;logDEPTH&quot;</span>)]) </span>
-<span id="cb13-111"><a href="environmental-data.html#cb13-111" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(b7) <span class="ot">&lt;-</span> <span class="st">&quot;logDEPTH&quot;</span></span>
-<span id="cb13-112"><a href="environmental-data.html#cb13-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-113"><a href="environmental-data.html#cb13-113" aria-hidden="true" tabindex="-1"></a><span class="co"># include the bathymetry raster into the prediction stack</span></span>
-<span id="cb13-114"><a href="environmental-data.html#cb13-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-115"><a href="environmental-data.html#cb13-115" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">stack</span>(b, b7)</span>
-<span id="cb13-116"><a href="environmental-data.html#cb13-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-117"><a href="environmental-data.html#cb13-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-118"><a href="environmental-data.html#cb13-118" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Create latitude, longitude and doy rasters ----------------------</span></span>
-<span id="cb13-119"><a href="environmental-data.html#cb13-119" aria-hidden="true" tabindex="-1"></a><span class="co"># these are needed to predict according to the spatio-temporal model</span></span>
-<span id="cb13-120"><a href="environmental-data.html#cb13-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-121"><a href="environmental-data.html#cb13-121" aria-hidden="true" tabindex="-1"></a>b8 <span class="ot">&lt;-</span> b9 <span class="ot">&lt;-</span> b10 <span class="ot">&lt;-</span> b[[<span class="dv">1</span>]] <span class="co"># create rasters with same structure</span></span>
-<span id="cb13-122"><a href="environmental-data.html#cb13-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-123"><a href="environmental-data.html#cb13-123" aria-hidden="true" tabindex="-1"></a>b8[] <span class="ot">&lt;-</span> <span class="fu">coordinates</span>(b8)[,<span class="dv">1</span>] <span class="co">#longitude  </span></span>
-<span id="cb13-124"><a href="environmental-data.html#cb13-124" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(b8) <span class="ot">&lt;-</span> <span class="st">&quot;LON&quot;</span></span>
-<span id="cb13-125"><a href="environmental-data.html#cb13-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-126"><a href="environmental-data.html#cb13-126" aria-hidden="true" tabindex="-1"></a>b9[] <span class="ot">&lt;-</span> <span class="fu">coordinates</span>(b8)[,<span class="dv">2</span>] <span class="co">#latitude  </span></span>
-<span id="cb13-127"><a href="environmental-data.html#cb13-127" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(b9) <span class="ot">&lt;-</span> <span class="st">&quot;LAT&quot;</span></span>
-<span id="cb13-128"><a href="environmental-data.html#cb13-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-129"><a href="environmental-data.html#cb13-129" aria-hidden="true" tabindex="-1"></a>b10[] <span class="ot">&lt;-</span> doy <span class="co"># day of the year</span></span>
-<span id="cb13-130"><a href="environmental-data.html#cb13-130" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(b10) <span class="ot">&lt;-</span> <span class="st">&quot;DOY&quot;</span></span>
-<span id="cb13-131"><a href="environmental-data.html#cb13-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-132"><a href="environmental-data.html#cb13-132" aria-hidden="true" tabindex="-1"></a><span class="co"># include longitude, latitude and day of the year into the prediction stack, </span></span>
-<span id="cb13-133"><a href="environmental-data.html#cb13-133" aria-hidden="true" tabindex="-1"></a><span class="co"># they are needed for the spatio-temporal model prediction</span></span>
-<span id="cb13-134"><a href="environmental-data.html#cb13-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-135"><a href="environmental-data.html#cb13-135" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">stack</span>(b, b8, b9, b10)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="environmental-data.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Download Environmental data from Bio-oracle</span></span>
+<span id="cb8-2"><a href="environmental-data.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="environmental-data.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># for mapping ...</span></span>
+<span id="cb8-4"><a href="environmental-data.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptools)</span>
+<span id="cb8-5"><a href="environmental-data.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgrass7)</span>
+<span id="cb8-6"><a href="environmental-data.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
+<span id="cb8-7"><a href="environmental-data.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb8-8"><a href="environmental-data.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-9"><a href="environmental-data.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)</span>
+<span id="cb8-10"><a href="environmental-data.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgbif)</span>
+<span id="cb8-11"><a href="environmental-data.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dataverse)</span>
+<span id="cb8-12"><a href="environmental-data.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstudioapi)</span>
+<span id="cb8-13"><a href="environmental-data.html#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="environmental-data.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># libraries for bio-oracle</span></span>
+<span id="cb8-15"><a href="environmental-data.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgdal)</span>
+<span id="cb8-16"><a href="environmental-data.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sdmpredictors) </span>
+<span id="cb8-17"><a href="environmental-data.html#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb8-18"><a href="environmental-data.html#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="environmental-data.html#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># http://bio-oracle.org/code.php</span></span>
+<span id="cb8-20"><a href="environmental-data.html#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;sdmpredictors&quot;)</span></span>
+<span id="cb8-21"><a href="environmental-data.html#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;leaflet&quot;)</span></span>
+<span id="cb8-22"><a href="environmental-data.html#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="environmental-data.html#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># location of script</span></span>
+<span id="cb8-24"><a href="environmental-data.html#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
+<span id="cb8-25"><a href="environmental-data.html#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="environmental-data.html#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore datasets in the package </span></span>
+<span id="cb8-27"><a href="environmental-data.html#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="fu">list_datasets</span>()</span>
+<span id="cb8-28"><a href="environmental-data.html#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="fu">list_layers</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>)</span>
+<span id="cb8-29"><a href="environmental-data.html#cb8-29" aria-hidden="true" tabindex="-1"></a>mytab <span class="ot">&lt;-</span> <span class="fu">list_layers</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>)</span>
+<span id="cb8-30"><a href="environmental-data.html#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="environmental-data.html#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="do">## Download specific layers to the current directory </span></span>
+<span id="cb8-32"><a href="environmental-data.html#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="environmental-data.html#cb8-33" aria-hidden="true" tabindex="-1"></a>myBioracle.layers <span class="ot">&lt;-</span> <span class="fu">load_layers</span>(<span class="fu">c</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span> ,<span class="st">&quot;BO_sstmean&quot;</span>, <span class="st">&quot;BO_bathymean&quot;</span>)) </span>
+<span id="cb8-34"><a href="environmental-data.html#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(myBioracle.layers, <span class="at">file=</span><span class="st">&quot;data/env/myBioracle.layers.Rdata&quot;</span>)</span>
+<span id="cb8-35"><a href="environmental-data.html#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="environmental-data.html#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">#load area plygon</span></span>
+<span id="cb8-37"><a href="environmental-data.html#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/spatial/area.RData&quot;</span>)</span>
+<span id="cb8-38"><a href="environmental-data.html#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="environmental-data.html#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co"># transform object to select only data in the area of interest</span></span>
+<span id="cb8-40"><a href="environmental-data.html#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="environmental-data.html#cb8-41" aria-hidden="true" tabindex="-1"></a>env_dataframe <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(myBioracle.layers, <span class="at">xy=</span><span class="cn">TRUE</span>)</span>
+<span id="cb8-42"><a href="environmental-data.html#cb8-42" aria-hidden="true" tabindex="-1"></a>ptos<span class="ot">&lt;-</span>env_dataframe[,<span class="fu">c</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;y&quot;</span>)]</span>
+<span id="cb8-43"><a href="environmental-data.html#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="environmental-data.html#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(ptos) <span class="ot">&lt;-</span> <span class="er">~</span> x <span class="sc">+</span> y</span>
+<span id="cb8-45"><a href="environmental-data.html#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="fu">proj4string</span>(ptos) <span class="ot">&lt;-</span><span class="fu">proj4string</span>(area)</span>
+<span id="cb8-46"><a href="environmental-data.html#cb8-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-47"><a href="environmental-data.html#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="do">## Select only occurrences in the defined previously selected area</span></span>
+<span id="cb8-48"><a href="environmental-data.html#cb8-48" aria-hidden="true" tabindex="-1"></a>env_dataframe<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">subset</span>(env_dataframe,<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">over</span>(ptos, area)[,<span class="dv">1</span>])))</span>
+<span id="cb8-49"><a href="environmental-data.html#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="environmental-data.html#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="co">#save the data frame</span></span>
+<span id="cb8-51"><a href="environmental-data.html#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(env_dataframe,<span class="at">file=</span><span class="st">&quot;data/env/env_dataframe.Rdata&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>

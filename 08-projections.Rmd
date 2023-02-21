@@ -19,54 +19,53 @@ library(maps) #map world
 library(raster)
 library(RColorBrewer)#color palette
 library(tidyverse)
+library(rstudioapi)
 ```
 
 # Projection
 
 ```{r, eval=F}
 
+# location of script
+setwd(dirname(getSourceEditorContext()$path))
+
+#load PA data
+load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
+
 #Load raster stack containing all variables
 
-load(here::here ("data","env", "myBioracle.layers.Rdata"))
+load("data/env/env_dataframe.Rdata")
 
-#load area plygon
-load("C:/use/GitHub/SDM/data/spatial/total_area.RData")
-
-# Transform raster stack to table
-
-env_dataframe <- as.data.frame(myBioracle.layers, xy=TRUE)
-ptos<-env_dataframe[,c("x","y")]
-
-coordinates(ptos) <- ~ x + y
-proj4string(ptos) <-proj4string(FAO_Atl_no_black_sea)
-  
-## Select only occurrences from FAO Atlantic
-env_dataframe<-data.frame(subset(env_dataframe,!is.na(over(ptos, FAO_Atl_no_black_sea)[,1])))
-
-save(env_dataframe,file="data/env/env_dataframe.Rdata")
+#remove positive bathy
+env_dataframe<-subset(env_dataframe,BO_bathymean<0)
 
 #Load SC-GAM model
 
-load(here::here ("models", "model.Rdata"))
+load(file.path("models", "model.Rdata"))
 
 # predicting 
-
-predict <- predict(selected_model,newdata=v_table,type ="response",se.fit=T)            
-
+predict <- predict(model,newdata=env_dataframe,type ="response",se.fit=T)         
 env_dataframe$fit<-predict$fit
 env_dataframe$se.fit<-predict$se.fit
 
-summary(env_dataframe)
+# predicting model without bathymetry
+env_dataframe2<-env_dataframe
+predict <- predict(model_nobathy,newdata=env_dataframe2,type ="response",se.fit=T)         
+env_dataframe2$fit<-predict$fit
+env_dataframe2$se.fit<-predict$se.fit
 
-probabilities_predict.r <- env_dataframe %>%
-    dplyr::select (x, y, fit) %>%
-   rasterFromXYZ()
 ```
 
 
 # Mapping
 
 ```{r, eval=F}
-plot(probabilities_predict.r)
+p11<-ggplot()+geom_raster(data=subset(env_dataframe),aes(x,y,fill=fit))+scale_fill_gradient2(low="blue", mid="orange",high="red",midpoint = 0.5) +ggtitle("with bathy concave")+ geom_point(data=subset(data,occurrenceStatus==1),aes(LON,LAT),col=1,size=0.3)     
+
+p12<-ggplot()+geom_raster(data=subset(env_dataframe2),aes(x,y,fill=fit))+scale_fill_gradient2(low="blue", mid="orange",high="red",midpoint = 0.5)+ggtitle("without bathy")+ geom_point(data=subset(data,occurrenceStatus==1),aes(LON,LAT),col=1,size=0.3)       
+
+grid.arrange(p11,p12,nrow=1)
+
+
 ```
 

@@ -12,7 +12,6 @@ Bla bla bla
 Download from GBIF OBIS. Mireia
 
 ```{r, eval=F}
-setwd("C:/use/GitHub/SDM")
 # Script information ------------------------------------------------------
 
 # Title: Download OBIS/GBIF occurrence data used in H2020 Mission Atlantic (No 862428) Project Task 3.4.
@@ -43,9 +42,17 @@ library(CoordinateCleaner)
 
 # Library for reproducible workflow
 library(here)
+library(rstudioapi)
 
 #library for worl map
 library(maptools)
+
+
+# location of script
+setwd(dirname(getSourceEditorContext()$path))
+
+# general settings for ggplot (black-white background, larger base_size)
+theme_set(theme_bw(base_size = 16))
 
 
 # STUDY AREA
@@ -56,9 +63,15 @@ library(maptools)
 # el enlace para la descarga del shapefile es el siguiente: 
  
 # http://www.fao.org/fishery/geoserver/fifao/ows?service=WFS&request=GetFeature&version=1.0.0&typeName=fifao:FAO_AREAS_CWP&outputFormat=SHAPE-ZIP")
+  
+#añado codigo para descargar el shapefile y descomprimirlo, pero no extactamente el mismo shp que tiene mireia, asiq de momento queda comentado sin usar
+
+# url<-"https://www.fao.org/fishery/geoserver/area/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=area%3AFAO_AREAS&maxFeatures=50&outputFormat=SHAPE-ZIP"
+# download.file(url,"data/FAO_AREAS.zip",mode="wb")
+# unzip("data/FAO_AREAS.zip",exdir="data/spatial")
 
 # Load FAO (spatial multipolygon)
-FAO<- st_read(here::here("data", "spatial", "FAO_AREAS.shp"))
+FAO<- st_read(file.path("data", "spatial", "FAO_AREAS.shp"))
 
 #Selecting Atlantic FAO regions
 FAO_Atl <- FAO[FAO$OCEAN=="Atlantic",]
@@ -211,19 +224,30 @@ mydata.fus<-mydata.fus[!duplicated(date),]
   ## Extract the FAO area of each point
   match3<-data.frame(subset(over(ptos, FAO_Atl_no_black_sea), !is.na(over(ptos, FAO_Atl_no_black_sea)[,1])))
   
-  data_fus_Atl<-cbind(F_AREA=match3$F_AREA,match2)
+  # create data frame with area, name, lon, lat and year 
+  df0<-cbind(F_AREA=match3$F_AREA,match2)[,c("F_AREA","scientificName","decimalLongitude","decimalLatitude","date_year","occurrenceStatus")]
   
-  #only years from 2000 to 2014
+  #rename some columns
+  names(df0)[3:5]<-c("LON","LAT","YEAR")
   
-  df0<- subset(data_fus_Atl, date_year<2015 & date_year>1999)
+  # add bathymetry from NOAA
+  library(marmap)
+
+  bathy <- getNOAA.bathy(lon1=-100,lon2=30,lat1=-41,lat2=55, resolution = 1, 
+                       keep=FALSE, antimeridian=FALSE)
+
+  df0$bathymetry <- get.depth(bathy, df0[,c("LON","LAT")], locator=F)$depth
+
 
 # SAVE OCCURRENCE DATA
 ---------------------------------    
 
 #NOTA INTERNA: quiero guardar el RData en la carpeta data/occurrences con el nombre de la especies sin espacios para no machar los RData en caso de que hagamos más de una especie pero no lo consigo. 
 
-save(df0, file = here::here("data/occurrences/occ.RData"))
-save(FAO_Atl_no_black_sea, file = here::here("data/spatial/total_area.RData"))
+# lo dejo como esta, asi luego al cargar los datos no hay que poner el nombre de la especie y es mas sencillo
+
+save(df0, file = "data/occurrences/occ.RData")
+save(FAO_Atl_no_black_sea, file = "data/spatial/total_area.RData")
 
   
 # PLOT OCCURRENCES MAP
@@ -235,7 +259,6 @@ ggplot() +
    geom_point(data=df0, aes(x=decimalLongitude, y=decimalLatitude,colour= occurrenceStatus)) 
   
 ```
-
 
 ## Create pseudo-absence data
 
@@ -271,42 +294,38 @@ library(gridExtra)
 library(lubridate)
 library(raster)
 
-# general settings for ggplot (black-white background, larger base_size)
-
-theme_set(theme_bw(base_size = 16))
-
-# Set directories ---------------------------------------------------------
-
-# final data set created by Nerea Goikoetxea after combining logboook and VMS data are in:
-# \\dok\nas\K\AZTIMAR\PROYECTOS\Funcionamiento de los ecosistemas marinos\IM-18-ANICHO\Cruce logbooks vs VMS\Data\df_2010_2019_DEF.csv
-# note that these data do not have yet the environmental variables. We have to repeat the process including the pseudo-absences 
-# because some dates were wrong in the previous file (anicho_landings_final_FECHASMAL.csv)
-
-data.dir <- here("data")
-
 # load data-files
 #occurrence data
-load("C:/use/GitHub/SDM/data/occurrences/occ.RData")
+load("data/occurrences/occ.RData")
 #map Atlantic without black sea
-load("C:/use/GitHub/SDM/data/spatial/total_area.RData")
+load("data/spatial/total_area.RData")
 
-# Remove points in land ----------------------------
+#remove points in land
+df0<-subset(df0,bathymetry<0)
 
-df0<-subset(df0,bathymetry>0)
+#use years from 2000 to 2014
+df0<- subset(df0, YEAR<=2014 & YEAR>=2000)
+
+# Remove points in south hemisphere (optional)
+#prop.table(table(df0$LAT<=0)) #only 22% of obs in the south
+#df0<-subset(df0,LAT>0)
+
+# Remove south hemisphere area
+#area <- crop(FAO_Atl_no_black_sea, extent(-100, 100, 0, 100))
+area <- FAO_Atl_no_black_sea
 
 #convert to spatial point data frame
-names(df0)[3:6]<-c("LON","LAT","YEAR","MONTH") ; df<-df0
-coordinates(df)<- ~LON+LAT
-crs(df)<-crs(FAO_Atl_no_black_sea)
+df<-df0 ; coordinates(df)<- ~LON+LAT
+crs(df)<-crs(area)
 
 #convert to sf
-Atl.sf<-st_union(st_as_sf(FAO_Atl_no_black_sea))
+area.sf<-st_union(st_as_sf(area))
 df.sf<-st_as_sf(df)
 
-ggplot(Atl.sf) + geom_sf() + geom_sf(data=st_union(df.sf))
+ggplot(area.sf) + geom_sf() + geom_sf(data=st_union(df.sf))
 
 
-dim(df) # 16615    10
+dim(df) # 15079    5
 head(df)
 tail(df)
 summary(df)
@@ -319,7 +338,7 @@ global <- map_data("worldHires")
 
 p0 <- ggplot() + 
   annotation_map(map=global, fill="grey")+
-  geom_sf(data=Atl.sf,fill=NA)
+  geom_sf(data=area.sf,fill=NA)
 print(p0)
 
 # EGSP: Transformation to UTM ---------------------------------------------
@@ -336,10 +355,10 @@ lonlat2UTM = function(lonlat) {
 }
 
 EPSG_2_UTM <- lonlat2UTM(c(mean(df$LON), mean(df$LAT))) 
-EPSG_2_UTM # 32621
+EPSG_2_UTM # 32623
 
 # transform to UTMs (in m)
-aux <- st_transform(Atl.sf, EPSG_2_UTM)
+aux <- st_transform(area.sf, EPSG_2_UTM)
 df.sf.utm <- st_transform(df.sf, EPSG_2_UTM)
 
 # number of points within the study area
@@ -399,19 +418,19 @@ rp <- as.data.frame(st_coordinates(rp.sf)) # transform to lat&lon and extract co
 pseudo$LON <- rp$X
 pseudo$LAT <- rp$Y
 p <- p0 +
-geom_sf(data=aux0.sub, fill=2, alpha=0.3)+
-geom_sf(data=df.sf.utm, col=4, alpha=0.3)+
-geom_sf(data=rp.sf, col=1, shape=4,size=0.5)+
-ggtitle(paste(unique(df$scientificName),"all"))
+  geom_sf(data=aux0.sub, fill=2, alpha=0.3)+
+  geom_sf(data=rp.sf, col=1, shape=4,size=0.5)+
+  geom_sf(data=df.sf.utm, col=4, alpha=0.3)+
+  ggtitle(paste(unique(df$scientificName),"all"))
 ggsave(file.path("plots","pseudo",paste0("pseudo_","all",".png")), p, device="png")
 
 
 p <- p0 +
-geom_sf(data=aux0.sub, fill=NA, alpha=0.3)+
-geom_sf(data=df.sf.utm, col=4, alpha=0.3,size=0.5)+
-geom_sf(data=rp.sf, col=1, shape=4,size=0.5)+
+  geom_sf(data=aux0.sub, fill=NA, alpha=0.3)+
+  geom_sf(data=df.sf.utm, col=4, alpha=0.3,size=0.5)+
+  geom_sf(data=rp.sf, col=1, shape=4,size=0.5)+
   coord_sf(xlim=c(-98,-79), ylim=c(15,31))+
-ggtitle(paste(unique(df$scientificName),"all"))
+  ggtitle(paste(unique(df$scientificName),"all"))
 ggsave(file.path("plots","pseudo",paste0("pseudo_","all_zoom",".png")), p, device="png")
 
 
@@ -419,6 +438,8 @@ ggsave(file.path("plots","pseudo",paste0("pseudo_","all_zoom",".png")), p, devic
 
 pseudo$scientificName <- df0$scientificName
 pseudo$occurrenceStatus  <- 0
+
+
 
 # Save the final dataset including the pseudo-absences --------------------
 
@@ -429,10 +450,12 @@ head(pseudo)
 
 dat <- rbind(df0, pseudo)
 save(list=c("dat"),file=file.path("data","outputs_for_modelling",file="PAdata.RData"))
+save(list=c("area"),file=file.path("data","spatial",file="area.RData"))
 write.table(dat, file=file.path("data","outputs_for_modelling","PAdata.csv"), row.names=F, sep=";", dec=".")
 
- End of script -----------------------------------------------------------
+End of script -----------------------------------------------------------
+  
+  ```
 
-```
 
 

@@ -16,3 +16,13 @@ model-validation
 optimum-threshold
 k-fold-validation
 prediction-and-maps
+loading-required-libraries
+variable-correlation
+script-information
+analysis-of-variance-inflation-factor-vif
+loading-required-libraries-1
+script-information-1
+find-the-difference-i.e.-reverse-of-st_intersection
+find-data-by-scientific-name-in-the-datasets-obisgbif
+projection
+mapping

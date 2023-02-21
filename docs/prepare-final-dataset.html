@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Prepare final dataset | Species distribution models (SDM)</title>
   <meta name="description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Prepare final dataset | Species distribution models (SDM)" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-01-26" />
+<meta name="date" content="2023-02-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -165,17 +165,23 @@ div.csl-indent {
 <li class="chapter" data-level="3" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>3</b> Presence-absence data</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>3.1</b> Download presence data</a></li>
-<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.2</b> Create pseudo-absence data</a></li>
+<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#find-the-difference-i.e.-reverse-of-st_intersection"><i class="fa fa-check"></i><b>3.2</b> Find the ‘difference’, i.e. reverse of st_intersection</a></li>
+<li class="chapter" data-level="3.3" data-path="presence-absence-data.html"><a href="presence-absence-data.html#find-data-by-scientific-name-in-the-datasets-obisgbif"><i class="fa fa-check"></i><b>3.3</b> Find data by scientific name in the datasets OBIS/GBIF</a></li>
+<li class="chapter" data-level="3.4" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.4</b> Create pseudo-absence data</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>4</b> Environmental data</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>4.1</b> Download from public repositories</a></li>
-<li class="chapter" data-level="4.2" data-path="environmental-data.html"><a href="environmental-data.html#operations-with-rasters-maybe-not-needed"><i class="fa fa-check"></i><b>4.2</b> Operations with rasters (maybe not needed)</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>5</b> Prepare final dataset</a>
 <ul>
+<li class="chapter" data-level="5.0.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#loading-required-libraries"><i class="fa fa-check"></i><b>5.0.1</b> Loading required libraries</a></li>
 <li class="chapter" data-level="5.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>5.1</b> Extract environmental data associated to presence-absence data</a></li>
-<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots"><i class="fa fa-check"></i><b>5.2</b> Exploratory plots</a></li>
+<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variable-correlation"><i class="fa fa-check"></i><b>5.2</b> Variable correlation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#script-information"><i class="fa fa-check"></i><b>5.2.1</b> Script information</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots"><i class="fa fa-check"></i><b>5.3</b> Exploratory plots</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
 <ul>
@@ -187,7 +193,10 @@ div.csl-indent {
 <li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
 <li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a></li>
+<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#loading-required-libraries-1"><i class="fa fa-check"></i><b>8.0.1</b> Loading required libraries</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -212,11 +221,155 @@ div.csl-indent {
 <div id="prepare-final-dataset" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Prepare final dataset<a href="prepare-final-dataset.html#prepare-final-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Bla bla bla</p>
+<div id="loading-required-libraries" class="section level3 hasAnchor" number="5.0.1">
+<h3><span class="header-section-number">5.0.1</span> Loading required libraries<a href="prepare-final-dataset.html#loading-required-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="prepare-final-dataset.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgdal) <span class="co"># to read shp</span></span>
+<span id="cb8-2"><a href="prepare-final-dataset.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster) <span class="co"># to work with rasters</span></span>
+<span id="cb8-3"><a href="prepare-final-dataset.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (here) <span class="co"># Libraries for reproducible workflow</span></span>
+<span id="cb8-4"><a href="prepare-final-dataset.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (sp)     <span class="co"># to perform raster</span></span>
+<span id="cb8-5"><a href="prepare-final-dataset.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(HH) <span class="co">#to calculate for VIF (Variance Inflation Factor)</span></span>
+<span id="cb8-6"><a href="prepare-final-dataset.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)<span class="co"># plots</span></span>
+<span id="cb8-7"><a href="prepare-final-dataset.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)<span class="co"># multiple plots</span></span>
+<span id="cb8-8"><a href="prepare-final-dataset.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb8-9"><a href="prepare-final-dataset.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)<span class="co">#plotting colors</span></span>
+<span id="cb8-10"><a href="prepare-final-dataset.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fields)<span class="co">#ploting images</span></span>
+<span id="cb8-11"><a href="prepare-final-dataset.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marmap)<span class="co">#ploting world</span></span>
+<span id="cb8-12"><a href="prepare-final-dataset.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptools)<span class="co">#mapping</span></span>
+<span id="cb8-13"><a href="prepare-final-dataset.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstudioapi)</span></code></pre></div>
+</div>
 <div id="extract-environmental-data-associated-to-presence-absence-data" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> Extract environmental data associated to presence-absence data<a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="prepare-final-dataset.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># location of script</span></span>
+<span id="cb9-2"><a href="prepare-final-dataset.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
+<span id="cb9-3"><a href="prepare-final-dataset.html#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="prepare-final-dataset.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#load data</span></span>
+<span id="cb9-5"><a href="prepare-final-dataset.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/outputs_for_modelling/PAdata.RData&quot;</span>)</span>
+<span id="cb9-6"><a href="prepare-final-dataset.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;data/env/myBioracle.layers.Rdata&quot;</span>) </span>
+<span id="cb9-7"><a href="prepare-final-dataset.html#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="prepare-final-dataset.html#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="prepare-final-dataset.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">### Extract environmental values from layers </span></span>
+<span id="cb9-10"><a href="prepare-final-dataset.html#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="prepare-final-dataset.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># con Bilinear extraigo los sites de los 4 nearest cells </span></span>
+<span id="cb9-12"><a href="prepare-final-dataset.html#cb9-12" aria-hidden="true" tabindex="-1"></a>mydata1.env.bil <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(<span class="at">x=</span>myBioracle.layers,<span class="at">y=</span>dat[,<span class="fu">c</span>(<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>)], <span class="at">method=</span><span class="st">&quot;bilinear&quot;</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>, <span class="at">df=</span>T) <span class="co"># 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)</span></span>
+<span id="cb9-13"><a href="prepare-final-dataset.html#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="prepare-final-dataset.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># merge with pa data</span></span>
+<span id="cb9-15"><a href="prepare-final-dataset.html#cb9-15" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dat, mydata1.env.bil)</span>
+<span id="cb9-16"><a href="prepare-final-dataset.html#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="prepare-final-dataset.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># remove positive bathymetries</span></span>
+<span id="cb9-18"><a href="prepare-final-dataset.html#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="prepare-final-dataset.html#cb9-19" aria-hidden="true" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">subset</span>(data,BO_bathymean<span class="sc">&lt;</span><span class="dv">0</span>)</span>
+<span id="cb9-20"><a href="prepare-final-dataset.html#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="prepare-final-dataset.html#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data) <span class="co"># 29435 sites : 4 are NAs</span></span>
+<span id="cb9-22"><a href="prepare-final-dataset.html#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="prepare-final-dataset.html#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">#save data frame</span></span>
+<span id="cb9-24"><a href="prepare-final-dataset.html#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="prepare-final-dataset.html#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="st">&quot;data&quot;</span>,<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;outputs_for_modelling&quot;</span>,<span class="at">file=</span><span class="st">&quot;PAdata_with_env.RData&quot;</span>))</span></code></pre></div>
 </div>
-<div id="exploratory-plots" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Exploratory plots<a href="prepare-final-dataset.html#exploratory-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="variable-correlation" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Variable correlation<a href="prepare-final-dataset.html#variable-correlation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>#Nota interna: copio el script de analísis VIF para las variables superficiales del proyecto MISSION</p>
+<div id="script-information" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Script information<a href="prepare-final-dataset.html#script-information" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>With this script we assess the correlation between environmental variables based on Variance Inflation Factor (VIF) by depth set</p>
+<p>Project: IM-20-MISSION</p>
+<div id="analysis-of-variance-inflation-factor-vif" class="section level4 hasAnchor" number="5.2.1.1">
+<h4><span class="header-section-number">5.2.1.1</span> Analysis of Variance Inflation Factor (VIF)<a href="prepare-final-dataset.html#analysis-of-variance-inflation-factor-vif" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>VIF is a measure of the amount of multicollinearity in regression analysis</p>
+<p>VIF equal to 1 = variables are not correlated
+VIF between 1 and 5 = variables are moderately correlated
+VIF greater than 5 = variables are highly correlated</p>
+<p>If you found high multicollinearity between two variables, you don’t need both of them in your model.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="prepare-final-dataset.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select variables for vif calculation</span></span>
+<span id="cb10-2"><a href="prepare-final-dataset.html#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="prepare-final-dataset.html#cb10-3" aria-hidden="true" tabindex="-1"></a>v_table <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="prepare-final-dataset.html#cb10-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span> (BO2_salinitymean_ss,BO_sstmean,BO2_chlomean_ss,BO_bathymean,BO_damean)</span>
+<span id="cb10-5"><a href="prepare-final-dataset.html#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="prepare-final-dataset.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">##### get vif results</span></span>
+<span id="cb10-7"><a href="prepare-final-dataset.html#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="prepare-final-dataset.html#cb10-8" aria-hidden="true" tabindex="-1"></a>resultado.vif <span class="ot">&lt;-</span> <span class="fu">vif</span>(v_table)</span>
+<span id="cb10-9"><a href="prepare-final-dataset.html#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(resultado.vif)</span>
+<span id="cb10-10"><a href="prepare-final-dataset.html#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="prepare-final-dataset.html#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#remove highest</span></span>
+<span id="cb10-12"><a href="prepare-final-dataset.html#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="prepare-final-dataset.html#cb10-13" aria-hidden="true" tabindex="-1"></a>v_table <span class="ot">&lt;-</span> v_table <span class="sc">%&gt;%</span> </span>
+<span id="cb10-14"><a href="prepare-final-dataset.html#cb10-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span> (<span class="sc">-</span>BO_damean)</span>
+<span id="cb10-15"><a href="prepare-final-dataset.html#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="prepare-final-dataset.html#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="do">##### get new vif results</span></span>
+<span id="cb10-17"><a href="prepare-final-dataset.html#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="prepare-final-dataset.html#cb10-18" aria-hidden="true" tabindex="-1"></a>resultado.vif <span class="ot">&lt;-</span> <span class="fu">vif</span>(v_table)</span>
+<span id="cb10-19"><a href="prepare-final-dataset.html#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(resultado.vif)</span>
+<span id="cb10-20"><a href="prepare-final-dataset.html#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="prepare-final-dataset.html#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="prepare-final-dataset.html#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#save data frame without correlated variable</span></span>
+<span id="cb10-23"><a href="prepare-final-dataset.html#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="prepare-final-dataset.html#cb10-24" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span> (<span class="sc">-</span>BO_damean)</span>
+<span id="cb10-25"><a href="prepare-final-dataset.html#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="st">&quot;data&quot;</span>,<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;outputs_for_modelling&quot;</span>,<span class="at">file=</span><span class="st">&quot;PAdata_with_env.RData&quot;</span>))</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="exploratory-plots" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Exploratory plots<a href="prepare-final-dataset.html#exploratory-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="prepare-final-dataset.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">####Leo archivos de especies de peces SP</span></span>
+<span id="cb11-2"><a href="prepare-final-dataset.html#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="prepare-final-dataset.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;outputs_for_modelling&quot;</span>, <span class="st">&quot;PAdata_with_env.Rdata&quot;</span>))</span>
+<span id="cb11-4"><a href="prepare-final-dataset.html#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="prepare-final-dataset.html#cb11-5" aria-hidden="true" tabindex="-1"></a>occ <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb11-6"><a href="prepare-final-dataset.html#cb11-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(data<span class="sc">$</span>occurrenceStatus <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb11-7"><a href="prepare-final-dataset.html#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="prepare-final-dataset.html#cb11-8" aria-hidden="true" tabindex="-1"></a>abs <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb11-9"><a href="prepare-final-dataset.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(data<span class="sc">$</span>occurrenceStatus <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb11-10"><a href="prepare-final-dataset.html#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="prepare-final-dataset.html#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#NOTA INTERNA: El número de ausencias es mayor que las presencias, creo que tiene que ver con haber elimanado los datos de batimetrías menores que 0</span></span>
+<span id="cb11-12"><a href="prepare-final-dataset.html#cb11-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-13"><a href="prepare-final-dataset.html#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">##Salvo el pdf</span></span>
+<span id="cb11-14"><a href="prepare-final-dataset.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;results&quot;</span>, <span class="st">&quot;factsheets_env.pdf&quot;</span>), <span class="at">paper=</span><span class="st">&quot;a4&quot;</span>, <span class="at">width=</span>, <span class="at">height=</span><span class="dv">12</span>,<span class="at">compress=</span>T)</span>
+<span id="cb11-15"><a href="prepare-final-dataset.html#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="prepare-final-dataset.html#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="prepare-final-dataset.html#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>)) </span>
+<span id="cb11-18"><a href="prepare-final-dataset.html#cb11-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-19"><a href="prepare-final-dataset.html#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span> (data)</span>
+<span id="cb11-20"><a href="prepare-final-dataset.html#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="prepare-final-dataset.html#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### 1 BO_bathymean: En plot1 una distribucion de densidad de presencias y ausencias vs bathymetry</span></span>
+<span id="cb11-22"><a href="prepare-final-dataset.html#cb11-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-23"><a href="prepare-final-dataset.html#cb11-23" aria-hidden="true" tabindex="-1"></a>  dens_occ<span class="ot">&lt;-</span><span class="fu">density</span>(occ<span class="sc">$</span>BO_bathymean,<span class="at">na.rm=</span>T)</span>
+<span id="cb11-24"><a href="prepare-final-dataset.html#cb11-24" aria-hidden="true" tabindex="-1"></a>  dens_abs<span class="ot">&lt;-</span><span class="fu">density</span>(abs<span class="sc">$</span>BO_bathymean,<span class="at">na.rm=</span>T)</span>
+<span id="cb11-25"><a href="prepare-final-dataset.html#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="prepare-final-dataset.html#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(dens_occ,<span class="at">xlab=</span><span class="st">&quot;BO_bathymean&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;dens&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb11-27"><a href="prepare-final-dataset.html#cb11-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(dens_abs,<span class="at">xlab=</span><span class="st">&quot;BO_bathymean&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;dens&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb11-28"><a href="prepare-final-dataset.html#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="prepare-final-dataset.html#cb11-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Occurrences&quot;</span>, <span class="st">&quot;Pseudoabsences&quot;</span>),</span>
+<span id="cb11-30"><a href="prepare-final-dataset.html#cb11-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>),<span class="at">pch=</span><span class="fl">0.1</span>, <span class="at">cex=</span><span class="fl">0.8</span>,<span class="at">box.lty=</span><span class="dv">0</span>,<span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
+<span id="cb11-31"><a href="prepare-final-dataset.html#cb11-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-32"><a href="prepare-final-dataset.html#cb11-32" aria-hidden="true" tabindex="-1"></a>  <span class="do">### NOTA INTERNA: hacer los plots para el resto de variables</span></span>
+<span id="cb11-33"><a href="prepare-final-dataset.html#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="prepare-final-dataset.html#cb11-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">#2. &quot;BO_chlomean&quot;  </span></span>
+<span id="cb11-35"><a href="prepare-final-dataset.html#cb11-35" aria-hidden="true" tabindex="-1"></a>  dens_occ<span class="ot">&lt;-</span><span class="fu">density</span>(occ<span class="sc">$</span>BO2_chlomean_ss,<span class="at">na.rm=</span>T)</span>
+<span id="cb11-36"><a href="prepare-final-dataset.html#cb11-36" aria-hidden="true" tabindex="-1"></a>  dens_abs<span class="ot">&lt;-</span><span class="fu">density</span>(abs<span class="sc">$</span>BO2_chlomean_ss,<span class="at">na.rm=</span>T)</span>
+<span id="cb11-37"><a href="prepare-final-dataset.html#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-38"><a href="prepare-final-dataset.html#cb11-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(dens_occ,<span class="at">xlab=</span><span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;dens&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb11-39"><a href="prepare-final-dataset.html#cb11-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(dens_abs,<span class="at">xlab=</span><span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;dens&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb11-40"><a href="prepare-final-dataset.html#cb11-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-41"><a href="prepare-final-dataset.html#cb11-41" aria-hidden="true" tabindex="-1"></a>  <span class="co">#NOTA INTERNA: HAY QUE JUGAR CON LAS ESCALAS</span></span>
+<span id="cb11-42"><a href="prepare-final-dataset.html#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-43"><a href="prepare-final-dataset.html#cb11-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Occurrences&quot;</span>, <span class="st">&quot;Pseudoabsences&quot;</span>),</span>
+<span id="cb11-44"><a href="prepare-final-dataset.html#cb11-44" aria-hidden="true" tabindex="-1"></a>         <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>),<span class="at">pch=</span><span class="fl">0.1</span>, <span class="at">cex=</span><span class="fl">0.8</span>,<span class="at">box.lty=</span><span class="dv">0</span>,<span class="at">xpd=</span><span class="cn">TRUE</span>)  </span>
+<span id="cb11-45"><a href="prepare-final-dataset.html#cb11-45" aria-hidden="true" tabindex="-1"></a>  <span class="co">#3. &quot;BO_damean&quot;      </span></span>
+<span id="cb11-46"><a href="prepare-final-dataset.html#cb11-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-47"><a href="prepare-final-dataset.html#cb11-47" aria-hidden="true" tabindex="-1"></a>  <span class="co">#REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE</span></span>
+<span id="cb11-48"><a href="prepare-final-dataset.html#cb11-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-49"><a href="prepare-final-dataset.html#cb11-49" aria-hidden="true" tabindex="-1"></a>  <span class="co">#4. &quot;BO_salinity&quot; </span></span>
+<span id="cb11-50"><a href="prepare-final-dataset.html#cb11-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-51"><a href="prepare-final-dataset.html#cb11-51" aria-hidden="true" tabindex="-1"></a>   <span class="co">#REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE</span></span>
+<span id="cb11-52"><a href="prepare-final-dataset.html#cb11-52" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-53"><a href="prepare-final-dataset.html#cb11-53" aria-hidden="true" tabindex="-1"></a>  <span class="co">#5. &quot;BO_sstmean&quot; </span></span>
+<span id="cb11-54"><a href="prepare-final-dataset.html#cb11-54" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-55"><a href="prepare-final-dataset.html#cb11-55" aria-hidden="true" tabindex="-1"></a>   <span class="co">#REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE</span></span>
+<span id="cb11-56"><a href="prepare-final-dataset.html#cb11-56" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-57"><a href="prepare-final-dataset.html#cb11-57" aria-hidden="true" tabindex="-1"></a>  <span class="co">#6. &quot;BO_sstrange&quot; </span></span>
+<span id="cb11-58"><a href="prepare-final-dataset.html#cb11-58" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-59"><a href="prepare-final-dataset.html#cb11-59" aria-hidden="true" tabindex="-1"></a>   <span class="co">#REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE</span></span>
+<span id="cb11-60"><a href="prepare-final-dataset.html#cb11-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-61"><a href="prepare-final-dataset.html#cb11-61" aria-hidden="true" tabindex="-1"></a> <span class="fu">dev.off</span>()</span></code></pre></div>
 
 </div>
 </div>

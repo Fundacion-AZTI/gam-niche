@@ -18,6 +18,7 @@ library(ggplot2)
 library(maps)
 library(rgbif)
 library(dataverse)
+library(rstudioapi)
 
 # libraries for bio-oracle
 library(rgdal)
@@ -28,6 +29,9 @@ library(leaflet)
 #install.packages("sdmpredictors")
 #install.packages("leaflet")
 
+# location of script
+setwd(dirname(getSourceEditorContext()$path))
+
 # Explore datasets in the package 
 list_datasets()
 list_layers("Bio-ORACLE")
@@ -35,8 +39,25 @@ mytab <- list_layers("Bio-ORACLE")
 
 ## Download specific layers to the current directory 
 
-myBioracle.layers <- load_layers(c("BO_chlomean", "BO_damean", "BO_salinity", "BO_sstmean", "BO_sstrange", "BO_bathymean")) 
+myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")) 
 save(myBioracle.layers, file="data/env/myBioracle.layers.Rdata")
+
+#load area plygon
+load("data/spatial/area.RData")
+
+# transform object to select only data in the area of interest
+
+env_dataframe <- as.data.frame(myBioracle.layers, xy=TRUE)
+ptos<-env_dataframe[,c("x","y")]
+
+coordinates(ptos) <- ~ x + y
+proj4string(ptos) <-proj4string(area)
+  
+## Select only occurrences in the defined previously selected area
+env_dataframe<-data.frame(subset(env_dataframe,!is.na(over(ptos, area)[,1])))
+
+#save the data frame
+save(env_dataframe,file="data/env/env_dataframe.Rdata")
 
 
 ```

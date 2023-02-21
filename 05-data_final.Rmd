@@ -7,12 +7,33 @@ editor_options:
 
 Bla bla bla
 
+### Loading required libraries
+
+```{r, eval=F}
+library(rgdal) # to read shp
+library(raster) # to work with rasters
+library (here) # Libraries for reproducible workflow
+library (sp)     # to perform raster
+library(HH) #to calculate for VIF (Variance Inflation Factor)
+library(ggplot2)# plots
+library(gridExtra)# multiple plots
+library(dplyr)
+library(RColorBrewer)#plotting colors
+library(fields)#ploting images
+library(marmap)#ploting world
+library(maptools)#mapping
+library(rstudioapi)
+```
+
 ## Extract environmental data associated to presence-absence data
 
 ```{r, eval=F}
 
+# location of script
+setwd(dirname(getSourceEditorContext()$path))
+
 #load data
-load("C:/use/GitHub/SDM/data/outputs_for_modelling/PAdata.RData")
+load("data/outputs_for_modelling/PAdata.RData")
 load(file="data/env/myBioracle.layers.Rdata") 
 
 
@@ -22,11 +43,17 @@ load(file="data/env/myBioracle.layers.Rdata")
 mydata1.env.bil <- raster::extract(x=myBioracle.layers,y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) # 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)
 
 # merge with pa data
-dat.all <- cbind(dat, mydata1.env.bil)
+data <- cbind(dat, mydata1.env.bil)
 
-summary(dat.all) # 23198 sites : 114 are NAs
+# remove positive bathymetries
 
-save(list="dat.all",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
+data<-subset(data,BO_bathymean<0)
+
+summary(data) # 29435 sites : 4 are NAs
+
+#save data frame
+
+save(list="data",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
 
 ```
 
@@ -40,29 +67,6 @@ With this script we assess the correlation between environmental variables based
 
 Project: IM-20-MISSION
 
-### Loading required libraries
-
-```{r}
-library(rgdal) # to read shp
-library(raster) # to work with rasters
-library (here) # Libraries for reproducible workflow
-library (sp)     # to perform raster
-library(HH) #to calculate for VIF (Variance Inflation Factor)
-library(ggplot2)# plots
-library(gridExtra)# multiple plots
-library(dplyr)
-library(RColorBrewer)#plotting colors
-library(fields)#ploting images
-library(marmap)#ploting world
-library(maptools)#mapping
-```
-
-### Loading variable set for 0 m depth
-
-```{r}
-set_0_m <- brick(here::here("data", "outputs_for_modelling","set_0_m.tif"))
-```
-
 #### Analysis of Variance Inflation Factor (VIF) 
 
 VIF is a measure of the amount of multicollinearity in regression analysis
@@ -73,57 +77,42 @@ VIF greater than 5 = variables are highly correlated
 
 If you found high multicollinearity between two variables, you don’t need both of them in your model.
 
-```{r}
-#### Transforming from stack to table
+```{r, eval=F}
 
-v_table_0_m <- as.data.frame(set_0_m, xy=TRUE)
+# select variables for vif calculation
 
-##### See a summary of the table
-
-summary(v_table_0_m)
-
-#names
-
-names (v_table_0_m) <- c("x", 
-                        "y", 
-                         "temp_0", 
-                         "sal_0",
-                         "nit_0",
-                         "do_0", 
-                         #"rel_dist_0", 
-                         "dist_seabed_0", 
-                         "mld_rel_0", 
-                         "npp_0")
-
-# remove xy for vif calculation
-
-v_table_0_m_cor <- v_table_0_m %>% 
-  dplyr::select (-x, -y)
+v_table <- data %>% 
+  dplyr::select (BO2_salinitymean_ss,BO_sstmean,BO2_chlomean_ss,BO_bathymean,BO_damean)
 
 ##### get vif results
 
-resultado.vif <- vif(v_table_0_m_cor)
-resultado.vif
+resultado.vif <- vif(v_table)
+sort(resultado.vif)
 
-#remove Dissolved Oxigen (do) because is higly correlated to temperature
+#remove highest
 
-v_table_0_m_cor <- v_table_0_m_cor %>% 
-  dplyr::select (-do_0)
+v_table <- v_table %>% 
+  dplyr::select (-BO_damean)
 
 ##### get new vif results
 
-resultado.vif <- vif(v_table_0_m_cor)
-resultado.vif
+resultado.vif <- vif(v_table)
+sort(resultado.vif)
+
+
+#save data frame without correlated variable
+
+data <- data %>% dplyr::select (-BO_damean)
+save(list="data",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
+
 ```
 
 ## Exploratory plots
 
-```{r}
+```{r, eval=F}
 ####Leo archivos de especies de peces SP
 
-load(here::here ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
-
-data<-subset(dat.all,BO_bathymean<0)
+load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
 
 occ <- data %>% 
   dplyr::filter(data$occurrenceStatus == 1)
@@ -134,7 +123,7 @@ abs <- data %>%
 #NOTA INTERNA: El número de ausencias es mayor que las presencias, creo que tiene que ver con haber elimanado los datos de batimetrías menores que 0
   
 ##Salvo el pdf
-pdf(file=here::here("results", "factsheets_env.pdf"), paper="a4", width=, height=12,compress=T)
+pdf(file=file.path("results", "factsheets_env.pdf"), paper="a4", width=, height=12,compress=T)
 
 
   par(mfrow=c(3,3)) 
@@ -155,11 +144,11 @@ pdf(file=here::here("results", "factsheets_env.pdf"), paper="a4", width=, height
   ### NOTA INTERNA: hacer los plots para el resto de variables
 
   #2. "BO_chlomean"  
-  dens_occ<-density(occ$BO_chlomean,na.rm=T)
-  dens_abs<-density(abs$BO_chlomean,na.rm=T)
+  dens_occ<-density(occ$BO2_chlomean_ss,na.rm=T)
+  dens_abs<-density(abs$BO2_chlomean_ss,na.rm=T)
 
-  plot(dens_occ,xlab="BO_chlomean", ylab="dens", main = "",col="red")
-  lines(dens_abs,xlab="BO_chlomean", ylab="dens", main = "",col="blue")
+  plot(dens_occ,xlab="BO2_chlomean_ss", ylab="dens", main = "",col="red")
+  lines(dens_abs,xlab="BO2_chlomean_ss", ylab="dens", main = "",col="blue")
   
   #NOTA INTERNA: HAY QUE JUGAR CON LAS ESCALAS
 
