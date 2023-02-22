@@ -57,19 +57,13 @@ model0 <- scam (occurrenceStatus ~  s(BO2_chlomean_ss, k=8,bs="cv"), family=bino
 summary(model0)
 plotmo(model0,level = 0.95, pt.col=8)
 
-model0 <- scam (occurrenceStatus ~  s(BO_bathymean, k=8,bs="cv"), family=binomial(link="logit"), data=data)
-summary(model0)
-plotmo(model0,level = 0.95, pt.col=8)
-
 model0 <- scam (occurrenceStatus ~  s(BO2_salinitymean_ss, k=8,bs="cv"), family=binomial(link="logit"), data=data,sp=0.00001)
 summary(model0)
 plotmo(model0,level = 0.95, pt.col=8)
 
-# including all variables
-model <- scam (occurrenceStatus ~  s(BO_sstmean, k=8,bs="cv")+ s(BO2_salinitymean_ss, k=8,bs="cv")+s(BO2_chlomean_ss, k=8,bs="cv")+s(BO_bathymean,k=8,bs="cv"), family=binomial(link="logit"), data=data,sp=rep(0.00001,4))
 
-# including all variables except bathymetry
-model_nobathy <- scam (occurrenceStatus ~  s(BO_sstmean, k=8,bs="cv")+ s(BO2_salinitymean_ss, k=8,bs="cv")+s(BO2_chlomean_ss, k=8,bs="cv"), family=binomial(link="logit"), data=data,sp=rep(0.00001,3))
+# model with the 3 variables
+model <- scam (occurrenceStatus ~  s(BO_sstmean, k=8,bs="cv")+ s(BO2_salinitymean_ss, k=8,bs="cv")+s(BO2_chlomean_ss, k=8,bs="cv"), family=binomial(link="logit"), data=data,sp=rep(0.00001,3))
 
 
 #Check model which contains all variables
@@ -78,12 +72,9 @@ scam.check(model)
 plot(model)
 plotmo(model,level = 0.95, pt.col=8)
 
-summary(model_nobathy)
-plotmo(model_nobathy,level = 0.95, pt.col=8)
-
 # Save the model
 selected_model<-model
-save(list=c("model","model_nobathy","selected_model"), file = ("models/model.RData"))
+save(list=c("selected_model"), file = ("models/model.RData"))
 ```
 
 
@@ -102,8 +93,7 @@ preparing data
 #NOTA INTERNA: añadir el nombre de las variables que tenemos
 vars <- c("BO_sstmean",
           "BO2_salinitymean_ss",
-          "BO2_chlomean_ss",
-          "BO_bathymean")
+          "BO2_chlomean_ss")
 ```
 
 Code to build SC-GAM model default sp= NULL, k = 8 and plevel  = 0.05
@@ -132,8 +122,6 @@ summary(selected_model)
 scam.check(selected_model)
 plot(selected_model)
 plotmo(selected_model,level = 0.95, pt.col=8)
-
-
 
 # Save the model
 

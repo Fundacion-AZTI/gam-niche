@@ -7,9 +7,8 @@ editor_options:
 
 Bla bla bla
 
-## Download presence data
 
-Download from GBIF OBIS. Mireia
+Loading required libraries
 
 ```{r, eval=F}
 # Script information ------------------------------------------------------
@@ -53,7 +52,13 @@ setwd(dirname(getSourceEditorContext()$path))
 
 # general settings for ggplot (black-white background, larger base_size)
 theme_set(theme_bw(base_size = 16))
+```
 
+## Download presence data
+
+Download from GBIF OBIS. Mireia
+
+```{r, eval=F}
 
 # STUDY AREA
 ---------------------------------
@@ -455,7 +460,7 @@ write.table(dat, file=file.path("data","outputs_for_modelling","PAdata.csv"), ro
 
 End of script -----------------------------------------------------------
   
-  ```
+```
 
 
 

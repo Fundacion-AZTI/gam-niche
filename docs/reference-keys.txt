@@ -26,3 +26,8 @@ find-the-difference-i.e.-reverse-of-st_intersection
 find-data-by-scientific-name-in-the-datasets-obisgbif
 projection
 mapping
+loading-required-libraries-2
+loading-required-libraries-3
+variable-correlation-analysis-of-variance-inflation-factor-vif
+loading-required-libraries-4
+loading-required-libraries-5

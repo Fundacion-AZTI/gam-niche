@@ -2,9 +2,7 @@
 
 Bla bla bla
 
-## Download from public repositories
-
-Download from Bio-oracle. 
+Loading required libraries
 
 ```{r, eval=F}
 ### Download Environmental data from Bio-oracle
@@ -31,7 +29,13 @@ library(leaflet)
 
 # location of script
 setwd(dirname(getSourceEditorContext()$path))
+```
 
+## Download from public repositories
+
+Download from Bio-oracle. 
+
+```{r, eval=F}
 # Explore datasets in the package 
 list_datasets()
 list_layers("Bio-ORACLE")

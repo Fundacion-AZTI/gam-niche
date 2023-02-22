@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-02-21" />
+<meta name="date" content="2023-02-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -233,22 +233,16 @@ div.csl-indent {
 <span id="cb9-9"><a href="projection.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/env/env_dataframe.Rdata&quot;</span>)</span>
 <span id="cb9-10"><a href="projection.html#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-11"><a href="projection.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#remove positive bathy</span></span>
-<span id="cb9-12"><a href="projection.html#cb9-12" aria-hidden="true" tabindex="-1"></a>env_dataframe<span class="ot">&lt;-</span><span class="fu">subset</span>(env_dataframe,BO_bathymean<span class="sc">&lt;</span><span class="dv">0</span>)</span>
+<span id="cb9-12"><a href="projection.html#cb9-12" aria-hidden="true" tabindex="-1"></a>env_dataframe_proj<span class="ot">&lt;-</span><span class="fu">subset</span>(env_dataframe,BO_bathymean<span class="sc">&lt;</span><span class="dv">0</span>)</span>
 <span id="cb9-13"><a href="projection.html#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-14"><a href="projection.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Load SC-GAM model</span></span>
 <span id="cb9-15"><a href="projection.html#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-16"><a href="projection.html#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;model.Rdata&quot;</span>))</span>
 <span id="cb9-17"><a href="projection.html#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-18"><a href="projection.html#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting </span></span>
-<span id="cb9-19"><a href="projection.html#cb9-19" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(model,<span class="at">newdata=</span>env_dataframe,<span class="at">type =</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit=</span>T)         </span>
-<span id="cb9-20"><a href="projection.html#cb9-20" aria-hidden="true" tabindex="-1"></a>env_dataframe<span class="sc">$</span>fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>fit</span>
-<span id="cb9-21"><a href="projection.html#cb9-21" aria-hidden="true" tabindex="-1"></a>env_dataframe<span class="sc">$</span>se.fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>se.fit</span>
-<span id="cb9-22"><a href="projection.html#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="projection.html#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting model without bathymetry</span></span>
-<span id="cb9-24"><a href="projection.html#cb9-24" aria-hidden="true" tabindex="-1"></a>env_dataframe2<span class="ot">&lt;-</span>env_dataframe</span>
-<span id="cb9-25"><a href="projection.html#cb9-25" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_nobathy,<span class="at">newdata=</span>env_dataframe2,<span class="at">type =</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit=</span>T)         </span>
-<span id="cb9-26"><a href="projection.html#cb9-26" aria-hidden="true" tabindex="-1"></a>env_dataframe2<span class="sc">$</span>fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>fit</span>
-<span id="cb9-27"><a href="projection.html#cb9-27" aria-hidden="true" tabindex="-1"></a>env_dataframe2<span class="sc">$</span>se.fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>se.fit</span></code></pre></div>
+<span id="cb9-19"><a href="projection.html#cb9-19" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model,<span class="at">newdata=</span>env_dataframe_proj,<span class="at">type =</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit=</span>T)         </span>
+<span id="cb9-20"><a href="projection.html#cb9-20" aria-hidden="true" tabindex="-1"></a>env_dataframe_proj<span class="sc">$</span>fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>fit</span>
+<span id="cb9-21"><a href="projection.html#cb9-21" aria-hidden="true" tabindex="-1"></a>env_dataframe_proj<span class="sc">$</span>se.fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>se.fit</span></code></pre></div>
 </div>
             </section>
 

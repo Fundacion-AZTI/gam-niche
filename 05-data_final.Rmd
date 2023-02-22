@@ -7,7 +7,7 @@ editor_options:
 
 Bla bla bla
 
-### Loading required libraries
+Loading required libraries
 
 ```{r, eval=F}
 library(rgdal) # to read shp
@@ -57,17 +57,15 @@ save(list="data",file=file.path("data","outputs_for_modelling",file="PAdata_with
 
 ```
 
-## Variable correlation 
+## Variable correlation: Analysis of Variance Inflation Factor (VIF) 
 
-#Nota interna: copio el script de analísis VIF para las variables superficiales del proyecto MISSION
+<!-- #Nota interna: copio el script de analísis VIF para las variables superficiales del proyecto MISSION -->
 
-### Script information
+<!-- ### Script information -->
 
 With this script we assess the correlation between environmental variables based on Variance Inflation Factor (VIF) by depth set 
 
 Project: IM-20-MISSION
-
-#### Analysis of Variance Inflation Factor (VIF) 
 
 VIF is a measure of the amount of multicollinearity in regression analysis
 
@@ -82,7 +80,7 @@ If you found high multicollinearity between two variables, you don’t need both
 # select variables for vif calculation
 
 v_table <- data %>% 
-  dplyr::select (BO2_salinitymean_ss,BO_sstmean,BO2_chlomean_ss,BO_bathymean,BO_damean)
+  dplyr::select (BO2_salinitymean_ss,BO_sstmean,BO2_chlomean_ss,BO_damean)
 
 ##### get vif results
 

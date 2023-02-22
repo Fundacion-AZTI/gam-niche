@@ -36,16 +36,21 @@ library(dismo)
 library(ggplot2)
 library(ggpubr)
 library(hrbrthemes) # theme_ipsum
+library(rstudioapi)
 ```
 
 ## Optimum threshold
 
 ```{r, eval=F}
+
+# location of script
+setwd(dirname(getSourceEditorContext()$path))
+
 #NOTA INTERNA: aquí hay que cargar el RData del modelo, cargo el que se crea con el 06-model_fit para poder correr el código
 
 #Load SC-GAM model
 
-load(here::here ("models", "model.Rdata"))
+load(file.path ("models", "model.Rdata"))
 
 #Load species PA data
 

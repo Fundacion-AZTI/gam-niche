@@ -7,7 +7,7 @@ editor_options:
 
 predict from fitted models and produce maps
 
-### Loading required libraries
+Loading required libraries
 
 ```{r, eval=F}
 
@@ -20,9 +20,12 @@ library(raster)
 library(RColorBrewer)#color palette
 library(tidyverse)
 library(rstudioapi)
+
+# general settings for ggplot (black-white background, larger base_size)
+theme_set(theme_bw(base_size = 16))
 ```
 
-# Projection
+## Projection
 
 ```{r, eval=F}
 
@@ -37,35 +40,31 @@ load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
 load("data/env/env_dataframe.Rdata")
 
 #remove positive bathy
-env_dataframe<-subset(env_dataframe,BO_bathymean<0)
+env_dataframe_proj<-subset(env_dataframe,BO_bathymean<0)
 
 #Load SC-GAM model
 
 load(file.path("models", "model.Rdata"))
 
 # predicting 
-predict <- predict(model,newdata=env_dataframe,type ="response",se.fit=T)         
-env_dataframe$fit<-predict$fit
-env_dataframe$se.fit<-predict$se.fit
+predict <- predict(selected_model,newdata=env_dataframe_proj,type ="response",se.fit=T)         
+env_dataframe_proj$fit<-predict$fit
+env_dataframe_proj$se.fit<-predict$se.fit
 
-# predicting model without bathymetry
-env_dataframe2<-env_dataframe
-predict <- predict(model_nobathy,newdata=env_dataframe2,type ="response",se.fit=T)         
-env_dataframe2$fit<-predict$fit
-env_dataframe2$se.fit<-predict$se.fit
 
 ```
 
 
-# Mapping
+## Mapping
 
 ```{r, eval=F}
-p11<-ggplot()+geom_raster(data=subset(env_dataframe),aes(x,y,fill=fit))+scale_fill_gradient2(low="blue", mid="orange",high="red",midpoint = 0.5) +ggtitle("with bathy concave")+ geom_point(data=subset(data,occurrenceStatus==1),aes(LON,LAT),col=1,size=0.3)     
+p<-ggplot()+geom_raster(data=subset(env_dataframe_proj),aes(x,y,fill=fit))+scale_fill_gradient2(low="blue", mid="orange",high="red",midpoint = 0.5) +ggtitle("with bathy concave")+ geom_point(data=subset(data,occurrenceStatus==1),aes(LON,LAT),col=1,size=0.3)     
 
-p12<-ggplot()+geom_raster(data=subset(env_dataframe2),aes(x,y,fill=fit))+scale_fill_gradient2(low="blue", mid="orange",high="red",midpoint = 0.5)+ggtitle("without bathy")+ geom_point(data=subset(data,occurrenceStatus==1),aes(LON,LAT),col=1,size=0.3)       
+print(p)
 
-grid.arrange(p11,p12,nrow=1)
+ggsave(file.path("plots","projections",paste0("proj_map.png")), p, device="png")
 
+save(env_dataframe_proj, file="results/projection.Rdata")
 
 ```
 
