@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Libraries
 
 Load libraries that will be used
@@ -11,3 +16,27 @@ Note that all the libraries must be installed. If some library is not installed,
 ```{r}
 install.packages("scam")
 ```
+
+#NOTA INTERNA: eta zerbait horrela idazten badugu: 
+
+List of required packages to follow this tutorial
+```{r}
+requiredPackages <- c("scam", #to build SC-GAMs models
+                      "raster", #to work with spatial data
+                      "ggplot2" #for plotting
+                      )
+```
+
+Function to install packages in case is need and load all required packages
+```{r}
+#Function to install the required packages that are not in your system and load all the required packages
+install_load_function <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg))
+    install.packages(new.pkg, dependencies = TRUE)
+  sapply(pkg, require, character.only = TRUE)
+}
+
+install_load_function(requiredPackages)
+```
+
