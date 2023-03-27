@@ -1,68 +1,109 @@
 # Environmental data
 
-Bla bla bla
-
 Loading required libraries
 
-```{r, eval=F}
+```{r, eval=T, warning=F, message=F}
 ### Download Environmental data from Bio-oracle
 
-# for mapping ...
-library(maptools)
-library(rgrass7)
-library(raster)
-library(sp)
-library(ggplot2)
-library(maps)
-library(rgbif)
-library(dataverse)
-library(rstudioapi)
+# # for mapping ...
+# library(maptools)
+# library(rgrass7)
+# library(raster)
+# library(sp)
+# library(ggplot2)
+# library(maps)
+# library(rgbif)
+# library(dataverse)
+# library(rstudioapi)
 
 # libraries for bio-oracle
-library(rgdal)
-library(sdmpredictors) 
-library(leaflet)
+# library(rgdal)
+#library(sdmpredictors) 
+# library(leaflet)
+
+library(knitr) # format tables
+library(kableExtra) # format tables
 
 # http://bio-oracle.org/code.php
 #install.packages("sdmpredictors")
 #install.packages("leaflet")
 
 # location of script
-setwd(dirname(getSourceEditorContext()$path))
+#setwd(dirname(getSourceEditorContext()$path))
 ```
 
 ## Download from public repositories
 
-Download from Bio-oracle. 
+Environmental data can be available from different sources. In this case, we used the Bio-ORACLE (ocean
+rasters for analyses of climate and environment) database [@tyberghein_etal_2012; @assis_etal_2017]. These data are publicly available and are easily accessible from the `sdmpredictors` package [`sdmpredictors`](https://cran.r-project.org/web/packages/sdmpredictors/index.html). 
 
-```{r, eval=F}
-# Explore datasets in the package 
-list_datasets()
-list_layers("Bio-ORACLE")
+After loading the `sdmpredictors` package, we can check the list of available datasets with the function `list_datasets` as follows: 
+
+```{r, eval=T, warning=F, message=F}
+library(sdmpredictors) 
+
+mydat <- list_datasets()
+
+kable(mydat)%>% 
+  kable_styling("striped") %>% 
+  scroll_box(height="600px", width = "100%")
+```
+
+By default this function returns all the supported datasets. To return only marine datasets we can set the `marine` argument equal to `TRUE` or equivalently we could set the `terrestrial` and `freshwater` arguments equal to `FALSE`:
+
+```{r, eval=T}
+mydat <- list_datasets(marine=T)
+# or equivalently: 
+# mydat <- list_datasets(terrestrial=F, freshwater=F)
+# mydat <- list_datasets(marine=T, terrestrial=F, freshwater=F)
+
+kable(mydat)%>% 
+  kable_styling("striped") %>% 
+  scroll_box(height="600px", width = "100%")
+```
+
+There are two datasets (Bio-ORACLE and MARSOEC) that have marine data. The function `list_layers` returns information on the layers of one or more datasets. So, we can see the layers available in the Bio-ORACLE dataset as follows:
+
+```{r, eval=T}
 mytab <- list_layers("Bio-ORACLE")
 
-## Download specific layers to the current directory 
-
-myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")) 
-save(myBioracle.layers, file="data/env/myBioracle.layers.Rdata")
-
-#load area plygon
-load("data/spatial/area.RData")
-
-# transform object to select only data in the area of interest
-
-env_dataframe <- as.data.frame(myBioracle.layers, xy=TRUE)
-ptos<-env_dataframe[,c("x","y")]
-
-coordinates(ptos) <- ~ x + y
-proj4string(ptos) <-proj4string(area)
-  
-## Select only occurrences in the defined previously selected area
-env_dataframe<-data.frame(subset(env_dataframe,!is.na(over(ptos, area)[,1])))
-
-#save the data frame
-save(env_dataframe,file="data/env/env_dataframe.Rdata")
-
-
+kable(mytab)%>% 
+  kable_styling("striped") %>% 
+  scroll_box(height="600px", width = "100%")
 ```
+
+Once we identify the dataset and the layers we are interested on, we can download them using the function `load_layers`. In this case, we download data on chlorophyl, salinity, XX, surface temperature and bathymetry:  
+
+```{r, eval=T}
+myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")) 
+```
+
+Note that the resulting object is a `rasterStack`, where each variable is a layer
+
+```{r}
+class(myBioracle.layers)
+myBioracle.layers
+``` 
+
+And we can plot it:
+
+```{r, warning=F, message=F}
+library(raster)
+raster::plot(myBioracle.layers)
+```
+
+To facilitate subsequent access, the rasterStackwith the downloaded data is saved in a local folder: 
+
+```{r, eval=T}
+save(myBioracle.layers, file="data/env/myBioracle.layers.Rdata")
+```
+
+Note that the functions `dataset_citations` and `layer_citations` provide the bibliographic entries of the datasets and layers for proper citation:
+
+```{r}
+print(dataset_citations("Bio-ORACLE"))
+print(layer_citations("BO2_chlomean_ss"))
+```
+
+
 

@@ -5,40 +5,45 @@ editor_options:
 ---
 # Prepare final dataset
 
-Bla bla bla
-
 Loading required libraries
 
 ```{r, eval=F}
-library(rgdal) # to read shp
-library(raster) # to work with rasters
-library (here) # Libraries for reproducible workflow
-library (sp)     # to perform raster
-library(HH) #to calculate for VIF (Variance Inflation Factor)
-library(ggplot2)# plots
-library(gridExtra)# multiple plots
-library(dplyr)
-library(RColorBrewer)#plotting colors
-library(fields)#ploting images
-library(marmap)#ploting world
-library(maptools)#mapping
-library(rstudioapi)
+# library(rgdal) # to read shp
+# library(raster) # to work with rasters
+# library (here) # Libraries for reproducible workflow
+# library (sp)     # to perform raster
+# library(HH) #to calculate for VIF (Variance Inflation Factor)
+# library(ggplot2)# plots
+# library(gridExtra)# multiple plots
+# library(dplyr)
+# library(RColorBrewer)#plotting colors
+# library(fields)#ploting images
+# library(marmap)#ploting world
+# library(maptools)#mapping
+# library(rstudioapi)
 ```
 
 ## Extract environmental data associated to presence-absence data
 
+Once the environmental rasters and the species abundance data (including pseudo-absences) have been prepared, we need to merge both sources of data. 
+
+
+
 ```{r, eval=F}
 
 # location of script
-setwd(dirname(getSourceEditorContext()$path))
+#setwd(dirname(getSourceEditorContext()$path))
 
 #load data
 load("data/outputs_for_modelling/PAdata.RData")
 load(file="data/env/myBioracle.layers.Rdata") 
+```
 
+For that we extract the environmental data associated to each of the species data points using the function `extract` from the `raster` package:
 
 ### Extract environmental values from layers 
 
+```{r, eval=F}
 # con Bilinear extraigo los sites de los 4 nearest cells 
 mydata1.env.bil <- raster::extract(x=myBioracle.layers,y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) # 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)
 

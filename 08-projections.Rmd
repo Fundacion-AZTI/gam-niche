@@ -25,6 +25,44 @@ library(rstudioapi)
 theme_set(theme_bw(base_size = 16))
 ```
 
+## Prepare environmental data. 04 ATALETIK HONA MUGITUTA
+
+In previous steps (see section XX), we have defined the polygon that defines the extent of our spatial data. We load the `area` object that is a SpatialPolygonsDataFrame class:
+
+```{r, eval=T, warning=F, message=F}
+load("data/spatial/area.RData")
+```
+
+And we load the rasterStack with the downloaded environmental data
+
+```{r}
+load("data/env/myBioracle.layers.Rdata")
+```
+
+We transform the environmental data set first into a data frame, and then into a SpatialDataFrame   
+
+```{r, eval=F}
+env_dataframe <- raster::as.data.frame(myBioracle.layers, xy=TRUE)
+pts <- env_dataframe[,c("x","y")]
+
+coordinates(pts) <- ~ x + y
+proj4string(pts) <-proj4string(area)
+```
+
+```{r, eval=F}
+  
+## Select only occurrences in the defined previously selected area
+env_dataframe <- data.frame(subset(env_dataframe, !is.na(over(pts, area)[,1])))
+```
+
+```{r, eval=F}
+
+#save the data frame
+save(env_dataframe, file="data/env/env_dataframe.Rdata")
+```
+
+
+
 ## Projection
 
 ```{r, eval=F}
