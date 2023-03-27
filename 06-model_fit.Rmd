@@ -6,7 +6,7 @@ editor_options:
 # Shape Constrained-Generalized Additive Models
 
 
-In order to fit SDM in agreement with the ecological niche theory, the proposed shape-constrained GAMs in [@citores_etal_2020] are fitted in this section. SC-GAMs are based on generalized additive models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by Pya (2014) using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting species distribution models in agreement with the ecological niche theory, we imposed concavity  constraints ($f''(x) \le 0$), so that the response can presents at most a single mode.  
+In order to fit SDM in agreement with the ecological niche theory, the proposed shape-constrained GAMs in [@citores_etal_2020] are fitted in this section. SC-GAMs are based on generalized additive models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by [@pya_etal_2015] using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting species distribution models in agreement with the ecological niche theory, we imposed concavity  constraints ($f''(x) \le 0$), so that the response can presents at most a single mode.  
 
 Alternatively, the R package `mboost` fits SC-GAMs using boosting methodos. This alternative won't be further developed here.
 
@@ -99,7 +99,7 @@ save(list=c("selected_model"), file = ("models/model.RData"))
 
 ## Model selection
 
-When several expalanotry variables are available, a variable selection process can be carried out. Here we provide a function to perform forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits. 
+When several explanatory variables are available, a variable selection process can be carried out. Here we provide as an example, a function that performs forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits. 
 
 ```{r, eval=T,message=FALSE,warning=FALSE}
 source("function/function_scam_selection_optimized.R")
@@ -116,31 +116,38 @@ vars <- c("BO_sstmean",
 The default AIC tolerance is 2 and there is not a limit on selected terms in this example. These options can be modified through aic.tol and vmax arguments in the function. The number of knots and the sp can be also modified.
 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-  model_SCGAM <- try(modsel.scam(basef="occurrenceStatus ~ 1", vars=vars, dat=data,sp=0.00001), silent=T)
+model_SCGAM <- try(modsel.scam(basef="occurrenceStatus ~ 1", vars=vars, dat=data,sp=0.00001), silent=T)  
 ```
 
-We check results of the selected model:
-
-```{r, eval=F}
+We check results of the selected model, such as, selected variable names:
+```{r, eval=T,message=FALSE,warning=FALSE}
 model_SCGAM$svars
-sapply(model_SCGAM$smod, AIC)
-sapply(model_SCGAM$smod, function(x) summary(x)$dev.expl)
-lapply(model_SCGAM$smod, formula)
-lapply(model_SCGAM$smod, summary)
-
-#Select the last model of the list which is the best model according to AIC and plevel criteria
-selected_model <- model_SCGAM$smod[[length(model_SCGAM$smod)]]
-selected_model$sp
-
-# see specifically the summary and the plots of the final model after the selection
-# note that it is the last element of the list of models
-summary(selected_model)
-scam.check(selected_model)
-plot(selected_model)
-plotmo(selected_model,level = 0.95, pt.col=8)
-
-# Save the model
-
-#save(selected_model, file = "models/selected_model.RData")
-
 ```
+
+AICs of the fitted models:
+```{r, eval=T,message=FALSE,warning=FALSE}
+sapply(model_SCGAM$smod, AIC)
+```
+
+Explained deviance of fitted models:
+```{r, eval=T,message=FALSE,warning=FALSE}
+sapply(model_SCGAM$smod, function(x) summary(x)$dev.expl)
+```
+
+Formulas of the fitted models:
+```{r, eval=T,message=FALSE,warning=FALSE}
+lapply(model_SCGAM$smod, formula)
+```
+
+Summaries of the fitted models:
+```{r, eval=T,message=FALSE,warning=FALSE}
+lapply(model_SCGAM$smod, summary)
+```
+
+The last model of the list, is the selected one. Which in this case contains the considered three variables.
+
+```{r, eval=T,message=FALSE,warning=FALSE}
+selected_model <- model_SCGAM$smod[[length(model_SCGAM$smod)]]
+```
+
+Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be also for SC-GAMs.

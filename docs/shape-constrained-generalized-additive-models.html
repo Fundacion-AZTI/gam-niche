@@ -215,7 +215,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="shape-constrained-generalized-additive-models" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Shape Constrained-Generalized Additive Models<a href="shape-constrained-generalized-additive-models.html#shape-constrained-generalized-additive-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In order to fit SDM in agreement with the ecological niche theory, the proposed shape-constrained GAMs in <span class="citation">(<a href="#ref-citores_etal_2020" role="doc-biblioref">Citores et al. 2020</a>)</span> are fitted in this section. SC-GAMs are based on generalized additive models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by Pya (2014) using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting species distribution models in agreement with the ecological niche theory, we imposed concavity constraints (<span class="math inline">\(f&#39;&#39;(x) \le 0\)</span>), so that the response can presents at most a single mode.</p>
+<p>In order to fit SDM in agreement with the ecological niche theory, the proposed shape-constrained GAMs in <span class="citation">(<a href="#ref-citores_etal_2020" role="doc-biblioref">Citores et al. 2020</a>)</span> are fitted in this section. SC-GAMs are based on generalized additive models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by <span class="citation">(<a href="#ref-pya_etal_2015" role="doc-biblioref">Pya and Wood 2015</a>)</span> using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting species distribution models in agreement with the ecological niche theory, we imposed concavity constraints (<span class="math inline">\(f&#39;&#39;(x) \le 0\)</span>), so that the response can presents at most a single mode.</p>
 <p>Alternatively, the R package <code>mboost</code> fits SC-GAMs using boosting methodos. This alternative won’t be further developed here.</p>
 <p>First we load all required libraries.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="shape-constrained-generalized-additive-models.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scam)</span>
@@ -361,14 +361,14 @@ div.csl-indent {
 </div>
 <div id="model-selection" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Model selection<a href="shape-constrained-generalized-additive-models.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>When several expalanotry variables are available, a variable selection process can be carried out. Here we provide a function to perform forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits.</p>
+<p>When several explanatory variables are available, a variable selection process can be carried out. Here we provide as an example, a function that performs forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="shape-constrained-generalized-additive-models.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;function/function_scam_selection_optimized.R&quot;</span>)</span></code></pre></div>
 <p>We save the names of the variables we want to introduce for the variable selection process as a vector:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="shape-constrained-generalized-additive-models.html#cb20-1" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BO_sstmean&quot;</span>,</span>
 <span id="cb20-2"><a href="shape-constrained-generalized-additive-models.html#cb20-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;BO2_salinitymean_ss&quot;</span>,</span>
 <span id="cb20-3"><a href="shape-constrained-generalized-additive-models.html#cb20-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;BO2_chlomean_ss&quot;</span>)</span></code></pre></div>
 <p>The default AIC tolerance is 2 and there is not a limit on selected terms in this example. These options can be modified through aic.tol and vmax arguments in the function. The number of knots and the sp can be also modified.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="shape-constrained-generalized-additive-models.html#cb21-1" aria-hidden="true" tabindex="-1"></a>  model_SCGAM <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">modsel.scam</span>(<span class="at">basef=</span><span class="st">&quot;occurrenceStatus ~ 1&quot;</span>, <span class="at">vars=</span>vars, <span class="at">dat=</span>data,<span class="at">sp=</span><span class="fl">0.00001</span>), <span class="at">silent=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="shape-constrained-generalized-additive-models.html#cb21-1" aria-hidden="true" tabindex="-1"></a>model_SCGAM <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">modsel.scam</span>(<span class="at">basef=</span><span class="st">&quot;occurrenceStatus ~ 1&quot;</span>, <span class="at">vars=</span>vars, <span class="at">dat=</span>data,<span class="at">sp=</span><span class="fl">0.00001</span>), <span class="at">silent=</span>T)  </span></code></pre></div>
 <pre><code>## [1] &quot;Fitting models with 1 terms&quot;
 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs=&#39;cv&#39;,k=8) 
 ##   occurrenceStatus ~ 1+s(BO2_salinitymean_ss,m=2,bs=&#39;cv&#39;,k=8) 
@@ -378,27 +378,137 @@ div.csl-indent {
 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs=&#39;cv&#39;,k=8)+s(BO2_chlomean_ss,m=2,bs=&#39;cv&#39;,k=8) 
 ## [1] &quot;Fitting models with 3 terms&quot;
 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs=&#39;cv&#39;,k=8)+s(BO2_chlomean_ss,m=2,bs=&#39;cv&#39;,k=8)+s(BO2_salinitymean_ss,m=2,bs=&#39;cv&#39;,k=8)</code></pre>
-<p>We check results of the selected model:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="shape-constrained-generalized-additive-models.html#cb23-1" aria-hidden="true" tabindex="-1"></a>model_SCGAM<span class="sc">$</span>svars</span>
-<span id="cb23-2"><a href="shape-constrained-generalized-additive-models.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, AIC)</span>
-<span id="cb23-3"><a href="shape-constrained-generalized-additive-models.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, <span class="cf">function</span>(x) <span class="fu">summary</span>(x)<span class="sc">$</span>dev.expl)</span>
-<span id="cb23-4"><a href="shape-constrained-generalized-additive-models.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span>
-<span id="cb23-5"><a href="shape-constrained-generalized-additive-models.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span>
-<span id="cb23-6"><a href="shape-constrained-generalized-additive-models.html#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="shape-constrained-generalized-additive-models.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Select the last model of the list which is the best model according to AIC and plevel criteria</span></span>
-<span id="cb23-8"><a href="shape-constrained-generalized-additive-models.html#cb23-8" aria-hidden="true" tabindex="-1"></a>selected_model <span class="ot">&lt;-</span> model_SCGAM<span class="sc">$</span>smod[[<span class="fu">length</span>(model_SCGAM<span class="sc">$</span>smod)]]</span>
-<span id="cb23-9"><a href="shape-constrained-generalized-additive-models.html#cb23-9" aria-hidden="true" tabindex="-1"></a>selected_model<span class="sc">$</span>sp</span>
-<span id="cb23-10"><a href="shape-constrained-generalized-additive-models.html#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-11"><a href="shape-constrained-generalized-additive-models.html#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># see specifically the summary and the plots of the final model after the selection</span></span>
-<span id="cb23-12"><a href="shape-constrained-generalized-additive-models.html#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># note that it is the last element of the list of models</span></span>
-<span id="cb23-13"><a href="shape-constrained-generalized-additive-models.html#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(selected_model)</span>
-<span id="cb23-14"><a href="shape-constrained-generalized-additive-models.html#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="fu">scam.check</span>(selected_model)</span>
-<span id="cb23-15"><a href="shape-constrained-generalized-additive-models.html#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(selected_model)</span>
-<span id="cb23-16"><a href="shape-constrained-generalized-additive-models.html#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(selected_model,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span>
-<span id="cb23-17"><a href="shape-constrained-generalized-additive-models.html#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-18"><a href="shape-constrained-generalized-additive-models.html#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the model</span></span>
-<span id="cb23-19"><a href="shape-constrained-generalized-additive-models.html#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-20"><a href="shape-constrained-generalized-additive-models.html#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co">#save(selected_model, file = &quot;models/selected_model.RData&quot;)</span></span></code></pre></div>
+<p>We check results of the selected model, such as, selected variable names:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="shape-constrained-generalized-additive-models.html#cb23-1" aria-hidden="true" tabindex="-1"></a>model_SCGAM<span class="sc">$</span>svars</span></code></pre></div>
+<pre><code>## [1] &quot;BO_sstmean&quot;          &quot;BO2_chlomean_ss&quot;     &quot;BO2_salinitymean_ss&quot;</code></pre>
+<p>AICs of the fitted models:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="shape-constrained-generalized-additive-models.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, AIC)</span></code></pre></div>
+<pre><code>##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss 
+##            40804.29            31548.99            28240.43            27836.39</code></pre>
+<p>Explained deviance of fitted models:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="shape-constrained-generalized-additive-models.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, <span class="cf">function</span>(x) <span class="fu">summary</span>(x)<span class="sc">$</span>dev.expl)</span></code></pre></div>
+<pre><code>##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss 
+##        3.566446e-16        2.269308e-01        3.081704e-01        3.181697e-01</code></pre>
+<p>Formulas of the fitted models:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="shape-constrained-generalized-additive-models.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span></code></pre></div>
+<pre><code>## $null
+## occurrenceStatus ~ 1
+## &lt;environment: 0x00000000390bfa30&gt;
+## 
+## $BO_sstmean
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x00000000390bfa30&gt;
+## 
+## $BO2_chlomean_ss
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x00000000390bfa30&gt;
+## 
+## $BO2_salinitymean_ss
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
+##     m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x00000000390bfa30&gt;</code></pre>
+<p>Summaries of the fitted models:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="shape-constrained-generalized-additive-models.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
+<pre><code>## $null
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1
+## &lt;environment: 0x00000000390bfa30&gt;
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept) -0.02113    0.01166  -1.813   0.0699 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## 
+## R-sq.(adj) =      0   Deviance explained = 3.57e-14%
+##   Scale est. = 1         n = 29435
+## 
+## 
+## $BO_sstmean
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x00000000390bfa30&gt;
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -50.267      3.133  -16.05   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##               edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)   2      2  987.9  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.2557   Deviance explained = 22.7%
+##   Scale est. = 1         n = 29435
+## 
+## 
+## $BO2_chlomean_ss
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x00000000390bfa30&gt;
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)   -51.41     173.06  -0.297    0.766
+## 
+## Approximate significance of smooth terms:
+##                      edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)      3.983  4.003  941.8  &lt;2e-16 ***
+## s(BO2_chlomean_ss) 3.008  3.017 2355.6  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.3365   Deviance explained = 30.8%
+##   Scale est. = 1         n = 29431
+## 
+## 
+## $BO2_salinitymean_ss
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
+##     m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x00000000390bfa30&gt;
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)   -58.99      50.82  -1.161    0.246
+## 
+## Approximate significance of smooth terms:
+##                          edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)          3.927  3.999  771.3  &lt;2e-16 ***
+## s(BO2_chlomean_ss)     3.008  3.016 1855.4  &lt;2e-16 ***
+## s(BO2_salinitymean_ss) 2.005  2.010  187.0  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.3474   Deviance explained = 31.8%
+##   Scale est. = 1         n = 29431</code></pre>
+<p>The last model of the list, is the selected one. Which in this case contains the considered three variables.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="shape-constrained-generalized-additive-models.html#cb33-1" aria-hidden="true" tabindex="-1"></a>selected_model <span class="ot">&lt;-</span> model_SCGAM<span class="sc">$</span>smod[[<span class="fu">length</span>(model_SCGAM<span class="sc">$</span>smod)]]</span></code></pre></div>
+<p>Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be also for SC-GAMs.</p>
 
 </div>
 </div>
@@ -406,6 +516,9 @@ div.csl-indent {
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-citores_etal_2020" class="csl-entry">
 Citores, L., L. Ibaibarriaga, D. J. Lee, M. J. Brewer, M. Santos, and G. Chust. 2020. <span>“Modelling Species Presence–Absence in the Ecological Niche Theory Framework Using Shape-Constrained Generalized Additive Models.”</span> <em>Ecological Modelling</em> 418: 108926.
+</div>
+<div id="ref-pya_etal_2015" class="csl-entry">
+Pya, Natalya, and Simon N Wood. 2015. <span>“Shape Constrained Additive Models.”</span> <em>Statistics and Computing</em> 25: 543–59.
 </div>
 </div>
             </section>
