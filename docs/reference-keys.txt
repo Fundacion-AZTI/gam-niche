@@ -31,3 +31,4 @@ loading-required-libraries-3
 variable-correlation-analysis-of-variance-inflation-factor-vif
 loading-required-libraries-4
 loading-required-libraries-5
+model-with-the-3-variables
