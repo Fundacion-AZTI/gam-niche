@@ -39,7 +39,7 @@ rasters for analyses of climate and environment) database [@tyberghein_etal_2012
 
 After loading the `sdmpredictors` package, we can check the list of available datasets with the function `list_datasets` as follows: 
 
-```{r, eval=T, warning=F, message=F}
+```{r, warning=F, message=F}
 library(sdmpredictors) 
 
 mydat <- list_datasets()
@@ -51,7 +51,7 @@ kable(mydat)%>%
 
 By default this function returns all the supported datasets. To return only marine datasets we can set the `marine` argument equal to `TRUE` or equivalently we could set the `terrestrial` and `freshwater` arguments equal to `FALSE`:
 
-```{r, eval=T}
+```{r}
 mydat <- list_datasets(marine=T)
 # or equivalently: 
 # mydat <- list_datasets(terrestrial=F, freshwater=F)
@@ -64,7 +64,7 @@ kable(mydat)%>%
 
 There are two datasets (Bio-ORACLE and MARSOEC) that have marine data. The function `list_layers` returns information on the layers of one or more datasets. So, we can see the layers available in the Bio-ORACLE dataset as follows:
 
-```{r, eval=T}
+```{r}
 mytab <- list_layers("Bio-ORACLE")
 
 kable(mytab)%>% 
@@ -72,9 +72,9 @@ kable(mytab)%>%
   scroll_box(height="600px", width = "100%")
 ```
 
-Once we identify the dataset and the layers we are interested on, we can download them using the function `load_layers`. In this case, we download data on chlorophyl, salinity, XX, surface temperature and bathymetry:  
+Once we identify the dataset and the layers we are interested on, we can download them using the function `load_layers`. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient, surface temperature and bathymetry:  
 
-```{r, eval=T}
+```{r}
 myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")) 
 ```
 
@@ -92,7 +92,19 @@ library(raster)
 raster::plot(myBioracle.layers)
 ```
 
-To facilitate subsequent access, the rasterStackwith the downloaded data is saved in a local folder: 
+In case we are not interested on the whole area, we can crop the raster objects to the area of interest. 
+
+For example, we can load the `area` object that is a SpatialPolygonsDataFrame that has been created previously and defines the extent of our spatial data and we can crop the rasterStack to the same extent:
+
+CHANGE HERE THE tmp NAME TO SOMETHING BETTER:
+
+```{r, warning=F, message=F}
+load("data/spatial/area.RData")
+tmp <- crop(myBioracle.layers, extent(area))
+plot(tmp)
+```
+
+To facilitate subsequent access, the rasterStack with the downloaded data is saved in a local folder: 
 
 ```{r, eval=T}
 save(myBioracle.layers, file="data/env/myBioracle.layers.Rdata")

@@ -22,6 +22,8 @@ To cite this book, please use:
 
 BLA BLA BLA
 
+
+
 <!--chapter:end:index.Rmd-->
 
 # Introduction
@@ -571,247 +573,365 @@ write.table(dat, file=file.path("data","outputs_for_modelling","PAdata.csv"), ro
 
 # Environmental data
 
-Bla bla bla
-
 Loading required libraries
 
-```{r, eval=F}
+```{r, eval=T, warning=F, message=F}
 ### Download Environmental data from Bio-oracle
 
-# for mapping ...
-library(maptools)
-library(rgrass7)
-library(raster)
-library(sp)
-library(ggplot2)
-library(maps)
-library(rgbif)
-library(dataverse)
-library(rstudioapi)
+# # for mapping ...
+# library(maptools)
+# library(rgrass7)
+# library(raster)
+# library(sp)
+# library(ggplot2)
+# library(maps)
+# library(rgbif)
+# library(dataverse)
+# library(rstudioapi)
 
 # libraries for bio-oracle
-library(rgdal)
-library(sdmpredictors) 
-library(leaflet)
+# library(rgdal)
+#library(sdmpredictors) 
+# library(leaflet)
+
+library(knitr) # format tables
+library(kableExtra) # format tables
 
 # http://bio-oracle.org/code.php
 #install.packages("sdmpredictors")
 #install.packages("leaflet")
 
 # location of script
-setwd(dirname(getSourceEditorContext()$path))
+#setwd(dirname(getSourceEditorContext()$path))
 ```
 
 ## Download from public repositories
 
-Download from Bio-oracle. 
+Environmental data can be available from different sources. In this case, we used the Bio-ORACLE (ocean
+rasters for analyses of climate and environment) database [@tyberghein_etal_2012; @assis_etal_2017]. These data are publicly available and are easily accessible from the `sdmpredictors` package [`sdmpredictors`](https://cran.r-project.org/web/packages/sdmpredictors/index.html). 
 
-```{r, eval=F}
-# Explore datasets in the package 
-list_datasets()
-list_layers("Bio-ORACLE")
+After loading the `sdmpredictors` package, we can check the list of available datasets with the function `list_datasets` as follows: 
+
+```{r, warning=F, message=F}
+library(sdmpredictors) 
+
+mydat <- list_datasets()
+
+kable(mydat)%>% 
+  kable_styling("striped") %>% 
+  scroll_box(height="600px", width = "100%")
+```
+
+By default this function returns all the supported datasets. To return only marine datasets we can set the `marine` argument equal to `TRUE` or equivalently we could set the `terrestrial` and `freshwater` arguments equal to `FALSE`:
+
+```{r}
+mydat <- list_datasets(marine=T)
+# or equivalently: 
+# mydat <- list_datasets(terrestrial=F, freshwater=F)
+# mydat <- list_datasets(marine=T, terrestrial=F, freshwater=F)
+
+kable(mydat)%>% 
+  kable_styling("striped") %>% 
+  scroll_box(height="600px", width = "100%")
+```
+
+There are two datasets (Bio-ORACLE and MARSOEC) that have marine data. The function `list_layers` returns information on the layers of one or more datasets. So, we can see the layers available in the Bio-ORACLE dataset as follows:
+
+```{r}
 mytab <- list_layers("Bio-ORACLE")
 
-## Download specific layers to the current directory 
-
-myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")) 
-save(myBioracle.layers, file="data/env/myBioracle.layers.Rdata")
-
-#load area plygon
-load("data/spatial/area.RData")
-
-# transform object to select only data in the area of interest
-
-env_dataframe <- as.data.frame(myBioracle.layers, xy=TRUE)
-ptos<-env_dataframe[,c("x","y")]
-
-coordinates(ptos) <- ~ x + y
-proj4string(ptos) <-proj4string(area)
-  
-## Select only occurrences in the defined previously selected area
-env_dataframe<-data.frame(subset(env_dataframe,!is.na(over(ptos, area)[,1])))
-
-#save the data frame
-save(env_dataframe,file="data/env/env_dataframe.Rdata")
-
-
+kable(mytab)%>% 
+  kable_styling("striped") %>% 
+  scroll_box(height="600px", width = "100%")
 ```
+
+Once we identify the dataset and the layers we are interested on, we can download them using the function `load_layers`. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient, surface temperature and bathymetry:  
+
+```{r}
+myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")) 
+```
+
+Note that the resulting object is a `rasterStack`, where each variable is a layer
+
+```{r}
+class(myBioracle.layers)
+myBioracle.layers
+``` 
+
+And we can plot it:
+
+```{r, warning=F, message=F}
+library(raster)
+raster::plot(myBioracle.layers)
+```
+
+In case we are not interested on the whole area, we can crop the raster objects to the area of interest. 
+
+For example, we can load the `area` object that is a SpatialPolygonsDataFrame that has been created previously and defines the extent of our spatial data and we can crop the rasterStack to the same extent:
+
+CHANGE HERE THE tmp NAME TO SOMETHING BETTER:
+
+```{r, warning=F, message=F}
+load("data/spatial/area.RData")
+tmp <- crop(myBioracle.layers, extent(area))
+plot(tmp)
+```
+
+To facilitate subsequent access, the rasterStack with the downloaded data is saved in a local folder: 
+
+```{r, eval=T}
+save(myBioracle.layers, file="data/env/myBioracle.layers.Rdata")
+```
+
+Note that the functions `dataset_citations` and `layer_citations` provide the bibliographic entries of the datasets and layers for proper citation:
+
+```{r}
+print(dataset_citations("Bio-ORACLE"))
+print(layer_citations("BO2_chlomean_ss"))
+```
+
+
 
 
 <!--chapter:end:04-data_env.Rmd-->
 
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
-# Prepare final dataset
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.width=16, fig.height=12)
+```
 
-Bla bla bla
+# Prepare final dataset
 
 Loading required libraries
 
-```{r, eval=F}
-library(rgdal) # to read shp
-library(raster) # to work with rasters
-library (here) # Libraries for reproducible workflow
-library (sp)     # to perform raster
-library(HH) #to calculate for VIF (Variance Inflation Factor)
-library(ggplot2)# plots
-library(gridExtra)# multiple plots
-library(dplyr)
-library(RColorBrewer)#plotting colors
-library(fields)#ploting images
-library(marmap)#ploting world
-library(maptools)#mapping
-library(rstudioapi)
+```{r, eval=T}
+# library(rgdal) # to read shp
+# library(raster) # to work with rasters
+# library (here) # Libraries for reproducible workflow
+# library (sp)     # to perform raster
+# library(HH) #to calculate for VIF (Variance Inflation Factor)
+# library(ggplot2)# plots
+
+
+# library(gridExtra)# multiple plots
+# library(dplyr)
+# library(RColorBrewer)#plotting colors
+# library(fields)#ploting images
+# library(marmap)#ploting world
+# library(maptools)#mapping
+# library(rstudioapi)
+
+# theme_set(theme_bw(base_size = 16))
 ```
 
 ## Extract environmental data associated to presence-absence data
 
-```{r, eval=F}
+Once the environmental rasters and the species abundance data (including pseudo-absences) have been prepared, we need to merge both sources of data. First, we load the objects created in previous sections:
 
-# location of script
-setwd(dirname(getSourceEditorContext()$path))
-
-#load data
+```{r, eval=T}
+#load presence-absence data
 load("data/outputs_for_modelling/PAdata.RData")
+
+# load environmental rasters
+library(sp)
+library(raster)
 load(file="data/env/myBioracle.layers.Rdata") 
+```
 
+Now we can extract the environmental data associated to each of the species data points using the function `extract` from the `raster` package. The method employed is `bilinear` that returns the interpolated value from the four nearest raster cells.
 
-### Extract environmental values from layers 
+CHECK THE NAMES THROUGHOUT!! dat, data... mydata1.env.bil TOO LONG... 
+I'm HAVING ERRORS WITH THIS. ONLY WORKS EXECUTED AFTER THE OTEHR... WHY?
 
-# con Bilinear extraigo los sites de los 4 nearest cells 
-mydata1.env.bil <- raster::extract(x=myBioracle.layers,y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) # 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)
+```{r, eval=F}
+mydata1.env.bil <- raster::extract(x=myBioracle.layers, y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) 
+head(mydata1.env.bil)
+```
 
-# merge with pa data
+We merge the presence/absence data and the environmental data: 
+
+```{r, eval=F}
 data <- cbind(dat, mydata1.env.bil)
+```
 
-# remove positive bathymetries
+We can conduct some quick checks on the new dataset:  
 
-data<-subset(data,BO_bathymean<0)
+```{r, eval=F}
+dim(data)
+str(data)
+head(data)
+summary(data)
+```
 
+ZER DA bathymetry ZUTABEA? AZALDU BEHAR DA??
+```{r, eval=F}
+# LI'k GEHITUTAKO KODIGOA. KENDU?
+plot(data$BO_bathymean, data$bathymetry)
+abline(0,1, col=2)
+```
+
+The new dataset has 30158 rows and 13 columns, and there are 162 NA's in the environmental dataset. Note also that there are some positive bathymetries that correspond to points located very close to the coast. We remove both the points with NA's and the points with positive bathymetries:
+
+```{r, eval=F}
+data <- subset(data, BO_bathymean<0)
+```
+
+We check again the dataset:
+
+```{r, eval=F}
+dim(data)
 summary(data) # 29435 sites : 4 are NAs
+```
 
-#save data frame
+The resulting dataset has 29435, from which 4 have NA's in BO2_chlomean_ss and BO2_salinitymean_ss. We save this dataset in a local file to work on it in subsequent steps. 
 
-save(list="data",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
+LI: REMOVE THE 4 NA's?? IT WILL FACILITATE MODEL COMPARISON
+
+```{r, eval=F}
+save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
+```
+
+## Exploratory plots of environmental variables
+
+LI: This first chunk can be removed, but I'm having problems with the first subsection
+
+```{r, eval=T}
+load("data/outputs_for_modelling/PAdata_with_env.RData")
+```
+
+Before starting the modelling process, we are going to explore the individual variables in the dataset. 
+
+The `YEAR` variable is only available for the presence data and the time coverage is quite different along time as shown by the following plot: 
+
+```{r}
+
+table(is.na(dat$YEAR), dat$occurrenceStatus) # NOTE THAT THE PSEUDO-ABSENCES DO NOT HAVE YEAR. So MAYBE BETTER TO REMOVE THIS PART.
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+theme_set(theme_bw(base_size=16))
+
+data %>% 
+  # filter(!is.na(YEAR)) %>% 
+  group_by(YEAR) %>% 
+  summarise(N=n()) %>% 
+  ggplot(aes(x=YEAR, y=N)) + 
+  geom_bar(stat="identity", col="red", fill="red", alpha=0.5)
+```
+
+We can explore the distributions of each of the environmental variables by looking at the violin and boxplots and at the histograms and density plots as follows: 
+
+```{r}
+tmp <- data[, c("BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
+tmp <- pivot_longer(data=tmp, cols=everything()) 
+
+ggplot(data=tmp, aes(x=name, y=value)) + 
+  geom_boxplot()+
+  facet_wrap(~name, scales="free")
+
+ggplot(data=tmp, aes(x=name, y=value)) + 
+  geom_violin(fill="red", alpha=0.3)+
+  geom_boxplot(width=0.1)+
+  facet_wrap(~name, scales="free")
+
+ggplot(data=tmp, aes(x=value)) + 
+  geom_histogram(aes(y= ..density.. ), colour=1, fill="red", alpha=0.3)+
+  geom_density(lwd=1)+
+  facet_wrap(~name, scales="free")
 
 ```
 
-## Variable correlation: Analysis of Variance Inflation Factor (VIF) 
+## Exploratory plots of environmental variables depending on presence/absence data
 
-<!-- #Nota interna: copio el script de analísis VIF para las variables superficiales del proyecto MISSION -->
+To analyse if there are preferences for certain ranges of the environmental variables, we compare the distribution of the environmental variables for presence and absence data:   
 
-<!-- ### Script information -->
+```{r}
 
-With this script we assess the correlation between environmental variables based on Variance Inflation Factor (VIF) by depth set 
+tmp <- data[, c("LON", "LAT", "BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean","occurrenceStatus")]
+tmp <- pivot_longer(data=tmp, cols=!occurrenceStatus) 
 
-Project: IM-20-MISSION
+ggplot(data=tmp, aes(x=factor(occurrenceStatus), y=value, fill=factor(occurrenceStatus), group=factor(occurrenceStatus))) + 
+  geom_violin(alpha=0.3)+
+  geom_boxplot(fill="white", width=0.1)+
+  facet_wrap(~name, scales="free")+
+  theme(legend.position = "bottom",legend.background = element_rect(fill = "white", colour = NA))
 
-VIF is a measure of the amount of multicollinearity in regression analysis
+ggplot(data=tmp, aes(x=value, fill=factor(occurrenceStatus), group=factor(occurrenceStatus))) + 
+  geom_density(lwd=1, alpha=0.3)+
+  facet_wrap(~name, scales="free")+
+  theme(legend.position = "bottom",legend.background = element_rect(fill = "white", colour = NA))
+```
 
-VIF equal to 1 = variables are not correlated
-VIF between 1 and 5 = variables are moderately correlated 
-VIF greater than 5 = variables are highly correlated
+## Correlation analysis
 
-If you found high multicollinearity between two variables, you don’t need both of them in your model.
+Some of the environmental variables can be correlated. The `GGally` package allows to easily produce pairplots of the variables and their correlation.  
 
-```{r, eval=F}
+```{r}
+library(GGally)
+
+tmp <- data[, c("LON","LAT","BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
+ggpairs(tmp)
+
+```
+
+A more detailed analysis of the potential correlations can be conducted using the package `ggcorrplot`:
+
+```{r}
+library(ggcorrplot)
+
+tmp <- data[, c("LON","LAT","BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
+
+mat <- cor(tmp, use="complete.obs") 
+p.mat <- cor_pmat(tmp)
+
+ggcorrplot(mat, type = "lower", lab=T, p.mat = p.mat)
+```
+
+## Variance Inflation Factor (VIF) 
+
+Furthermore, multicollinearity in regression analysis can be explored using the VIF (Variance Inflation Factor). The value of the VIF statistics indicate the level of multicollinearity with the rest of the variables:
+
+* VIF equal to 1 = variables are not correlated
+* VIF between 1 and 5 = variables are moderately correlated 
+* VIF greater than 5 = variables are highly correlated
+
+There are several packages in `R` that allows to calculate the VIF statistics. In this case we use the package `HH`: 
+
+```{r, eval=T}
+
+library(HH)
 
 # select variables for vif calculation
+v.table <- data %>% 
+  dplyr::select (BO2_salinitymean_ss, BO_sstmean, BO2_chlomean_ss, BO_damean, BO_bathymean)
 
-v_table <- data %>% 
-  dplyr::select (BO2_salinitymean_ss,BO_sstmean,BO2_chlomean_ss,BO_damean)
+# get vif results
 
-##### get vif results
+out.vif <- vif(v.table)
+sort(out.vif)
+```
 
-resultado.vif <- vif(v_table)
-sort(resultado.vif)
+We remove the variable that has the highest VIF value and we test again the multicollinearity: 
 
-#remove highest
+```{r}
 
-v_table <- v_table %>% 
+v.table <- v.table %>% 
   dplyr::select (-BO_damean)
 
-##### get new vif results
+#  get new vif results
 
-resultado.vif <- vif(v_table)
-sort(resultado.vif)
+out.vif <- vif(v.table)
+sort(out.vif)
+```
 
+Now all the variables have VIF values that are acceptable. So, we proceed to save these variables for the next modelling stages:
 
-#save data frame without correlated variable
-
+```{r}
 data <- data %>% dplyr::select (-BO_damean)
-save(list="data",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
 
+# save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
 ```
 
-## Exploratory plots
-
-```{r, eval=F}
-####Leo archivos de especies de peces SP
-
-load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
-
-occ <- data %>% 
-  dplyr::filter(data$occurrenceStatus == 1)
-
-abs <- data %>% 
-  dplyr::filter(data$occurrenceStatus == 0)
-
-#NOTA INTERNA: El número de ausencias es mayor que las presencias, creo que tiene que ver con haber elimanado los datos de batimetrías menores que 0
-  
-##Salvo el pdf
-pdf(file=file.path("results", "factsheets_env.pdf"), paper="a4", width=, height=12,compress=T)
-
-
-  par(mfrow=c(3,3)) 
-  
-  names (data)
-
-  #### 1 BO_bathymean: En plot1 una distribucion de densidad de presencias y ausencias vs bathymetry
-  
-  dens_occ<-density(occ$BO_bathymean,na.rm=T)
-  dens_abs<-density(abs$BO_bathymean,na.rm=T)
-
-  plot(dens_occ,xlab="BO_bathymean", ylab="dens", main = "",col="red")
-  lines(dens_abs,xlab="BO_bathymean", ylab="dens", main = "",col="blue")
-
-  legend("topleft",legend=c("Occurrences", "Pseudoabsences"),
-         col=c("red", "blue"),pch=0.1, cex=0.8,box.lty=0,xpd=TRUE)
-  
-  ### NOTA INTERNA: hacer los plots para el resto de variables
-
-  #2. "BO_chlomean"  
-  dens_occ<-density(occ$BO2_chlomean_ss,na.rm=T)
-  dens_abs<-density(abs$BO2_chlomean_ss,na.rm=T)
-
-  plot(dens_occ,xlab="BO2_chlomean_ss", ylab="dens", main = "",col="red")
-  lines(dens_abs,xlab="BO2_chlomean_ss", ylab="dens", main = "",col="blue")
-  
-  #NOTA INTERNA: HAY QUE JUGAR CON LAS ESCALAS
-
-  legend("topright",legend=c("Occurrences", "Pseudoabsences"),
-         col=c("red", "blue"),pch=0.1, cex=0.8,box.lty=0,xpd=TRUE)  
-  #3. "BO_damean"      
-  
-  #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
-  
-  #4. "BO_salinity" 
-  
-   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
-  
-  #5. "BO_sstmean" 
-  
-   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
-  
-  #6. "BO_sstrange" 
-  
-   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
-
- dev.off()
-```
 
 
 <!--chapter:end:05-data_final.Rmd-->
@@ -824,7 +944,7 @@ editor_options:
 # Shape Constrained-Generalized Additive Models
 
 
-In order to fit SDM in agreement with the ecological niche theory, the proposed shape-constrained GAMs in [@citores_etal_2020] are fitted in this section. SC-GAMs are based on generalized additive models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by Pya (2014) using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting species distribution models in agreement with the ecological niche theory, we imposed concavity  constraints ($f''(x) \le 0$), so that the response can presents at most a single mode.  
+In order to fit SDM in agreement with the ecological niche theory, the proposed shape-constrained GAMs in [@citores_etal_2020] are fitted in this section. SC-GAMs are based on generalized additive models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by [@pya_etal_2015] using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting species distribution models in agreement with the ecological niche theory, we imposed concavity  constraints ($f''(x) \le 0$), so that the response can presents at most a single mode.  
 
 Alternatively, the R package `mboost` fits SC-GAMs using boosting methodos. This alternative won't be further developed here.
 
@@ -917,7 +1037,7 @@ save(list=c("selected_model"), file = ("models/model.RData"))
 
 ## Model selection
 
-When several expalanotry variables are available, a variable selection process can be carried out. Here we provide a function to perform forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits. 
+When several explanatory variables are available, a variable selection process can be carried out. Here we provide as an example, a function that performs forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits. 
 
 ```{r, eval=T,message=FALSE,warning=FALSE}
 source("function/function_scam_selection_optimized.R")
@@ -934,34 +1054,41 @@ vars <- c("BO_sstmean",
 The default AIC tolerance is 2 and there is not a limit on selected terms in this example. These options can be modified through aic.tol and vmax arguments in the function. The number of knots and the sp can be also modified.
 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-  model_SCGAM <- try(modsel.scam(basef="occurrenceStatus ~ 1", vars=vars, dat=data,sp=0.00001), silent=T)
+model_SCGAM <- try(modsel.scam(basef="occurrenceStatus ~ 1", vars=vars, dat=data,sp=0.00001), silent=T)  
 ```
 
-We check results of the selected model:
-
-```{r, eval=F}
+We check results of the selected model, such as, selected variable names:
+```{r, eval=T,message=FALSE,warning=FALSE}
 model_SCGAM$svars
-sapply(model_SCGAM$smod, AIC)
-sapply(model_SCGAM$smod, function(x) summary(x)$dev.expl)
-lapply(model_SCGAM$smod, formula)
-lapply(model_SCGAM$smod, summary)
-
-#Select the last model of the list which is the best model according to AIC and plevel criteria
-selected_model <- model_SCGAM$smod[[length(model_SCGAM$smod)]]
-selected_model$sp
-
-# see specifically the summary and the plots of the final model after the selection
-# note that it is the last element of the list of models
-summary(selected_model)
-scam.check(selected_model)
-plot(selected_model)
-plotmo(selected_model,level = 0.95, pt.col=8)
-
-# Save the model
-
-#save(selected_model, file = "models/selected_model.RData")
-
 ```
+
+AICs of the fitted models:
+```{r, eval=T,message=FALSE,warning=FALSE}
+sapply(model_SCGAM$smod, AIC)
+```
+
+Explained deviance of fitted models:
+```{r, eval=T,message=FALSE,warning=FALSE}
+sapply(model_SCGAM$smod, function(x) summary(x)$dev.expl)
+```
+
+Formulas of the fitted models:
+```{r, eval=T,message=FALSE,warning=FALSE}
+lapply(model_SCGAM$smod, formula)
+```
+
+Summaries of the fitted models:
+```{r, eval=T,message=FALSE,warning=FALSE}
+lapply(model_SCGAM$smod, summary)
+```
+
+The last model of the list, is the selected one. Which in this case contains the considered three variables.
+
+```{r, eval=T,message=FALSE,warning=FALSE}
+selected_model <- model_SCGAM$smod[[length(model_SCGAM$smod)]]
+```
+
+Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be also for SC-GAMs.
 
 <!--chapter:end:06-model_fit.Rmd-->
 
@@ -1176,6 +1303,44 @@ library(rstudioapi)
 # general settings for ggplot (black-white background, larger base_size)
 theme_set(theme_bw(base_size = 16))
 ```
+
+## Prepare environmental data. 04 ATALETIK HONA MUGITUTA
+
+In previous steps (see section XX), we have defined the polygon that defines the extent of our spatial data. We load the `area` object that is a SpatialPolygonsDataFrame class:
+
+```{r, eval=T, warning=F, message=F}
+load("data/spatial/area.RData")
+```
+
+And we load the rasterStack with the downloaded environmental data
+
+```{r}
+load("data/env/myBioracle.layers.Rdata")
+```
+
+We transform the environmental data set first into a data frame, and then into a SpatialDataFrame   
+
+```{r, eval=F}
+env_dataframe <- raster::as.data.frame(myBioracle.layers, xy=TRUE)
+pts <- env_dataframe[,c("x","y")]
+
+coordinates(pts) <- ~ x + y
+proj4string(pts) <-proj4string(area)
+```
+
+```{r, eval=F}
+  
+## Select only occurrences in the defined previously selected area
+env_dataframe <- data.frame(subset(env_dataframe, !is.na(over(pts, area)[,1])))
+```
+
+```{r, eval=F}
+
+#save the data frame
+save(env_dataframe, file="data/env/env_dataframe.Rdata")
+```
+
+
 
 ## Projection
 

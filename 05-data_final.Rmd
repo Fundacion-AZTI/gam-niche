@@ -1,19 +1,20 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.width=16, fig.height=12)
+```
+
 # Prepare final dataset
 
 Loading required libraries
 
-```{r, eval=F}
+```{r, eval=T}
 # library(rgdal) # to read shp
 # library(raster) # to work with rasters
 # library (here) # Libraries for reproducible workflow
 # library (sp)     # to perform raster
 # library(HH) #to calculate for VIF (Variance Inflation Factor)
 # library(ggplot2)# plots
+
+
 # library(gridExtra)# multiple plots
 # library(dplyr)
 # library(RColorBrewer)#plotting colors
@@ -21,158 +22,217 @@ Loading required libraries
 # library(marmap)#ploting world
 # library(maptools)#mapping
 # library(rstudioapi)
+
+# theme_set(theme_bw(base_size = 16))
 ```
 
 ## Extract environmental data associated to presence-absence data
 
-Once the environmental rasters and the species abundance data (including pseudo-absences) have been prepared, we need to merge both sources of data. 
+Once the environmental rasters and the species abundance data (including pseudo-absences) have been prepared, we need to merge both sources of data. First, we load the objects created in previous sections:
 
-
-
-```{r, eval=F}
-
-# location of script
-#setwd(dirname(getSourceEditorContext()$path))
-
-#load data
+```{r, eval=T}
+#load presence-absence data
 load("data/outputs_for_modelling/PAdata.RData")
+
+# load environmental rasters
+library(sp)
+library(raster)
 load(file="data/env/myBioracle.layers.Rdata") 
 ```
 
-For that we extract the environmental data associated to each of the species data points using the function `extract` from the `raster` package:
+Now we can extract the environmental data associated to each of the species data points using the function `extract` from the `raster` package. The method employed is `bilinear` that returns the interpolated value from the four nearest raster cells.
 
-### Extract environmental values from layers 
+CHECK THE NAMES THROUGHOUT!! dat, data... mydata1.env.bil TOO LONG... 
+I'm HAVING ERRORS WITH THIS. ONLY WORKS EXECUTED AFTER THE OTEHR... WHY?
 
 ```{r, eval=F}
-# con Bilinear extraigo los sites de los 4 nearest cells 
-mydata1.env.bil <- raster::extract(x=myBioracle.layers,y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) # 4 nearest cells, se consigue valor 29 sites más (se siguen perdiendo 64, de los cuales algunos son errores, es decir, no costeros)
+mydata1.env.bil <- raster::extract(x=myBioracle.layers, y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) 
+head(mydata1.env.bil)
+```
 
-# merge with pa data
+We merge the presence/absence data and the environmental data: 
+
+```{r, eval=F}
 data <- cbind(dat, mydata1.env.bil)
+```
 
-# remove positive bathymetries
+We can conduct some quick checks on the new dataset:  
 
-data<-subset(data,BO_bathymean<0)
+```{r, eval=F}
+dim(data)
+str(data)
+head(data)
+summary(data)
+```
 
+ZER DA bathymetry ZUTABEA? AZALDU BEHAR DA??
+```{r, eval=F}
+# LI'k GEHITUTAKO KODIGOA. KENDU?
+plot(data$BO_bathymean, data$bathymetry)
+abline(0,1, col=2)
+```
+
+The new dataset has 30158 rows and 13 columns, and there are 162 NA's in the environmental dataset. Note also that there are some positive bathymetries that correspond to points located very close to the coast. We remove both the points with NA's and the points with positive bathymetries:
+
+```{r, eval=F}
+data <- subset(data, BO_bathymean<0)
+```
+
+We check again the dataset:
+
+```{r, eval=F}
+dim(data)
 summary(data) # 29435 sites : 4 are NAs
+```
 
-#save data frame
+The resulting dataset has 29435, from which 4 have NA's in BO2_chlomean_ss and BO2_salinitymean_ss. We save this dataset in a local file to work on it in subsequent steps. 
 
-save(list="data",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
+LI: REMOVE THE 4 NA's?? IT WILL FACILITATE MODEL COMPARISON
+
+```{r, eval=F}
+save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
+```
+
+## Exploratory plots of environmental variables
+
+LI: This first chunk can be removed, but I'm having problems with the first subsection
+
+```{r, eval=T}
+load("data/outputs_for_modelling/PAdata_with_env.RData")
+```
+
+Before starting the modelling process, we are going to explore the individual variables in the dataset. 
+
+The `YEAR` variable is only available for the presence data and the time coverage is quite different along time as shown by the following plot: 
+
+```{r}
+
+table(is.na(dat$YEAR), dat$occurrenceStatus) # NOTE THAT THE PSEUDO-ABSENCES DO NOT HAVE YEAR. So MAYBE BETTER TO REMOVE THIS PART.
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+theme_set(theme_bw(base_size=16))
+
+data %>% 
+  # filter(!is.na(YEAR)) %>% 
+  group_by(YEAR) %>% 
+  summarise(N=n()) %>% 
+  ggplot(aes(x=YEAR, y=N)) + 
+  geom_bar(stat="identity", col="red", fill="red", alpha=0.5)
+```
+
+We can explore the distributions of each of the environmental variables by looking at the violin and boxplots and at the histograms and density plots as follows: 
+
+```{r}
+tmp <- data[, c("BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
+tmp <- pivot_longer(data=tmp, cols=everything()) 
+
+ggplot(data=tmp, aes(x=name, y=value)) + 
+  geom_boxplot()+
+  facet_wrap(~name, scales="free")
+
+ggplot(data=tmp, aes(x=name, y=value)) + 
+  geom_violin(fill="red", alpha=0.3)+
+  geom_boxplot(width=0.1)+
+  facet_wrap(~name, scales="free")
+
+ggplot(data=tmp, aes(x=value)) + 
+  geom_histogram(aes(y= ..density.. ), colour=1, fill="red", alpha=0.3)+
+  geom_density(lwd=1)+
+  facet_wrap(~name, scales="free")
 
 ```
 
-## Variable correlation: Analysis of Variance Inflation Factor (VIF) 
+## Exploratory plots of environmental variables depending on presence/absence data
 
-<!-- #Nota interna: copio el script de analísis VIF para las variables superficiales del proyecto MISSION -->
+To analyse if there are preferences for certain ranges of the environmental variables, we compare the distribution of the environmental variables for presence and absence data:   
 
-<!-- ### Script information -->
+```{r}
 
-With this script we assess the correlation between environmental variables based on Variance Inflation Factor (VIF) by depth set 
+tmp <- data[, c("LON", "LAT", "BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean","occurrenceStatus")]
+tmp <- pivot_longer(data=tmp, cols=!occurrenceStatus) 
 
-Project: IM-20-MISSION
+ggplot(data=tmp, aes(x=factor(occurrenceStatus), y=value, fill=factor(occurrenceStatus), group=factor(occurrenceStatus))) + 
+  geom_violin(alpha=0.3)+
+  geom_boxplot(fill="white", width=0.1)+
+  facet_wrap(~name, scales="free")+
+  theme(legend.position = "bottom",legend.background = element_rect(fill = "white", colour = NA))
 
-VIF is a measure of the amount of multicollinearity in regression analysis
+ggplot(data=tmp, aes(x=value, fill=factor(occurrenceStatus), group=factor(occurrenceStatus))) + 
+  geom_density(lwd=1, alpha=0.3)+
+  facet_wrap(~name, scales="free")+
+  theme(legend.position = "bottom",legend.background = element_rect(fill = "white", colour = NA))
+```
 
-VIF equal to 1 = variables are not correlated
-VIF between 1 and 5 = variables are moderately correlated 
-VIF greater than 5 = variables are highly correlated
+## Correlation analysis
 
-If you found high multicollinearity between two variables, you don’t need both of them in your model.
+Some of the environmental variables can be correlated. The `GGally` package allows to easily produce pairplots of the variables and their correlation.  
 
-```{r, eval=F}
+```{r}
+library(GGally)
+
+tmp <- data[, c("LON","LAT","BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
+ggpairs(tmp)
+
+```
+
+A more detailed analysis of the potential correlations can be conducted using the package `ggcorrplot`:
+
+```{r}
+library(ggcorrplot)
+
+tmp <- data[, c("LON","LAT","BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
+
+mat <- cor(tmp, use="complete.obs") 
+p.mat <- cor_pmat(tmp)
+
+ggcorrplot(mat, type = "lower", lab=T, p.mat = p.mat)
+```
+
+## Variance Inflation Factor (VIF) 
+
+Furthermore, multicollinearity in regression analysis can be explored using the VIF (Variance Inflation Factor). The value of the VIF statistics indicate the level of multicollinearity with the rest of the variables:
+
+* VIF equal to 1 = variables are not correlated
+* VIF between 1 and 5 = variables are moderately correlated 
+* VIF greater than 5 = variables are highly correlated
+
+There are several packages in `R` that allows to calculate the VIF statistics. In this case we use the package `HH`: 
+
+```{r, eval=T}
+
+library(HH)
 
 # select variables for vif calculation
+v.table <- data %>% 
+  dplyr::select (BO2_salinitymean_ss, BO_sstmean, BO2_chlomean_ss, BO_damean, BO_bathymean)
 
-v_table <- data %>% 
-  dplyr::select (BO2_salinitymean_ss,BO_sstmean,BO2_chlomean_ss,BO_damean)
+# get vif results
 
-##### get vif results
+out.vif <- vif(v.table)
+sort(out.vif)
+```
 
-resultado.vif <- vif(v_table)
-sort(resultado.vif)
+We remove the variable that has the highest VIF value and we test again the multicollinearity: 
 
-#remove highest
+```{r}
 
-v_table <- v_table %>% 
+v.table <- v.table %>% 
   dplyr::select (-BO_damean)
 
-##### get new vif results
+#  get new vif results
 
-resultado.vif <- vif(v_table)
-sort(resultado.vif)
+out.vif <- vif(v.table)
+sort(out.vif)
+```
 
+Now all the variables have VIF values that are acceptable. So, we proceed to save these variables for the next modelling stages:
 
-#save data frame without correlated variable
-
+```{r}
 data <- data %>% dplyr::select (-BO_damean)
-save(list="data",file=file.path("data","outputs_for_modelling",file="PAdata_with_env.RData"))
 
+# save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
 ```
 
-## Exploratory plots
-
-```{r, eval=F}
-####Leo archivos de especies de peces SP
-
-load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
-
-occ <- data %>% 
-  dplyr::filter(data$occurrenceStatus == 1)
-
-abs <- data %>% 
-  dplyr::filter(data$occurrenceStatus == 0)
-
-#NOTA INTERNA: El número de ausencias es mayor que las presencias, creo que tiene que ver con haber elimanado los datos de batimetrías menores que 0
-  
-##Salvo el pdf
-pdf(file=file.path("results", "factsheets_env.pdf"), paper="a4", width=, height=12,compress=T)
-
-
-  par(mfrow=c(3,3)) 
-  
-  names (data)
-
-  #### 1 BO_bathymean: En plot1 una distribucion de densidad de presencias y ausencias vs bathymetry
-  
-  dens_occ<-density(occ$BO_bathymean,na.rm=T)
-  dens_abs<-density(abs$BO_bathymean,na.rm=T)
-
-  plot(dens_occ,xlab="BO_bathymean", ylab="dens", main = "",col="red")
-  lines(dens_abs,xlab="BO_bathymean", ylab="dens", main = "",col="blue")
-
-  legend("topleft",legend=c("Occurrences", "Pseudoabsences"),
-         col=c("red", "blue"),pch=0.1, cex=0.8,box.lty=0,xpd=TRUE)
-  
-  ### NOTA INTERNA: hacer los plots para el resto de variables
-
-  #2. "BO_chlomean"  
-  dens_occ<-density(occ$BO2_chlomean_ss,na.rm=T)
-  dens_abs<-density(abs$BO2_chlomean_ss,na.rm=T)
-
-  plot(dens_occ,xlab="BO2_chlomean_ss", ylab="dens", main = "",col="red")
-  lines(dens_abs,xlab="BO2_chlomean_ss", ylab="dens", main = "",col="blue")
-  
-  #NOTA INTERNA: HAY QUE JUGAR CON LAS ESCALAS
-
-  legend("topright",legend=c("Occurrences", "Pseudoabsences"),
-         col=c("red", "blue"),pch=0.1, cex=0.8,box.lty=0,xpd=TRUE)  
-  #3. "BO_damean"      
-  
-  #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
-  
-  #4. "BO_salinity" 
-  
-   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
-  
-  #5. "BO_sstmean" 
-  
-   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
-  
-  #6. "BO_sstrange" 
-  
-   #REPETIR EL DENSITY PLOT DE ARRIBA CAMBIANDO LA VARIABLE
-
- dev.off()
-```
 
