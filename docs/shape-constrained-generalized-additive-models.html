@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-03-27" />
+<meta name="date" content="2023-03-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -174,8 +174,10 @@ div.csl-indent {
 <li class="chapter" data-level="5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>5</b> Prepare final dataset</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>5.1</b> Extract environmental data associated to presence-absence data</a></li>
-<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variable-correlation-analysis-of-variance-inflation-factor-vif"><i class="fa fa-check"></i><b>5.2</b> Variable correlation: Analysis of Variance Inflation Factor (VIF)</a></li>
-<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots"><i class="fa fa-check"></i><b>5.3</b> Exploratory plots</a></li>
+<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>5.2</b> Exploratory plots of environmental variables</a></li>
+<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>5.3</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
+<li class="chapter" data-level="5.4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#correlation-analysis"><i class="fa fa-check"></i><b>5.4</b> Correlation analysis</a></li>
+<li class="chapter" data-level="5.5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>5.5</b> Variance Inflation Factor (VIF)</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
 <ul>
@@ -189,8 +191,9 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>8.1</b> Projection</a></li>
-<li class="chapter" data-level="8.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>8.2</b> Mapping</a></li>
+<li class="chapter" data-level="8.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data.-04-ataletik-hona-mugituta"><i class="fa fa-check"></i><b>8.1</b> Prepare environmental data. 04 ATALETIK HONA MUGITUTA</a></li>
+<li class="chapter" data-level="8.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>8.2</b> Projection</a></li>
+<li class="chapter" data-level="8.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>8.3</b> Mapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -266,7 +269,7 @@ div.csl-indent {
 ## UBRE score = 0.071818  Scale est. = 1         n = 29435</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="shape-constrained-generalized-additive-models.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(model_sst,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>We repeat the same for the rest of the variables.</p>
+<p>We repeat the same steps for the rest of the variables.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="shape-constrained-generalized-additive-models.html#cb6-1" aria-hidden="true" tabindex="-1"></a>model_chl <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO2_chlomean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data)</span>
 <span id="cb6-2"><a href="shape-constrained-generalized-additive-models.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_chl)</span></code></pre></div>
 <pre><code>## 
@@ -292,7 +295,7 @@ div.csl-indent {
 ## UBRE score = 0.22512  Scale est. = 1         n = 29431</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="shape-constrained-generalized-additive-models.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(model_chl,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Due to convergence issues, sometimes it is necessary to fix the smoothing parameter (sp) at <span class="math inline">\(10^{-5}\)</span>, as here when introducing salinity as an explanatory variable. If no value is provided, the smoothing parameter is estimated within the model.</p>
+<p>Due to convergence issues, sometimes it is necessary to fix the smoothing parameter (sp) at small value, i.e. <span class="math inline">\(10^{-5}\)</span>, as here when introducing salinity as an explanatory variable. If no value is provided, the smoothing parameter is estimated within the model.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="shape-constrained-generalized-additive-models.html#cb9-1" aria-hidden="true" tabindex="-1"></a>model_sal <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO2_salinitymean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data,<span class="at">sp=</span><span class="fl">0.00001</span>)</span>
 <span id="cb9-2"><a href="shape-constrained-generalized-additive-models.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_sal)</span></code></pre></div>
 <pre><code>## 
@@ -393,22 +396,22 @@ div.csl-indent {
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="shape-constrained-generalized-additive-models.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span></code></pre></div>
 <pre><code>## $null
 ## occurrenceStatus ~ 1
-## &lt;environment: 0x00000000390bfa30&gt;
+## &lt;environment: 0x0000000039109ec0&gt;
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x00000000390bfa30&gt;
+## &lt;environment: 0x0000000039109ec0&gt;
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x00000000390bfa30&gt;
+## &lt;environment: 0x0000000039109ec0&gt;
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x00000000390bfa30&gt;</code></pre>
+## &lt;environment: 0x0000000039109ec0&gt;</code></pre>
 <p>Summaries of the fitted models:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="shape-constrained-generalized-additive-models.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
 <pre><code>## $null
@@ -418,7 +421,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1
-## &lt;environment: 0x00000000390bfa30&gt;
+## &lt;environment: 0x0000000039109ec0&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)  
@@ -438,7 +441,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x00000000390bfa30&gt;
+## &lt;environment: 0x0000000039109ec0&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -464,7 +467,7 @@ div.csl-indent {
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x00000000390bfa30&gt;
+## &lt;environment: 0x0000000039109ec0&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -490,7 +493,7 @@ div.csl-indent {
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x00000000390bfa30&gt;
+## &lt;environment: 0x0000000039109ec0&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -508,7 +511,7 @@ div.csl-indent {
 ##   Scale est. = 1         n = 29431</code></pre>
 <p>The last model of the list, is the selected one. Which in this case contains the considered three variables.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="shape-constrained-generalized-additive-models.html#cb33-1" aria-hidden="true" tabindex="-1"></a>selected_model <span class="ot">&lt;-</span> model_SCGAM<span class="sc">$</span>smod[[<span class="fu">length</span>(model_SCGAM<span class="sc">$</span>smod)]]</span></code></pre></div>
-<p>Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be also for SC-GAMs.</p>
+<p>Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be used also for SC-GAMs.</p>
 
 </div>
 </div>
