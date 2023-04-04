@@ -258,22 +258,11 @@ ggplot() +
 
 ## Create pseudo-absence data
 
-Prevalence 50%
+After saving presence data for the species of interest we need to generate absence data (with a constant prevalence of 50%, [@mcpherson_2004],[@barbetmassin_etal_2012]), in order to work with logistic regression SDM afterwards. For that, we generate a buffer around each presence data point, with a radius of 100km, where no absences can be generated. 
 
-See code from ANICHO (mantaining some space around presences). Leire C.
+we load the requiered libraries.
 
-Ref [@barbetmassin_etal_2012]
-
-Copio aqui el codigo de anicho tal cual, luego lo limpiaré para este caso:
-
-```{r, eval=F}
-# Script information ------------------------------------------------------
-
-# Title: Generate pseudo-absences for IM-18-ANICHO
-# Last modified by Leire Ibaibarriaga (libaibarriaga@azti.es) and Leire Citores (lcitores@azti.es)
-
-# Load libraries ----------------------------------------------------------
-
+```{r,  eval=T,message=FALSE,warning=FALSE}
 library(tidyverse)
 library(ggplot2)
 library(scales)
@@ -289,27 +278,32 @@ library(sf)
 library(gridExtra)
 library(lubridate)
 library(raster)
+```
 
-# load data-files
+We load the presence data and the object with the area of study.
+```{r,  eval=T,message=FALSE,warning=FALSE}
 #occurrence data
 load("data/occurrences/occ.RData")
-#map Atlantic without black sea
+#study area spatial polygon
 load("data/spatial/total_area.RData")
+```
 
+Before starting the pseudo-absence generation process, we delete observations in land (positive bathymetry) and select data between 2000 and 2014 (same temporal range as the environmental data that we will load later).
+```{r,  eval=T,message=FALSE,warning=FALSE}
 #remove points in land
 df0<-subset(df0,bathymetry<0)
 
 #use years from 2000 to 2014
 df0<- subset(df0, YEAR<=2014 & YEAR>=2000)
 
-# Remove points in south hemisphere (optional)
-#prop.table(table(df0$LAT<=0)) #only 22% of obs in the south
-#df0<-subset(df0,LAT>0)
-
-# Remove south hemisphere area
-#area <- crop(study_area, extent(-100, 100, 0, 100))
+#use the whole saved area
 area <- study_area
+```
 
+
+Then we transform the presence data frame to "SpatialPointsDataFrame" class object and the to "sf" class object so we can operate and plot easily with spatial data. We can see the charaterstics of this object through its summary.
+
+```{r,  eval=T,message=FALSE,warning=FALSE}
 #convert to spatial point data frame
 df<-df0 ; coordinates(df)<- ~LON+LAT
 crs(df)<-crs(area)
@@ -318,32 +312,28 @@ crs(df)<-crs(area)
 area.sf<-st_union(st_as_sf(area))
 df.sf<-st_as_sf(df)
 
-ggplot(area.sf) + geom_sf() + geom_sf(data=st_union(df.sf))
-
-
-dim(df) # 15079    5
-head(df)
-tail(df)
 summary(df)
 ```
 
+We can easily plot sf objects using ggplot, here we plot the area of study and the presence data points
 
-```{r, eval=F}
-# Maps --------------------------------------------------------------------
+```{r,  eval=T,message=FALSE,warning=FALSE}
+ggplot(area.sf) + geom_sf() + geom_sf(data=st_union(df.sf),size=0.05,alpha=0.5)
+```
 
+We save a base plot (p0) with the world map and our area of study in blue
+```{r, eval=T,message=FALSE,warning=FALSE}
 # basic ggplot
-
 global <- map_data("worldHires")
-
 p0 <- ggplot() + 
   annotation_map(map=global, fill="grey")+
-  geom_sf(data=area.sf,fill=NA)
+  geom_sf(data=area.sf,fill=5)
 print(p0)
+```
 
-# EGSP: Transformation to UTM ---------------------------------------------
-
+In order to generate a buffer around each acurrence data point, we need to work with euclidean distances, so first, we need to transform the decimal latitude and longitude values to UTM.
+```{r, eval=T,message=FALSE,warning=FALSE}
 # function to find your UTM. Taken from Nerea Goikoetxea
-
 lonlat2UTM = function(lonlat) {
   utm = (floor((lonlat[1] + 180) / 6) %% 60) + 1
   if(lonlat[2] > 0) {
@@ -353,108 +343,82 @@ lonlat2UTM = function(lonlat) {
   }
 }
 
-EPSG_2_UTM <- lonlat2UTM(c(mean(df$LON), mean(df$LAT))) 
-EPSG_2_UTM # 32623
+(EPSG_2_UTM <- lonlat2UTM(c(mean(df$LON), mean(df$LAT))))
 
-# transform to UTMs (in m)
+# transform area and data points to UTMs (in m)
 aux <- st_transform(area.sf, EPSG_2_UTM)
 df.sf.utm <- st_transform(df.sf, EPSG_2_UTM)
+```
 
-# number of points within the study area
+Now, we can create buffers of 100km around the points and join the resulting polygons. Then this buffer is intersected with the area of study defining the area where the pseudo-absences can be generated. To visualize the defined areas, we plot the buffers in red and the area that we will use to generate pseudo-absences in green.
 
-df.in <- st_intersects(df.sf.utm, aux, sparse=FALSE)
-df$INSIDE <- df.in[,1]
-mean(df$INSIDE) # 100% points inside the area of study
-
-# create buffers of 10km (10000) around the points and join the resulting polygons
-
+```{r, eval=T,message=FALSE,warning=FALSE}
+# create buffers of 100000m
 buffer <- st_buffer(df.sf.utm, dist=100000)
 buffer <- st_union(buffer)
 
-p0 + geom_sf(data=buffer)
-
-p <- p0 +
-  geom_sf(data=buffer, fill="blue")+
-  coord_sf(xlim=c(-90,-82), ylim=c(25,31))
-print(p)
-
-# intersect the result with the buffers around the catch data points
+# intersect the are with the buffer
 aux0 <- st_difference(aux, buffer)
 
 # ggplot for all data
+p0 +geom_sf(data=aux0,fill=3)+geom_sf(data=buffer,fill=2)
 
-p <- p0 +
-  geom_sf(data=aux0, fill=2)+
-  coord_sf(xlim=c(-95,-82), ylim=c(25,31))
-print(p)
-
-p<-p0 + geom_sf(data=aux0,fill=2)
-
-ggsave(file.path("plots","pseudo",paste0("area_pseudo_all.png")), p, device="png")
+#zoom
+p0 +geom_sf(data=aux0,fill=3)+geom_sf(data=buffer,fill=2)+
+  coord_sf(xlim=c(-95,-82), ylim=c(22,31))
 ```
 
 
-```{r, eval=F}
-# Generate pseudo-absences -------------------------------------------------
-
-
+We create a data frame for pseudo-absences with the same dimensions as the presences data frame.
+```{r, eval=T,message=FALSE,warning=FALSE}
 # Generate the pseudo-absence data frame
-
 pseudo <- matrix(data=NA, nrow=dim(df0)[1], ncol=dim(df0)[2])
 pseudo <- data.frame(pseudo)
 names(pseudo) <- names(df0)
+```
 
+To generate the pseudo-absence data points, we sample randomly from the defined area and we extract their latitude and longitude to incorporate them in the created data frame. we set the occurceStatus equal to 0 as they are absences.
+
+```{r, eval=T,message=FALSE,warning=FALSE}
 # set the seed
-
 set.seed(1)
 
-##no loop
+#sample from the defined area
+rp.sf <- st_sample(aux0, size=dim(df.sf.utm)[1], type="random") # randomly sample points
 
-buffer.sub <- st_buffer(df.sf.utm, dist=100000)
-buffer.sub <- st_union(buffer.sub)
-aux0.sub <- st_difference(aux, buffer.sub)
-rp.sf <- st_sample(aux0.sub, size=dim(df.sf.utm)[1], type="random") # randomly sample points
+# transform to lat and lon and extract coordinates as data.frame
 rp.sf <- st_transform(rp.sf, 4326)
-rp <- as.data.frame(st_coordinates(rp.sf)) # transform to lat&lon and extract coordinates as data.frame
+rp <- as.data.frame(st_coordinates(rp.sf)) 
 pseudo$LON <- rp$X
 pseudo$LAT <- rp$Y
-p <- p0 +
-  geom_sf(data=aux0.sub, fill=2, alpha=0.3)+
-  geom_sf(data=rp.sf, col=1, shape=4,size=0.5)+
-  geom_sf(data=df.sf.utm, col=4, alpha=0.3)+
-  ggtitle(paste(unique(df$scientificName),"all"))
-ggsave(file.path("plots","pseudo",paste0("pseudo_","all",".png")), p, device="png")
-
-
-p <- p0 +
-  geom_sf(data=aux0.sub, fill=NA, alpha=0.3)+
-  geom_sf(data=df.sf.utm, col=4, alpha=0.3,size=0.5)+
-  geom_sf(data=rp.sf, col=1, shape=4,size=0.5)+
-  coord_sf(xlim=c(-98,-79), ylim=c(15,31))+
-  ggtitle(paste(unique(df$scientificName),"all"))
-ggsave(file.path("plots","pseudo",paste0("pseudo_","all_zoom",".png")), p, device="png")
-
 
 # complete the rest of columns
-
 pseudo$scientificName <- df0$scientificName
 pseudo$occurrenceStatus  <- 0
 ```
 
+We can plot the generated pseudo-absence data (in pink) in the map, together with the presence data points (in black).
 
-```{r, eval=F}
-# Save the final dataset including the pseudo-absences --------------------
+```{r, eval=T,message=FALSE,warning=FALSE}
+p0 +
+  geom_sf(data=rp.sf, col=6, shape=4,size=0.5)+
+  geom_sf(data=df.sf.utm, col=1, alpha=0.8,size=0.5)+
+  ggtitle(unique(df$scientificName))
 
-head(df0)
-head(pseudo)
+#zoom
+p0 +
+  geom_sf(data=rp.sf, col=6, shape=4,size=1)+
+  geom_sf(data=df.sf.utm, col=1, alpha=0.8,size=0.5)+
+  coord_sf(xlim=c(-95,-82), ylim=c(23,31))+
+  ggtitle(unique(df$scientificName))
+```
 
+Finally we join the presence and pseudo-absence data frames and save the new data frame as well as the area object.
+```{r, eval=T,message=FALSE,warning=FALSE}
 # Join the two data sets and save the final dataset
-
 dat <- rbind(df0, pseudo)
 save(list=c("dat"),file=file.path("data","outputs_for_modelling",file="PAdata.RData"))
 save(list=c("area"),file=file.path("data","spatial",file="area.RData"))
-write.table(dat, file=file.path("data","outputs_for_modelling","PAdata.csv"), row.names=F, sep=";", dec=".")
-
 ```
 
 
