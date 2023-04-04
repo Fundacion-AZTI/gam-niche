@@ -37,7 +37,7 @@ load("data/outputs_for_modelling/PAdata.RData")
 # load environmental rasters
 library(sp)
 library(raster)
-load(file="data/env/myBioracle.layers.Rdata") 
+myBioracle.layers<-stack("data/env/myBioracle.layers.tif")
 ```
 
 Now we can extract the environmental data associated to each of the species data points using the function `extract` from the `raster` package. The method employed is `bilinear` that returns the interpolated value from the four nearest raster cells.
@@ -45,20 +45,22 @@ Now we can extract the environmental data associated to each of the species data
 CHECK THE NAMES THROUGHOUT!! dat, data... mydata1.env.bil TOO LONG... 
 I'm HAVING ERRORS WITH THIS. ONLY WORKS EXECUTED AFTER THE OTEHR... WHY?
 
-```{r, eval=F}
-mydata1.env.bil <- raster::extract(x=myBioracle.layers, y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) 
-head(mydata1.env.bil)
+```{r, eval=T}
+raster_ex <- raster::extract(x=myBioracle.layers, y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) 
+colnames(raster_ex)[-1]<-c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")
+
+head(raster_ex)
 ```
 
 We merge the presence/absence data and the environmental data: 
 
-```{r, eval=F}
-data <- cbind(dat, mydata1.env.bil)
+```{r, eval=T}
+data <- cbind(dat, raster_ex)
 ```
 
 We can conduct some quick checks on the new dataset:  
 
-```{r, eval=F}
+```{r, eval=T}
 dim(data)
 str(data)
 head(data)
@@ -74,13 +76,13 @@ abline(0,1, col=2)
 
 The new dataset has 30158 rows and 13 columns, and there are 162 NA's in the environmental dataset. Note also that there are some positive bathymetries that correspond to points located very close to the coast. We remove both the points with NA's and the points with positive bathymetries:
 
-```{r, eval=F}
+```{r, eval=T}
 data <- subset(data, BO_bathymean<0)
 ```
 
 We check again the dataset:
 
-```{r, eval=F}
+```{r, eval=T}
 dim(data)
 summary(data) # 29435 sites : 4 are NAs
 ```
@@ -89,17 +91,11 @@ The resulting dataset has 29435, from which 4 have NA's in BO2_chlomean_ss and B
 
 LI: REMOVE THE 4 NA's?? IT WILL FACILITATE MODEL COMPARISON
 
-```{r, eval=F}
+```{r, eval=T}
 save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
 ```
 
 ## Exploratory plots of environmental variables
-
-LI: This first chunk can be removed, but I'm having problems with the first subsection
-
-```{r, eval=T}
-load("data/outputs_for_modelling/PAdata_with_env.RData")
-```
 
 Before starting the modelling process, we are going to explore the individual variables in the dataset. 
 

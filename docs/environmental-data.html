@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Environmental data | Species distribution models (SDM)</title>
+  <title>Chapter 3 Environmental data | Species distribution models (SDM)</title>
   <meta name="description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Environmental data | Species distribution models (SDM)" />
+  <meta property="og:title" content="Chapter 3 Environmental data | Species distribution models (SDM)" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
   <meta name="github-repo" content="Fundacion-AZTI/SDM" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Environmental data | Species distribution models (SDM)" />
+  <meta name="twitter:title" content="Chapter 3 Environmental data | Species distribution models (SDM)" />
   
   <meta name="twitter:description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-03-28" />
+<meta name="date" content="2023-04-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -94,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -158,46 +158,46 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">BOOK TITLE</a></li>
+<li><a href="./">SDM</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>2</b> Libraries</a></li>
-<li class="chapter" data-level="3" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>3</b> Presence-absence data</a>
+<li class="chapter" data-level="2" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>2</b> Presence-absence data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>3.1</b> Download presence data</a></li>
-<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.2</b> Create pseudo-absence data</a></li>
+<li class="chapter" data-level="2.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>2.1</b> Download presence data</a></li>
+<li class="chapter" data-level="2.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>2.2</b> Create pseudo-absence data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>4</b> Environmental data</a>
+<li class="chapter" data-level="3" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>3</b> Environmental data</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>4.1</b> Download from public repositories</a></li>
+<li class="chapter" data-level="3.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>3.1</b> Download from public repositories</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>5</b> Prepare final dataset</a>
+<li class="chapter" data-level="4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>4</b> Prepare final dataset</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>5.1</b> Extract environmental data associated to presence-absence data</a></li>
-<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-for-individual-variables"><i class="fa fa-check"></i><b>5.2</b> Exploratory plots for individual variables</a></li>
-<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#correlation-analysis"><i class="fa fa-check"></i><b>5.3</b> Correlation analysis</a></li>
-<li class="chapter" data-level="5.4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variable-correlation-analysis-of-variance-inflation-factor-vif"><i class="fa fa-check"></i><b>5.4</b> Variable correlation: Analysis of Variance Inflation Factor (VIF)</a></li>
-<li class="chapter" data-level="5.5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots"><i class="fa fa-check"></i><b>5.5</b> Exploratory plots</a></li>
+<li class="chapter" data-level="4.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>4.1</b> Extract environmental data associated to presence-absence data</a></li>
+<li class="chapter" data-level="4.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>4.2</b> Exploratory plots of environmental variables</a></li>
+<li class="chapter" data-level="4.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>4.3</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
+<li class="chapter" data-level="4.4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#correlation-analysis"><i class="fa fa-check"></i><b>4.4</b> Correlation analysis</a></li>
+<li class="chapter" data-level="4.5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>4.5</b> Variance Inflation Factor (VIF)</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
+<li class="chapter" data-level="5" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>5</b> Shape Constrained-Generalized Additive Models</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>6.1</b> Model fit</a></li>
-<li class="chapter" data-level="6.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a></li>
+<li class="chapter" data-level="5.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>5.1</b> Model fit</a></li>
+<li class="chapter" data-level="5.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>5.2</b> Model selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>7</b> Model validation</a>
+<li class="chapter" data-level="6" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>6</b> Model validation</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
-<li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
+<li class="chapter" data-level="6.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>6.1</b> Optimum threshold</a></li>
+<li class="chapter" data-level="6.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>6.2</b> k-fold validation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a>
+<li class="chapter" data-level="7" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>7</b> Prediction and maps</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data.-04-ataletik-hona-mugituta"><i class="fa fa-check"></i><b>8.1</b> Prepare environmental data. 04 ATALETIK HONA MUGITUTA</a></li>
-<li class="chapter" data-level="8.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>8.2</b> Projection</a></li>
-<li class="chapter" data-level="8.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>8.3</b> Mapping</a></li>
+<li class="chapter" data-level="7.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data.-04-ataletik-hona-mugituta"><i class="fa fa-check"></i><b>7.1</b> Prepare environmental data. 04 ATALETIK HONA MUGITUTA</a></li>
+<li class="chapter" data-level="7.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>7.2</b> Projection</a></li>
+<li class="chapter" data-level="7.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>7.3</b> Mapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>8</b> Libraries</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -218,8 +218,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="environmental-data" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Environmental data<a href="environmental-data.html#environmental-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="environmental-data" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Environmental data<a href="environmental-data.html#environmental-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Loading required libraries</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="environmental-data.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Download Environmental data from Bio-oracle</span></span>
 <span id="cb1-2"><a href="environmental-data.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -248,8 +248,8 @@ div.csl-indent {
 <span id="cb1-25"><a href="environmental-data.html#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="environmental-data.html#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># location of script</span></span>
 <span id="cb1-27"><a href="environmental-data.html#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd(dirname(getSourceEditorContext()$path))</span></span></code></pre></div>
-<div id="download-from-public-repositories" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Download from public repositories<a href="environmental-data.html#download-from-public-repositories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="download-from-public-repositories" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Download from public repositories<a href="environmental-data.html#download-from-public-repositories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Environmental data can be available from different sources. In this case, we used the Bio-ORACLE (ocean
 rasters for analyses of climate and environment) database <span class="citation">(<a href="#ref-tyberghein_etal_2012" role="doc-biblioref">Tyberghein et al. 2012</a>; <a href="#ref-assis_etal_2017" role="doc-biblioref">Assis et al. 2017</a>)</span>. These data are publicly available and are easily accessible from the <code>sdmpredictors</code> package <a href="https://cran.r-project.org/web/packages/sdmpredictors/index.html"><code>sdmpredictors</code></a>.</p>
 <p>After loading the <code>sdmpredictors</code> package, we can check the list of available datasets with the function <code>list_datasets</code> as follows:</p>
@@ -379,7 +379,7 @@ FALSE
 <a href="https://www.earthenv.org/streams" class="uri">https://www.earthenv.org/streams</a>
 </td>
 <td style="text-align:left;">
-The dataset consists of near-global, spatially continuous, and freshwater-specific environmental variables in a standardized 1km grid. We delineated the sub-catchment for each grid cell along the HydroSHEDS river network and summarized the upstream environment (climate, topography, land cover, surface geology and soil) to each grid cell using various metrics (average, minimum, maximum, range, sum, inverse distance-weighted average and sum). All variables were subsequently averaged across single lakes and reservoirs of the Global lakes and Wetlands Database that are connected to the river network. Monthly climate variables were summarized into 19 long-term climatic variables following the &lt;d2&gt;bioclim&lt;d3&gt; framework.
+The dataset consists of near-global, spatially continuous, and freshwater-specific environmental variables in a standardized 1km grid. We delineated the sub-catchment for each grid cell along the HydroSHEDS river network and summarized the upstream environment (climate, topography, land cover, surface geology and soil) to each grid cell using various metrics (average, minimum, maximum, range, sum, inverse distance-weighted average and sum). All variables were subsequently averaged across single lakes and reservoirs of the Global lakes and Wetlands Database that are connected to the river network. Monthly climate variables were summarized into 19 long-term climatic variables following the ÒbioclimÓ framework.
 </td>
 <td style="text-align:left;">
 Domisch, S., Amatulli, G., and Jetz, W. (2015) Near-global freshwater-specific environmental variables for biodiversity analyses in 1 km resolution. Scientific Data 2:150073 doi: 10.1038/sdata.2015.73
@@ -71251,8 +71251,8 @@ TRUE
 </div>
 <p>Once we identify the dataset and the layers we are interested on, we can download them using the function <code>load_layers</code>. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient, surface temperature and bathymetry:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="environmental-data.html#cb5-1" aria-hidden="true" tabindex="-1"></a>myBioracle.layers <span class="ot">&lt;-</span> <span class="fu">load_layers</span>(<span class="fu">c</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span> ,<span class="st">&quot;BO_sstmean&quot;</span>, <span class="st">&quot;BO_bathymean&quot;</span>)) </span></code></pre></div>
-<pre><code>## Warning in get_datadir(datadir): file.path(tempdir(), &quot;sdmpredictors&quot;) will be
-## used as datadir, set options(sdmpredictors_datadir=&quot;&lt;directory&gt;&quot;) to avoid
+<pre><code>## Warning in get_datadir(datadir): file.path(tempdir(), &quot;sdmpredictors&quot;) will
+## be used as datadir, set options(sdmpredictors_datadir=&quot;&lt;directory&gt;&quot;) to avoid
 ## re-downloading the data in every session or set the datadir parameter in
 ## load_layers</code></pre>
 <p>Note that the resulting object is a <code>rasterStack</code>, where each variable is a layer</p>
@@ -71281,18 +71281,18 @@ TRUE
 <span id="cb12-3"><a href="environmental-data.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tmp)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>To facilitate subsequent access, the rasterStack with the downloaded data is saved in a local folder:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="environmental-data.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(myBioracle.layers, <span class="at">file=</span><span class="st">&quot;data/env/myBioracle.layers.Rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="environmental-data.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(myBioracle.layers, <span class="at">filename=</span><span class="st">&quot;data/env/myBioracle.layers.tif&quot;</span>, <span class="at">options=</span><span class="st">&quot;INTERLEAVE=BAND&quot;</span>, <span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Note that the functions <code>dataset_citations</code> and <code>layer_citations</code> provide the bibliographic entries of the datasets and layers for proper citation:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="environmental-data.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dataset_citations</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>))</span></code></pre></div>
-<pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \&quot;Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 &lt;https://doi.org/10.1111/geb.12693&gt;.&quot;                                 
-## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n&lt;https://doi.org/10.1111/j.1466-8238.2011.00656.x&gt;.&quot;</code></pre>
+<pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, SerrÃ£o E, De Clerck O, Tittensor D (2018). \&quot;Bioâ\200\220ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi: 10.1111/geb.12693 (URL:\nhttps://doi.org/10.1111/geb.12693).&quot;                             
+## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi: 10.1111/j.1466-8238.2011.00656.x (URL:\nhttps://doi.org/10.1111/j.1466-8238.2011.00656.x).&quot;</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="environmental-data.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">layer_citations</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>))</span></code></pre></div>
-<pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \&quot;Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 &lt;https://doi.org/10.1111/geb.12693&gt;.&quot;                                 
-## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n&lt;https://doi.org/10.1111/j.1466-8238.2011.00656.x&gt;.&quot;</code></pre>
+<pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, SerrÃ£o E, De Clerck O, Tittensor D (2018). \&quot;Bioâ\200\220ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi: 10.1111/geb.12693 (URL:\nhttps://doi.org/10.1111/geb.12693).&quot;                             
+## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi: 10.1111/j.1466-8238.2011.00656.x (URL:\nhttps://doi.org/10.1111/j.1466-8238.2011.00656.x).&quot;</code></pre>
 
 </div>
 </div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-assis_etal_2017" class="csl-entry">
 Assis, Jorge, Lennert Tyberghein, Samuel Bosch, Heroen Verbruggen, Ester A. Serrão, Olivier De Clerck, and Derek Tittensor. 2017. <span>“Bio‐ORACLE V2.0: Extending Marine Data Layers for Bioclimatic Modelling.”</span> Journal Article. <em>Global Ecology and Biogeography</em> 27 (3): 277–84. <a href="https://doi.org/10.1111/geb.12693">https://doi.org/10.1111/geb.12693</a>.
@@ -71338,7 +71338,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-data_env.Rmd",
+"link": "https://github.com/Fundacion-AZTI/SDM/edit/master/03-data_env.Rmd",
 "text": "Edit"
 },
 "history": {

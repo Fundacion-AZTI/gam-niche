@@ -107,7 +107,7 @@ plot(tmp)
 To facilitate subsequent access, the rasterStack with the downloaded data is saved in a local folder: 
 
 ```{r, eval=T}
-save(myBioracle.layers, file="data/env/myBioracle.layers.Rdata")
+writeRaster(myBioracle.layers, filename="data/env/myBioracle.layers.tif", options="INTERLEAVE=BAND", overwrite=TRUE)
 ```
 
 Note that the functions `dataset_citations` and `layer_citations` provide the bibliographic entries of the datasets and layers for proper citation:
