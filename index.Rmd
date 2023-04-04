@@ -18,6 +18,8 @@ This is a short tutorial for constructing species distribution models in R using
 
 The code is available in [AZTI's github repository](https://github.com/Fundacion-AZTI/SDM) repository and the book is readily available [here](https://fundacion-azti.github.io/SDM/).
 
+This work was funded by... MISSION
+
 To cite this book, please use: 
 
 BLA BLA BLA
