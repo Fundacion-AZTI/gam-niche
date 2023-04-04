@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Presence-absence data | Species distribution models (SDM)</title>
+  <title>Chapter 2 Presence-absence data | Species distribution models (SDM)</title>
   <meta name="description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Presence-absence data | Species distribution models (SDM)" />
+  <meta property="og:title" content="Chapter 2 Presence-absence data | Species distribution models (SDM)" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
   <meta name="github-repo" content="Fundacion-AZTI/SDM" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Presence-absence data | Species distribution models (SDM)" />
+  <meta name="twitter:title" content="Chapter 2 Presence-absence data | Species distribution models (SDM)" />
   
   <meta name="twitter:description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="libraries.html"/>
+<link rel="prev" href="introduction.html"/>
 <link rel="next" href="environmental-data.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -156,46 +156,46 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">BOOK TITLE</a></li>
+<li><a href="./">SDM</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>2</b> Libraries</a></li>
-<li class="chapter" data-level="3" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>3</b> Presence-absence data</a>
+<li class="chapter" data-level="2" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>2</b> Presence-absence data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>3.1</b> Download presence data</a></li>
-<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.2</b> Create pseudo-absence data</a></li>
+<li class="chapter" data-level="2.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>2.1</b> Download presence data</a></li>
+<li class="chapter" data-level="2.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>2.2</b> Create pseudo-absence data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>4</b> Environmental data</a>
+<li class="chapter" data-level="3" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>3</b> Environmental data</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>4.1</b> Download from public repositories</a></li>
+<li class="chapter" data-level="3.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>3.1</b> Download from public repositories</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>5</b> Prepare final dataset</a>
+<li class="chapter" data-level="4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>4</b> Prepare final dataset</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>5.1</b> Extract environmental data associated to presence-absence data</a></li>
-<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>5.2</b> Exploratory plots of environmental variables</a></li>
-<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>5.3</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
-<li class="chapter" data-level="5.4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#correlation-analysis"><i class="fa fa-check"></i><b>5.4</b> Correlation analysis</a></li>
-<li class="chapter" data-level="5.5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>5.5</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="4.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>4.1</b> Extract environmental data associated to presence-absence data</a></li>
+<li class="chapter" data-level="4.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>4.2</b> Exploratory plots of environmental variables</a></li>
+<li class="chapter" data-level="4.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>4.3</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
+<li class="chapter" data-level="4.4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#correlation-analysis"><i class="fa fa-check"></i><b>4.4</b> Correlation analysis</a></li>
+<li class="chapter" data-level="4.5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>4.5</b> Variance Inflation Factor (VIF)</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
+<li class="chapter" data-level="5" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>5</b> Shape Constrained-Generalized Additive Models</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>6.1</b> Model fit</a></li>
-<li class="chapter" data-level="6.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a></li>
+<li class="chapter" data-level="5.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>5.1</b> Model fit</a></li>
+<li class="chapter" data-level="5.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>5.2</b> Model selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>7</b> Model validation</a>
+<li class="chapter" data-level="6" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>6</b> Model validation</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
-<li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
+<li class="chapter" data-level="6.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>6.1</b> Optimum threshold</a></li>
+<li class="chapter" data-level="6.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>6.2</b> k-fold validation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a>
+<li class="chapter" data-level="7" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>7</b> Prediction and maps</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data.-04-ataletik-hona-mugituta"><i class="fa fa-check"></i><b>8.1</b> Prepare environmental data. 04 ATALETIK HONA MUGITUTA</a></li>
-<li class="chapter" data-level="8.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>8.2</b> Projection</a></li>
-<li class="chapter" data-level="8.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>8.3</b> Mapping</a></li>
+<li class="chapter" data-level="7.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data.-04-ataletik-hona-mugituta"><i class="fa fa-check"></i><b>7.1</b> Prepare environmental data. 04 ATALETIK HONA MUGITUTA</a></li>
+<li class="chapter" data-level="7.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>7.2</b> Projection</a></li>
+<li class="chapter" data-level="7.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>7.3</b> Mapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>8</b> Libraries</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -216,8 +216,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="presence-absence-data" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Presence-absence data<a href="presence-absence-data.html#presence-absence-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="presence-absence-data" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Presence-absence data<a href="presence-absence-data.html#presence-absence-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this chapter we first, download occurrence data from global open-access datasets such as Global Biodiversity Information Facility (GBIF, <a href="https://www.gbif.org/" class="uri">https://www.gbif.org/</a>) and Ocean Biodiversity Information System (OBIS, <a href="https://obis.org/" class="uri">https://obis.org/</a>); second, clean downloaded data reformating, renaming fields and removing outliers data; and lastly, we generate a set of pseudoabsence points along our study area.</p>
 <p>First we load list required libraries.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="presence-absence-data.html#cb1-1" aria-hidden="true" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
@@ -252,8 +252,8 @@ div.csl-indent {
 <span id="cb3-3"><a href="presence-absence-data.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="presence-absence-data.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># general settings for ggplot (black-white background, larger base_size)</span></span>
 <span id="cb3-5"><a href="presence-absence-data.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
-<div id="download-presence-data" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Download presence data<a href="presence-absence-data.html#download-presence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="download-presence-data" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Download presence data<a href="presence-absence-data.html#download-presence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First we need to define our study area, in this case we select the Atlantic ocean based on the The Food and Agriculture Organization (FAO) Major Fishing Areas for Statistical Purposes and we remove Black sea subarea.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="presence-absence-data.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># url where FAO shapfile is stored</span></span>
 <span id="cb4-2"><a href="presence-absence-data.html#cb4-2" aria-hidden="true" tabindex="-1"></a>url<span class="ot">&lt;-</span><span class="st">&quot;https://www.fao.org/fishery/geoserver/area/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=area%3AFAO_AREAS&amp;maxFeatures=50&amp;outputFormat=SHAPE-ZIP&quot;</span></span>
@@ -418,8 +418,8 @@ div.csl-indent {
 <span id="cb14-6"><a href="presence-absence-data.html#cb14-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&#39;gray&#39;</span>, <span class="at">size =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb14-7"><a href="presence-absence-data.html#cb14-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">data=</span>df0, <span class="fu">aes</span>(<span class="at">x=</span>decimalLongitude, <span class="at">y=</span>decimalLatitude,<span class="at">colour=</span> occurrenceStatus)) </span></code></pre></div>
 </div>
-<div id="create-pseudo-absence-data" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Create pseudo-absence data<a href="presence-absence-data.html#create-pseudo-absence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="create-pseudo-absence-data" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Create pseudo-absence data<a href="presence-absence-data.html#create-pseudo-absence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>After saving presence data for the species of interest we need to generate absence data (with a constant prevalence of 50%, <span class="citation">(<a href="#ref-mcpherson_2004" role="doc-biblioref">McPHERSON, Jetz, and Rogers 2004</a>)</span>,<span class="citation">(<a href="#ref-barbetmassin_etal_2012" role="doc-biblioref">Barbet-Massin et al. 2012</a>)</span>), in order to work with logistic regression SDM afterwards. For that, we generate a buffer around each presence data point, with a radius of 100km, where no absences can be generated.</p>
 <p>we load the requiered libraries.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="presence-absence-data.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -560,15 +560,15 @@ div.csl-indent {
 <span id="cb30-5"><a href="presence-absence-data.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">95</span>,<span class="sc">-</span><span class="dv">82</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">31</span>))<span class="sc">+</span></span>
 <span id="cb30-6"><a href="presence-absence-data.html#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">unique</span>(df<span class="sc">$</span>scientificName))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
-<p>Finally we join the presence and pseudo-absence data frames and save the new data frame as well as the area object.</p>
+<p>Finally we join the presence and pseudo-absence data frames selecting the columns of interest and save the new data frame as well as the area object.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="presence-absence-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join the two data sets and save the final dataset</span></span>
-<span id="cb31-2"><a href="presence-absence-data.html#cb31-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df0, pseudo)</span>
+<span id="cb31-2"><a href="presence-absence-data.html#cb31-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df0, pseudo)[,<span class="fu">c</span>(<span class="st">&quot;scientificName&quot;</span>,<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>,<span class="st">&quot;YEAR&quot;</span>,<span class="st">&quot;occurrenceStatus&quot;</span>)]</span>
 <span id="cb31-3"><a href="presence-absence-data.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="fu">c</span>(<span class="st">&quot;dat&quot;</span>),<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;outputs_for_modelling&quot;</span>,<span class="at">file=</span><span class="st">&quot;PAdata.RData&quot;</span>))</span>
 <span id="cb31-4"><a href="presence-absence-data.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="fu">c</span>(<span class="st">&quot;area&quot;</span>),<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;spatial&quot;</span>,<span class="at">file=</span><span class="st">&quot;area.RData&quot;</span>))</span></code></pre></div>
 
 </div>
 </div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-barbetmassin_etal_2012" class="csl-entry">
 Barbet-Massin, Morgane, Frédéric Jiguet, Cécile Hélène Albert, and Wilfried Thuiller. 2012. <span>“Selecting Pseudo-Absences for Species Distribution Models: How, Where and How Many?”</span> Journal Article. <em>Methods in Ecology and Evolution</em> 3 (2): 327–38. <a href="https://doi.org/10.1111/j.2041-210X.2011.00172.x">https://doi.org/10.1111/j.2041-210X.2011.00172.x</a>.
@@ -582,7 +582,7 @@ McPHERSON, JANA M, Walter Jetz, and David J Rogers. 2004. <span>“The Effects o
           </div>
         </div>
       </div>
-<a href="libraries.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="environmental-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -614,7 +614,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-data_pa.Rmd",
+"link": "https://github.com/Fundacion-AZTI/SDM/edit/master/02-data_pa.Rmd",
 "text": "Edit"
 },
 "history": {

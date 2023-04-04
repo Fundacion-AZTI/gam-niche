@@ -413,10 +413,10 @@ p0 +
   ggtitle(unique(df$scientificName))
 ```
 
-Finally we join the presence and pseudo-absence data frames and save the new data frame as well as the area object.
+Finally we join the presence and pseudo-absence data frames selecting the columns of interest and save the new data frame as well as the area object.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # Join the two data sets and save the final dataset
-dat <- rbind(df0, pseudo)
+dat <- rbind(df0, pseudo)[,c("scientificName","LON","LAT","YEAR","occurrenceStatus")]
 save(list=c("dat"),file=file.path("data","outputs_for_modelling",file="PAdata.RData"))
 save(list=c("area"),file=file.path("data","spatial",file="area.RData"))
 ```

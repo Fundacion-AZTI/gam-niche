@@ -42,9 +42,6 @@ myBioracle.layers<-stack("data/env/myBioracle.layers.tif")
 
 Now we can extract the environmental data associated to each of the species data points using the function `extract` from the `raster` package. The method employed is `bilinear` that returns the interpolated value from the four nearest raster cells.
 
-CHECK THE NAMES THROUGHOUT!! dat, data... mydata1.env.bil TOO LONG... 
-I'm HAVING ERRORS WITH THIS. ONLY WORKS EXECUTED AFTER THE OTEHR... WHY?
-
 ```{r, eval=T}
 raster_ex <- raster::extract(x=myBioracle.layers, y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) 
 colnames(raster_ex)[-1]<-c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")
@@ -65,13 +62,6 @@ dim(data)
 str(data)
 head(data)
 summary(data)
-```
-
-ZER DA bathymetry ZUTABEA? AZALDU BEHAR DA??
-```{r, eval=F}
-# LI'k GEHITUTAKO KODIGOA. KENDU?
-plot(data$BO_bathymean, data$bathymetry)
-abline(0,1, col=2)
 ```
 
 The new dataset has 30158 rows and 13 columns, and there are 162 NA's in the environmental dataset. Note also that there are some positive bathymetries that correspond to points located very close to the coast. We remove both the points with NA's and the points with positive bathymetries:
