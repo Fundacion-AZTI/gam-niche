@@ -7,8 +7,7 @@ editor_options:
 
 In this chapter we first, download occurrence data from global open-access datasets such as Global Biodiversity Information Facility (GBIF, https://www.gbif.org/) and Ocean Biodiversity Information System (OBIS, https://obis.org/); second, clean downloaded data reformating, renaming fields and removing outliers data; and lastly, we generate a set of pseudoabsence points along our study area. 
 
-First we load list required libraries.
-
+First we load a list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
   #GENERAL USE LIBRARIES --------#
@@ -25,12 +24,13 @@ requiredPackages <- c(
   "sf", # to work with spatial data (shapefiles)
   "data.table", #for reading data,
   "dplyr", #for reading data,
-  "tidyr" #for reading data
+  "tidyr", #for reading data
+  "marmap" #bathymetry getNOAA.bathy remotes::install_github("ericpante/marmap")
   )
 ```
 
-Function to install the required packages that are not in your system and load all the required packages
-```{r, eval=F}
+We run a function to install the required packages that are not in our system and load all the required packages.
+```{r, eval=T,message=FALSE,warning=FALSE}
 install_load_function <- function(pkg){
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg))
@@ -42,65 +42,76 @@ install_load_function(requiredPackages)
 
 ```
 
-Define some settings
-```{r, eval=F}
-# location of script
+We define some overall settings.
+```{r, eval=T,message=FALSE,warning=FALSE}
+# Location of script
 setwd(dirname(getSourceEditorContext()$path))
 
-# general settings for ggplot (black-white background, larger base_size)
+# General settings for ggplot (black-white background, larger base_size)
 theme_set(theme_bw(base_size = 16))
 ```
 
 ## Download presence data
 
-First we need to define our study area, in this case we select the Atlantic ocean based on the The Food and Agriculture Organization (FAO) Major Fishing Areas for Statistical Purposes and we remove Black sea subarea.   
-```{r, eval=F}
+In this section we download presence data from global public datasets. 
+
+To do so, we first define our study area, in this case we select the Atlantic ocean based on the The Food and Agriculture Organization (FAO) Major Fishing Areas for Statistical Purposes and we remove Black sea subarea.   
+```{r, eval=T,message=FALSE,warning=FALSE}
 # url where FAO shapfile is stored
 url<-"https://www.fao.org/fishery/geoserver/area/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=area%3AFAO_AREAS&maxFeatures=50&outputFormat=SHAPE-ZIP"
 
-#download file
+# Download file
 download.file(url,"data/spatial/FAO_AREAS.zip",mode="wb")
 
-#unzip downloaded file
+# Unzip downloaded file
 unzip("data/spatial/FAO_AREAS.zip",exdir="data/spatial")
 
 # Load FAO (spatial multipolygon)
 FAO<- st_read(file.path("data", "spatial", "FAO_AREAS.shp"))
 
-#Select Atlantic Ocean FAO Area 
+# Select Atlantic Ocean FAO Area 
 FAO_Atl <- FAO[FAO$OCEAN=="Atlantic",]
 
-#Select Black sea subarea 
+# Select Black sea subarea 
 Black_Sea <- FAO_Atl[FAO_Atl$ID=="20",]
 
-# transform to sf objects
+# Transform to sf objects
 FAO_Atl.sf <- st_as_sf(FAO_Atl)
 Black_Sea.sf <- st_as_sf(Black_Sea)
 
 # Remove Black sea using st_difference (reverse of st_intersection)
 FAO_Atl_no_black_sea <- st_difference(FAO_Atl.sf,Black_Sea.sf) %>%   dplyr::select (F_AREA)
 
-#transform to spatial polygons dataframe
+# Transform to spatial polygons dataframe
 study_area<- sf:::as_Spatial(FAO_Atl_no_black_sea)
 
 plot(study_area)
+
+# Remove unused files
+rm(FAO, FAO_Atl, FAO_Atl.sf, FAO_Atl_no_black_sea, Black_Sea, Black_Sea.sf)
 ```
 
-Download data from OBIS and GBIF using scientific name. In this case we select Albacore tuna species (<em>Thunnus alalunga</em>).
-```{r, eval=F}
+Download occurrence data from OBIS and GBIF using scientific name. 
+
+In this case we select Albacore tuna species (<em>Thunnus alalunga</em>).
+```{r, eval=T,message=FALSE,warning=FALSE}
 # Get data from OBIS
-mydata.obis<-robis::occurrence(scientificname="Thunnus alalunga")
+#mydata.obis<-robis::occurrence(scientificname="Thunnus alalunga")
+#save(mydata.obis, file=file.path("data","occurrences",file="mydata.obis.RData"))
+load("data/occurrences/mydata.obis.RData")
 
 # Get data from GBIF
-mydata.gbif<-occ_data(scientificName="Thunnus alalunga", hasCoordinate = TRUE, limit=100000)$data
+#mydata.gbif<-occ_data(scientificName="Thunnus alalunga", hasCoordinate = TRUE, limit=100000)$data
+#save(mydata.gbif,file=file.path("data","occurrences",file="mydata.gbif.RData"))
+load("data/occurrences/mydata.gbif.RData")
 ```
 
-We now check the downloaded data and select the fields of interest
-```{r, eval=F}
-# check names for GBIF data
+We now check the downloaded data and select the fields of interest.
+```{r, eval=T,message=FALSE,warning=FALSE}
+# Check names for GBIF data
 names(mydata.gbif)
   
-#select columns of interest
+# Select columns of interest
 mydata.gbif <- mydata.gbif %>%
                 dplyr::select("acceptedScientificName",
                   "decimalLongitude",
@@ -111,10 +122,10 @@ mydata.gbif <- mydata.gbif %>%
                   "eventDate",
                   "depth")
 
-#check names in for OBIS data
+# Check names in for OBIS data
 names(mydata.obis)
 
-#select columns of interest
+# Select columns of interest
 mydata.obis <-  mydata.obis %>%
                 dplyr::select("scientificName",
                   "decimalLongitude",
@@ -127,12 +138,11 @@ mydata.obis <-  mydata.obis %>%
                   "bathymetry",
                   "occurrenceStatus",
                   "sst")
-  
+
 ```
 
-Reformat the data addin a new field and renaming some columns from mydata.gbif dataframe in order to have the same columns and be able to join both tables
-
-```{r, eval=F}
+Reformat the data adding a new field and renaming some columns from mydata.gbif dataframe in order to have the same columns and be able to join both downloaded datasets.
+```{r, eval=T,message=FALSE,warning=FALSE}
 mydata.gbif <- mydata.gbif %>% 
     dplyr::rename(scientificName= "acceptedScientificName") %>% 
     dplyr::rename(date_year = "year") %>% 
@@ -140,22 +150,25 @@ mydata.gbif <- mydata.gbif %>%
     dplyr::mutate(occurrenceStatus=1) %>% 
     dplyr::mutate(sst= NA)
 
-#Join data from OBIS and GBIF 
+# Join data from OBIS and GBIF 
 mydata.fus<-rbind(mydata.obis,mydata.gbif)
   
-#assign unique scientific name 
-  mydata.fus <- mydata.fus %>% 
+# Assign unique scientific name 
+mydata.fus <- mydata.fus %>% 
     dplyr::mutate(scientificName= paste(mydata.obis$scientificName[1]))
+
+# Remove unused files
+rm(mydata.gbif, mydata.obis)
 ```
 
-Clean raw data
-```{r, eval=F}
-#give date format to eventDate and fill out month and date_year columns
+We now clean downloaded raw data.
+```{r, eval=T,message=FALSE,warning=FALSE}
+# Give date format to eventDate and fill out month and date_year columns
   mydata.fus$eventDate <- as.Date(mydata.fus$eventDate)
   mydata.fus$date_year <- as.numeric(mydata.fus$date_year)
   mydata.fus$month <- as.numeric(mydata.fus$month)
 
-#mutate occurrenceStatus column giving value of 1 to presences and 0 to absences
+# Mutate occurrenceStatus column giving value of 1 to presences and 0 to absences
   
 unique (mydata.fus$occurrenceStatus)
 
@@ -167,16 +180,15 @@ mydata.fus <- mydata.fus %>%
     mutate(occurrenceStatus = ifelse(occurrenceStatus== "Presence", 1, occurrenceStatus)) %>% 
     mutate(occurrenceStatus = ifelse(occurrenceStatus== "P", 1, occurrenceStatus)) %>% 
     mutate(occurrenceStatus = ifelse(occurrenceStatus== "Q", 1, occurrenceStatus))
-```
 
-Assign 1 value to all occurrences
-```{r, eval=F}
+# Assign 1 value to all occurrences
 mydata.fus <- mydata.fus  %>% 
     dplyr::mutate(occurrenceStatus = 1)
 ```
 
-Remove outliers based on distance method (total distance= 1000 km)
-```{r, eval=F}
+
+We remove outliers based on distance method (total distance= 1000 km).
+```{r, eval=T,message=FALSE,warning=FALSE}
 
 out.dist <- cc_outl(x=mydata.fus,
                 lon = "decimalLongitude", lat = "decimalLatitude",
@@ -185,75 +197,73 @@ out.dist <- cc_outl(x=mydata.fus,
                 thinning=T, thinning_res=0.5,
                 value="flagged") 
 
-#remove outliers from the data
+# Remove outliers from the data
 mydata.fus <- mydata.fus[out.dist, ]
 ```
 
-Remove duplicates based on the date
-```{r, eval=F}
-
+Remove duplicates.
+```{r, eval=T,message=FALSE,warning=FALSE}
+# First create a vector containing longitude, latitude and event date information
 date <- cbind(mydata.fus$decimalLongitude,mydata.fus$decimalLatitude,mydata.fus$eventDate)
 
+# Remove the duplicated records
 mydata.fus<-mydata.fus[!duplicated(date),]
+
+# Remove unused files
+rm(date)
 ```
 
-Prepare the data to 
-```{r, eval=F}
-# PREPARE DATA TO USE FAO ATLANTIC REGION MASK
----------------------------------    
-    
-  # Prepare coordinate format and projection to be able to use FAO zone masks
-  dat <- data.frame(cbind(mydata.fus$decimalLongitude,mydata.fus$decimalLatitude))
-  ptos<-as.data.table(dat,keep.columnnames=TRUE)
+Mask retrieved occurrence data to our study area and add bathymetry value to each occurrence point.
+```{r, eval=T,message=FALSE,warning=FALSE}
+# Assign coordinate format and projection to be able to use FAO Atlantic as a mask
+dat <- data.frame(cbind(mydata.fus$decimalLongitude,mydata.fus$decimalLatitude))
+ptos<-as.data.table(dat,keep.columnnames=TRUE)
   
-  coordinates(ptos) <- ~ X1 + X2
-  
-  proj4string(ptos) <-proj4string(study_area)
-  
-  ## Select only occurrences from FAO Atlantic
-  match2<-data.frame(subset(mydata.fus,!is.na(over(ptos, study_area)[,1])))
-  
-  ## Extract the FAO area of each point
-  match3<-data.frame(subset(over(ptos, study_area), !is.na(over(ptos, study_area)[,1])))
-  
-  # create data frame with area, name, lon, lat and year 
-  df0<-cbind(F_AREA=match3$F_AREA,match2)[,c("F_AREA","scientificName","decimalLongitude","decimalLatitude","date_year","occurrenceStatus")]
-  
-  #rename some columns
-  names(df0)[3:5]<-c("LON","LAT","YEAR")
-  
-  # add bathymetry from NOAA
-  library(marmap)
+coordinates(ptos) <- ~ X1 + X2
 
-  bathy <- getNOAA.bathy(lon1=-100,lon2=30,lat1=-41,lat2=55, resolution = 1, 
-                       keep=FALSE, antimeridian=FALSE)
+# Assign projection
+proj4string(ptos) <-proj4string(study_area)
+  
+# Select only occurrences from FAO Atlantic
 
-  df0$bathymetry <- get.depth(bathy, df0[,c("LON","LAT")], locator=F)$depth
+match2<-data.frame(subset(mydata.fus,!is.na(over(ptos, study_area)[,1])))
+  
+# Extract the FAO area of each point
+match3<-data.frame(subset(over(ptos, study_area), !is.na(over(ptos, study_area)[,1])))
+  
+# Create data frame with area, name, long, lat and year 
+df0<-cbind(F_AREA=match3$F_AREA,match2)[,c("F_AREA","scientificName","decimalLongitude","decimalLatitude","date_year","occurrenceStatus")]
+
+# Rename some columns
+names(df0)[3:5]<-c("LON","LAT","YEAR")
+
+# Add bathymetry from NOAA
+#bathy <- marmap::getNOAA.bathy(lon1=-100,lon2=30,lat1=-41,lat2=55, resolution = 1,               keep=TRUE, antimeridian=FALSE, path= here::here("data", "spatial"))
+load("data/spatial/bathy.RData")
+
+df0$bathymetry <- get.depth(bathy, df0[,c("LON","LAT")], locator=F)$depth
+
+# Remove unused files
+rm(mydata.fus, match2, match3, dat, ptos)
 ```
 
-
-```{r, eval=F}
-# SAVE OCCURRENCE DATA
----------------------------------    
-
-#NOTA INTERNA: quiero guardar el RData en la carpeta data/occurrences con el nombre de la especies sin espacios para no machar los RData en caso de que hagamos más de una especie pero no lo consigo. 
-
-# lo dejo como esta, asi luego al cargar los datos no hay que poner el nombre de la especie y es mas sencillo
-
-save(df0, file = "data/occurrences/occ.RData")
-save(study_area, file = "data/spatial/total_area.RData")
-```
-
-
-```{r, eval=F}
-# PLOT OCCURRENCES MAP
----------------------------------   
+We plot the occurrence data.
+```{r, eval=T,message=FALSE,warning=FALSE}
 ggplot() +
    geom_path(data = study_area, 
              aes(x = long, y = lat, group = group),
-             color = 'gray', size = .2) +
-   geom_point(data=df0, aes(x=decimalLongitude, y=decimalLatitude,colour= occurrenceStatus)) 
+             color = 'gray', linewidth = .2) +
+   geom_point(data=df0, aes(x=LON, y=LAT,colour= occurrenceStatus)) 
   
+```
+
+And, we save the data.
+```{r, eval=T,message=FALSE,warning=FALSE}
+save(df0, file = "data/occurrences/occ.RData")
+save(study_area, file = "data/spatial/total_area.RData")
+
+# Remove unused files
+rm(df0)
 ```
 
 ## Create pseudo-absence data
@@ -302,7 +312,6 @@ area <- study_area
 
 
 Then we transform the presence data frame to "SpatialPointsDataFrame" class object and the to "sf" class object so we can operate and plot easily with spatial data. We can see the charaterstics of this object through its summary.
-
 ```{r,  eval=T,message=FALSE,warning=FALSE}
 #convert to spatial point data frame
 df<-df0 ; coordinates(df)<- ~LON+LAT
@@ -315,13 +324,12 @@ df.sf<-st_as_sf(df)
 summary(df)
 ```
 
-We can easily plot sf objects using ggplot, here we plot the area of study and the presence data points
-
+We can easily plot sf objects using ggplot, here we plot the area of study and the presence data points.
 ```{r,  eval=T,message=FALSE,warning=FALSE}
 ggplot(area.sf) + geom_sf() + geom_sf(data=st_union(df.sf),size=0.05,alpha=0.5)
 ```
 
-We save a base plot (p0) with the world map and our area of study in blue
+We save a base plot (p0) with the world map and our area of study in blue.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # basic ggplot
 global <- map_data("worldHires")
@@ -331,7 +339,7 @@ p0 <- ggplot() +
 print(p0)
 ```
 
-In order to generate a buffer around each acurrence data point, we need to work with euclidean distances, so first, we need to transform the decimal latitude and longitude values to UTM.
+In order to generate a buffer around each ocurrence data point, we need to work with euclidean distances, so first, we need to transform the decimal latitude and longitude values to UTM.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # function to find your UTM. Taken from Nerea Goikoetxea
 lonlat2UTM = function(lonlat) {
@@ -351,7 +359,6 @@ df.sf.utm <- st_transform(df.sf, EPSG_2_UTM)
 ```
 
 Now, we can create buffers of 100km around the points and join the resulting polygons. Then this buffer is intersected with the area of study defining the area where the pseudo-absences can be generated. To visualize the defined areas, we plot the buffers in red and the area that we will use to generate pseudo-absences in green.
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # create buffers of 100000m
 buffer <- st_buffer(df.sf.utm, dist=100000)
@@ -378,7 +385,6 @@ names(pseudo) <- names(df0)
 ```
 
 To generate the pseudo-absence data points, we sample randomly from the defined area and we extract their latitude and longitude to incorporate them in the created data frame. we set the occurceStatus equal to 0 as they are absences.
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # set the seed
 set.seed(1)
@@ -398,7 +404,6 @@ pseudo$occurrenceStatus  <- 0
 ```
 
 We can plot the generated pseudo-absence data (in pink) in the map, together with the presence data points (in black).
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
 p0 +
   geom_sf(data=rp.sf, col=6, shape=4,size=0.5)+
