@@ -169,7 +169,6 @@ We now clean downloaded raw data.
   mydata.fus$month <- as.numeric(mydata.fus$month)
 
 # Mutate occurrenceStatus column giving value of 1 to presences and 0 to absences
-  
 unique (mydata.fus$occurrenceStatus)
 
 mydata.fus <- mydata.fus %>% 
@@ -185,7 +184,6 @@ mydata.fus <- mydata.fus %>%
 mydata.fus <- mydata.fus  %>% 
     dplyr::mutate(occurrenceStatus = 1)
 ```
-
 
 We remove outliers based on distance method (total distance= 1000 km).
 ```{r, eval=T,message=FALSE,warning=FALSE}
@@ -253,7 +251,7 @@ ggplot() +
    geom_path(data = study_area, 
              aes(x = long, y = lat, group = group),
              color = 'gray', linewidth = .2) +
-   geom_point(data=df0, aes(x=LON, y=LAT,colour= occurrenceStatus)) 
+   geom_point(data=df0, aes(x=LON, y=LAT)) 
   
 ```
 
