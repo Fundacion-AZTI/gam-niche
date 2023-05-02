@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Presence-absence data | Species distribution models (SDM)</title>
   <meta name="description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Presence-absence data | Species distribution models (SDM)" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-04-04" />
+<meta name="date" content="2023-04-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -219,7 +219,7 @@ div.csl-indent {
 <div id="presence-absence-data" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Presence-absence data<a href="presence-absence-data.html#presence-absence-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this chapter we first, download occurrence data from global open-access datasets such as Global Biodiversity Information Facility (GBIF, <a href="https://www.gbif.org/" class="uri">https://www.gbif.org/</a>) and Ocean Biodiversity Information System (OBIS, <a href="https://obis.org/" class="uri">https://obis.org/</a>); second, clean downloaded data reformating, renaming fields and removing outliers data; and lastly, we generate a set of pseudoabsence points along our study area.</p>
-<p>First we load list required libraries.</p>
+<p>First we load a list of required libraries.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="presence-absence-data.html#cb1-1" aria-hidden="true" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb1-2"><a href="presence-absence-data.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
 <span id="cb1-3"><a href="presence-absence-data.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
@@ -235,9 +235,10 @@ div.csl-indent {
 <span id="cb1-13"><a href="presence-absence-data.html#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;sf&quot;</span>, <span class="co"># to work with spatial data (shapefiles)</span></span>
 <span id="cb1-14"><a href="presence-absence-data.html#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data.table&quot;</span>, <span class="co">#for reading data,</span></span>
 <span id="cb1-15"><a href="presence-absence-data.html#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>, <span class="co">#for reading data,</span></span>
-<span id="cb1-16"><a href="presence-absence-data.html#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tidyr&quot;</span> <span class="co">#for reading data</span></span>
-<span id="cb1-17"><a href="presence-absence-data.html#cb1-17" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p>Function to install the required packages that are not in your system and load all the required packages</p>
+<span id="cb1-16"><a href="presence-absence-data.html#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tidyr&quot;</span>, <span class="co">#for reading data</span></span>
+<span id="cb1-17"><a href="presence-absence-data.html#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;marmap&quot;</span> <span class="co">#bathymetry getNOAA.bathy remotes::install_github(&quot;ericpante/marmap&quot;)</span></span>
+<span id="cb1-18"><a href="presence-absence-data.html#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="presence-absence-data.html#cb2-1" aria-hidden="true" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
 <span id="cb2-2"><a href="presence-absence-data.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
 <span id="cb2-3"><a href="presence-absence-data.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
@@ -246,221 +247,402 @@ div.csl-indent {
 <span id="cb2-6"><a href="presence-absence-data.html#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb2-7"><a href="presence-absence-data.html#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="presence-absence-data.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
-<p>Define some settings</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="presence-absence-data.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># location of script</span></span>
-<span id="cb3-2"><a href="presence-absence-data.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
-<span id="cb3-3"><a href="presence-absence-data.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="presence-absence-data.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># general settings for ggplot (black-white background, larger base_size)</span></span>
-<span id="cb3-5"><a href="presence-absence-data.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
+<pre><code>##              here        rstudioapi          maptools           ggplot2 
+##              TRUE              TRUE              TRUE              TRUE 
+##             robis             rgbif CoordinateCleaner             rgdal 
+##              TRUE              TRUE              TRUE              TRUE 
+##                sf        data.table             dplyr             tidyr 
+##              TRUE              TRUE              TRUE              TRUE 
+##            marmap 
+##              TRUE</code></pre>
+<p>We define some overall settings.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="presence-absence-data.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Location of script</span></span>
+<span id="cb4-2"><a href="presence-absence-data.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
+<span id="cb4-3"><a href="presence-absence-data.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="presence-absence-data.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># General settings for ggplot (black-white background, larger base_size)</span></span>
+<span id="cb4-5"><a href="presence-absence-data.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
 <div id="download-presence-data" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Download presence data<a href="presence-absence-data.html#download-presence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>First we need to define our study area, in this case we select the Atlantic ocean based on the The Food and Agriculture Organization (FAO) Major Fishing Areas for Statistical Purposes and we remove Black sea subarea.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="presence-absence-data.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># url where FAO shapfile is stored</span></span>
-<span id="cb4-2"><a href="presence-absence-data.html#cb4-2" aria-hidden="true" tabindex="-1"></a>url<span class="ot">&lt;-</span><span class="st">&quot;https://www.fao.org/fishery/geoserver/area/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=area%3AFAO_AREAS&amp;maxFeatures=50&amp;outputFormat=SHAPE-ZIP&quot;</span></span>
-<span id="cb4-3"><a href="presence-absence-data.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="presence-absence-data.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#download file</span></span>
-<span id="cb4-5"><a href="presence-absence-data.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(url,<span class="st">&quot;data/spatial/FAO_AREAS.zip&quot;</span>,<span class="at">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb4-6"><a href="presence-absence-data.html#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="presence-absence-data.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#unzip downloaded file</span></span>
-<span id="cb4-8"><a href="presence-absence-data.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">&quot;data/spatial/FAO_AREAS.zip&quot;</span>,<span class="at">exdir=</span><span class="st">&quot;data/spatial&quot;</span>)</span>
-<span id="cb4-9"><a href="presence-absence-data.html#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="presence-absence-data.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load FAO (spatial multipolygon)</span></span>
-<span id="cb4-11"><a href="presence-absence-data.html#cb4-11" aria-hidden="true" tabindex="-1"></a>FAO<span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;FAO_AREAS.shp&quot;</span>))</span>
-<span id="cb4-12"><a href="presence-absence-data.html#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="presence-absence-data.html#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Select Atlantic Ocean FAO Area </span></span>
-<span id="cb4-14"><a href="presence-absence-data.html#cb4-14" aria-hidden="true" tabindex="-1"></a>FAO_Atl <span class="ot">&lt;-</span> FAO[FAO<span class="sc">$</span>OCEAN<span class="sc">==</span><span class="st">&quot;Atlantic&quot;</span>,]</span>
-<span id="cb4-15"><a href="presence-absence-data.html#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="presence-absence-data.html#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Select Black sea subarea </span></span>
-<span id="cb4-17"><a href="presence-absence-data.html#cb4-17" aria-hidden="true" tabindex="-1"></a>Black_Sea <span class="ot">&lt;-</span> FAO_Atl[FAO_Atl<span class="sc">$</span>ID<span class="sc">==</span><span class="st">&quot;20&quot;</span>,]</span>
-<span id="cb4-18"><a href="presence-absence-data.html#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="presence-absence-data.html#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># transform to sf objects</span></span>
-<span id="cb4-20"><a href="presence-absence-data.html#cb4-20" aria-hidden="true" tabindex="-1"></a>FAO_Atl.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(FAO_Atl)</span>
-<span id="cb4-21"><a href="presence-absence-data.html#cb4-21" aria-hidden="true" tabindex="-1"></a>Black_Sea.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(Black_Sea)</span>
-<span id="cb4-22"><a href="presence-absence-data.html#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="presence-absence-data.html#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Black sea using st_difference (reverse of st_intersection)</span></span>
-<span id="cb4-24"><a href="presence-absence-data.html#cb4-24" aria-hidden="true" tabindex="-1"></a>FAO_Atl_no_black_sea <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(FAO_Atl.sf,Black_Sea.sf) <span class="sc">%&gt;%</span>   dplyr<span class="sc">::</span><span class="fu">select</span> (F_AREA)</span>
-<span id="cb4-25"><a href="presence-absence-data.html#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="presence-absence-data.html#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#transform to spatial polygons dataframe</span></span>
-<span id="cb4-27"><a href="presence-absence-data.html#cb4-27" aria-hidden="true" tabindex="-1"></a>study_area<span class="ot">&lt;-</span> sf<span class="sc">:::</span><span class="fu">as_Spatial</span>(FAO_Atl_no_black_sea)</span>
-<span id="cb4-28"><a href="presence-absence-data.html#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="presence-absence-data.html#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(study_area)</span></code></pre></div>
-<p>Download data from OBIS and GBIF using scientific name. In this case we select Albacore tuna species (<em>Thunnus alalunga</em>).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="presence-absence-data.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from OBIS</span></span>
-<span id="cb5-2"><a href="presence-absence-data.html#cb5-2" aria-hidden="true" tabindex="-1"></a>mydata.obis<span class="ot">&lt;-</span>robis<span class="sc">::</span><span class="fu">occurrence</span>(<span class="at">scientificname=</span><span class="st">&quot;Thunnus alalunga&quot;</span>)</span>
+<p>In this section we download presence data from global public datasets.</p>
+<p>To do so, we first define our study area, in this case we select the Atlantic ocean based on the The Food and Agriculture Organization (FAO) Major Fishing Areas for Statistical Purposes and we remove Black sea subarea.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="presence-absence-data.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># url where FAO shapfile is stored</span></span>
+<span id="cb5-2"><a href="presence-absence-data.html#cb5-2" aria-hidden="true" tabindex="-1"></a>url<span class="ot">&lt;-</span><span class="st">&quot;https://www.fao.org/fishery/geoserver/area/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=area%3AFAO_AREAS&amp;maxFeatures=50&amp;outputFormat=SHAPE-ZIP&quot;</span></span>
 <span id="cb5-3"><a href="presence-absence-data.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="presence-absence-data.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from GBIF</span></span>
-<span id="cb5-5"><a href="presence-absence-data.html#cb5-5" aria-hidden="true" tabindex="-1"></a>mydata.gbif<span class="ot">&lt;-</span><span class="fu">occ_data</span>(<span class="at">scientificName=</span><span class="st">&quot;Thunnus alalunga&quot;</span>, <span class="at">hasCoordinate =</span> <span class="cn">TRUE</span>, <span class="at">limit=</span><span class="dv">100000</span>)<span class="sc">$</span>data</span></code></pre></div>
-<p>We now check the downloaded data and select the fields of interest</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="presence-absence-data.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check names for GBIF data</span></span>
-<span id="cb6-2"><a href="presence-absence-data.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata.gbif)</span>
-<span id="cb6-3"><a href="presence-absence-data.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-4"><a href="presence-absence-data.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#select columns of interest</span></span>
-<span id="cb6-5"><a href="presence-absence-data.html#cb6-5" aria-hidden="true" tabindex="-1"></a>mydata.gbif <span class="ot">&lt;-</span> mydata.gbif <span class="sc">%&gt;%</span></span>
-<span id="cb6-6"><a href="presence-absence-data.html#cb6-6" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">&quot;acceptedScientificName&quot;</span>,</span>
-<span id="cb6-7"><a href="presence-absence-data.html#cb6-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;decimalLongitude&quot;</span>,</span>
-<span id="cb6-8"><a href="presence-absence-data.html#cb6-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;decimalLatitude&quot;</span>,</span>
-<span id="cb6-9"><a href="presence-absence-data.html#cb6-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;year&quot;</span>,</span>
-<span id="cb6-10"><a href="presence-absence-data.html#cb6-10" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;month&quot;</span>,</span>
-<span id="cb6-11"><a href="presence-absence-data.html#cb6-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;day&quot;</span>,</span>
-<span id="cb6-12"><a href="presence-absence-data.html#cb6-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;eventDate&quot;</span>,</span>
-<span id="cb6-13"><a href="presence-absence-data.html#cb6-13" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;depth&quot;</span>)</span>
-<span id="cb6-14"><a href="presence-absence-data.html#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="presence-absence-data.html#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#check names in for OBIS data</span></span>
-<span id="cb6-16"><a href="presence-absence-data.html#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata.obis)</span>
-<span id="cb6-17"><a href="presence-absence-data.html#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="presence-absence-data.html#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#select columns of interest</span></span>
-<span id="cb6-19"><a href="presence-absence-data.html#cb6-19" aria-hidden="true" tabindex="-1"></a>mydata.obis <span class="ot">&lt;-</span>  mydata.obis <span class="sc">%&gt;%</span></span>
-<span id="cb6-20"><a href="presence-absence-data.html#cb6-20" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">&quot;scientificName&quot;</span>,</span>
-<span id="cb6-21"><a href="presence-absence-data.html#cb6-21" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;decimalLongitude&quot;</span>,</span>
-<span id="cb6-22"><a href="presence-absence-data.html#cb6-22" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;decimalLatitude&quot;</span>,</span>
-<span id="cb6-23"><a href="presence-absence-data.html#cb6-23" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;date_year&quot;</span>,</span>
-<span id="cb6-24"><a href="presence-absence-data.html#cb6-24" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;month&quot;</span>,</span>
-<span id="cb6-25"><a href="presence-absence-data.html#cb6-25" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;day&quot;</span>,</span>
-<span id="cb6-26"><a href="presence-absence-data.html#cb6-26" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;eventDate&quot;</span>,</span>
-<span id="cb6-27"><a href="presence-absence-data.html#cb6-27" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;depth&quot;</span>,</span>
-<span id="cb6-28"><a href="presence-absence-data.html#cb6-28" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;bathymetry&quot;</span>,</span>
-<span id="cb6-29"><a href="presence-absence-data.html#cb6-29" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;occurrenceStatus&quot;</span>,</span>
-<span id="cb6-30"><a href="presence-absence-data.html#cb6-30" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;sst&quot;</span>)</span></code></pre></div>
-<p>Reformat the data addin a new field and renaming some columns from mydata.gbif dataframe in order to have the same columns and be able to join both tables</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="presence-absence-data.html#cb7-1" aria-hidden="true" tabindex="-1"></a>mydata.gbif <span class="ot">&lt;-</span> mydata.gbif <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="presence-absence-data.html#cb7-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">scientificName=</span> <span class="st">&quot;acceptedScientificName&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="presence-absence-data.html#cb7-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">date_year =</span> <span class="st">&quot;year&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-4"><a href="presence-absence-data.html#cb7-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bathymetry=</span> <span class="cn">NA</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-5"><a href="presence-absence-data.html#cb7-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">occurrenceStatus=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-6"><a href="presence-absence-data.html#cb7-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">sst=</span> <span class="cn">NA</span>)</span>
-<span id="cb7-7"><a href="presence-absence-data.html#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="presence-absence-data.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Join data from OBIS and GBIF </span></span>
-<span id="cb7-9"><a href="presence-absence-data.html#cb7-9" aria-hidden="true" tabindex="-1"></a>mydata.fus<span class="ot">&lt;-</span><span class="fu">rbind</span>(mydata.obis,mydata.gbif)</span>
-<span id="cb7-10"><a href="presence-absence-data.html#cb7-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-11"><a href="presence-absence-data.html#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#assign unique scientific name </span></span>
-<span id="cb7-12"><a href="presence-absence-data.html#cb7-12" aria-hidden="true" tabindex="-1"></a>  mydata.fus <span class="ot">&lt;-</span> mydata.fus <span class="sc">%&gt;%</span> </span>
-<span id="cb7-13"><a href="presence-absence-data.html#cb7-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">scientificName=</span> <span class="fu">paste</span>(mydata.obis<span class="sc">$</span>scientificName[<span class="dv">1</span>]))</span></code></pre></div>
-<p>Clean raw data</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="presence-absence-data.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#give date format to eventDate and fill out month and date_year columns</span></span>
-<span id="cb8-2"><a href="presence-absence-data.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  mydata.fus<span class="sc">$</span>eventDate <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(mydata.fus<span class="sc">$</span>eventDate)</span>
-<span id="cb8-3"><a href="presence-absence-data.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  mydata.fus<span class="sc">$</span>date_year <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mydata.fus<span class="sc">$</span>date_year)</span>
-<span id="cb8-4"><a href="presence-absence-data.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  mydata.fus<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mydata.fus<span class="sc">$</span>month)</span>
-<span id="cb8-5"><a href="presence-absence-data.html#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="presence-absence-data.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#mutate occurrenceStatus column giving value of 1 to presences and 0 to absences</span></span>
-<span id="cb8-7"><a href="presence-absence-data.html#cb8-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-8"><a href="presence-absence-data.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span> (mydata.fus<span class="sc">$</span>occurrenceStatus)</span>
-<span id="cb8-9"><a href="presence-absence-data.html#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="presence-absence-data.html#cb8-10" aria-hidden="true" tabindex="-1"></a>mydata.fus <span class="ot">&lt;-</span> mydata.fus <span class="sc">%&gt;%</span> </span>
-<span id="cb8-11"><a href="presence-absence-data.html#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;NA&quot;</span>, <span class="cn">NA</span>, occurrenceStatus)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-12"><a href="presence-absence-data.html#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;Present&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-13"><a href="presence-absence-data.html#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;present&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-14"><a href="presence-absence-data.html#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;Presente&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-15"><a href="presence-absence-data.html#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;Presence&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-16"><a href="presence-absence-data.html#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;P&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-17"><a href="presence-absence-data.html#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;Q&quot;</span>, <span class="dv">1</span>, occurrenceStatus))</span></code></pre></div>
-<p>Assign 1 value to all occurrences</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="presence-absence-data.html#cb9-1" aria-hidden="true" tabindex="-1"></a>mydata.fus <span class="ot">&lt;-</span> mydata.fus  <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="presence-absence-data.html#cb9-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p>Remove outliers based on distance method (total distance= 1000 km)</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="presence-absence-data.html#cb10-1" aria-hidden="true" tabindex="-1"></a>out.dist <span class="ot">&lt;-</span> <span class="fu">cc_outl</span>(<span class="at">x=</span>mydata.fus,</span>
-<span id="cb10-2"><a href="presence-absence-data.html#cb10-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">lon =</span> <span class="st">&quot;decimalLongitude&quot;</span>, <span class="at">lat =</span> <span class="st">&quot;decimalLatitude&quot;</span>,</span>
-<span id="cb10-3"><a href="presence-absence-data.html#cb10-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">species =</span> <span class="st">&quot;scientificName&quot;</span>,</span>
-<span id="cb10-4"><a href="presence-absence-data.html#cb10-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">method=</span><span class="st">&quot;distance&quot;</span>, <span class="at">tdi=</span><span class="dv">1000</span>, <span class="co"># distance method with tdi=1000km</span></span>
-<span id="cb10-5"><a href="presence-absence-data.html#cb10-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">thinning=</span>T, <span class="at">thinning_res=</span><span class="fl">0.5</span>,</span>
-<span id="cb10-6"><a href="presence-absence-data.html#cb10-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">value=</span><span class="st">&quot;flagged&quot;</span>) </span>
-<span id="cb10-7"><a href="presence-absence-data.html#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="presence-absence-data.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#remove outliers from the data</span></span>
-<span id="cb10-9"><a href="presence-absence-data.html#cb10-9" aria-hidden="true" tabindex="-1"></a>mydata.fus <span class="ot">&lt;-</span> mydata.fus[out.dist, ]</span></code></pre></div>
-<p>Remove duplicates based on the date</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="presence-absence-data.html#cb11-1" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mydata.fus<span class="sc">$</span>decimalLongitude,mydata.fus<span class="sc">$</span>decimalLatitude,mydata.fus<span class="sc">$</span>eventDate)</span>
-<span id="cb11-2"><a href="presence-absence-data.html#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="presence-absence-data.html#cb11-3" aria-hidden="true" tabindex="-1"></a>mydata.fus<span class="ot">&lt;-</span>mydata.fus[<span class="sc">!</span><span class="fu">duplicated</span>(date),]</span></code></pre></div>
-<p>Prepare the data to</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="presence-absence-data.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PREPARE DATA TO USE FAO ATLANTIC REGION MASK</span></span>
-<span id="cb12-2"><a href="presence-absence-data.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="sc">---------------------------------</span>    </span>
-<span id="cb12-3"><a href="presence-absence-data.html#cb12-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb12-4"><a href="presence-absence-data.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Prepare coordinate format and projection to be able to use FAO zone masks</span></span>
-<span id="cb12-5"><a href="presence-absence-data.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(mydata.fus<span class="sc">$</span>decimalLongitude,mydata.fus<span class="sc">$</span>decimalLatitude))</span>
-<span id="cb12-6"><a href="presence-absence-data.html#cb12-6" aria-hidden="true" tabindex="-1"></a>  ptos<span class="ot">&lt;-</span><span class="fu">as.data.table</span>(dat,<span class="at">keep.columnnames=</span><span class="cn">TRUE</span>)</span>
-<span id="cb12-7"><a href="presence-absence-data.html#cb12-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-8"><a href="presence-absence-data.html#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coordinates</span>(ptos) <span class="ot">&lt;-</span> <span class="er">~</span> X1 <span class="sc">+</span> X2</span>
-<span id="cb12-9"><a href="presence-absence-data.html#cb12-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-10"><a href="presence-absence-data.html#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proj4string</span>(ptos) <span class="ot">&lt;-</span><span class="fu">proj4string</span>(study_area)</span>
-<span id="cb12-11"><a href="presence-absence-data.html#cb12-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-12"><a href="presence-absence-data.html#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Select only occurrences from FAO Atlantic</span></span>
-<span id="cb12-13"><a href="presence-absence-data.html#cb12-13" aria-hidden="true" tabindex="-1"></a>  match2<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">subset</span>(mydata.fus,<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">over</span>(ptos, study_area)[,<span class="dv">1</span>])))</span>
-<span id="cb12-14"><a href="presence-absence-data.html#cb12-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-15"><a href="presence-absence-data.html#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Extract the FAO area of each point</span></span>
-<span id="cb12-16"><a href="presence-absence-data.html#cb12-16" aria-hidden="true" tabindex="-1"></a>  match3<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">subset</span>(<span class="fu">over</span>(ptos, study_area), <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">over</span>(ptos, study_area)[,<span class="dv">1</span>])))</span>
-<span id="cb12-17"><a href="presence-absence-data.html#cb12-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-18"><a href="presence-absence-data.html#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create data frame with area, name, lon, lat and year </span></span>
-<span id="cb12-19"><a href="presence-absence-data.html#cb12-19" aria-hidden="true" tabindex="-1"></a>  df0<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="at">F_AREA=</span>match3<span class="sc">$</span>F_AREA,match2)[,<span class="fu">c</span>(<span class="st">&quot;F_AREA&quot;</span>,<span class="st">&quot;scientificName&quot;</span>,<span class="st">&quot;decimalLongitude&quot;</span>,<span class="st">&quot;decimalLatitude&quot;</span>,<span class="st">&quot;date_year&quot;</span>,<span class="st">&quot;occurrenceStatus&quot;</span>)]</span>
-<span id="cb12-20"><a href="presence-absence-data.html#cb12-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-21"><a href="presence-absence-data.html#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">#rename some columns</span></span>
-<span id="cb12-22"><a href="presence-absence-data.html#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(df0)[<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>]<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>,<span class="st">&quot;YEAR&quot;</span>)</span>
-<span id="cb12-23"><a href="presence-absence-data.html#cb12-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-24"><a href="presence-absence-data.html#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add bathymetry from NOAA</span></span>
-<span id="cb12-25"><a href="presence-absence-data.html#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(marmap)</span>
-<span id="cb12-26"><a href="presence-absence-data.html#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-27"><a href="presence-absence-data.html#cb12-27" aria-hidden="true" tabindex="-1"></a>  bathy <span class="ot">&lt;-</span> <span class="fu">getNOAA.bathy</span>(<span class="at">lon1=</span><span class="sc">-</span><span class="dv">100</span>,<span class="at">lon2=</span><span class="dv">30</span>,<span class="at">lat1=</span><span class="sc">-</span><span class="dv">41</span>,<span class="at">lat2=</span><span class="dv">55</span>, <span class="at">resolution =</span> <span class="dv">1</span>, </span>
-<span id="cb12-28"><a href="presence-absence-data.html#cb12-28" aria-hidden="true" tabindex="-1"></a>                       <span class="at">keep=</span><span class="cn">FALSE</span>, <span class="at">antimeridian=</span><span class="cn">FALSE</span>)</span>
-<span id="cb12-29"><a href="presence-absence-data.html#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-30"><a href="presence-absence-data.html#cb12-30" aria-hidden="true" tabindex="-1"></a>  df0<span class="sc">$</span>bathymetry <span class="ot">&lt;-</span> <span class="fu">get.depth</span>(bathy, df0[,<span class="fu">c</span>(<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>)], <span class="at">locator=</span>F)<span class="sc">$</span>depth</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="presence-absence-data.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SAVE OCCURRENCE DATA</span></span>
-<span id="cb13-2"><a href="presence-absence-data.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">---------------------------------</span>    </span>
-<span id="cb13-3"><a href="presence-absence-data.html#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="presence-absence-data.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#NOTA INTERNA: quiero guardar el RData en la carpeta data/occurrences con el nombre de la especies sin espacios para no machar los RData en caso de que hagamos más de una especie pero no lo consigo. </span></span>
-<span id="cb13-5"><a href="presence-absence-data.html#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="presence-absence-data.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># lo dejo como esta, asi luego al cargar los datos no hay que poner el nombre de la especie y es mas sencillo</span></span>
-<span id="cb13-7"><a href="presence-absence-data.html#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="presence-absence-data.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(df0, <span class="at">file =</span> <span class="st">&quot;data/occurrences/occ.RData&quot;</span>)</span>
-<span id="cb13-9"><a href="presence-absence-data.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(study_area, <span class="at">file =</span> <span class="st">&quot;data/spatial/total_area.RData&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="presence-absence-data.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PLOT OCCURRENCES MAP</span></span>
-<span id="cb14-2"><a href="presence-absence-data.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">---------------------------------</span>   </span>
-<span id="cb14-3"><a href="presence-absence-data.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb14-4"><a href="presence-absence-data.html#cb14-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_path</span>(<span class="at">data =</span> study_area, </span>
-<span id="cb14-5"><a href="presence-absence-data.html#cb14-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">group =</span> group),</span>
-<span id="cb14-6"><a href="presence-absence-data.html#cb14-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&#39;gray&#39;</span>, <span class="at">size =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="presence-absence-data.html#cb14-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">data=</span>df0, <span class="fu">aes</span>(<span class="at">x=</span>decimalLongitude, <span class="at">y=</span>decimalLatitude,<span class="at">colour=</span> occurrenceStatus)) </span></code></pre></div>
+<span id="cb5-4"><a href="presence-absence-data.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download file</span></span>
+<span id="cb5-5"><a href="presence-absence-data.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(url,<span class="st">&quot;data/spatial/FAO_AREAS.zip&quot;</span>,<span class="at">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb5-6"><a href="presence-absence-data.html#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="presence-absence-data.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Unzip downloaded file</span></span>
+<span id="cb5-8"><a href="presence-absence-data.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">&quot;data/spatial/FAO_AREAS.zip&quot;</span>,<span class="at">exdir=</span><span class="st">&quot;data/spatial&quot;</span>)</span>
+<span id="cb5-9"><a href="presence-absence-data.html#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="presence-absence-data.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load FAO (spatial multipolygon)</span></span>
+<span id="cb5-11"><a href="presence-absence-data.html#cb5-11" aria-hidden="true" tabindex="-1"></a>FAO<span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;FAO_AREAS.shp&quot;</span>))</span></code></pre></div>
+<pre><code>## Reading layer `FAO_AREAS&#39; from data source 
+##   `D:\PROJECTS\github\SDM\data\spatial\FAO_AREAS.shp&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 50 features and 15 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -180 ymin: -85.58276 xmax: 180 ymax: 89.99
+## Geodetic CRS:  WGS 84</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="presence-absence-data.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select Atlantic Ocean FAO Area </span></span>
+<span id="cb7-2"><a href="presence-absence-data.html#cb7-2" aria-hidden="true" tabindex="-1"></a>FAO_Atl <span class="ot">&lt;-</span> FAO[FAO<span class="sc">$</span>OCEAN<span class="sc">==</span><span class="st">&quot;Atlantic&quot;</span>,]</span>
+<span id="cb7-3"><a href="presence-absence-data.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="presence-absence-data.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select Black sea subarea </span></span>
+<span id="cb7-5"><a href="presence-absence-data.html#cb7-5" aria-hidden="true" tabindex="-1"></a>Black_Sea <span class="ot">&lt;-</span> FAO_Atl[FAO_Atl<span class="sc">$</span>ID<span class="sc">==</span><span class="st">&quot;20&quot;</span>,]</span>
+<span id="cb7-6"><a href="presence-absence-data.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="presence-absence-data.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform to sf objects</span></span>
+<span id="cb7-8"><a href="presence-absence-data.html#cb7-8" aria-hidden="true" tabindex="-1"></a>FAO_Atl.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(FAO_Atl)</span>
+<span id="cb7-9"><a href="presence-absence-data.html#cb7-9" aria-hidden="true" tabindex="-1"></a>Black_Sea.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(Black_Sea)</span>
+<span id="cb7-10"><a href="presence-absence-data.html#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="presence-absence-data.html#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Black sea using st_difference (reverse of st_intersection)</span></span>
+<span id="cb7-12"><a href="presence-absence-data.html#cb7-12" aria-hidden="true" tabindex="-1"></a>FAO_Atl_no_black_sea <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(FAO_Atl.sf,Black_Sea.sf) <span class="sc">%&gt;%</span>   dplyr<span class="sc">::</span><span class="fu">select</span> (F_AREA)</span>
+<span id="cb7-13"><a href="presence-absence-data.html#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="presence-absence-data.html#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform to spatial polygons dataframe</span></span>
+<span id="cb7-15"><a href="presence-absence-data.html#cb7-15" aria-hidden="true" tabindex="-1"></a>study_area<span class="ot">&lt;-</span> sf<span class="sc">:::</span><span class="fu">as_Spatial</span>(FAO_Atl_no_black_sea)</span>
+<span id="cb7-16"><a href="presence-absence-data.html#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="presence-absence-data.html#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(study_area)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="presence-absence-data.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unused files</span></span>
+<span id="cb8-2"><a href="presence-absence-data.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(FAO, FAO_Atl, FAO_Atl.sf, FAO_Atl_no_black_sea, Black_Sea, Black_Sea.sf)</span></code></pre></div>
+<p>Download occurrence data from OBIS and GBIF using scientific name.</p>
+<p>In this case we select Albacore tuna species (<em>Thunnus alalunga</em>).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="presence-absence-data.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from OBIS</span></span>
+<span id="cb9-2"><a href="presence-absence-data.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#mydata.obis&lt;-robis::occurrence(scientificname=&quot;Thunnus alalunga&quot;)</span></span>
+<span id="cb9-3"><a href="presence-absence-data.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#save(mydata.obis, file=file.path(&quot;data&quot;,&quot;occurrences&quot;,file=&quot;mydata.obis.RData&quot;))</span></span>
+<span id="cb9-4"><a href="presence-absence-data.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/occurrences/mydata.obis.RData&quot;</span>)</span>
+<span id="cb9-5"><a href="presence-absence-data.html#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="presence-absence-data.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from GBIF</span></span>
+<span id="cb9-7"><a href="presence-absence-data.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#mydata.gbif&lt;-occ_data(scientificName=&quot;Thunnus alalunga&quot;, hasCoordinate = TRUE, limit=100000)$data</span></span>
+<span id="cb9-8"><a href="presence-absence-data.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#save(mydata.gbif,file=file.path(&quot;data&quot;,&quot;occurrences&quot;,file=&quot;mydata.gbif.RData&quot;))</span></span>
+<span id="cb9-9"><a href="presence-absence-data.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/occurrences/mydata.gbif.RData&quot;</span>)</span></code></pre></div>
+<p>We now check the downloaded data and select the fields of interest.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="presence-absence-data.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check names for GBIF data</span></span>
+<span id="cb10-2"><a href="presence-absence-data.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata.gbif)</span></code></pre></div>
+<pre><code>##   [1] &quot;key&quot;                              &quot;scientificName&quot;                  
+##   [3] &quot;decimalLatitude&quot;                  &quot;decimalLongitude&quot;                
+##   [5] &quot;issues&quot;                           &quot;datasetKey&quot;                      
+##   [7] &quot;publishingOrgKey&quot;                 &quot;installationKey&quot;                 
+##   [9] &quot;publishingCountry&quot;                &quot;protocol&quot;                        
+##  [11] &quot;lastCrawled&quot;                      &quot;lastParsed&quot;                      
+##  [13] &quot;crawlId&quot;                          &quot;hostingOrganizationKey&quot;          
+##  [15] &quot;basisOfRecord&quot;                    &quot;occurrenceStatus&quot;                
+##  [17] &quot;taxonKey&quot;                         &quot;kingdomKey&quot;                      
+##  [19] &quot;phylumKey&quot;                        &quot;orderKey&quot;                        
+##  [21] &quot;familyKey&quot;                        &quot;genusKey&quot;                        
+##  [23] &quot;speciesKey&quot;                       &quot;acceptedTaxonKey&quot;                
+##  [25] &quot;acceptedScientificName&quot;           &quot;kingdom&quot;                         
+##  [27] &quot;phylum&quot;                           &quot;order&quot;                           
+##  [29] &quot;family&quot;                           &quot;genus&quot;                           
+##  [31] &quot;species&quot;                          &quot;genericName&quot;                     
+##  [33] &quot;specificEpithet&quot;                  &quot;taxonRank&quot;                       
+##  [35] &quot;taxonomicStatus&quot;                  &quot;iucnRedListCategory&quot;             
+##  [37] &quot;dateIdentified&quot;                   &quot;coordinateUncertaintyInMeters&quot;   
+##  [39] &quot;year&quot;                             &quot;month&quot;                           
+##  [41] &quot;day&quot;                              &quot;eventDate&quot;                       
+##  [43] &quot;modified&quot;                         &quot;lastInterpreted&quot;                 
+##  [45] &quot;references&quot;                       &quot;license&quot;                         
+##  [47] &quot;isInCluster&quot;                      &quot;datasetName&quot;                     
+##  [49] &quot;recordedBy&quot;                       &quot;identifiedBy&quot;                    
+##  [51] &quot;geodeticDatum&quot;                    &quot;countryCode&quot;                     
+##  [53] &quot;country&quot;                          &quot;rightsHolder&quot;                    
+##  [55] &quot;identifier&quot;                       &quot;http://unknown.org/nick&quot;         
+##  [57] &quot;informationWithheld&quot;              &quot;verbatimEventDate&quot;               
+##  [59] &quot;collectionCode&quot;                   &quot;gbifID&quot;                          
+##  [61] &quot;occurrenceID&quot;                     &quot;taxonID&quot;                         
+##  [63] &quot;catalogNumber&quot;                    &quot;institutionCode&quot;                 
+##  [65] &quot;eventTime&quot;                        &quot;http://unknown.org/captive&quot;      
+##  [67] &quot;identificationID&quot;                 &quot;continent&quot;                       
+##  [69] &quot;stateProvince&quot;                    &quot;verbatimLocality&quot;                
+##  [71] &quot;occurrenceRemarks&quot;                &quot;lifeStage&quot;                       
+##  [73] &quot;datasetID&quot;                        &quot;eventID&quot;                         
+##  [75] &quot;footprintWKT&quot;                     &quot;originalNameUsage&quot;               
+##  [77] &quot;county&quot;                           &quot;identificationVerificationStatus&quot;
+##  [79] &quot;nameAccordingTo&quot;                  &quot;networkKeys&quot;                     
+##  [81] &quot;individualCount&quot;                  &quot;elevation&quot;                       
+##  [83] &quot;waterBody&quot;                        &quot;institutionKey&quot;                  
+##  [85] &quot;otherCatalogNumbers&quot;              &quot;preparations&quot;                    
+##  [87] &quot;recordNumber&quot;                     &quot;acceptedNameUsage&quot;               
+##  [89] &quot;vernacularName&quot;                   &quot;institutionID&quot;                   
+##  [91] &quot;language&quot;                         &quot;type&quot;                            
+##  [93] &quot;identificationRemarks&quot;            &quot;projectId&quot;                       
+##  [95] &quot;municipality&quot;                     &quot;collectionKey&quot;                   
+##  [97] &quot;higherGeography&quot;                  &quot;georeferenceProtocol&quot;            
+##  [99] &quot;island&quot;                           &quot;endDayOfYear&quot;                    
+## [101] &quot;locality&quot;                         &quot;fieldNumber&quot;                     
+## [103] &quot;startDayOfYear&quot;                   &quot;collectionID&quot;                    
+## [105] &quot;higherClassification&quot;             &quot;materialSampleID&quot;                
+## [107] &quot;disposition&quot;                      &quot;programmeAcronym&quot;                
+## [109] &quot;organismQuantity&quot;                 &quot;organismQuantityType&quot;            
+## [111] &quot;samplingProtocol&quot;                 &quot;locationAccordingTo&quot;             
+## [113] &quot;coordinatePrecision&quot;              &quot;georeferencedDate&quot;               
+## [115] &quot;nomenclaturalCode&quot;                &quot;associatedReferences&quot;            
+## [117] &quot;taxonRemarks&quot;                     &quot;ownerInstitutionCode&quot;            
+## [119] &quot;bibliographicCitation&quot;            &quot;habitat&quot;                         
+## [121] &quot;locationRemarks&quot;                  &quot;depth&quot;                           
+## [123] &quot;http://unknown.org/license&quot;       &quot;taxonConceptID&quot;                  
+## [125] &quot;http://unknown.org/rightsHolder&quot;  &quot;depthAccuracy&quot;                   
+## [127] &quot;dynamicProperties&quot;                &quot;elevationAccuracy&quot;               
+## [129] &quot;rights&quot;                           &quot;georeferenceSources&quot;             
+## [131] &quot;georeferenceRemarks&quot;              &quot;name&quot;                            
+## [133] &quot;associatedSequences&quot;              &quot;establishmentMeans&quot;              
+## [135] &quot;georeferenceVerificationStatus&quot;   &quot;accessRights&quot;                    
+## [137] &quot;georeferencedBy&quot;                  &quot;verbatimSRS&quot;                     
+## [139] &quot;previousIdentifications&quot;          &quot;locationID&quot;                      
+## [141] &quot;acceptedNameUsageID&quot;              &quot;http://unknown.org/language&quot;     
+## [143] &quot;http://unknown.org/modified&quot;      &quot;samplingEffort&quot;                  
+## [145] &quot;verbatimDepth&quot;                    &quot;behavior&quot;                        
+## [147] &quot;eventRemarks&quot;                     &quot;footprintSRS&quot;                    
+## [149] &quot;namePublishedInYear&quot;              &quot;verbatimCoordinateSystem&quot;        
+## [151] &quot;parentNameUsage&quot;                  &quot;http://unknown.org/taxonRankID&quot;  
+## [153] &quot;http://unknown.org/species&quot;       &quot;higherGeographyID&quot;               
+## [155] &quot;islandGroup&quot;                      &quot;organismID&quot;                      
+## [157] &quot;distanceFromCentroidInMeters&quot;     &quot;http://unknown.org/orders&quot;       
+## [159] &quot;typeStatus&quot;</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="presence-absence-data.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select columns of interest</span></span>
+<span id="cb12-2"><a href="presence-absence-data.html#cb12-2" aria-hidden="true" tabindex="-1"></a>mydata.gbif <span class="ot">&lt;-</span> mydata.gbif <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="presence-absence-data.html#cb12-3" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">&quot;acceptedScientificName&quot;</span>,</span>
+<span id="cb12-4"><a href="presence-absence-data.html#cb12-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;decimalLongitude&quot;</span>,</span>
+<span id="cb12-5"><a href="presence-absence-data.html#cb12-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;decimalLatitude&quot;</span>,</span>
+<span id="cb12-6"><a href="presence-absence-data.html#cb12-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;year&quot;</span>,</span>
+<span id="cb12-7"><a href="presence-absence-data.html#cb12-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;month&quot;</span>,</span>
+<span id="cb12-8"><a href="presence-absence-data.html#cb12-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;day&quot;</span>,</span>
+<span id="cb12-9"><a href="presence-absence-data.html#cb12-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;eventDate&quot;</span>,</span>
+<span id="cb12-10"><a href="presence-absence-data.html#cb12-10" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;depth&quot;</span>)</span>
+<span id="cb12-11"><a href="presence-absence-data.html#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="presence-absence-data.html#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check names in for OBIS data</span></span>
+<span id="cb12-13"><a href="presence-absence-data.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata.obis)</span></code></pre></div>
+<pre><code>##   [1] &quot;infraphylum&quot;                    &quot;country&quot;                       
+##   [3] &quot;date_year&quot;                      &quot;scientificNameID&quot;              
+##   [5] &quot;year&quot;                           &quot;scientificName&quot;                
+##   [7] &quot;dropped&quot;                        &quot;gigaclassid&quot;                   
+##   [9] &quot;aphiaID&quot;                        &quot;decimalLatitude&quot;               
+##  [11] &quot;subclassid&quot;                     &quot;gigaclass&quot;                     
+##  [13] &quot;infraphylumid&quot;                  &quot;phylumid&quot;                      
+##  [15] &quot;familyid&quot;                       &quot;catalogNumber&quot;                 
+##  [17] &quot;basisOfRecord&quot;                  &quot;terrestrial&quot;                   
+##  [19] &quot;id&quot;                             &quot;day&quot;                           
+##  [21] &quot;parvphylum&quot;                     &quot;order&quot;                         
+##  [23] &quot;dataset_id&quot;                     &quot;locality&quot;                      
+##  [25] &quot;decimalLongitude&quot;               &quot;collectionCode&quot;                
+##  [27] &quot;date_end&quot;                       &quot;speciesid&quot;                     
+##  [29] &quot;date_start&quot;                     &quot;month&quot;                         
+##  [31] &quot;genus&quot;                          &quot;eventDate&quot;                     
+##  [33] &quot;brackish&quot;                       &quot;absence&quot;                       
+##  [35] &quot;subfamily&quot;                      &quot;genusid&quot;                       
+##  [37] &quot;originalScientificName&quot;         &quot;marine&quot;                        
+##  [39] &quot;subphylumid&quot;                    &quot;subfamilyid&quot;                   
+##  [41] &quot;institutionCode&quot;                &quot;date_mid&quot;                      
+##  [43] &quot;class&quot;                          &quot;orderid&quot;                       
+##  [45] &quot;waterBody&quot;                      &quot;kingdom&quot;                       
+##  [47] &quot;classid&quot;                        &quot;phylum&quot;                        
+##  [49] &quot;species&quot;                        &quot;subphylum&quot;                     
+##  [51] &quot;subclass&quot;                       &quot;family&quot;                        
+##  [53] &quot;category&quot;                       &quot;kingdomid&quot;                     
+##  [55] &quot;parvphylumid&quot;                   &quot;node_id&quot;                       
+##  [57] &quot;flags&quot;                          &quot;sss&quot;                           
+##  [59] &quot;shoredistance&quot;                  &quot;sst&quot;                           
+##  [61] &quot;bathymetry&quot;                     &quot;maximumDepthInMeters&quot;          
+##  [63] &quot;minimumDepthInMeters&quot;           &quot;sex&quot;                           
+##  [65] &quot;depth&quot;                          &quot;coordinatePrecision&quot;           
+##  [67] &quot;verbatimCoordinates&quot;            &quot;occurrenceRemarks&quot;             
+##  [69] &quot;individualCount&quot;                &quot;occurrenceStatus&quot;              
+##  [71] &quot;modified&quot;                       &quot;materialSampleID&quot;              
+##  [73] &quot;occurrenceID&quot;                   &quot;scientificNameAuthorship&quot;      
+##  [75] &quot;taxonRank&quot;                      &quot;datasetID&quot;                     
+##  [77] &quot;associatedReferences&quot;           &quot;bibliographicCitation&quot;         
+##  [79] &quot;coordinateUncertaintyInMeters&quot;  &quot;vernacularName&quot;                
+##  [81] &quot;footprintWKT&quot;                   &quot;specificEpithet&quot;               
+##  [83] &quot;recordNumber&quot;                   &quot;georeferenceRemarks&quot;           
+##  [85] &quot;stateProvince&quot;                  &quot;continent&quot;                     
+##  [87] &quot;recordedBy&quot;                     &quot;rightsHolder&quot;                  
+##  [89] &quot;language&quot;                       &quot;type&quot;                          
+##  [91] &quot;license&quot;                        &quot;ownerInstitutionCode&quot;          
+##  [93] &quot;datasetName&quot;                    &quot;geodeticDatum&quot;                 
+##  [95] &quot;accessRights&quot;                   &quot;dynamicProperties&quot;             
+##  [97] &quot;county&quot;                         &quot;samplingEffort&quot;                
+##  [99] &quot;lifeStage&quot;                      &quot;footprintSRS&quot;                  
+## [101] &quot;samplingProtocol&quot;               &quot;parentEventID&quot;                 
+## [103] &quot;eventID&quot;                        &quot;eventRemarks&quot;                  
+## [105] &quot;identifiedBy&quot;                   &quot;georeferencedBy&quot;               
+## [107] &quot;minimumElevationInMeters&quot;       &quot;maximumElevationInMeters&quot;      
+## [109] &quot;dateIdentified&quot;                 &quot;behavior&quot;                      
+## [111] &quot;georeferenceProtocol&quot;           &quot;verbatimDepth&quot;                 
+## [113] &quot;organismQuantity&quot;               &quot;organismQuantityType&quot;          
+## [115] &quot;startDayOfYear&quot;                 &quot;collectionID&quot;                  
+## [117] &quot;typeStatus&quot;                     &quot;institutionID&quot;                 
+## [119] &quot;acceptedNameUsage&quot;              &quot;preparations&quot;                  
+## [121] &quot;countryCode&quot;                    &quot;otherCatalogNumbers&quot;           
+## [123] &quot;references&quot;                     &quot;fieldNumber&quot;                   
+## [125] &quot;endDayOfYear&quot;                   &quot;eventTime&quot;                     
+## [127] &quot;locationID&quot;                     &quot;taxonRemarks&quot;                  
+## [129] &quot;georeferencedDate&quot;              &quot;verbatimEventDate&quot;             
+## [131] &quot;identificationRemarks&quot;          &quot;nomenclaturalCode&quot;             
+## [133] &quot;taxonomicStatus&quot;                &quot;higherClassification&quot;          
+## [135] &quot;higherGeography&quot;                &quot;verbatimLatitude&quot;              
+## [137] &quot;verbatimLongitude&quot;              &quot;establishmentMeans&quot;            
+## [139] &quot;verbatimLocality&quot;               &quot;georeferenceVerificationStatus&quot;
+## [141] &quot;island&quot;                         &quot;identificationQualifier&quot;       
+## [143] &quot;identificationID&quot;               &quot;informationWithheld&quot;           
+## [145] &quot;islandGroup&quot;                    &quot;acceptedNameUsageID&quot;           
+## [147] &quot;locationRemarks&quot;                &quot;verbatimSRS&quot;                   
+## [149] &quot;previousIdentifications&quot;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="presence-absence-data.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select columns of interest</span></span>
+<span id="cb14-2"><a href="presence-absence-data.html#cb14-2" aria-hidden="true" tabindex="-1"></a>mydata.obis <span class="ot">&lt;-</span>  mydata.obis <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="presence-absence-data.html#cb14-3" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">&quot;scientificName&quot;</span>,</span>
+<span id="cb14-4"><a href="presence-absence-data.html#cb14-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;decimalLongitude&quot;</span>,</span>
+<span id="cb14-5"><a href="presence-absence-data.html#cb14-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;decimalLatitude&quot;</span>,</span>
+<span id="cb14-6"><a href="presence-absence-data.html#cb14-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;date_year&quot;</span>,</span>
+<span id="cb14-7"><a href="presence-absence-data.html#cb14-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;month&quot;</span>,</span>
+<span id="cb14-8"><a href="presence-absence-data.html#cb14-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;day&quot;</span>,</span>
+<span id="cb14-9"><a href="presence-absence-data.html#cb14-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;eventDate&quot;</span>,</span>
+<span id="cb14-10"><a href="presence-absence-data.html#cb14-10" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;depth&quot;</span>,</span>
+<span id="cb14-11"><a href="presence-absence-data.html#cb14-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;bathymetry&quot;</span>,</span>
+<span id="cb14-12"><a href="presence-absence-data.html#cb14-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;occurrenceStatus&quot;</span>,</span>
+<span id="cb14-13"><a href="presence-absence-data.html#cb14-13" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;sst&quot;</span>)</span></code></pre></div>
+<p>Reformat the data adding a new field and renaming some columns from mydata.gbif dataframe in order to have the same columns and be able to join both downloaded datasets.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="presence-absence-data.html#cb15-1" aria-hidden="true" tabindex="-1"></a>mydata.gbif <span class="ot">&lt;-</span> mydata.gbif <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="presence-absence-data.html#cb15-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">scientificName=</span> <span class="st">&quot;acceptedScientificName&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="presence-absence-data.html#cb15-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">date_year =</span> <span class="st">&quot;year&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="presence-absence-data.html#cb15-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bathymetry=</span> <span class="cn">NA</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-5"><a href="presence-absence-data.html#cb15-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">occurrenceStatus=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-6"><a href="presence-absence-data.html#cb15-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">sst=</span> <span class="cn">NA</span>)</span>
+<span id="cb15-7"><a href="presence-absence-data.html#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="presence-absence-data.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Join data from OBIS and GBIF </span></span>
+<span id="cb15-9"><a href="presence-absence-data.html#cb15-9" aria-hidden="true" tabindex="-1"></a>mydata.fus<span class="ot">&lt;-</span><span class="fu">rbind</span>(mydata.obis,mydata.gbif)</span>
+<span id="cb15-10"><a href="presence-absence-data.html#cb15-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-11"><a href="presence-absence-data.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign unique scientific name </span></span>
+<span id="cb15-12"><a href="presence-absence-data.html#cb15-12" aria-hidden="true" tabindex="-1"></a>mydata.fus <span class="ot">&lt;-</span> mydata.fus <span class="sc">%&gt;%</span> </span>
+<span id="cb15-13"><a href="presence-absence-data.html#cb15-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">scientificName=</span> <span class="fu">paste</span>(mydata.obis<span class="sc">$</span>scientificName[<span class="dv">1</span>]))</span>
+<span id="cb15-14"><a href="presence-absence-data.html#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="presence-absence-data.html#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unused files</span></span>
+<span id="cb15-16"><a href="presence-absence-data.html#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mydata.gbif, mydata.obis)</span></code></pre></div>
+<p>We now clean downloaded raw data.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="presence-absence-data.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Give date format to eventDate and fill out month and date_year columns</span></span>
+<span id="cb16-2"><a href="presence-absence-data.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  mydata.fus<span class="sc">$</span>eventDate <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(mydata.fus<span class="sc">$</span>eventDate)</span>
+<span id="cb16-3"><a href="presence-absence-data.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  mydata.fus<span class="sc">$</span>date_year <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mydata.fus<span class="sc">$</span>date_year)</span>
+<span id="cb16-4"><a href="presence-absence-data.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  mydata.fus<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mydata.fus<span class="sc">$</span>month)</span>
+<span id="cb16-5"><a href="presence-absence-data.html#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="presence-absence-data.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Mutate occurrenceStatus column giving value of 1 to presences and 0 to absences</span></span>
+<span id="cb16-7"><a href="presence-absence-data.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span> (mydata.fus<span class="sc">$</span>occurrenceStatus)</span></code></pre></div>
+<pre><code>## [1] NA        &quot;present&quot; &quot;P&quot;       &quot;Present&quot; &quot;NA&quot;      &quot;1&quot;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="presence-absence-data.html#cb18-1" aria-hidden="true" tabindex="-1"></a>mydata.fus <span class="ot">&lt;-</span> mydata.fus <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="presence-absence-data.html#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;NA&quot;</span>, <span class="cn">NA</span>, occurrenceStatus)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="presence-absence-data.html#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;Present&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="presence-absence-data.html#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;present&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="presence-absence-data.html#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;Presente&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="presence-absence-data.html#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;Presence&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="presence-absence-data.html#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;P&quot;</span>, <span class="dv">1</span>, occurrenceStatus)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="presence-absence-data.html#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="fu">ifelse</span>(occurrenceStatus<span class="sc">==</span> <span class="st">&quot;Q&quot;</span>, <span class="dv">1</span>, occurrenceStatus))</span>
+<span id="cb18-9"><a href="presence-absence-data.html#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="presence-absence-data.html#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign 1 value to all occurrences</span></span>
+<span id="cb18-11"><a href="presence-absence-data.html#cb18-11" aria-hidden="true" tabindex="-1"></a>mydata.fus <span class="ot">&lt;-</span> mydata.fus  <span class="sc">%&gt;%</span> </span>
+<span id="cb18-12"><a href="presence-absence-data.html#cb18-12" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">occurrenceStatus =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>We remove outliers based on distance method (total distance= 1000 km).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="presence-absence-data.html#cb19-1" aria-hidden="true" tabindex="-1"></a>out.dist <span class="ot">&lt;-</span> <span class="fu">cc_outl</span>(<span class="at">x=</span>mydata.fus,</span>
+<span id="cb19-2"><a href="presence-absence-data.html#cb19-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">lon =</span> <span class="st">&quot;decimalLongitude&quot;</span>, <span class="at">lat =</span> <span class="st">&quot;decimalLatitude&quot;</span>,</span>
+<span id="cb19-3"><a href="presence-absence-data.html#cb19-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">species =</span> <span class="st">&quot;scientificName&quot;</span>,</span>
+<span id="cb19-4"><a href="presence-absence-data.html#cb19-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">method=</span><span class="st">&quot;distance&quot;</span>, <span class="at">tdi=</span><span class="dv">1000</span>, <span class="co"># distance method with tdi=1000km</span></span>
+<span id="cb19-5"><a href="presence-absence-data.html#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">thinning=</span>T, <span class="at">thinning_res=</span><span class="fl">0.5</span>,</span>
+<span id="cb19-6"><a href="presence-absence-data.html#cb19-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">value=</span><span class="st">&quot;flagged&quot;</span>) </span>
+<span id="cb19-7"><a href="presence-absence-data.html#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="presence-absence-data.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove outliers from the data</span></span>
+<span id="cb19-9"><a href="presence-absence-data.html#cb19-9" aria-hidden="true" tabindex="-1"></a>mydata.fus <span class="ot">&lt;-</span> mydata.fus[out.dist, ]</span></code></pre></div>
+<p>Remove duplicates.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="presence-absence-data.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First create a vector containing longitude, latitude and event date information</span></span>
+<span id="cb20-2"><a href="presence-absence-data.html#cb20-2" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mydata.fus<span class="sc">$</span>decimalLongitude,mydata.fus<span class="sc">$</span>decimalLatitude,mydata.fus<span class="sc">$</span>eventDate)</span>
+<span id="cb20-3"><a href="presence-absence-data.html#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="presence-absence-data.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the duplicated records</span></span>
+<span id="cb20-5"><a href="presence-absence-data.html#cb20-5" aria-hidden="true" tabindex="-1"></a>mydata.fus<span class="ot">&lt;-</span>mydata.fus[<span class="sc">!</span><span class="fu">duplicated</span>(date),]</span>
+<span id="cb20-6"><a href="presence-absence-data.html#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="presence-absence-data.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unused files</span></span>
+<span id="cb20-8"><a href="presence-absence-data.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(date)</span></code></pre></div>
+<p>Mask retrieved occurrence data to our study area and add bathymetry value to each occurrence point.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="presence-absence-data.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign coordinate format and projection to be able to use FAO Atlantic as a mask</span></span>
+<span id="cb21-2"><a href="presence-absence-data.html#cb21-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(mydata.fus<span class="sc">$</span>decimalLongitude,mydata.fus<span class="sc">$</span>decimalLatitude))</span>
+<span id="cb21-3"><a href="presence-absence-data.html#cb21-3" aria-hidden="true" tabindex="-1"></a>ptos<span class="ot">&lt;-</span><span class="fu">as.data.table</span>(dat,<span class="at">keep.columnnames=</span><span class="cn">TRUE</span>)</span>
+<span id="cb21-4"><a href="presence-absence-data.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-5"><a href="presence-absence-data.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(ptos) <span class="ot">&lt;-</span> <span class="er">~</span> X1 <span class="sc">+</span> X2</span>
+<span id="cb21-6"><a href="presence-absence-data.html#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="presence-absence-data.html#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign projection</span></span>
+<span id="cb21-8"><a href="presence-absence-data.html#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">proj4string</span>(ptos) <span class="ot">&lt;-</span><span class="fu">proj4string</span>(study_area)</span>
+<span id="cb21-9"><a href="presence-absence-data.html#cb21-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-10"><a href="presence-absence-data.html#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only occurrences from FAO Atlantic</span></span>
+<span id="cb21-11"><a href="presence-absence-data.html#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="presence-absence-data.html#cb21-12" aria-hidden="true" tabindex="-1"></a>match2<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">subset</span>(mydata.fus,<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">over</span>(ptos, study_area)[,<span class="dv">1</span>])))</span>
+<span id="cb21-13"><a href="presence-absence-data.html#cb21-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-14"><a href="presence-absence-data.html#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the FAO area of each point</span></span>
+<span id="cb21-15"><a href="presence-absence-data.html#cb21-15" aria-hidden="true" tabindex="-1"></a>match3<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">subset</span>(<span class="fu">over</span>(ptos, study_area), <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">over</span>(ptos, study_area)[,<span class="dv">1</span>])))</span>
+<span id="cb21-16"><a href="presence-absence-data.html#cb21-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-17"><a href="presence-absence-data.html#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frame with area, name, long, lat and year </span></span>
+<span id="cb21-18"><a href="presence-absence-data.html#cb21-18" aria-hidden="true" tabindex="-1"></a>df0<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="at">F_AREA=</span>match3<span class="sc">$</span>F_AREA,match2)[,<span class="fu">c</span>(<span class="st">&quot;F_AREA&quot;</span>,<span class="st">&quot;scientificName&quot;</span>,<span class="st">&quot;decimalLongitude&quot;</span>,<span class="st">&quot;decimalLatitude&quot;</span>,<span class="st">&quot;date_year&quot;</span>,<span class="st">&quot;occurrenceStatus&quot;</span>)]</span>
+<span id="cb21-19"><a href="presence-absence-data.html#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="presence-absence-data.html#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename some columns</span></span>
+<span id="cb21-21"><a href="presence-absence-data.html#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df0)[<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>]<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>,<span class="st">&quot;YEAR&quot;</span>)</span>
+<span id="cb21-22"><a href="presence-absence-data.html#cb21-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-23"><a href="presence-absence-data.html#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Add bathymetry from NOAA</span></span>
+<span id="cb21-24"><a href="presence-absence-data.html#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co">#bathy &lt;- marmap::getNOAA.bathy(lon1=-100,lon2=30,lat1=-41,lat2=55, resolution = 1,               keep=TRUE, antimeridian=FALSE, path= here::here(&quot;data&quot;, &quot;spatial&quot;))</span></span>
+<span id="cb21-25"><a href="presence-absence-data.html#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/spatial/bathy.RData&quot;</span>)</span>
+<span id="cb21-26"><a href="presence-absence-data.html#cb21-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-27"><a href="presence-absence-data.html#cb21-27" aria-hidden="true" tabindex="-1"></a>df0<span class="sc">$</span>bathymetry <span class="ot">&lt;-</span> <span class="fu">get.depth</span>(bathy, df0[,<span class="fu">c</span>(<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>)], <span class="at">locator=</span>F)<span class="sc">$</span>depth</span>
+<span id="cb21-28"><a href="presence-absence-data.html#cb21-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-29"><a href="presence-absence-data.html#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unused files</span></span>
+<span id="cb21-30"><a href="presence-absence-data.html#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mydata.fus, match2, match3, dat, ptos)</span></code></pre></div>
+<p>We plot the occurrence data.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="presence-absence-data.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb22-2"><a href="presence-absence-data.html#cb22-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_path</span>(<span class="at">data =</span> study_area, </span>
+<span id="cb22-3"><a href="presence-absence-data.html#cb22-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">group =</span> group),</span>
+<span id="cb22-4"><a href="presence-absence-data.html#cb22-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&#39;gray&#39;</span>, <span class="at">linewidth =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="presence-absence-data.html#cb22-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">data=</span>df0, <span class="fu">aes</span>(<span class="at">x=</span>LON, <span class="at">y=</span>LAT)) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>And, we save the data.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="presence-absence-data.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(df0, <span class="at">file =</span> <span class="st">&quot;data/occurrences/occ.RData&quot;</span>)</span>
+<span id="cb23-2"><a href="presence-absence-data.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(study_area, <span class="at">file =</span> <span class="st">&quot;data/spatial/total_area.RData&quot;</span>)</span>
+<span id="cb23-3"><a href="presence-absence-data.html#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="presence-absence-data.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unused files</span></span>
+<span id="cb23-5"><a href="presence-absence-data.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(df0)</span></code></pre></div>
 </div>
 <div id="create-pseudo-absence-data" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Create pseudo-absence data<a href="presence-absence-data.html#create-pseudo-absence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>After saving presence data for the species of interest we need to generate absence data (with a constant prevalence of 50%, <span class="citation">(<a href="#ref-mcpherson_2004" role="doc-biblioref">McPHERSON, Jetz, and Rogers 2004</a>)</span>,<span class="citation">(<a href="#ref-barbetmassin_etal_2012" role="doc-biblioref">Barbet-Massin et al. 2012</a>)</span>), in order to work with logistic regression SDM afterwards. For that, we generate a buffer around each presence data point, with a radius of 100km, where no absences can be generated.</p>
 <p>we load the requiered libraries.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="presence-absence-data.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb15-2"><a href="presence-absence-data.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb15-3"><a href="presence-absence-data.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb15-4"><a href="presence-absence-data.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb15-5"><a href="presence-absence-data.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
-<span id="cb15-6"><a href="presence-absence-data.html#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="presence-absence-data.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)        <span class="co"># some basic country maps</span></span>
-<span id="cb15-8"><a href="presence-absence-data.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapdata)     <span class="co"># higher resolution maps</span></span>
-<span id="cb15-9"><a href="presence-absence-data.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapproj)</span>
-<span id="cb15-10"><a href="presence-absence-data.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marmap)      <span class="co"># access global topography data</span></span>
-<span id="cb15-11"><a href="presence-absence-data.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapplots)    <span class="co"># ices rectangles</span></span>
-<span id="cb15-12"><a href="presence-absence-data.html#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb15-13"><a href="presence-absence-data.html#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb15-14"><a href="presence-absence-data.html#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb15-15"><a href="presence-absence-data.html#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="presence-absence-data.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb24-2"><a href="presence-absence-data.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb24-3"><a href="presence-absence-data.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb24-4"><a href="presence-absence-data.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb24-5"><a href="presence-absence-data.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb24-6"><a href="presence-absence-data.html#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="presence-absence-data.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)        <span class="co"># some basic country maps</span></span>
+<span id="cb24-8"><a href="presence-absence-data.html#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapdata)     <span class="co"># higher resolution maps</span></span>
+<span id="cb24-9"><a href="presence-absence-data.html#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapproj)</span>
+<span id="cb24-10"><a href="presence-absence-data.html#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marmap)      <span class="co"># access global topography data</span></span>
+<span id="cb24-11"><a href="presence-absence-data.html#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapplots)    <span class="co"># ices rectangles</span></span>
+<span id="cb24-12"><a href="presence-absence-data.html#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb24-13"><a href="presence-absence-data.html#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb24-14"><a href="presence-absence-data.html#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb24-15"><a href="presence-absence-data.html#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span></code></pre></div>
 <p>We load the presence data and the object with the area of study.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="presence-absence-data.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#occurrence data</span></span>
-<span id="cb16-2"><a href="presence-absence-data.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/occurrences/occ.RData&quot;</span>)</span>
-<span id="cb16-3"><a href="presence-absence-data.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#study area spatial polygon</span></span>
-<span id="cb16-4"><a href="presence-absence-data.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/spatial/total_area.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="presence-absence-data.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#occurrence data</span></span>
+<span id="cb25-2"><a href="presence-absence-data.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/occurrences/occ.RData&quot;</span>)</span>
+<span id="cb25-3"><a href="presence-absence-data.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#study area spatial polygon</span></span>
+<span id="cb25-4"><a href="presence-absence-data.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/spatial/total_area.RData&quot;</span>)</span></code></pre></div>
 <p>Before starting the pseudo-absence generation process, we delete observations in land (positive bathymetry) and select data between 2000 and 2014 (same temporal range as the environmental data that we will load later).</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="presence-absence-data.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#remove points in land</span></span>
-<span id="cb17-2"><a href="presence-absence-data.html#cb17-2" aria-hidden="true" tabindex="-1"></a>df0<span class="ot">&lt;-</span><span class="fu">subset</span>(df0,bathymetry<span class="sc">&lt;</span><span class="dv">0</span>)</span>
-<span id="cb17-3"><a href="presence-absence-data.html#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="presence-absence-data.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#use years from 2000 to 2014</span></span>
-<span id="cb17-5"><a href="presence-absence-data.html#cb17-5" aria-hidden="true" tabindex="-1"></a>df0<span class="ot">&lt;-</span> <span class="fu">subset</span>(df0, YEAR<span class="sc">&lt;=</span><span class="dv">2014</span> <span class="sc">&amp;</span> YEAR<span class="sc">&gt;=</span><span class="dv">2000</span>)</span>
-<span id="cb17-6"><a href="presence-absence-data.html#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="presence-absence-data.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#use the whole saved area</span></span>
-<span id="cb17-8"><a href="presence-absence-data.html#cb17-8" aria-hidden="true" tabindex="-1"></a>area <span class="ot">&lt;-</span> study_area</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="presence-absence-data.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#remove points in land</span></span>
+<span id="cb26-2"><a href="presence-absence-data.html#cb26-2" aria-hidden="true" tabindex="-1"></a>df0<span class="ot">&lt;-</span><span class="fu">subset</span>(df0,bathymetry<span class="sc">&lt;</span><span class="dv">0</span>)</span>
+<span id="cb26-3"><a href="presence-absence-data.html#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="presence-absence-data.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#use years from 2000 to 2014</span></span>
+<span id="cb26-5"><a href="presence-absence-data.html#cb26-5" aria-hidden="true" tabindex="-1"></a>df0<span class="ot">&lt;-</span> <span class="fu">subset</span>(df0, YEAR<span class="sc">&lt;=</span><span class="dv">2014</span> <span class="sc">&amp;</span> YEAR<span class="sc">&gt;=</span><span class="dv">2000</span>)</span>
+<span id="cb26-6"><a href="presence-absence-data.html#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="presence-absence-data.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#use the whole saved area</span></span>
+<span id="cb26-8"><a href="presence-absence-data.html#cb26-8" aria-hidden="true" tabindex="-1"></a>area <span class="ot">&lt;-</span> study_area</span></code></pre></div>
 <p>Then we transform the presence data frame to “SpatialPointsDataFrame” class object and the to “sf” class object so we can operate and plot easily with spatial data. We can see the charaterstics of this object through its summary.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="presence-absence-data.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#convert to spatial point data frame</span></span>
-<span id="cb18-2"><a href="presence-absence-data.html#cb18-2" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span>df0 ; <span class="fu">coordinates</span>(df)<span class="ot">&lt;-</span> <span class="er">~</span>LON<span class="sc">+</span>LAT</span>
-<span id="cb18-3"><a href="presence-absence-data.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(df)<span class="ot">&lt;-</span><span class="fu">crs</span>(area)</span>
-<span id="cb18-4"><a href="presence-absence-data.html#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="presence-absence-data.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#convert to sf</span></span>
-<span id="cb18-6"><a href="presence-absence-data.html#cb18-6" aria-hidden="true" tabindex="-1"></a>area.sf<span class="ot">&lt;-</span><span class="fu">st_union</span>(<span class="fu">st_as_sf</span>(area))</span>
-<span id="cb18-7"><a href="presence-absence-data.html#cb18-7" aria-hidden="true" tabindex="-1"></a>df.sf<span class="ot">&lt;-</span><span class="fu">st_as_sf</span>(df)</span>
-<span id="cb18-8"><a href="presence-absence-data.html#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="presence-absence-data.html#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="presence-absence-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#convert to spatial point data frame</span></span>
+<span id="cb27-2"><a href="presence-absence-data.html#cb27-2" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span>df0 ; <span class="fu">coordinates</span>(df)<span class="ot">&lt;-</span> <span class="er">~</span>LON<span class="sc">+</span>LAT</span>
+<span id="cb27-3"><a href="presence-absence-data.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(df)<span class="ot">&lt;-</span><span class="fu">crs</span>(area)</span>
+<span id="cb27-4"><a href="presence-absence-data.html#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="presence-absence-data.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#convert to sf</span></span>
+<span id="cb27-6"><a href="presence-absence-data.html#cb27-6" aria-hidden="true" tabindex="-1"></a>area.sf<span class="ot">&lt;-</span><span class="fu">st_union</span>(<span class="fu">st_as_sf</span>(area))</span>
+<span id="cb27-7"><a href="presence-absence-data.html#cb27-7" aria-hidden="true" tabindex="-1"></a>df.sf<span class="ot">&lt;-</span><span class="fu">st_as_sf</span>(df)</span>
+<span id="cb27-8"><a href="presence-absence-data.html#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="presence-absence-data.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div>
 <pre><code>## Object of class SpatialPointsDataFrame
 ## Coordinates:
 ##        min      max
@@ -468,10 +650,10 @@ div.csl-indent {
 ## LAT -34.71 54.15014
 ## Is projected: FALSE 
 ## proj4string : [+proj=longlat +datum=WGS84 +no_defs]
-## Number of points: 15079
+## Number of points: 14903
 ## Data attributes:
 ##     F_AREA          scientificName          YEAR      occurrenceStatus
-##  Length:15079       Length:15079       Min.   :2000   Min.   :1       
+##  Length:14903       Length:14903       Min.   :2000   Min.   :1       
 ##  Class :character   Class :character   1st Qu.:2001   1st Qu.:1       
 ##  Mode  :character   Mode  :character   Median :2002   Median :1       
 ##                                        Mean   :2003   Mean   :1       
@@ -479,92 +661,92 @@ div.csl-indent {
 ##                                        Max.   :2013   Max.   :1       
 ##    bathymetry      
 ##  Min.   :-8404.09  
-##  1st Qu.:-1904.84  
-##  Median :-1023.43  
-##  Mean   :-1416.66  
-##  3rd Qu.: -293.08  
+##  1st Qu.:-1916.92  
+##  Median :-1030.77  
+##  Mean   :-1433.61  
+##  3rd Qu.: -351.32  
 ##  Max.   :   -1.13</code></pre>
-<p>We can easily plot sf objects using ggplot, here we plot the area of study and the presence data points</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="presence-absence-data.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(area.sf) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data=</span><span class="fu">st_union</span>(df.sf),<span class="at">size=</span><span class="fl">0.05</span>,<span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<p>We can easily plot sf objects using ggplot, here we plot the area of study and the presence data points.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="presence-absence-data.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(area.sf) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data=</span><span class="fu">st_union</span>(df.sf),<span class="at">size=</span><span class="fl">0.05</span>,<span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>We save a base plot (p0) with the world map and our area of study in blue.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="presence-absence-data.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># basic ggplot</span></span>
+<span id="cb30-2"><a href="presence-absence-data.html#cb30-2" aria-hidden="true" tabindex="-1"></a>global <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&quot;worldHires&quot;</span>)</span>
+<span id="cb30-3"><a href="presence-absence-data.html#cb30-3" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb30-4"><a href="presence-absence-data.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_map</span>(<span class="at">map=</span>global, <span class="at">fill=</span><span class="st">&quot;grey&quot;</span>)<span class="sc">+</span></span>
+<span id="cb30-5"><a href="presence-absence-data.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>area.sf,<span class="at">fill=</span><span class="dv">5</span>)</span>
+<span id="cb30-6"><a href="presence-absence-data.html#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p0)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<p>We save a base plot (p0) with the world map and our area of study in blue</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="presence-absence-data.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># basic ggplot</span></span>
-<span id="cb21-2"><a href="presence-absence-data.html#cb21-2" aria-hidden="true" tabindex="-1"></a>global <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&quot;worldHires&quot;</span>)</span>
-<span id="cb21-3"><a href="presence-absence-data.html#cb21-3" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb21-4"><a href="presence-absence-data.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_map</span>(<span class="at">map=</span>global, <span class="at">fill=</span><span class="st">&quot;grey&quot;</span>)<span class="sc">+</span></span>
-<span id="cb21-5"><a href="presence-absence-data.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>area.sf,<span class="at">fill=</span><span class="dv">5</span>)</span>
-<span id="cb21-6"><a href="presence-absence-data.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p0)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<p>In order to generate a buffer around each acurrence data point, we need to work with euclidean distances, so first, we need to transform the decimal latitude and longitude values to UTM.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="presence-absence-data.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to find your UTM. Taken from Nerea Goikoetxea</span></span>
-<span id="cb22-2"><a href="presence-absence-data.html#cb22-2" aria-hidden="true" tabindex="-1"></a>lonlat2UTM <span class="ot">=</span> <span class="cf">function</span>(lonlat) {</span>
-<span id="cb22-3"><a href="presence-absence-data.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  utm <span class="ot">=</span> (<span class="fu">floor</span>((lonlat[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">180</span>) <span class="sc">/</span> <span class="dv">6</span>) <span class="sc">%%</span> <span class="dv">60</span>) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb22-4"><a href="presence-absence-data.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(lonlat[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb22-5"><a href="presence-absence-data.html#cb22-5" aria-hidden="true" tabindex="-1"></a>    utm <span class="sc">+</span> <span class="dv">32600</span></span>
-<span id="cb22-6"><a href="presence-absence-data.html#cb22-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span>{</span>
-<span id="cb22-7"><a href="presence-absence-data.html#cb22-7" aria-hidden="true" tabindex="-1"></a>    utm <span class="sc">+</span> <span class="dv">32700</span></span>
-<span id="cb22-8"><a href="presence-absence-data.html#cb22-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb22-9"><a href="presence-absence-data.html#cb22-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-10"><a href="presence-absence-data.html#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-11"><a href="presence-absence-data.html#cb22-11" aria-hidden="true" tabindex="-1"></a>(EPSG_2_UTM <span class="ot">&lt;-</span> <span class="fu">lonlat2UTM</span>(<span class="fu">c</span>(<span class="fu">mean</span>(df<span class="sc">$</span>LON), <span class="fu">mean</span>(df<span class="sc">$</span>LAT))))</span></code></pre></div>
+<p>In order to generate a buffer around each ocurrence data point, we need to work with euclidean distances, so first, we need to transform the decimal latitude and longitude values to UTM.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="presence-absence-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to find your UTM. Taken from Nerea Goikoetxea</span></span>
+<span id="cb31-2"><a href="presence-absence-data.html#cb31-2" aria-hidden="true" tabindex="-1"></a>lonlat2UTM <span class="ot">=</span> <span class="cf">function</span>(lonlat) {</span>
+<span id="cb31-3"><a href="presence-absence-data.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  utm <span class="ot">=</span> (<span class="fu">floor</span>((lonlat[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">180</span>) <span class="sc">/</span> <span class="dv">6</span>) <span class="sc">%%</span> <span class="dv">60</span>) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb31-4"><a href="presence-absence-data.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(lonlat[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb31-5"><a href="presence-absence-data.html#cb31-5" aria-hidden="true" tabindex="-1"></a>    utm <span class="sc">+</span> <span class="dv">32600</span></span>
+<span id="cb31-6"><a href="presence-absence-data.html#cb31-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span>{</span>
+<span id="cb31-7"><a href="presence-absence-data.html#cb31-7" aria-hidden="true" tabindex="-1"></a>    utm <span class="sc">+</span> <span class="dv">32700</span></span>
+<span id="cb31-8"><a href="presence-absence-data.html#cb31-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb31-9"><a href="presence-absence-data.html#cb31-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-10"><a href="presence-absence-data.html#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="presence-absence-data.html#cb31-11" aria-hidden="true" tabindex="-1"></a>(EPSG_2_UTM <span class="ot">&lt;-</span> <span class="fu">lonlat2UTM</span>(<span class="fu">c</span>(<span class="fu">mean</span>(df<span class="sc">$</span>LON), <span class="fu">mean</span>(df<span class="sc">$</span>LAT))))</span></code></pre></div>
 <pre><code>## [1] 32623</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="presence-absence-data.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform area and data points to UTMs (in m)</span></span>
-<span id="cb24-2"><a href="presence-absence-data.html#cb24-2" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(area.sf, EPSG_2_UTM)</span>
-<span id="cb24-3"><a href="presence-absence-data.html#cb24-3" aria-hidden="true" tabindex="-1"></a>df.sf.utm <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(df.sf, EPSG_2_UTM)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="presence-absence-data.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform area and data points to UTMs (in m)</span></span>
+<span id="cb33-2"><a href="presence-absence-data.html#cb33-2" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(area.sf, EPSG_2_UTM)</span>
+<span id="cb33-3"><a href="presence-absence-data.html#cb33-3" aria-hidden="true" tabindex="-1"></a>df.sf.utm <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(df.sf, EPSG_2_UTM)</span></code></pre></div>
 <p>Now, we can create buffers of 100km around the points and join the resulting polygons. Then this buffer is intersected with the area of study defining the area where the pseudo-absences can be generated. To visualize the defined areas, we plot the buffers in red and the area that we will use to generate pseudo-absences in green.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="presence-absence-data.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create buffers of 100000m</span></span>
-<span id="cb25-2"><a href="presence-absence-data.html#cb25-2" aria-hidden="true" tabindex="-1"></a>buffer <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(df.sf.utm, <span class="at">dist=</span><span class="dv">100000</span>)</span>
-<span id="cb25-3"><a href="presence-absence-data.html#cb25-3" aria-hidden="true" tabindex="-1"></a>buffer <span class="ot">&lt;-</span> <span class="fu">st_union</span>(buffer)</span>
-<span id="cb25-4"><a href="presence-absence-data.html#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="presence-absence-data.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># intersect the are with the buffer</span></span>
-<span id="cb25-6"><a href="presence-absence-data.html#cb25-6" aria-hidden="true" tabindex="-1"></a>aux0 <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(aux, buffer)</span>
-<span id="cb25-7"><a href="presence-absence-data.html#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="presence-absence-data.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot for all data</span></span>
-<span id="cb25-9"><a href="presence-absence-data.html#cb25-9" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span><span class="fu">geom_sf</span>(<span class="at">data=</span>aux0,<span class="at">fill=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">geom_sf</span>(<span class="at">data=</span>buffer,<span class="at">fill=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="presence-absence-data.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#zoom</span></span>
-<span id="cb26-2"><a href="presence-absence-data.html#cb26-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span><span class="fu">geom_sf</span>(<span class="at">data=</span>aux0,<span class="at">fill=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">geom_sf</span>(<span class="at">data=</span>buffer,<span class="at">fill=</span><span class="dv">2</span>)<span class="sc">+</span></span>
-<span id="cb26-3"><a href="presence-absence-data.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">95</span>,<span class="sc">-</span><span class="dv">82</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">22</span>,<span class="dv">31</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="presence-absence-data.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create buffers of 100000m</span></span>
+<span id="cb34-2"><a href="presence-absence-data.html#cb34-2" aria-hidden="true" tabindex="-1"></a>buffer <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(df.sf.utm, <span class="at">dist=</span><span class="dv">100000</span>)</span>
+<span id="cb34-3"><a href="presence-absence-data.html#cb34-3" aria-hidden="true" tabindex="-1"></a>buffer <span class="ot">&lt;-</span> <span class="fu">st_union</span>(buffer)</span>
+<span id="cb34-4"><a href="presence-absence-data.html#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="presence-absence-data.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># intersect the are with the buffer</span></span>
+<span id="cb34-6"><a href="presence-absence-data.html#cb34-6" aria-hidden="true" tabindex="-1"></a>aux0 <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(aux, buffer)</span>
+<span id="cb34-7"><a href="presence-absence-data.html#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="presence-absence-data.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot for all data</span></span>
+<span id="cb34-9"><a href="presence-absence-data.html#cb34-9" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span><span class="fu">geom_sf</span>(<span class="at">data=</span>aux0,<span class="at">fill=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">geom_sf</span>(<span class="at">data=</span>buffer,<span class="at">fill=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="presence-absence-data.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#zoom</span></span>
+<span id="cb35-2"><a href="presence-absence-data.html#cb35-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span><span class="fu">geom_sf</span>(<span class="at">data=</span>aux0,<span class="at">fill=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">geom_sf</span>(<span class="at">data=</span>buffer,<span class="at">fill=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb35-3"><a href="presence-absence-data.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">95</span>,<span class="sc">-</span><span class="dv">82</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">22</span>,<span class="dv">31</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
 <p>We create a data frame for pseudo-absences with the same dimensions as the presences data frame.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="presence-absence-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the pseudo-absence data frame</span></span>
-<span id="cb27-2"><a href="presence-absence-data.html#cb27-2" aria-hidden="true" tabindex="-1"></a>pseudo <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span><span class="fu">dim</span>(df0)[<span class="dv">1</span>], <span class="at">ncol=</span><span class="fu">dim</span>(df0)[<span class="dv">2</span>])</span>
-<span id="cb27-3"><a href="presence-absence-data.html#cb27-3" aria-hidden="true" tabindex="-1"></a>pseudo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(pseudo)</span>
-<span id="cb27-4"><a href="presence-absence-data.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pseudo) <span class="ot">&lt;-</span> <span class="fu">names</span>(df0)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="presence-absence-data.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the pseudo-absence data frame</span></span>
+<span id="cb36-2"><a href="presence-absence-data.html#cb36-2" aria-hidden="true" tabindex="-1"></a>pseudo <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span><span class="fu">dim</span>(df0)[<span class="dv">1</span>], <span class="at">ncol=</span><span class="fu">dim</span>(df0)[<span class="dv">2</span>])</span>
+<span id="cb36-3"><a href="presence-absence-data.html#cb36-3" aria-hidden="true" tabindex="-1"></a>pseudo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(pseudo)</span>
+<span id="cb36-4"><a href="presence-absence-data.html#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pseudo) <span class="ot">&lt;-</span> <span class="fu">names</span>(df0)</span></code></pre></div>
 <p>To generate the pseudo-absence data points, we sample randomly from the defined area and we extract their latitude and longitude to incorporate them in the created data frame. we set the occurceStatus equal to 0 as they are absences.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="presence-absence-data.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed</span></span>
-<span id="cb28-2"><a href="presence-absence-data.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb28-3"><a href="presence-absence-data.html#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="presence-absence-data.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#sample from the defined area</span></span>
-<span id="cb28-5"><a href="presence-absence-data.html#cb28-5" aria-hidden="true" tabindex="-1"></a>rp.sf <span class="ot">&lt;-</span> <span class="fu">st_sample</span>(aux0, <span class="at">size=</span><span class="fu">dim</span>(df.sf.utm)[<span class="dv">1</span>], <span class="at">type=</span><span class="st">&quot;random&quot;</span>) <span class="co"># randomly sample points</span></span>
-<span id="cb28-6"><a href="presence-absence-data.html#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="presence-absence-data.html#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># transform to lat and lon and extract coordinates as data.frame</span></span>
-<span id="cb28-8"><a href="presence-absence-data.html#cb28-8" aria-hidden="true" tabindex="-1"></a>rp.sf <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(rp.sf, <span class="dv">4326</span>)</span>
-<span id="cb28-9"><a href="presence-absence-data.html#cb28-9" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">st_coordinates</span>(rp.sf)) </span>
-<span id="cb28-10"><a href="presence-absence-data.html#cb28-10" aria-hidden="true" tabindex="-1"></a>pseudo<span class="sc">$</span>LON <span class="ot">&lt;-</span> rp<span class="sc">$</span>X</span>
-<span id="cb28-11"><a href="presence-absence-data.html#cb28-11" aria-hidden="true" tabindex="-1"></a>pseudo<span class="sc">$</span>LAT <span class="ot">&lt;-</span> rp<span class="sc">$</span>Y</span>
-<span id="cb28-12"><a href="presence-absence-data.html#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="presence-absence-data.html#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the rest of columns</span></span>
-<span id="cb28-14"><a href="presence-absence-data.html#cb28-14" aria-hidden="true" tabindex="-1"></a>pseudo<span class="sc">$</span>scientificName <span class="ot">&lt;-</span> df0<span class="sc">$</span>scientificName</span>
-<span id="cb28-15"><a href="presence-absence-data.html#cb28-15" aria-hidden="true" tabindex="-1"></a>pseudo<span class="sc">$</span>occurrenceStatus  <span class="ot">&lt;-</span> <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="presence-absence-data.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed</span></span>
+<span id="cb37-2"><a href="presence-absence-data.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb37-3"><a href="presence-absence-data.html#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="presence-absence-data.html#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">#sample from the defined area</span></span>
+<span id="cb37-5"><a href="presence-absence-data.html#cb37-5" aria-hidden="true" tabindex="-1"></a>rp.sf <span class="ot">&lt;-</span> <span class="fu">st_sample</span>(aux0, <span class="at">size=</span><span class="fu">dim</span>(df.sf.utm)[<span class="dv">1</span>], <span class="at">type=</span><span class="st">&quot;random&quot;</span>) <span class="co"># randomly sample points</span></span>
+<span id="cb37-6"><a href="presence-absence-data.html#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="presence-absence-data.html#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># transform to lat and lon and extract coordinates as data.frame</span></span>
+<span id="cb37-8"><a href="presence-absence-data.html#cb37-8" aria-hidden="true" tabindex="-1"></a>rp.sf <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(rp.sf, <span class="dv">4326</span>)</span>
+<span id="cb37-9"><a href="presence-absence-data.html#cb37-9" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">st_coordinates</span>(rp.sf)) </span>
+<span id="cb37-10"><a href="presence-absence-data.html#cb37-10" aria-hidden="true" tabindex="-1"></a>pseudo<span class="sc">$</span>LON <span class="ot">&lt;-</span> rp<span class="sc">$</span>X</span>
+<span id="cb37-11"><a href="presence-absence-data.html#cb37-11" aria-hidden="true" tabindex="-1"></a>pseudo<span class="sc">$</span>LAT <span class="ot">&lt;-</span> rp<span class="sc">$</span>Y</span>
+<span id="cb37-12"><a href="presence-absence-data.html#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="presence-absence-data.html#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the rest of columns</span></span>
+<span id="cb37-14"><a href="presence-absence-data.html#cb37-14" aria-hidden="true" tabindex="-1"></a>pseudo<span class="sc">$</span>scientificName <span class="ot">&lt;-</span> df0<span class="sc">$</span>scientificName</span>
+<span id="cb37-15"><a href="presence-absence-data.html#cb37-15" aria-hidden="true" tabindex="-1"></a>pseudo<span class="sc">$</span>occurrenceStatus  <span class="ot">&lt;-</span> <span class="dv">0</span></span></code></pre></div>
 <p>We can plot the generated pseudo-absence data (in pink) in the map, together with the presence data points (in black).</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="presence-absence-data.html#cb29-1" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span></span>
-<span id="cb29-2"><a href="presence-absence-data.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>rp.sf, <span class="at">col=</span><span class="dv">6</span>, <span class="at">shape=</span><span class="dv">4</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
-<span id="cb29-3"><a href="presence-absence-data.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>df.sf.utm, <span class="at">col=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.8</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
-<span id="cb29-4"><a href="presence-absence-data.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">unique</span>(df<span class="sc">$</span>scientificName))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="presence-absence-data.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#zoom</span></span>
-<span id="cb30-2"><a href="presence-absence-data.html#cb30-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span></span>
-<span id="cb30-3"><a href="presence-absence-data.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>rp.sf, <span class="at">col=</span><span class="dv">6</span>, <span class="at">shape=</span><span class="dv">4</span>,<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb30-4"><a href="presence-absence-data.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>df.sf.utm, <span class="at">col=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.8</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
-<span id="cb30-5"><a href="presence-absence-data.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">95</span>,<span class="sc">-</span><span class="dv">82</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">31</span>))<span class="sc">+</span></span>
-<span id="cb30-6"><a href="presence-absence-data.html#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">unique</span>(df<span class="sc">$</span>scientificName))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="presence-absence-data.html#cb38-1" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span></span>
+<span id="cb38-2"><a href="presence-absence-data.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>rp.sf, <span class="at">col=</span><span class="dv">6</span>, <span class="at">shape=</span><span class="dv">4</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb38-3"><a href="presence-absence-data.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>df.sf.utm, <span class="at">col=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.8</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb38-4"><a href="presence-absence-data.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">unique</span>(df<span class="sc">$</span>scientificName))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="presence-absence-data.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#zoom</span></span>
+<span id="cb39-2"><a href="presence-absence-data.html#cb39-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span></span>
+<span id="cb39-3"><a href="presence-absence-data.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>rp.sf, <span class="at">col=</span><span class="dv">6</span>, <span class="at">shape=</span><span class="dv">4</span>,<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb39-4"><a href="presence-absence-data.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>df.sf.utm, <span class="at">col=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.8</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb39-5"><a href="presence-absence-data.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">95</span>,<span class="sc">-</span><span class="dv">82</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">31</span>))<span class="sc">+</span></span>
+<span id="cb39-6"><a href="presence-absence-data.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">unique</span>(df<span class="sc">$</span>scientificName))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
 <p>Finally we join the presence and pseudo-absence data frames selecting the columns of interest and save the new data frame as well as the area object.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="presence-absence-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join the two data sets and save the final dataset</span></span>
-<span id="cb31-2"><a href="presence-absence-data.html#cb31-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df0, pseudo)[,<span class="fu">c</span>(<span class="st">&quot;scientificName&quot;</span>,<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>,<span class="st">&quot;YEAR&quot;</span>,<span class="st">&quot;occurrenceStatus&quot;</span>)]</span>
-<span id="cb31-3"><a href="presence-absence-data.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="fu">c</span>(<span class="st">&quot;dat&quot;</span>),<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;outputs_for_modelling&quot;</span>,<span class="at">file=</span><span class="st">&quot;PAdata.RData&quot;</span>))</span>
-<span id="cb31-4"><a href="presence-absence-data.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="fu">c</span>(<span class="st">&quot;area&quot;</span>),<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;spatial&quot;</span>,<span class="at">file=</span><span class="st">&quot;area.RData&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="presence-absence-data.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join the two data sets and save the final dataset</span></span>
+<span id="cb40-2"><a href="presence-absence-data.html#cb40-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df0, pseudo)[,<span class="fu">c</span>(<span class="st">&quot;scientificName&quot;</span>,<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>,<span class="st">&quot;YEAR&quot;</span>,<span class="st">&quot;occurrenceStatus&quot;</span>)]</span>
+<span id="cb40-3"><a href="presence-absence-data.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="fu">c</span>(<span class="st">&quot;dat&quot;</span>),<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;outputs_for_modelling&quot;</span>,<span class="at">file=</span><span class="st">&quot;PAdata.RData&quot;</span>))</span>
+<span id="cb40-4"><a href="presence-absence-data.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="fu">c</span>(<span class="st">&quot;area&quot;</span>),<span class="at">file=</span><span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;spatial&quot;</span>,<span class="at">file=</span><span class="st">&quot;area.RData&quot;</span>))</span></code></pre></div>
 
 </div>
 </div>

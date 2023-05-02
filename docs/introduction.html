@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Introduction | Species distribution models (SDM)</title>
   <meta name="description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Introduction | Species distribution models (SDM)" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-04-04" />
+<meta name="date" content="2023-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="libraries.html"/>
+<link rel="next" href="presence-absence-data.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -92,46 +92,46 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">BOOK TITLE</a></li>
+<li><a href="./">SDM</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>2</b> Libraries</a></li>
-<li class="chapter" data-level="3" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>3</b> Presence-absence data</a>
+<li class="chapter" data-level="2" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>2</b> Presence-absence data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>3.1</b> Download presence data</a></li>
-<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.2</b> Create pseudo-absence data</a></li>
+<li class="chapter" data-level="2.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>2.1</b> Download presence data</a></li>
+<li class="chapter" data-level="2.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>2.2</b> Create pseudo-absence data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>4</b> Environmental data</a>
+<li class="chapter" data-level="3" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>3</b> Environmental data</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>4.1</b> Download from public repositories</a></li>
+<li class="chapter" data-level="3.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>3.1</b> Download from public repositories</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>5</b> Prepare final dataset</a>
+<li class="chapter" data-level="4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>4</b> Prepare final dataset</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>5.1</b> Extract environmental data associated to presence-absence data</a></li>
-<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>5.2</b> Exploratory plots of environmental variables</a></li>
-<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>5.3</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
-<li class="chapter" data-level="5.4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#correlation-analysis"><i class="fa fa-check"></i><b>5.4</b> Correlation analysis</a></li>
-<li class="chapter" data-level="5.5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>5.5</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="4.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>4.1</b> Extract environmental data associated to presence-absence data</a></li>
+<li class="chapter" data-level="4.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>4.2</b> Exploratory plots of environmental variables</a></li>
+<li class="chapter" data-level="4.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>4.3</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
+<li class="chapter" data-level="4.4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#correlation-analysis"><i class="fa fa-check"></i><b>4.4</b> Correlation analysis</a></li>
+<li class="chapter" data-level="4.5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>4.5</b> Variance Inflation Factor (VIF)</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
+<li class="chapter" data-level="5" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>5</b> Shape Constrained-Generalized Additive Models</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>6.1</b> Model fit</a></li>
-<li class="chapter" data-level="6.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a></li>
+<li class="chapter" data-level="5.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>5.1</b> Model fit</a></li>
+<li class="chapter" data-level="5.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>5.2</b> Model selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>7</b> Model validation</a>
+<li class="chapter" data-level="6" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>6</b> Model validation</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
-<li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
+<li class="chapter" data-level="6.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>6.1</b> Optimum threshold</a></li>
+<li class="chapter" data-level="6.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>6.2</b> k-fold validation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a>
+<li class="chapter" data-level="7" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>7</b> Prediction and maps</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data.-04-ataletik-hona-mugituta"><i class="fa fa-check"></i><b>8.1</b> Prepare environmental data. 04 ATALETIK HONA MUGITUTA</a></li>
-<li class="chapter" data-level="8.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>8.2</b> Projection</a></li>
-<li class="chapter" data-level="8.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>8.3</b> Mapping</a></li>
+<li class="chapter" data-level="7.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data.-04-ataletik-hona-mugituta"><i class="fa fa-check"></i><b>7.1</b> Prepare environmental data. 04 ATALETIK HONA MUGITUTA</a></li>
+<li class="chapter" data-level="7.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>7.2</b> Projection</a></li>
+<li class="chapter" data-level="7.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>7.3</b> Mapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>8</b> Libraries</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -160,7 +160,7 @@ div.csl-indent {
 <p>The book is organised following the key steps in good modelling practice of SDMs <span class="citation">(<a href="#ref-elith_etal_2009" role="doc-biblioref">Elith and Leathwick 2009</a>)</span>. First, presence data of a selected species are downloaded from GBIF/OBIS global public datasets and pseudo-absence data are created. Then, environmental data are downloaded from public repositories and extracted at each of the presence/pseudo-absence data points. Based on this dataset, an exploratory analysis is conducted to help deciding on the best modelling approach. The model is fitted to the dataset and the quality of the fit and the realism of the fitted response function are evaluated. After selecting a threshold to transform the continuous probability predictions into binary responses, the model is validated using a k-fold approach. Finally, the predicted maps are generated for visualization.</p>
 
 </div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-citores_etal_2020" class="csl-entry">
 Citores, L., L. Ibaibarriaga, D. J. Lee, M. J. Brewer, M. Santos, and G. Chust. 2020. <span>“Modelling Species Presence–Absence in the Ecological Niche Theory Framework Using Shape-Constrained Generalized Additive Models.”</span> <em>Ecological Modelling</em> 418: 108926.
@@ -178,7 +178,7 @@ Hutchinson, G. E. 1957. <span>“Concluding Remarks.”</span> Journal Article. 
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="libraries.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="presence-absence-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -209,7 +209,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-intro.Rmd",
+"link": "https://github.com/Fundacion-AZTI/SDM/edit/master/01-intro.Rmd",
 "text": "Edit"
 },
 "history": {
