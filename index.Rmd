@@ -7,7 +7,7 @@ documentclass: book
 bibliography:
 - references.bib
 description: |
-  This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models.  
+  This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by @citores_etal_2020.  
 link-citations: yes
 github-repo: Fundacion-AZTI/gam-niche
 ---
