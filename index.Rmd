@@ -1,5 +1,5 @@
 --- 
-title: "Species distribution models (SDM)"
+title: "GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory"
 author: "AZTI"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -9,19 +9,17 @@ bibliography:
 description: |
   This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models.  
 link-citations: yes
-github-repo: Fundacion-AZTI/SDM
+github-repo: Fundacion-AZTI/gam-niche
 ---
 
 # About {-}
 
-This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models. 
+This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by [Citores et al. 2020 Ecological Modelling 418:108926. DOI: https://doi.org/10.1016/j.ecolmodel.2019.108926](https://github.com/Fundacion-AZTI/gam-niche)[@citores_etal_2020]
 
-The code is available in [AZTI's github repository](https://github.com/Fundacion-AZTI/SDM) repository and the book is readily available [here](https://fundacion-azti.github.io/SDM/).
+The code is available in [AZTI's github repository](https://github.com/Fundacion-AZTI/gam-niche) and the book is readily available [here](https://fundacion-azti.github.io/gam-niche/).
 
-This work was funded by... MISSION
+To cite this book, please use:
 
-To cite this book, please use: 
-
-BLA BLA BLA
+Valle M, Citores L, Ibaibarriaga L, Chuts C (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory.FALTA EL DOI DE AZTI
 
 
