@@ -18,6 +18,7 @@ requiredPackages <- c(
   "knitr",  # format tables
   "kableExtra", # format tables
   "raster", # to work with spatial data
+  "dplyr",
   
   #DOWNLOAD FROM PUBLIC REPOSITORIES --------#
   "sdmpredictors" #to access Bio-ORACLE dataset
@@ -66,13 +67,9 @@ mydat <- list_datasets(marine=T)
 # or equivalently: 
 # mydat <- list_datasets(terrestrial=F, freshwater=F)
 # mydat <- list_datasets(marine=T, terrestrial=F, freshwater=F)
-
-kable(mydat)%>% 
-  kable_styling("striped") %>% 
-  scroll_box(height="600px", width = "100%")
 ```
 
-There are two datasets (Bio-ORACLE and MARSOEC) that have marine data. The function `list_layers` returns information on the layers of one or more datasets. So, we can see the layers available in the Bio-ORACLE dataset as follows:
+There are two datasets (Bio-ORACLE and MARSPEC) that have marine data. The function `list_layers` returns information on the layers of one or more datasets. So, we can see the layers available in the Bio-ORACLE dataset as follows:
 ```{r, eval=T,message=FALSE,warning=FALSE}
 mytab <- list_layers("Bio-ORACLE")
 
@@ -81,8 +78,24 @@ kable(mytab)%>%
   scroll_box(height="600px", width = "100%")
 ```
 
-Once we identify the dataset and the layers we are interested on, we can download them using the function `load_layers`. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient, surface temperature and bathymetry: 
+Once we identify the dataset and the layers we are interested on, we can extract their details from the list. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient, surface temperature and bathymetry.
 ```{r, eval=T,message=FALSE,warning=FALSE}
+target <- c("BO2_chlomean_ss",
+            "BO2_salinitymean_ss",
+            "BO_damean",
+            "BO_sstmean",
+            "BO_bathymean")
+
+# Extrat details from the list
+myvars <- mytab %>% 
+  dplyr::filter (mytab$layer_code %in% target)
+
+myvars$name
+```
+
+And we can download them using the function `load_layers` 
+```{r, eval=T,message=FALSE,warning=FALSE}
+# Download layers
 myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")) 
 ```
 
