@@ -4,47 +4,74 @@ editor_options:
   chunk_output_type: console
 ---
 
-
 # Model validation
 
 In this section, model validation is performed in order to assess the predictive performance of the selected model. This validation is conducted via k-fold cross-validation. The data set is divided into k equally sized groups [@hijmans_2012], using a percentage of randomly selected observations to run the model and the remaining for validation, iteratively for each fold. 
 
-
-First we load all required libraries.
-
+First we load the list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-library(scam)
-library(plotmo)
-library(rgdal)
-library(ggplot2)
-library(dplyr)
-library(fields)
-library(maps) 
-library(raster)
-library(RColorBrewer)
-library(tidyverse)
-library(R.utils) 
-library(SDMTools)
-library(dismo)
-library(ggplot2)
-library(ggpubr)
-library(hrbrthemes)
-library(rstudioapi)
+requiredPackages <- c(
+  #GENERAL USE LIBRARIES --------#
+  "here", # Library for reproducible workflow
+  "rstudioapi",  # Library for reproducible workflow
+  "stringr",
+  "RColorBrewer",  
+  "ggplot2",
+  "dplyr",
+  "tidyverse",
+  "R.utils",
+  "ggpubr",
+  "hrbrthemes",
+  
+  #SPATIAL DATA --------#
+  "rgdal",
+  "fields",
+  "maps" ,
+  "raster",
+
+  #MODEL FIT --------#
+  "scam",
+  "plotmo",
+  "SDMTools",
+  "pkgbuild",
+  "dismo"
+  )
+```
+
+We run a function to install the required packages that are not in our system and load all the required packages.
+```{r, eval=T,message=FALSE,warning=FALSE}
+install_load_function <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg))
+    install.packages(new.pkg, dependencies = TRUE)
+  sapply(pkg, require, character.only = TRUE)
+}
+
+install_load_function(requiredPackages)
+
+```
+
+We define some overall settings.
+```{r, eval=T,message=FALSE,warning=FALSE}
+# Location of script
+setwd(dirname(getSourceEditorContext()$path))
+
+# General settings for ggplot (black-white background, larger base_size)
+theme_set(theme_bw(base_size = 16))
 ```
 
 We load output from the selected model saved in the previous step.
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
 setwd(dirname(getSourceEditorContext()$path))
-load(file.path ("models", "model.Rdata"))
+
+load(file.path ("models", "selected_model.Rdata"))
 ```
 
 ## Optimum threshold
 
 We generate a data frame with the data used in the selected model and we add the predicted values.
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
-  #data used in the selected model
+  #PAdata_enviroment used in the selected model
   data<-selected_model$model
 
   # Predict 
@@ -56,7 +83,6 @@ We generate a data frame with the data used in the selected model and we add the
 ``` 
 
 The threshold for presence-absence classification for each species is obtained as the values maximizing sensitivity plus specificity [@jimenez_etal_2007]. If the result was a range (instead of a single value), we would select the mean value of the range. 
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
   # Optimizing the threshold probability
   obs <- data$occurrenceStatus
@@ -71,7 +97,6 @@ The threshold for presence-absence classification for each species is obtained a
 ```
 
 Accuracy indicators, such as AUC (Area Under the Receiver Operating Characteristic—ROC—curve), sensitivity (true predicted presences) and specificity (true predicted absences) are first computed for the all observations.
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
   # Accuracy values with all observations
   accuracy (obs, predSCGAM_P, threshold=myThreshold)
@@ -83,17 +108,15 @@ Accuracy indicators, such as AUC (Area Under the Receiver Operating Characterist
 ## k-fold validation
 
 In this case we use a 5-fold cross-validation. 
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
   # Number of groups
   k <- 5 
   # Generate groups
-  groups<-kfold(data, k, by=data$status)
+  groups<-kfold(data, k, by=data$occurrencestatus)
 ```
 
 
 The model is run for each of the 5 random subset (with a 20% of the observations) and indicators are then computed using the remaining 80% of the observations. Indicators are the averaged across folds. 
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
   # Initialise the confusion matrix and the accuracy table: 
   myCM <- NULL 
@@ -138,8 +161,7 @@ The model is run for each of the 5 random subset (with a 20% of the observations
 ```
 
 We save the validation summary object.
-
 ```{r, eval=F}
-  save(validation_summary, file = here::here("models/validation_summary.RData"))
+save(validation_summary, file = here::here("models/validation_summary.RData"))
 ```
 
