@@ -118,12 +118,6 @@ For a more detailed check of the fitting, we can use the scam.check function:
 scam.check(model)
 ```
 
-Finally, we save the model.
-```{r, eval=T,message=FALSE,warning=FALSE}
-selected_model<-model
-save(list=c("selected_model"), file = ("models/model.RData"))
-```
-
 ## Model selection
 
 When several explanatory variables are available, a variable selection process can be carried out. Here we provide as an example, a function that performs forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits. 
@@ -171,6 +165,11 @@ lapply(model_SCGAM$smod, summary)
 The last model of the list, is the selected one. Which in this case contains the considered three variables.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 selected_model <- model_SCGAM$smod[[length(model_SCGAM$smod)]]
+```
+
+We save the selected model
+```{r}
+save(list="selected_model", file="models/selected_model.RData")
 ```
 
 Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be used also for SC-GAMs.
