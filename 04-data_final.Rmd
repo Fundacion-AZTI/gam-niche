@@ -69,7 +69,7 @@ Now we can extract the environmental data associated to each of the species data
 ```{r, eval=T,message=FALSE,warning=FALSE}
 raster_ex <- raster::extract(x=mylayers, y=PAdata[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) 
 
-colnames(raster_ex)[-1]<-c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")
+colnames(raster_ex)[-1]<-c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean")
 
 head(raster_ex)
 ```
@@ -87,11 +87,8 @@ head(data)
 summary(data)
 ```
 
-The new dataset has 29806 rows and 11 columns, and there are 139 NA's in the environmental dataset. Note also that there are some positive bathymetries that correspond to points located very close to the coast. We remove both the points with positive bathymetries and the points with NA's:
-
+The new dataset has 29806 rows and 10 columns, and there are 139 NA's in the environmental dataset. We remove the points with NA's:
 ```{r, eval=T,message=FALSE,warning=FALSE}
-data <- subset(data, BO_bathymean<0)
-
 data <- data %>% 
   dplyr::select (-YEAR) %>% #we remove year column because pseudoabsences miss this info
   na.omit()
@@ -115,7 +112,7 @@ Before starting the modelling process, we are going to explore the individual va
 We can explore the distributions of each of the environmental variables by looking at the violin and boxplots and at the histograms and density plots as follows: 
 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-tmp <- data[, c("BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
+tmp <- data[, c("BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean")]
 tmp <- pivot_longer(data=tmp, cols=everything()) 
 
 ggplot(data=tmp, aes(x=name, y=value)) + 
@@ -138,7 +135,7 @@ ggplot(data=tmp, aes(x=value)) +
 To analyse if there are preferences for certain ranges of the environmental variables, we compare the distribution of the environmental variables for presence and absence data:   
 ```{r, eval=T,message=FALSE,warning=FALSE}
 
-tmp <- data[, c("LON", "LAT", "BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean","occurrenceStatus")]
+tmp <- data[, c("LON", "LAT", "BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","occurrenceStatus")]
 tmp <- pivot_longer(data=tmp, cols=!occurrenceStatus) 
 
 ggplot(data=tmp, aes(x=factor(occurrenceStatus), y=value, fill=factor(occurrenceStatus), group=factor(occurrenceStatus))) + 
@@ -157,8 +154,9 @@ ggplot(data=tmp, aes(x=value, fill=factor(occurrenceStatus), group=factor(occurr
 
 Some of the environmental variables can be correlated. The `GGally` package allows to easily produce pairplots of the variables and their correlation.  
 ```{r, eval=T,message=FALSE,warning=FALSE}
-tmp <- data[, c("LON","LAT","BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
-ggpairs(tmp)
+tmp <- data[, c("LON","LAT","BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean")]
+
+ggpairs(tmp) #this takes some minutes
 ```
 
 A more detailed analysis of the potential correlations can be conducted using the package `ggcorrplot`:
@@ -181,7 +179,7 @@ There are several packages in `R` that allows to calculate the VIF statistics. I
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # select variables for VIF calculation
 v.table <- data %>% 
-  dplyr::select (BO2_salinitymean_ss, BO_sstmean, BO2_chlomean_ss, BO_damean, BO_bathymean)
+  dplyr::select (BO2_salinitymean_ss, BO_sstmean, BO2_chlomean_ss, BO_damean)
 
 # get VIF results
 out.vif <- vif(v.table)
