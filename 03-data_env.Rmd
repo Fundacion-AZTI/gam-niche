@@ -78,13 +78,12 @@ kable(mytab)%>%
   scroll_box(height="600px", width = "100%")
 ```
 
-Once we identify the dataset and the layers we are interested on, we can extract their details from the list. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient, surface temperature and bathymetry.
+Once we identify the dataset and the layers we are interested on, we can extract their details from the list. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient and sea surface temperature.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 target <- c("BO2_chlomean_ss",
             "BO2_salinitymean_ss",
             "BO_damean",
-            "BO_sstmean",
-            "BO_bathymean")
+            "BO_sstmean")
 
 # Extrat details from the list
 myvars <- mytab %>% 
@@ -96,7 +95,7 @@ myvars$name
 And we can download them using the function `load_layers` 
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # Download layers
-myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")) 
+myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean")) 
 ```
 
 Note that the resulting object is a `rasterStack`, where each variable is a layer
