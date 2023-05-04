@@ -1,87 +1,110 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+## Prepare the final dataset
+
+In this chapter we first, extract environmental data associated to the presence-pseudoabsence data, we explore the data we got, we check correlation between variables and we calculate the Variance Inflation Factor (VIF) to make a selection of the variables we are going to use in the model. 
+
+First we load a list of required libraries.
+```{r, eval=T,message=FALSE,warning=FALSE}
+requiredPackages <- c(
+  #GENERAL USE LIBRARIES --------#
+  "here", # Library for reproducible workflow
+  "rstudioapi",  # Library for reproducible workflow
+  
+  #EXTRACT ENVIRONMENTAL DATA AND PLOTS
+  "sp", # spatial data
+  "raster", #spatial data
+  "dplyr",
+  "tidyr",
+  "ggplot2",
+  "ggcorrplot",
+  
+  #CORRELATION ANALYSIS
+  "GGally", #correlation analysis
+  "HH" #calculate VIF
+    )
+```
+
+We run a function to install the required packages that are not in our system and load all the required packages.
+```{r, eval=T,message=FALSE,warning=FALSE}
+install_load_function <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg))
+    install.packages(new.pkg, dependencies = TRUE)
+  sapply(pkg, require, character.only = TRUE)
+}
+
+install_load_function(requiredPackages)
+
+```
+
+We define some overall settings.
+```{r, eval=T,message=FALSE,warning=FALSE}
+# Location of script
+setwd(dirname(getSourceEditorContext()$path))
+
+# General settings for ggplot (black-white background, larger base_size)
+theme_set(theme_bw(base_size = 16))
+```
+
 ```{r setup, include=FALSE} 
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.width=16, fig.height=12)
 ```
 
-# Prepare final dataset
-
-Loading required libraries
-
-```{r, eval=T}
-# library(rgdal) # to read shp
-# library(raster) # to work with rasters
-# library (here) # Libraries for reproducible workflow
-# library (sp)     # to perform raster
-# library(HH) #to calculate for VIF (Variance Inflation Factor)
-# library(ggplot2)# plots
-
-
-# library(gridExtra)# multiple plots
-# library(dplyr)
-# library(RColorBrewer)#plotting colors
-# library(fields)#ploting images
-# library(marmap)#ploting world
-# library(maptools)#mapping
-# library(rstudioapi)
-
-# theme_set(theme_bw(base_size = 16))
-```
-
 ## Extract environmental data associated to presence-absence data
 
-Once the environmental rasters and the species abundance data (including pseudo-absences) have been prepared, we need to merge both sources of data. First, we load the objects created in previous sections:
-
-```{r, eval=T}
+Once we have prepared our species distribution data (occurrences and pseudo-absences) and the environmental rasters, we need to merge both sources of data. First, we load the objects created in previous sections:
+```{r, eval=T,message=FALSE,warning=FALSE}
 #load presence-absence data
 load("data/outputs_for_modelling/PAdata.RData")
 
 # load environmental rasters
-library(sp)
-library(raster)
-myBioracle.layers<-stack("data/env/myBioracle.layers.tif")
+mylayers<-stack("data/env/mylayers.tif")
 ```
 
 Now we can extract the environmental data associated to each of the species data points using the function `extract` from the `raster` package. The method employed is `bilinear` that returns the interpolated value from the four nearest raster cells.
+```{r, eval=T,message=FALSE,warning=FALSE}
+raster_ex <- raster::extract(x=mylayers, y=PAdata[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) 
 
-```{r, eval=T}
-raster_ex <- raster::extract(x=myBioracle.layers, y=dat[,c("LON","LAT")], method="bilinear", na.rm=TRUE, df=T) 
 colnames(raster_ex)[-1]<-c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean", "BO_bathymean")
 
 head(raster_ex)
 ```
 
 We merge the presence/absence data and the environmental data: 
-
-```{r, eval=T}
-data <- cbind(dat, raster_ex)
+```{r, eval=T,message=FALSE,warning=FALSE}
+data <- cbind(PAdata, raster_ex)
 ```
 
 We can conduct some quick checks on the new dataset:  
-
-```{r, eval=T}
+```{r, eval=T,message=FALSE,warning=FALSE}
 dim(data)
 str(data)
 head(data)
 summary(data)
 ```
 
-The new dataset has 30158 rows and 13 columns, and there are 162 NA's in the environmental dataset. Note also that there are some positive bathymetries that correspond to points located very close to the coast. We remove both the points with NA's and the points with positive bathymetries:
+The new dataset has 29806 rows and 11 columns, and there are 139 NA's in the environmental dataset. Note also that there are some positive bathymetries that correspond to points located very close to the coast. We remove both the points with positive bathymetries and the points with NA's:
 
-```{r, eval=T}
+```{r, eval=T,message=FALSE,warning=FALSE}
 data <- subset(data, BO_bathymean<0)
+
+data <- data %>% 
+  dplyr::select (-YEAR) %>% #we remove year column because pseudoabsences miss this info
+  na.omit()
 ```
 
 We check again the dataset:
-
-```{r, eval=T}
+```{r, eval=T,message=FALSE,warning=FALSE}
 dim(data)
-summary(data) # 29435 sites : 4 are NAs
+summary(data) 
 ```
 
-The resulting dataset has 29435, from which 4 have NA's in BO2_chlomean_ss and BO2_salinitymean_ss. We save this dataset in a local file to work on it in subsequent steps. 
-
-LI: REMOVE THE 4 NA's?? IT WILL FACILITATE MODEL COMPARISON
-
-```{r, eval=T}
+The resulting dataset has 29661. We save this dataset in a local file to work on it in subsequent steps. 
+```{r, eval=T,message=FALSE,warning=FALSE}
 save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
 ```
 
@@ -89,28 +112,9 @@ save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
 
 Before starting the modelling process, we are going to explore the individual variables in the dataset. 
 
-The `YEAR` variable is only available for the presence data and the time coverage is quite different along time as shown by the following plot: 
-
-```{r}
-
-table(is.na(dat$YEAR), dat$occurrenceStatus) # NOTE THAT THE PSEUDO-ABSENCES DO NOT HAVE YEAR. So MAYBE BETTER TO REMOVE THIS PART.
-
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-theme_set(theme_bw(base_size=16))
-
-data %>% 
-  # filter(!is.na(YEAR)) %>% 
-  group_by(YEAR) %>% 
-  summarise(N=n()) %>% 
-  ggplot(aes(x=YEAR, y=N)) + 
-  geom_bar(stat="identity", col="red", fill="red", alpha=0.5)
-```
-
 We can explore the distributions of each of the environmental variables by looking at the violin and boxplots and at the histograms and density plots as follows: 
 
-```{r}
+```{r, eval=T,message=FALSE,warning=FALSE}
 tmp <- data[, c("BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
 tmp <- pivot_longer(data=tmp, cols=everything()) 
 
@@ -124,17 +128,15 @@ ggplot(data=tmp, aes(x=name, y=value)) +
   facet_wrap(~name, scales="free")
 
 ggplot(data=tmp, aes(x=value)) + 
-  geom_histogram(aes(y= ..density.. ), colour=1, fill="red", alpha=0.3)+
+  geom_histogram(aes(y= after_stat(density)), colour=1, fill="red", alpha=0.3)+
   geom_density(lwd=1)+
   facet_wrap(~name, scales="free")
-
 ```
 
 ## Exploratory plots of environmental variables depending on presence/absence data
 
 To analyse if there are preferences for certain ranges of the environmental variables, we compare the distribution of the environmental variables for presence and absence data:   
-
-```{r}
+```{r, eval=T,message=FALSE,warning=FALSE}
 
 tmp <- data[, c("LON", "LAT", "BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean","occurrenceStatus")]
 tmp <- pivot_longer(data=tmp, cols=!occurrenceStatus) 
@@ -154,22 +156,13 @@ ggplot(data=tmp, aes(x=value, fill=factor(occurrenceStatus), group=factor(occurr
 ## Correlation analysis
 
 Some of the environmental variables can be correlated. The `GGally` package allows to easily produce pairplots of the variables and their correlation.  
-
-```{r}
-library(GGally)
-
+```{r, eval=T,message=FALSE,warning=FALSE}
 tmp <- data[, c("LON","LAT","BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
 ggpairs(tmp)
-
 ```
 
 A more detailed analysis of the potential correlations can be conducted using the package `ggcorrplot`:
-
-```{r}
-library(ggcorrplot)
-
-tmp <- data[, c("LON","LAT","BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","BO_bathymean")]
-
+```{r, eval=T,message=FALSE,warning=FALSE}
 mat <- cor(tmp, use="complete.obs") 
 p.mat <- cor_pmat(tmp)
 
@@ -185,40 +178,35 @@ Furthermore, multicollinearity in regression analysis can be explored using the 
 * VIF greater than 5 = variables are highly correlated
 
 There are several packages in `R` that allows to calculate the VIF statistics. In this case we use the package `HH`: 
-
-```{r, eval=T}
-
-library(HH)
-
-# select variables for vif calculation
+```{r, eval=T,message=FALSE,warning=FALSE}
+# select variables for VIF calculation
 v.table <- data %>% 
   dplyr::select (BO2_salinitymean_ss, BO_sstmean, BO2_chlomean_ss, BO_damean, BO_bathymean)
 
-# get vif results
-
+# get VIF results
 out.vif <- vif(v.table)
 sort(out.vif)
 ```
 
 We remove the variable that has the highest VIF value and we test again the multicollinearity: 
 
-```{r}
-
+```{r, eval=T,message=FALSE,warning=FALSE}
 v.table <- v.table %>% 
   dplyr::select (-BO_damean)
 
-#  get new vif results
-
+#  get new VIF results
 out.vif <- vif(v.table)
 sort(out.vif)
 ```
 
-Now all the variables have VIF values that are acceptable. So, we proceed to save these variables for the next modelling stages:
-
-```{r}
+Now all the variables have VIF values that are acceptable. So, we proceed to remove BO_damean (Diffuse attenuation coefficient at 490 nm). And save the selected variables for the next modelling stages:
+```{r, eval=T,message=FALSE,warning=FALSE}
 data <- data %>% dplyr::select (-BO_damean)
+```
 
-# save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
+We save the dataset as our output for modelling
+```{r, eval=T,message=FALSE,warning=FALSE}
+save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
 ```
 
 
