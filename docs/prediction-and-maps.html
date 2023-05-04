@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Prediction and maps | Species distribution models (SDM)</title>
-  <meta name="description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <title>Chapter 5 Prediction and maps | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
+  <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Prediction and maps | Species distribution models (SDM)" />
+  <meta property="og:title" content="Chapter 5 Prediction and maps | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="github-repo" content="Fundacion-AZTI/SDM" />
+  <meta property="og:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="github-repo" content="Fundacion-AZTI/gam-niche" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Prediction and maps | Species distribution models (SDM)" />
+  <meta name="twitter:title" content="Chapter 5 Prediction and maps | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   
-  <meta name="twitter:description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
+  <meta name="twitter:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
   
 
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-02-22" />
+<meta name="date" content="2023-05-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -156,43 +156,42 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">BOOK TITLE</a></li>
+<li><a href="./">SDM</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>2</b> Libraries</a></li>
-<li class="chapter" data-level="3" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>3</b> Presence-absence data</a>
+<li class="chapter" data-level="2" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>2</b> Presence-absence data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>3.1</b> Download presence data</a></li>
-<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.2</b> Create pseudo-absence data</a></li>
+<li class="chapter" data-level="2.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>2.1</b> Download presence data</a></li>
+<li class="chapter" data-level="2.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>2.2</b> Create pseudo-absence data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>4</b> Environmental data</a>
+<li class="chapter" data-level="3" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>3</b> Environmental data</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>4.1</b> Download from public repositories</a></li>
+<li class="chapter" data-level="3.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>3.1</b> Download from public repositories</a></li>
+<li class="chapter" data-level="3.2" data-path="environmental-data.html"><a href="environmental-data.html#prepare-the-final-dataset"><i class="fa fa-check"></i><b>3.2</b> Prepare the final dataset</a></li>
+<li class="chapter" data-level="3.3" data-path="environmental-data.html"><a href="environmental-data.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>3.3</b> Extract environmental data associated to presence-absence data</a></li>
+<li class="chapter" data-level="3.4" data-path="environmental-data.html"><a href="environmental-data.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>3.4</b> Exploratory plots of environmental variables</a></li>
+<li class="chapter" data-level="3.5" data-path="environmental-data.html"><a href="environmental-data.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>3.5</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
+<li class="chapter" data-level="3.6" data-path="environmental-data.html"><a href="environmental-data.html#correlation-analysis"><i class="fa fa-check"></i><b>3.6</b> Correlation analysis</a></li>
+<li class="chapter" data-level="3.7" data-path="environmental-data.html"><a href="environmental-data.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>3.7</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="3.8" data-path="environmental-data.html"><a href="environmental-data.html#shape-constrained-generalized-additive-models"><i class="fa fa-check"></i><b>3.8</b> Shape Constrained-Generalized Additive Models</a></li>
+<li class="chapter" data-level="3.9" data-path="environmental-data.html"><a href="environmental-data.html#model-fit"><i class="fa fa-check"></i><b>3.9</b> Model fit</a></li>
+<li class="chapter" data-level="3.10" data-path="environmental-data.html"><a href="environmental-data.html#model-selection"><i class="fa fa-check"></i><b>3.10</b> Model selection</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>5</b> Prepare final dataset</a>
+<li class="chapter" data-level="4" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4</b> Model validation</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>5.1</b> Extract environmental data associated to presence-absence data</a></li>
-<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variable-correlation-analysis-of-variance-inflation-factor-vif"><i class="fa fa-check"></i><b>5.2</b> Variable correlation: Analysis of Variance Inflation Factor (VIF)</a></li>
-<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots"><i class="fa fa-check"></i><b>5.3</b> Exploratory plots</a></li>
+<li class="chapter" data-level="4.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>4.1</b> Optimum threshold</a></li>
+<li class="chapter" data-level="4.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>4.2</b> k-fold validation</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
+<li class="chapter" data-level="5" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>5</b> Prediction and maps</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>6.1</b> Model fit</a></li>
-<li class="chapter" data-level="6.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>7</b> Model validation</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
-<li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>8.1</b> Projection</a></li>
-<li class="chapter" data-level="8.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>8.2</b> Mapping</a></li>
+<li class="chapter" data-level="5.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data."><i class="fa fa-check"></i><b>5.1</b> Prepare environmental data.</a></li>
+<li class="chapter" data-level="5.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>5.2</b> Projection</a></li>
+<li class="chapter" data-level="5.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>5.3</b> Mapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="6" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>6</b> Libraries</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -205,7 +204,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Species distribution models (SDM)</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</a>
           </h1>
         </div>
 
@@ -213,55 +212,120 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="prediction-and-maps" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Prediction and maps<a href="prediction-and-maps.html#prediction-and-maps" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>predict from fitted models and produce maps</p>
-<p>Loading required libraries</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="prediction-and-maps.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgdal)</span>
-<span id="cb8-2"><a href="prediction-and-maps.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb8-3"><a href="prediction-and-maps.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb8-4"><a href="prediction-and-maps.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fields) <span class="co">#imageplot</span></span>
-<span id="cb8-5"><a href="prediction-and-maps.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps) <span class="co">#map world</span></span>
-<span id="cb8-6"><a href="prediction-and-maps.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
-<span id="cb8-7"><a href="prediction-and-maps.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)<span class="co">#color palette</span></span>
-<span id="cb8-8"><a href="prediction-and-maps.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb8-9"><a href="prediction-and-maps.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstudioapi)</span>
-<span id="cb8-10"><a href="prediction-and-maps.html#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="prediction-and-maps.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># general settings for ggplot (black-white background, larger base_size)</span></span>
-<span id="cb8-12"><a href="prediction-and-maps.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
-<div id="projection" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> Projection<a href="prediction-and-maps.html#projection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="prediction-and-maps.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># location of script</span></span>
-<span id="cb9-2"><a href="prediction-and-maps.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
-<span id="cb9-3"><a href="prediction-and-maps.html#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="prediction-and-maps.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#load PA data</span></span>
-<span id="cb9-5"><a href="prediction-and-maps.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;outputs_for_modelling&quot;</span>, <span class="st">&quot;PAdata_with_env.Rdata&quot;</span>))</span>
-<span id="cb9-6"><a href="prediction-and-maps.html#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="prediction-and-maps.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Load raster stack containing all variables</span></span>
-<span id="cb9-8"><a href="prediction-and-maps.html#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="prediction-and-maps.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/env/env_dataframe.Rdata&quot;</span>)</span>
-<span id="cb9-10"><a href="prediction-and-maps.html#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="prediction-and-maps.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#remove positive bathy</span></span>
-<span id="cb9-12"><a href="prediction-and-maps.html#cb9-12" aria-hidden="true" tabindex="-1"></a>env_dataframe_proj<span class="ot">&lt;-</span><span class="fu">subset</span>(env_dataframe,BO_bathymean<span class="sc">&lt;</span><span class="dv">0</span>)</span>
-<span id="cb9-13"><a href="prediction-and-maps.html#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="prediction-and-maps.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Load SC-GAM model</span></span>
-<span id="cb9-15"><a href="prediction-and-maps.html#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="prediction-and-maps.html#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;model.Rdata&quot;</span>))</span>
-<span id="cb9-17"><a href="prediction-and-maps.html#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-18"><a href="prediction-and-maps.html#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting </span></span>
-<span id="cb9-19"><a href="prediction-and-maps.html#cb9-19" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model,<span class="at">newdata=</span>env_dataframe_proj,<span class="at">type =</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit=</span>T)         </span>
-<span id="cb9-20"><a href="prediction-and-maps.html#cb9-20" aria-hidden="true" tabindex="-1"></a>env_dataframe_proj<span class="sc">$</span>fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>fit</span>
-<span id="cb9-21"><a href="prediction-and-maps.html#cb9-21" aria-hidden="true" tabindex="-1"></a>env_dataframe_proj<span class="sc">$</span>se.fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>se.fit</span></code></pre></div>
+<div id="prediction-and-maps" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Prediction and maps<a href="prediction-and-maps.html#prediction-and-maps" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this chapter we predict from the fitted model and produce final SDMs maps.</p>
+<p>First we load a list of required libraries.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="prediction-and-maps.html#cb1-1" aria-hidden="true" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="prediction-and-maps.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
+<span id="cb1-3"><a href="prediction-and-maps.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
+<span id="cb1-4"><a href="prediction-and-maps.html#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>,  <span class="co"># Library for reproducible workflow</span></span>
+<span id="cb1-5"><a href="prediction-and-maps.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>, <span class="co">#for plotting</span></span>
+<span id="cb1-6"><a href="prediction-and-maps.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tidyverse&quot;</span>, </span>
+<span id="cb1-7"><a href="prediction-and-maps.html#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rgdal&quot;</span>, <span class="co"># to work with Spatial data</span></span>
+<span id="cb1-8"><a href="prediction-and-maps.html#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>, <span class="co">#spatial </span></span>
+<span id="cb1-9"><a href="prediction-and-maps.html#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;maps&quot;</span>, <span class="co">#world map</span></span>
+<span id="cb1-10"><a href="prediction-and-maps.html#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;maptools&quot;</span>, <span class="co">#plotting world map</span></span>
+<span id="cb1-11"><a href="prediction-and-maps.html#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;RColorBrewer&quot;</span>, <span class="co">#color palette</span></span>
+<span id="cb1-12"><a href="prediction-and-maps.html#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;scam&quot;</span>, <span class="co">#sdm models under the ecological niche theory framework</span></span>
+<span id="cb1-13"><a href="prediction-and-maps.html#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ggpubr&quot;</span></span>
+<span id="cb1-14"><a href="prediction-and-maps.html#cb1-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="prediction-and-maps.html#cb2-1" aria-hidden="true" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb2-2"><a href="prediction-and-maps.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
+<span id="cb2-3"><a href="prediction-and-maps.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
+<span id="cb2-4"><a href="prediction-and-maps.html#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="prediction-and-maps.html#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="prediction-and-maps.html#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-7"><a href="prediction-and-maps.html#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="prediction-and-maps.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
+<pre><code>##         here   rstudioapi      ggplot2    tidyverse        rgdal       raster 
+##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+##         maps     maptools RColorBrewer         scam       ggpubr 
+##         TRUE         TRUE         TRUE         TRUE         TRUE</code></pre>
+<p>We define some overall settings.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="prediction-and-maps.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Location of script</span></span>
+<span id="cb4-2"><a href="prediction-and-maps.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
+<span id="cb4-3"><a href="prediction-and-maps.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="prediction-and-maps.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># General settings for ggplot (black-white background, larger base_size)</span></span>
+<span id="cb4-5"><a href="prediction-and-maps.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
+<div id="prepare-environmental-data." class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Prepare environmental data.<a href="prediction-and-maps.html#prepare-environmental-data." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In previous steps (see Chapter 2), we have defined the study area that defines the extent of our spatial data. We load the <code>study_area</code> object that is a SpatialPolygonsDataFrame class:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="prediction-and-maps.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/spatial/study_area.RData&quot;</span>)</span></code></pre></div>
+<p>And we load the rasterStack with the downloaded environmental data.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="prediction-and-maps.html#cb6-1" aria-hidden="true" tabindex="-1"></a>mylayers<span class="ot">&lt;-</span><span class="fu">stack</span>(<span class="st">&quot;data/env/mylayers.tif&quot;</span>)</span></code></pre></div>
+<p>We transform the environmental data set first into a data frame, and then into a SpatialDataFrame.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="prediction-and-maps.html#cb7-1" aria-hidden="true" tabindex="-1"></a>env_dataframe <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">as.data.frame</span>(mylayers, <span class="at">xy=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="prediction-and-maps.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="prediction-and-maps.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(env_dataframe)</span></code></pre></div>
+<pre><code>##        x                y            mylayers_1        mylayers_2     
+##  Min.   :-97.79   Min.   :-82.96   Min.   :0.0       Min.   : 0.1     
+##  1st Qu.:-56.23   1st Qu.:-39.73   1st Qu.:0.1       1st Qu.:33.8     
+##  Median :-14.67   Median :  3.50   Median :0.3       Median :34.6     
+##  Mean   :-14.67   Mean   :  3.50   Mean   :0.3       Mean   :34.4     
+##  3rd Qu.: 26.90   3rd Qu.: 46.73   3rd Qu.:0.4       3rd Qu.:35.6     
+##  Max.   : 68.46   Max.   : 89.96   Max.   :3.6       Max.   :40.7     
+##                                    NA&#39;s   :1501044   NA&#39;s   :1501044  
+##    mylayers_3        mylayers_4     
+##  Min.   :0.0       Min.   :-1.8     
+##  1st Qu.:0.0       1st Qu.: 1.9     
+##  Median :0.0       Median :15.1     
+##  Mean   :0.1       Mean   :13.7     
+##  3rd Qu.:0.1       3rd Qu.:24.1     
+##  Max.   :1.0       Max.   :32.3     
+##  NA&#39;s   :1652879   NA&#39;s   :1652879</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="prediction-and-maps.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(env_dataframe) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span>, <span class="st">&quot;BO_sstmean&quot;</span>)</span></code></pre></div>
 </div>
-<div id="mapping" class="section level2 hasAnchor" number="8.2">
-<h2><span class="header-section-number">8.2</span> Mapping<a href="prediction-and-maps.html#mapping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="prediction-and-maps.html#cb10-1" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_raster</span>(<span class="at">data=</span><span class="fu">subset</span>(env_dataframe_proj),<span class="fu">aes</span>(x,y,<span class="at">fill=</span>fit))<span class="sc">+</span><span class="fu">scale_fill_gradient2</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">mid=</span><span class="st">&quot;orange&quot;</span>,<span class="at">high=</span><span class="st">&quot;red&quot;</span>,<span class="at">midpoint =</span> <span class="fl">0.5</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">&quot;with bathy concave&quot;</span>)<span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data=</span><span class="fu">subset</span>(data,occurrenceStatus<span class="sc">==</span><span class="dv">1</span>),<span class="fu">aes</span>(LON,LAT),<span class="at">col=</span><span class="dv">1</span>,<span class="at">size=</span><span class="fl">0.3</span>)     </span>
-<span id="cb10-2"><a href="prediction-and-maps.html#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="prediction-and-maps.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb10-4"><a href="prediction-and-maps.html#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="prediction-and-maps.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">file.path</span>(<span class="st">&quot;plots&quot;</span>,<span class="st">&quot;projections&quot;</span>,<span class="fu">paste0</span>(<span class="st">&quot;proj_map.png&quot;</span>)), p, <span class="at">device=</span><span class="st">&quot;png&quot;</span>)</span>
+<div id="projection" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Projection<a href="prediction-and-maps.html#projection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="prediction-and-maps.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load SC-GAM model</span></span>
+<span id="cb10-2"><a href="prediction-and-maps.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;selected_model.Rdata&quot;</span>))</span>
+<span id="cb10-3"><a href="prediction-and-maps.html#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="prediction-and-maps.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># predicting </span></span>
+<span id="cb10-5"><a href="prediction-and-maps.html#cb10-5" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model,<span class="at">newdata=</span>env_dataframe,<span class="at">type =</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit=</span>T)         </span>
 <span id="cb10-6"><a href="prediction-and-maps.html#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="prediction-and-maps.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(env_dataframe_proj, <span class="at">file=</span><span class="st">&quot;results/projection.Rdata&quot;</span>)</span></code></pre></div>
+<span id="cb10-7"><a href="prediction-and-maps.html#cb10-7" aria-hidden="true" tabindex="-1"></a>env_dataframe<span class="sc">$</span>fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>fit</span>
+<span id="cb10-8"><a href="prediction-and-maps.html#cb10-8" aria-hidden="true" tabindex="-1"></a>env_dataframe<span class="sc">$</span>se.fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>se.fit</span>
+<span id="cb10-9"><a href="prediction-and-maps.html#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="prediction-and-maps.html#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(env_dataframe, <span class="at">file=</span><span class="st">&quot;results/projection.Rdata&quot;</span>)</span></code></pre></div>
+</div>
+<div id="mapping" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Mapping<a href="prediction-and-maps.html#mapping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="prediction-and-maps.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load PA data</span></span>
+<span id="cb11-2"><a href="prediction-and-maps.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;outputs_for_modelling&quot;</span>, <span class="st">&quot;PAdata_with_env.Rdata&quot;</span>))</span>
+<span id="cb11-3"><a href="prediction-and-maps.html#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="prediction-and-maps.html#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="prediction-and-maps.html#cb11-5" aria-hidden="true" tabindex="-1"></a>proj_map <span class="ot">&lt;-</span><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb11-6"><a href="prediction-and-maps.html#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>(<span class="at">data=</span><span class="fu">subset</span>(env_dataframe),</span>
+<span id="cb11-7"><a href="prediction-and-maps.html#cb11-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(x,y,<span class="at">fill=</span>fit)) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="prediction-and-maps.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb11-9"><a href="prediction-and-maps.html#cb11-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">mid=</span><span class="st">&quot;orange&quot;</span>,</span>
+<span id="cb11-10"><a href="prediction-and-maps.html#cb11-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">high=</span><span class="st">&quot;red&quot;</span>,</span>
+<span id="cb11-11"><a href="prediction-and-maps.html#cb11-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">midpoint =</span> <span class="fl">0.5</span>,</span>
+<span id="cb11-12"><a href="prediction-and-maps.html#cb11-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="prediction-and-maps.html#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Occurrence probabilty Thunnus alalunga&quot;</span>)<span class="sc">+</span> </span>
+<span id="cb11-14"><a href="prediction-and-maps.html#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span><span class="fu">subset</span>(data,occurrenceStatus<span class="sc">==</span><span class="dv">1</span>),</span>
+<span id="cb11-15"><a href="prediction-and-maps.html#cb11-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(LON,LAT),</span>
+<span id="cb11-16"><a href="prediction-and-maps.html#cb11-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">col=</span><span class="dv">1</span>,</span>
+<span id="cb11-17"><a href="prediction-and-maps.html#cb11-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb11-18"><a href="prediction-and-maps.html#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>(<span class="at">base_size =</span> <span class="dv">14</span>)<span class="sc">+</span></span>
+<span id="cb11-19"><a href="prediction-and-maps.html#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-20"><a href="prediction-and-maps.html#cb11-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;italic&quot;</span>), </span>
+<span id="cb11-21"><a href="prediction-and-maps.html#cb11-21" aria-hidden="true" tabindex="-1"></a>        <span class="co">#text = element_text(size = 14), </span></span>
+<span id="cb11-22"><a href="prediction-and-maps.html#cb11-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb11-23"><a href="prediction-and-maps.html#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb11-24"><a href="prediction-and-maps.html#cb11-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-25"><a href="prediction-and-maps.html#cb11-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;latitude&quot;</span>, <span class="at">x =</span> <span class="st">&quot;longitude&quot;</span>)</span>
+<span id="cb11-26"><a href="prediction-and-maps.html#cb11-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-27"><a href="prediction-and-maps.html#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(proj_map)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="prediction-and-maps.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename=</span> <span class="st">&quot;Thunnus_alalunga_proj_map.tif&quot;</span>, </span>
+<span id="cb12-2"><a href="prediction-and-maps.html#cb12-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot=</span>proj_map, </span>
+<span id="cb12-3"><a href="prediction-and-maps.html#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">device=</span><span class="st">&quot;tiff&quot;</span>,</span>
+<span id="cb12-4"><a href="prediction-and-maps.html#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">path=</span>here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;plots&quot;</span>, <span class="st">&quot;projections&quot;</span>), </span>
+<span id="cb12-5"><a href="prediction-and-maps.html#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">height=</span><span class="dv">22</span>, <span class="at">width=</span><span class="dv">30</span>,</span>
+<span id="cb12-6"><a href="prediction-and-maps.html#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">units=</span><span class="st">&quot;cm&quot;</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -302,7 +366,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/08-projections.Rmd",
+"link": "https://github.com/Fundacion-AZTI/SDM/edit/master/07-projections.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,33 +4,33 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Model validation | Species distribution models (SDM)</title>
-  <meta name="description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <title>Chapter 4 Model validation | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
+  <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Model validation | Species distribution models (SDM)" />
+  <meta property="og:title" content="Chapter 4 Model validation | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
-  <meta name="github-repo" content="Fundacion-AZTI/SDM" />
+  <meta property="og:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="github-repo" content="Fundacion-AZTI/gam-niche" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Model validation | Species distribution models (SDM)" />
+  <meta name="twitter:title" content="Chapter 4 Model validation | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   
-  <meta name="twitter:description" content="This is a short tutorial about constructing species distribution models in R using shape-constrained generalized additive models." />
+  <meta name="twitter:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
   
 
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-03-29" />
+<meta name="date" content="2023-05-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="shape-constrained-generalized-additive-models.html"/>
+<link rel="prev" href="environmental-data.html"/>
 <link rel="next" href="prediction-and-maps.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -156,46 +156,42 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">BOOK TITLE</a></li>
+<li><a href="./">SDM</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>2</b> Libraries</a></li>
-<li class="chapter" data-level="3" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>3</b> Presence-absence data</a>
+<li class="chapter" data-level="2" data-path="presence-absence-data.html"><a href="presence-absence-data.html"><i class="fa fa-check"></i><b>2</b> Presence-absence data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>3.1</b> Download presence data</a></li>
-<li class="chapter" data-level="3.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>3.2</b> Create pseudo-absence data</a></li>
+<li class="chapter" data-level="2.1" data-path="presence-absence-data.html"><a href="presence-absence-data.html#download-presence-data"><i class="fa fa-check"></i><b>2.1</b> Download presence data</a></li>
+<li class="chapter" data-level="2.2" data-path="presence-absence-data.html"><a href="presence-absence-data.html#create-pseudo-absence-data"><i class="fa fa-check"></i><b>2.2</b> Create pseudo-absence data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>4</b> Environmental data</a>
+<li class="chapter" data-level="3" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>3</b> Environmental data</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>4.1</b> Download from public repositories</a></li>
+<li class="chapter" data-level="3.1" data-path="environmental-data.html"><a href="environmental-data.html#download-from-public-repositories"><i class="fa fa-check"></i><b>3.1</b> Download from public repositories</a></li>
+<li class="chapter" data-level="3.2" data-path="environmental-data.html"><a href="environmental-data.html#prepare-the-final-dataset"><i class="fa fa-check"></i><b>3.2</b> Prepare the final dataset</a></li>
+<li class="chapter" data-level="3.3" data-path="environmental-data.html"><a href="environmental-data.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>3.3</b> Extract environmental data associated to presence-absence data</a></li>
+<li class="chapter" data-level="3.4" data-path="environmental-data.html"><a href="environmental-data.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>3.4</b> Exploratory plots of environmental variables</a></li>
+<li class="chapter" data-level="3.5" data-path="environmental-data.html"><a href="environmental-data.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>3.5</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
+<li class="chapter" data-level="3.6" data-path="environmental-data.html"><a href="environmental-data.html#correlation-analysis"><i class="fa fa-check"></i><b>3.6</b> Correlation analysis</a></li>
+<li class="chapter" data-level="3.7" data-path="environmental-data.html"><a href="environmental-data.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>3.7</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="3.8" data-path="environmental-data.html"><a href="environmental-data.html#shape-constrained-generalized-additive-models"><i class="fa fa-check"></i><b>3.8</b> Shape Constrained-Generalized Additive Models</a></li>
+<li class="chapter" data-level="3.9" data-path="environmental-data.html"><a href="environmental-data.html#model-fit"><i class="fa fa-check"></i><b>3.9</b> Model fit</a></li>
+<li class="chapter" data-level="3.10" data-path="environmental-data.html"><a href="environmental-data.html#model-selection"><i class="fa fa-check"></i><b>3.10</b> Model selection</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html"><i class="fa fa-check"></i><b>5</b> Prepare final dataset</a>
+<li class="chapter" data-level="4" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4</b> Model validation</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#extract-environmental-data-associated-to-presence-absence-data"><i class="fa fa-check"></i><b>5.1</b> Extract environmental data associated to presence-absence data</a></li>
-<li class="chapter" data-level="5.2" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables"><i class="fa fa-check"></i><b>5.2</b> Exploratory plots of environmental variables</a></li>
-<li class="chapter" data-level="5.3" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data"><i class="fa fa-check"></i><b>5.3</b> Exploratory plots of environmental variables depending on presence/absence data</a></li>
-<li class="chapter" data-level="5.4" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#correlation-analysis"><i class="fa fa-check"></i><b>5.4</b> Correlation analysis</a></li>
-<li class="chapter" data-level="5.5" data-path="prepare-final-dataset.html"><a href="prepare-final-dataset.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>5.5</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="4.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>4.1</b> Optimum threshold</a></li>
+<li class="chapter" data-level="4.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>4.2</b> k-fold validation</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html"><i class="fa fa-check"></i><b>6</b> Shape Constrained-Generalized Additive Models</a>
+<li class="chapter" data-level="5" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>5</b> Prediction and maps</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-fit"><i class="fa fa-check"></i><b>6.1</b> Model fit</a></li>
-<li class="chapter" data-level="6.2" data-path="shape-constrained-generalized-additive-models.html"><a href="shape-constrained-generalized-additive-models.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>7</b> Model validation</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="model-validation.html"><a href="model-validation.html#optimum-threshold"><i class="fa fa-check"></i><b>7.1</b> Optimum threshold</a></li>
-<li class="chapter" data-level="7.2" data-path="model-validation.html"><a href="model-validation.html#k-fold-validation"><i class="fa fa-check"></i><b>7.2</b> k-fold validation</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html"><i class="fa fa-check"></i><b>8</b> Prediction and maps</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data.-04-ataletik-hona-mugituta"><i class="fa fa-check"></i><b>8.1</b> Prepare environmental data. 04 ATALETIK HONA MUGITUTA</a></li>
-<li class="chapter" data-level="8.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>8.2</b> Projection</a></li>
-<li class="chapter" data-level="8.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>8.3</b> Mapping</a></li>
+<li class="chapter" data-level="5.1" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#prepare-environmental-data."><i class="fa fa-check"></i><b>5.1</b> Prepare environmental data.</a></li>
+<li class="chapter" data-level="5.2" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#projection"><i class="fa fa-check"></i><b>5.2</b> Projection</a></li>
+<li class="chapter" data-level="5.3" data-path="prediction-and-maps.html"><a href="prediction-and-maps.html#mapping"><i class="fa fa-check"></i><b>5.3</b> Mapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="6" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>6</b> Libraries</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -208,7 +204,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Species distribution models (SDM)</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</a>
           </h1>
         </div>
 
@@ -216,65 +212,98 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-validation" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Model validation<a href="model-validation.html#model-validation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="model-validation" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Model validation<a href="model-validation.html#model-validation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this section, model validation is performed in order to assess the predictive performance of the selected model. This validation is conducted via k-fold cross-validation. The data set is divided into k equally sized groups <span class="citation">(<a href="#ref-hijmans_2012" role="doc-biblioref">Hijmans 2012</a>)</span>, using a percentage of randomly selected observations to run the model and the remaining for validation, iteratively for each fold.</p>
-<p>First we load all required libraries.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="model-validation.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scam)</span>
-<span id="cb1-2"><a href="model-validation.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotmo)</span>
-<span id="cb1-3"><a href="model-validation.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgdal)</span>
-<span id="cb1-4"><a href="model-validation.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-5"><a href="model-validation.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-6"><a href="model-validation.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fields)</span>
-<span id="cb1-7"><a href="model-validation.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps) </span>
-<span id="cb1-8"><a href="model-validation.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
-<span id="cb1-9"><a href="model-validation.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
-<span id="cb1-10"><a href="model-validation.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-11"><a href="model-validation.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R.utils) </span>
-<span id="cb1-12"><a href="model-validation.html#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SDMTools)</span>
-<span id="cb1-13"><a href="model-validation.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dismo)</span>
-<span id="cb1-14"><a href="model-validation.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-15"><a href="model-validation.html#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb1-16"><a href="model-validation.html#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hrbrthemes)</span>
-<span id="cb1-17"><a href="model-validation.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstudioapi)</span></code></pre></div>
+<p>First we load the list of required libraries.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="model-validation.html#cb1-1" aria-hidden="true" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="model-validation.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
+<span id="cb1-3"><a href="model-validation.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
+<span id="cb1-4"><a href="model-validation.html#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>,  <span class="co"># Library for reproducible workflow</span></span>
+<span id="cb1-5"><a href="model-validation.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;stringr&quot;</span>,</span>
+<span id="cb1-6"><a href="model-validation.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;RColorBrewer&quot;</span>,  </span>
+<span id="cb1-7"><a href="model-validation.html#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>,</span>
+<span id="cb1-8"><a href="model-validation.html#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>,</span>
+<span id="cb1-9"><a href="model-validation.html#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tidyverse&quot;</span>,</span>
+<span id="cb1-10"><a href="model-validation.html#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;R.utils&quot;</span>,</span>
+<span id="cb1-11"><a href="model-validation.html#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ggpubr&quot;</span>,</span>
+<span id="cb1-12"><a href="model-validation.html#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;hrbrthemes&quot;</span>,</span>
+<span id="cb1-13"><a href="model-validation.html#cb1-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-14"><a href="model-validation.html#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">#SPATIAL DATA --------#</span></span>
+<span id="cb1-15"><a href="model-validation.html#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rgdal&quot;</span>,</span>
+<span id="cb1-16"><a href="model-validation.html#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fields&quot;</span>,</span>
+<span id="cb1-17"><a href="model-validation.html#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;maps&quot;</span> ,</span>
+<span id="cb1-18"><a href="model-validation.html#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>,</span>
+<span id="cb1-19"><a href="model-validation.html#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="model-validation.html#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#MODEL FIT --------#</span></span>
+<span id="cb1-21"><a href="model-validation.html#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;scam&quot;</span>,</span>
+<span id="cb1-22"><a href="model-validation.html#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;plotmo&quot;</span>,</span>
+<span id="cb1-23"><a href="model-validation.html#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;SDMTools&quot;</span>,</span>
+<span id="cb1-24"><a href="model-validation.html#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;pkgbuild&quot;</span>,</span>
+<span id="cb1-25"><a href="model-validation.html#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dismo&quot;</span></span>
+<span id="cb1-26"><a href="model-validation.html#cb1-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="model-validation.html#cb2-1" aria-hidden="true" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb2-2"><a href="model-validation.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
+<span id="cb2-3"><a href="model-validation.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
+<span id="cb2-4"><a href="model-validation.html#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="model-validation.html#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="model-validation.html#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-7"><a href="model-validation.html#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="model-validation.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
+<pre><code>##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr 
+##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+##    tidyverse      R.utils       ggpubr   hrbrthemes        rgdal       fields 
+##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+##         maps       raster         scam       plotmo     SDMTools     pkgbuild 
+##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+##        dismo 
+##         TRUE</code></pre>
+<p>We define some overall settings.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="model-validation.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Location of script</span></span>
+<span id="cb4-2"><a href="model-validation.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
+<span id="cb4-3"><a href="model-validation.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="model-validation.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># General settings for ggplot (black-white background, larger base_size)</span></span>
+<span id="cb4-5"><a href="model-validation.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
 <p>We load output from the selected model saved in the previous step.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="model-validation.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
-<span id="cb2-2"><a href="model-validation.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span> (<span class="st">&quot;models&quot;</span>, <span class="st">&quot;model.Rdata&quot;</span>))</span></code></pre></div>
-<div id="optimum-threshold" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Optimum threshold<a href="model-validation.html#optimum-threshold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="model-validation.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">dirname</span>(<span class="fu">getSourceEditorContext</span>()<span class="sc">$</span>path))</span>
+<span id="cb5-2"><a href="model-validation.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="model-validation.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span> (<span class="st">&quot;models&quot;</span>, <span class="st">&quot;selected_model.Rdata&quot;</span>))</span></code></pre></div>
+<div id="optimum-threshold" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Optimum threshold<a href="model-validation.html#optimum-threshold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We generate a data frame with the data used in the selected model and we add the predicted values.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="model-validation.html#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">#data used in the selected model</span></span>
-<span id="cb3-2"><a href="model-validation.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  data<span class="ot">&lt;-</span>selected_model<span class="sc">$</span>model</span>
-<span id="cb3-3"><a href="model-validation.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="model-validation.html#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Predict </span></span>
-<span id="cb3-5"><a href="model-validation.html#cb3-5" aria-hidden="true" tabindex="-1"></a>  scgam.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model, <span class="at">newdata=</span>data, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
-<span id="cb3-6"><a href="model-validation.html#cb3-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-7"><a href="model-validation.html#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the prediction to the data object</span></span>
-<span id="cb3-8"><a href="model-validation.html#cb3-8" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>scgam.pred <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(scgam.pred)</span>
-<span id="cb3-9"><a href="model-validation.html#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(data)</span></code></pre></div>
-<pre><code>##    occurrenceStatus BO_sstmean BO2_salinitymean_ss BO2_chlomean_ss scgam.pred
-## 1                 1   16.99439            35.42666      1.20410306  0.9833270
-## 4                 1   16.99439            35.42666      1.20410306  0.9833270
-## 7                 1   25.52963            36.43070      0.08455528  0.4364165
-## 9                 1   16.99439            35.42666      1.20410306  0.9833270
-## 11                1   15.21486            34.20426      0.72283227  0.8450083
-## 12                1   16.99439            35.42666      1.20410306  0.9833270</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="model-validation.html#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">#PAdata_enviroment used in the selected model</span></span>
+<span id="cb6-2"><a href="model-validation.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  data<span class="ot">&lt;-</span>selected_model<span class="sc">$</span>model</span>
+<span id="cb6-3"><a href="model-validation.html#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="model-validation.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Predict </span></span>
+<span id="cb6-5"><a href="model-validation.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  scgam.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model, <span class="at">newdata=</span>data, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb6-6"><a href="model-validation.html#cb6-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-7"><a href="model-validation.html#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the prediction to the data object</span></span>
+<span id="cb6-8"><a href="model-validation.html#cb6-8" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>scgam.pred <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(scgam.pred)</span>
+<span id="cb6-9"><a href="model-validation.html#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(data)</span></code></pre></div>
+<pre><code>##    occurrenceStatus BO_sstmean BO2_chlomean_ss BO2_salinitymean_ss scgam.pred
+## 1                 1   16.99439      1.20410309            35.42666  0.9804524
+## 5                 1   16.99439      1.20410309            35.42666  0.9804524
+## 8                 1   25.52963      0.08455528            36.43070  0.4238477
+## 10                1   16.99439      1.20410309            35.42666  0.9804524
+## 11                1   15.21486      0.72283228            34.20426  0.8449155
+## 12                1   16.99439      1.20410309            35.42666  0.9804524</code></pre>
 <p>The threshold for presence-absence classification for each species is obtained as the values maximizing sensitivity plus specificity <span class="citation">(<a href="#ref-jimenez_etal_2007" role="doc-biblioref">Jiménez-Valverde and Lobo 2007</a>)</span>. If the result was a range (instead of a single value), we would select the mean value of the range.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="model-validation.html#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Optimizing the threshold probability</span></span>
-<span id="cb5-2"><a href="model-validation.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  obs <span class="ot">&lt;-</span> data<span class="sc">$</span>occurrenceStatus</span>
-<span id="cb5-3"><a href="model-validation.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  predSCGAM_P <span class="ot">&lt;-</span> data<span class="sc">$</span>scgam.pred</span>
-<span id="cb5-4"><a href="model-validation.html#cb5-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-5"><a href="model-validation.html#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># threshold optimizing</span></span>
-<span id="cb5-6"><a href="model-validation.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  myoptim <span class="ot">&lt;-</span> <span class="fu">optim.thresh</span> (obs,predSCGAM_P)</span>
-<span id="cb5-7"><a href="model-validation.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  myoptim</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="model-validation.html#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Optimizing the threshold probability</span></span>
+<span id="cb8-2"><a href="model-validation.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  obs <span class="ot">&lt;-</span> data<span class="sc">$</span>occurrenceStatus</span>
+<span id="cb8-3"><a href="model-validation.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  predSCGAM_P <span class="ot">&lt;-</span> data<span class="sc">$</span>scgam.pred</span>
+<span id="cb8-4"><a href="model-validation.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-5"><a href="model-validation.html#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># threshold optimizing</span></span>
+<span id="cb8-6"><a href="model-validation.html#cb8-6" aria-hidden="true" tabindex="-1"></a>  myoptim <span class="ot">&lt;-</span> <span class="fu">optim.thresh</span> (obs,predSCGAM_P)</span>
+<span id="cb8-7"><a href="model-validation.html#cb8-7" aria-hidden="true" tabindex="-1"></a>  myoptim</span></code></pre></div>
 <pre><code>## $min.occurence.prediction
-## [1] 0.006721373
+## [1] 0.01156124
 ## 
 ## $mean.occurence.prediction
-## [1] 0.6611373
+## [1] 0.6642745
 ## 
 ## $`10.percent.omission`
-## [1] 0.37
+## [1] 0.36
 ## 
 ## $`sensitivity=specificity`
 ## [1] 0.44
@@ -289,89 +318,89 @@ div.csl-indent {
 ## [1] 0.42
 ## 
 ## $min.ROC.plot.distance
-## [1] 0.43</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="model-validation.html#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select the threshold that maximizes the sum of sensitivity and specificity </span></span>
-<span id="cb7-2"><a href="model-validation.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  myThreshold <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>((myoptim[[<span class="st">&quot;max.sensitivity+specificity&quot;</span>]]))</span></code></pre></div>
+## [1] 0.42</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="model-validation.html#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select the threshold that maximizes the sum of sensitivity and specificity </span></span>
+<span id="cb10-2"><a href="model-validation.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  myThreshold <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>((myoptim[[<span class="st">&quot;max.sensitivity+specificity&quot;</span>]]))</span></code></pre></div>
 <p>Accuracy indicators, such as AUC (Area Under the Receiver Operating Characteristic—ROC—curve), sensitivity (true predicted presences) and specificity (true predicted absences) are first computed for the all observations.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="model-validation.html#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Accuracy values with all observations</span></span>
-<span id="cb8-2"><a href="model-validation.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span> (obs, predSCGAM_P, <span class="at">threshold=</span>myThreshold)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="model-validation.html#cb11-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Accuracy values with all observations</span></span>
+<span id="cb11-2"><a href="model-validation.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span> (obs, predSCGAM_P, <span class="at">threshold=</span>myThreshold)</span></code></pre></div>
 <pre><code>##   threshold       AUC omission.rate sensitivity specificity prop.correct
-## 1      0.42 0.7415126     0.2016207   0.7983793   0.6846459    0.7409194
-##       Kappa
-## 1 0.4824257</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="model-validation.html#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create confusion matrix with all observations</span></span>
-<span id="cb10-2"><a href="model-validation.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confusion.matrix</span>(obs, predSCGAM_P, <span class="at">threshold=</span>myThreshold)</span></code></pre></div>
+## 1      0.42 0.7415229     0.1985506   0.8014494   0.6815964    0.7418159
+##      Kappa
+## 1 0.483323</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="model-validation.html#cb13-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create confusion matrix with all observations</span></span>
+<span id="cb13-2"><a href="model-validation.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confusion.matrix</span>(obs, predSCGAM_P, <span class="at">threshold=</span>myThreshold)</span></code></pre></div>
 <pre><code>##     obs
 ## pred     0     1
-##    0 10180  2936
-##    1  4689 11626
+##    0 10059  2959
+##    1  4699 11944
 ## attr(,&quot;class&quot;)
 ## [1] &quot;confusion.matrix&quot;</code></pre>
 </div>
-<div id="k-fold-validation" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> k-fold validation<a href="model-validation.html#k-fold-validation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="k-fold-validation" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> k-fold validation<a href="model-validation.html#k-fold-validation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this case we use a 5-fold cross-validation.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="model-validation.html#cb12-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Number of groups</span></span>
-<span id="cb12-2"><a href="model-validation.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="dv">5</span> </span>
-<span id="cb12-3"><a href="model-validation.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate groups</span></span>
-<span id="cb12-4"><a href="model-validation.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  groups<span class="ot">&lt;-</span><span class="fu">kfold</span>(data, k, <span class="at">by=</span>data<span class="sc">$</span>status)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="model-validation.html#cb15-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Number of groups</span></span>
+<span id="cb15-2"><a href="model-validation.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="dv">5</span> </span>
+<span id="cb15-3"><a href="model-validation.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate groups</span></span>
+<span id="cb15-4"><a href="model-validation.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  groups<span class="ot">&lt;-</span><span class="fu">kfold</span>(data, k, <span class="at">by=</span>data<span class="sc">$</span>occurrencestatus)</span></code></pre></div>
 <p>The model is run for each of the 5 random subset (with a 20% of the observations) and indicators are then computed using the remaining 80% of the observations. Indicators are the averaged across folds.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="model-validation.html#cb13-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialise the confusion matrix and the accuracy table: </span></span>
-<span id="cb13-2"><a href="model-validation.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  myCM <span class="ot">&lt;-</span> <span class="cn">NULL</span> </span>
-<span id="cb13-3"><a href="model-validation.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  myACC <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb13-4"><a href="model-validation.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-5"><a href="model-validation.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the formula of the selected model  </span></span>
-<span id="cb13-6"><a href="model-validation.html#cb13-6" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">summary</span>(selected_model)[[<span class="st">&quot;formula&quot;</span>]]</span>
-<span id="cb13-7"><a href="model-validation.html#cb13-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-8"><a href="model-validation.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the smoothing parameters of the selected model  </span></span>
-<span id="cb13-9"><a href="model-validation.html#cb13-9" aria-hidden="true" tabindex="-1"></a>  sp <span class="ot">&lt;-</span> selected_model<span class="sc">$</span>sp</span>
-<span id="cb13-10"><a href="model-validation.html#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="model-validation.html#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop for each group k</span></span>
-<span id="cb13-12"><a href="model-validation.html#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
-<span id="cb13-13"><a href="model-validation.html#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Preparation of Training Sites</span></span>
-<span id="cb13-14"><a href="model-validation.html#cb13-14" aria-hidden="true" tabindex="-1"></a>    p_Training <span class="ot">&lt;-</span> data[groups <span class="sc">!=</span> j,]</span>
-<span id="cb13-15"><a href="model-validation.html#cb13-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-16"><a href="model-validation.html#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model fit</span></span>
-<span id="cb13-17"><a href="model-validation.html#cb13-17" aria-hidden="true" tabindex="-1"></a>    selected_model.sp.j <span class="ot">&lt;-</span> <span class="fu">scam</span> (formula, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>),<span class="at">data=</span>p_Training, <span class="at">sp=</span><span class="fu">c</span>(sp))</span>
-<span id="cb13-18"><a href="model-validation.html#cb13-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-19"><a href="model-validation.html#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict Model</span></span>
-<span id="cb13-20"><a href="model-validation.html#cb13-20" aria-hidden="true" tabindex="-1"></a>    p_validacion<span class="ot">&lt;-</span>data[groups <span class="sc">==</span> j,]</span>
-<span id="cb13-21"><a href="model-validation.html#cb13-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-22"><a href="model-validation.html#cb13-22" aria-hidden="true" tabindex="-1"></a>    selected_model.sp.j.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model.sp.j, <span class="at">newdata=</span>p_validacion, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
-<span id="cb13-23"><a href="model-validation.html#cb13-23" aria-hidden="true" tabindex="-1"></a>    p_validacion<span class="sc">$</span>Pred <span class="ot">&lt;-</span> selected_model.sp.j.pred</span>
-<span id="cb13-24"><a href="model-validation.html#cb13-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-25"><a href="model-validation.html#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Confussion matrix and accuracy table for fold j</span></span>
-<span id="cb13-26"><a href="model-validation.html#cb13-26" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> p_validacion<span class="sc">$</span>occurrenceStatus</span>
-<span id="cb13-27"><a href="model-validation.html#cb13-27" aria-hidden="true" tabindex="-1"></a>    predSCGAM <span class="ot">&lt;-</span> p_validacion<span class="sc">$</span>Pred</span>
-<span id="cb13-28"><a href="model-validation.html#cb13-28" aria-hidden="true" tabindex="-1"></a>    myCM <span class="ot">&lt;-</span> <span class="fu">rbind</span>(myCM, <span class="fu">as.numeric</span>(<span class="fu">confusion.matrix</span>(obs, predSCGAM, <span class="at">threshold=</span>myThreshold)))</span>
-<span id="cb13-29"><a href="model-validation.html#cb13-29" aria-hidden="true" tabindex="-1"></a>    myACC <span class="ot">&lt;-</span> <span class="fu">rbind</span>(myACC, <span class="fu">accuracy</span>(obs, predSCGAM, <span class="at">threshold=</span>myThreshold))</span>
-<span id="cb13-30"><a href="model-validation.html#cb13-30" aria-hidden="true" tabindex="-1"></a>  } </span>
-<span id="cb13-31"><a href="model-validation.html#cb13-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-32"><a href="model-validation.html#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Mean values across k-folds</span></span>
-<span id="cb13-33"><a href="model-validation.html#cb13-33" aria-hidden="true" tabindex="-1"></a>  validation_summary<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="at">Threshold=</span>myThreshold,</span>
-<span id="cb13-34"><a href="model-validation.html#cb13-34" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_AUC=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>AUC),</span>
-<span id="cb13-35"><a href="model-validation.html#cb13-35" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_Omision=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>omission.rate),</span>
-<span id="cb13-36"><a href="model-validation.html#cb13-36" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_sensitivity=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>sensitivity),</span>
-<span id="cb13-37"><a href="model-validation.html#cb13-37" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_specificity=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>specificity),</span>
-<span id="cb13-38"><a href="model-validation.html#cb13-38" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_Prop.Corr=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>prop.correct))</span>
-<span id="cb13-39"><a href="model-validation.html#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-40"><a href="model-validation.html#cb13-40" aria-hidden="true" tabindex="-1"></a>  validation_summary</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="model-validation.html#cb16-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialise the confusion matrix and the accuracy table: </span></span>
+<span id="cb16-2"><a href="model-validation.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  myCM <span class="ot">&lt;-</span> <span class="cn">NULL</span> </span>
+<span id="cb16-3"><a href="model-validation.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  myACC <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb16-4"><a href="model-validation.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-5"><a href="model-validation.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the formula of the selected model  </span></span>
+<span id="cb16-6"><a href="model-validation.html#cb16-6" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">summary</span>(selected_model)[[<span class="st">&quot;formula&quot;</span>]]</span>
+<span id="cb16-7"><a href="model-validation.html#cb16-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-8"><a href="model-validation.html#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the smoothing parameters of the selected model  </span></span>
+<span id="cb16-9"><a href="model-validation.html#cb16-9" aria-hidden="true" tabindex="-1"></a>  sp <span class="ot">&lt;-</span> selected_model<span class="sc">$</span>sp</span>
+<span id="cb16-10"><a href="model-validation.html#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="model-validation.html#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop for each group k</span></span>
+<span id="cb16-12"><a href="model-validation.html#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="cb16-13"><a href="model-validation.html#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Preparation of Training Sites</span></span>
+<span id="cb16-14"><a href="model-validation.html#cb16-14" aria-hidden="true" tabindex="-1"></a>    p_Training <span class="ot">&lt;-</span> data[groups <span class="sc">!=</span> j,]</span>
+<span id="cb16-15"><a href="model-validation.html#cb16-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-16"><a href="model-validation.html#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Model fit</span></span>
+<span id="cb16-17"><a href="model-validation.html#cb16-17" aria-hidden="true" tabindex="-1"></a>    selected_model.sp.j <span class="ot">&lt;-</span> <span class="fu">scam</span> (formula, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>),<span class="at">data=</span>p_Training, <span class="at">sp=</span><span class="fu">c</span>(sp))</span>
+<span id="cb16-18"><a href="model-validation.html#cb16-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-19"><a href="model-validation.html#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict Model</span></span>
+<span id="cb16-20"><a href="model-validation.html#cb16-20" aria-hidden="true" tabindex="-1"></a>    p_validacion<span class="ot">&lt;-</span>data[groups <span class="sc">==</span> j,]</span>
+<span id="cb16-21"><a href="model-validation.html#cb16-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-22"><a href="model-validation.html#cb16-22" aria-hidden="true" tabindex="-1"></a>    selected_model.sp.j.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model.sp.j, <span class="at">newdata=</span>p_validacion, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb16-23"><a href="model-validation.html#cb16-23" aria-hidden="true" tabindex="-1"></a>    p_validacion<span class="sc">$</span>Pred <span class="ot">&lt;-</span> selected_model.sp.j.pred</span>
+<span id="cb16-24"><a href="model-validation.html#cb16-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-25"><a href="model-validation.html#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Confussion matrix and accuracy table for fold j</span></span>
+<span id="cb16-26"><a href="model-validation.html#cb16-26" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> p_validacion<span class="sc">$</span>occurrenceStatus</span>
+<span id="cb16-27"><a href="model-validation.html#cb16-27" aria-hidden="true" tabindex="-1"></a>    predSCGAM <span class="ot">&lt;-</span> p_validacion<span class="sc">$</span>Pred</span>
+<span id="cb16-28"><a href="model-validation.html#cb16-28" aria-hidden="true" tabindex="-1"></a>    myCM <span class="ot">&lt;-</span> <span class="fu">rbind</span>(myCM, <span class="fu">as.numeric</span>(<span class="fu">confusion.matrix</span>(obs, predSCGAM, <span class="at">threshold=</span>myThreshold)))</span>
+<span id="cb16-29"><a href="model-validation.html#cb16-29" aria-hidden="true" tabindex="-1"></a>    myACC <span class="ot">&lt;-</span> <span class="fu">rbind</span>(myACC, <span class="fu">accuracy</span>(obs, predSCGAM, <span class="at">threshold=</span>myThreshold))</span>
+<span id="cb16-30"><a href="model-validation.html#cb16-30" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb16-31"><a href="model-validation.html#cb16-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-32"><a href="model-validation.html#cb16-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Mean values across k-folds</span></span>
+<span id="cb16-33"><a href="model-validation.html#cb16-33" aria-hidden="true" tabindex="-1"></a>  validation_summary<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="at">Threshold=</span>myThreshold,</span>
+<span id="cb16-34"><a href="model-validation.html#cb16-34" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_AUC=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>AUC),</span>
+<span id="cb16-35"><a href="model-validation.html#cb16-35" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_Omision=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>omission.rate),</span>
+<span id="cb16-36"><a href="model-validation.html#cb16-36" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_sensitivity=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>sensitivity),</span>
+<span id="cb16-37"><a href="model-validation.html#cb16-37" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_specificity=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>specificity),</span>
+<span id="cb16-38"><a href="model-validation.html#cb16-38" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_Prop.Corr=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>prop.correct))</span>
+<span id="cb16-39"><a href="model-validation.html#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="model-validation.html#cb16-40" aria-hidden="true" tabindex="-1"></a>  validation_summary</span></code></pre></div>
 <pre><code>##      Threshold  mean_AUC mean_Omision mean_sensitivity mean_specificity
-## [1,]      0.42 0.7380621     0.209646         0.790354        0.6857702
+## [1,]      0.42 0.7245586    0.2398038        0.7601962         0.688921
 ##      mean_Prop.Corr
-## [1,]      0.7375217</code></pre>
+## [1,]      0.7246211</code></pre>
 <p>We save the validation summary object.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="model-validation.html#cb15-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save</span>(validation_summary, <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;models/validation_summary.RData&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="model-validation.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(validation_summary, <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;models/validation_summary.RData&quot;</span>))</span></code></pre></div>
 
 </div>
 </div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-hijmans_2012" class="csl-entry">
-Hijmans, Robert J. 2012. <span>“Cross-Validation of Species Distribution Models: Removing Spatial Sorting Bias and Calibration with a Null Model.”</span> <em>Ecology</em> 93 (3): 679–88.
+Hijmans, R. J. 2012. <span>“Cross-Validation of Species Distribution Models: Removing Spatial Sorting Bias and Calibration with a Null Model.”</span> <em>Ecology</em> 93 (3): 679–88. https://doi.org/<a href="https://doi.org/10.1890/11-0826.1">https://doi.org/10.1890/11-0826.1</a>.
 </div>
 <div id="ref-jimenez_etal_2007" class="csl-entry">
-Jiménez-Valverde, Alberto, and Jorge M Lobo. 2007. <span>“Threshold Criteria for Conversion of Probability of Species Presence to Either–or Presence–Absence.”</span> <em>Acta Oecologica</em> 31 (3): 361–69.
+Jiménez-Valverde, A., and J. M. Lobo. 2007. <span>“Threshold Criteria for Conversion of Probability of Species Presence to Either-or Presence-Absence.”</span> <em>Acta Oecologica</em> 31 (3): 361–69. https://doi.org/<a href="https://doi.org/10.1016/j.actao.2007.02.001">https://doi.org/10.1016/j.actao.2007.02.001</a>.
 </div>
 </div>
             </section>
@@ -379,7 +408,7 @@ Jiménez-Valverde, Alberto, and Jorge M Lobo. 2007. <span>“Threshold Criteria 
           </div>
         </div>
       </div>
-<a href="shape-constrained-generalized-additive-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="environmental-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="prediction-and-maps.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -411,7 +440,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/07-model_validation.Rmd",
+"link": "https://github.com/Fundacion-AZTI/SDM/edit/master/06-model_validation.Rmd",
 "text": "Edit"
 },
 "history": {
