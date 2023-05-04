@@ -20,7 +20,8 @@ requiredPackages <- c(
   "maps", #world map
   "maptools", #plotting world map
   "RColorBrewer", #color palette
-  "scam" #sdm models under the ecological niche theory framework
+  "scam", #sdm models under the ecological niche theory framework
+  "ggpubr"
   )
 ```
 
@@ -48,74 +49,80 @@ theme_set(theme_bw(base_size = 16))
 
 ## Prepare environmental data. 
 
-In previous steps (see Chapter 2), we have defined the study area that defines the extent of our spatial data. We load the `area` object that is a SpatialPolygonsDataFrame class:
+In previous steps (see Chapter 2), we have defined the study area that defines the extent of our spatial data. We load the `study_area` object that is a SpatialPolygonsDataFrame class:
 ```{r, eval=T, warning=F, message=F}
-load("data/spatial/area.RData")
+load("data/spatial/study_area.RData")
 ```
 
 And we load the rasterStack with the downloaded environmental data.
-```{r}
-load("data/env/myBioracle.layers.Rdata")
+```{r, eval=T, warning=F, message=F}
+mylayers<-stack("data/env/mylayers.tif")
 ```
 
 We transform the environmental data set first into a data frame, and then into a SpatialDataFrame.
-```{r, eval=F}
-myBioracle.layers<-stack("data/env/myBioracle.layers.tif")
-env_dataframe <- raster::as.data.frame(myBioracle.layers, xy=TRUE)
-pts <- env_dataframe[,c("x","y")]
+```{r, eval=T, warning=F, message=F}
+env_dataframe <- raster::as.data.frame(mylayers, xy=TRUE)
 
-coordinates(pts) <- ~ x + y
-proj4string(pts) <-proj4string(area)
-```
+summary(env_dataframe)
 
-```{r, eval=F}
-  
-## Select only our study area data in the defined previously selected area
-env_dataframe <- data.frame(subset(env_dataframe, !is.na(over(pts, area)[,1])))
-```
-
-```{r, eval=F}
-
-#save the data frame
-save(env_dataframe, file="data/env/env_dataframe.Rdata")
+names(env_dataframe) <- c("x", "y", "BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean", "BO_sstmean")
 ```
 
 ## Projection
-```{r, eval=F}
-#load PA data
-load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
 
-#Load raster stack containing all variables
-load("data/env/env_dataframe.Rdata")
-
-#remove positive bathy
-env_dataframe_proj<-subset(env_dataframe,BO_bathymean<0)
-
+We load the selected model and predict into the whole environmental data. 
+```{r, eval=T, warning=F, message=F}
 #Load SC-GAM model
-
-load(file.path("models", "model.Rdata"))
+load(file.path("models", "selected_model.Rdata"))
 
 # predicting 
-predict <- predict(selected_model,newdata=env_dataframe_proj,type ="response",se.fit=T)         
-env_dataframe_proj$fit<-predict$fit
-env_dataframe_proj$se.fit<-predict$se.fit
+predict <- predict(selected_model,newdata=env_dataframe,type ="response",se.fit=T)         
 
-save(env_dataframe_proj, file="results/projection.Rdata")
+env_dataframe$fit<-predict$fit
+env_dataframe$se.fit<-predict$se.fit
+
+save(env_dataframe, file="results/projection.Rdata")
 ```
-
 
 ## Mapping
 
-```{r, eval=F}
-p<-ggplot()+
-  geom_raster(data=subset(env_dataframe_proj),aes(x,y,fill=fit))+scale_fill_gradient2(low="blue", mid="orange",high="red",midpoint = 0.5) +
-  ggtitle("with bathy concave")+ geom_point(data=subset(data,occurrenceStatus==1),aes(LON,LAT),col=1,size=0.3)     
-
-print(p)
-
-ggsave(file.path("plots","projections",paste0("proj_map.png")), p, device="png")
+```{r, eval=T, warning=F, message=F}
+#load PA data
+load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
 
 
+proj_map <-ggplot()+
+  geom_raster(data=subset(env_dataframe),
+              aes(x,y,fill=fit)) +
+  scale_fill_gradient2(low="blue", 
+                       mid="orange",
+                       high="red",
+                       midpoint = 0.5,
+                       limits = c(0,1)) +
+  ggtitle("Occurrence probabilty Thunnus alalunga")+ 
+  geom_point(data=subset(data,occurrenceStatus==1),
+             aes(LON,LAT),
+             col=1,
+             size=0.3) +
+  theme_pubclean(base_size = 14)+
+  theme(panel.background = element_blank(),
+        plot.title = element_text(face = "italic"), 
+        #text = element_text(size = 14), 
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10),
+        legend.position="right") +
+  labs(y="latitude", x = "longitude")
+  
+print(proj_map)
+```
 
+We finally save the projection map.
+```{r, eval=T, warning=F, message=F}
+ggsave(filename= "Thunnus_alalunga_proj_map.tif", 
+        plot=proj_map, 
+        device="tiff",
+        path=here::here ("plots", "projections"), 
+        height=22, width=30,
+        units="cm", dpi=300)
 ```
 
