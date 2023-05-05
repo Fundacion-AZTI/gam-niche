@@ -4,7 +4,7 @@ download-presence-data
 create-pseudo-absence-data
 environmental-data
 download-from-public-repositories
-prepare-final-dataset
+prepare-the-final-dataset
 extract-environmental-data-associated-to-presence-absence-data
 exploratory-plots-of-environmental-variables
 exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data
@@ -17,9 +17,6 @@ model-validation
 optimum-threshold
 k-fold-validation
 prediction-and-maps
-prepare-environmental-data.-04-ataletik-hona-mugituta
+prepare-environmental-data
 projection
 mapping
-libraries
-prepare-environmental-data.
-prepare-the-final-dataset
