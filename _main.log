@@ -1,0 +1,1741 @@
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.5.4)  5 MAY 2023 10:22
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**_main.tex
+(./_main.tex
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2023-04-20> (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2022/07/02 v1.4n Standard LaTeX document class
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count181
+\c@chapter=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2022/04/08 v2.17n AMS math features
+\@mathmargin=\skip50
+For additional information on amsmath, use the `?' option.
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks16
+\ex@=\dimen141
+)) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen142
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count190
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count191
+\leftroot@=\count192
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count193
+\DOTSCASE@=\count194
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box51
+\strutbox@=\box52
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen143
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count195
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count196
+\dotsspace@=\muskip16
+\c@parentequation=\count197
+\dspbrk@lvl=\count198
+\tag@help=\toks17
+\row@=\count199
+\column@=\count266
+\maxfields@=\count267
+\andhelp@=\toks18
+\eqnshift@=\dimen144
+\alignsep@=\dimen145
+\tagshift@=\dimen146
+\tagwidth@=\dimen147
+\totwidth@=\dimen148
+\lineht@=\dimen149
+\@envbody=\toks19
+\multlinegap=\skip51
+\multlinetaggap=\skip52
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2023-04-20 L3 programming layer (loader) 
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+File: l3backend-xetex.def 2023-04-19 L3 backend support: XeTeX
+\g__graphics_track_int=\count268
+\l__pdf_internal_box=\box53
+\g__pdf_backend_object_int=\count269
+\g__pdf_backend_annotation_int=\count270
+\g__pdf_backend_link_int=\count271
+))
+Package: unicode-math 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-xetex.sty
+Package: unicode-math-xetex 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2023-02-02 L3 Experimental document command parser
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+Package: l3keys2e 2023-02-02 LaTeX2e option processing using LaTeX3 keys
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.sty
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+\l__fontspec_script_int=\count272
+\l__fontspec_language_int=\count273
+\l__fontspec_strnum_int=\count274
+\l__fontspec_tmp_int=\count275
+\l__fontspec_tmpa_int=\count276
+\l__fontspec_tmpb_int=\count277
+\l__fontspec_tmpc_int=\count278
+\l__fontspec_em_int=\count279
+\l__fontspec_emdef_int=\count280
+\l__fontspec_strong_int=\count281
+\l__fontspec_strongdef_int=\count282
+\l__fontspec_tmpa_dim=\dimen150
+\l__fontspec_tmpb_dim=\dimen151
+\l__fontspec_tmpc_dim=\dimen152
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.cfg))) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fix-cm.sty
+Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
+))
+\g__um_fam_int=\count283
+\g__um_fonts_used_int=\count284
+\l__um_primecount_int=\count285
+\g__um_primekern_muskip=\muskip17
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-table.tex))) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 227.
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2022/09/22 v5.0n Graphics/color driver for xetex
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1369.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1371.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks21
+)
+\FV@CodeLineNo=\count286
+\FV@InFile=\read2
+\FV@TabBox=\box54
+\c@FancyVerbLine=\count287
+\FV@StepNumber=\count288
+\FV@OutFile=\write3
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip53
+\fb@frw=\dimen153
+\fb@frh=\dimen154
+\FrameRule=\dimen155
+\FrameSep=\dimen156
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
+\LTleft=\skip54
+\LTright=\skip55
+\LTpre=\skip56
+\LTpost=\skip57
+\LTchunksize=\count289
+\LTcapwidth=\dimen157
+\LT@head=\box55
+\LT@firsthead=\box56
+\LT@foot=\box57
+\LT@lastfoot=\box58
+\LT@gbox=\box59
+\LT@cols=\count290
+\LT@rows=\count291
+\c@LT@tables=\count292
+\c@LT@chunks=\count293
+\LT@p@ftn=\toks22
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen158
+\lightrulewidth=\dimen159
+\cmidrulewidth=\dimen160
+\belowrulesep=\dimen161
+\belowbottomsep=\dimen162
+\aboverulesep=\dimen163
+\abovetopsep=\dimen164
+\cmidrulesep=\dimen165
+\cmidrulekern=\dimen166
+\defaultaddspace=\dimen167
+\@cmidla=\count294
+\@cmidlb=\count295
+\@aboverulesep=\dimen168
+\@belowrulesep=\dimen169
+\@thisruleclass=\count296
+\@lastruleclass=\count297
+\@thisrulewidth=\dimen170
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen171
+\ar@mcellbox=\box60
+\extrarowheight=\dimen172
+\NC@list=\toks23
+\extratabsurround=\skip58
+\backup@length=\skip59
+\ar@cellbox=\box61
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count298
+\calc@Bcount=\count299
+\calc@Adimen=\dimen173
+\calc@Bdimen=\dimen174
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count300
+\calc@Cskip=\skip62
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count301
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
+Package: footnote 1997/01/28 1.13 Save footnotes around boxes
+\fn@notes=\box62
+\fn@width=\dimen175
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 107.
+)
+\Gin@req@height=\dimen176
+\Gin@req@width=\dimen177
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip63
+\multirow@cntb=\count302
+\multirow@dima=\skip64
+\bigstrutjot=\dimen178
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen179
+\WF@size=\dimen180
+\c@WF@wrappedlines=\count303
+\WF@box=\box63
+\WF@everypar=\toks24
+Package: wrapfig 2003/01/31  v 3.6
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count304
+\float@exts=\toks25
+\float@box=\box64
+\@float@everytoks=\toks26
+\@floatcapt=\box65
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2022/06/20 v1.0f Color table columns (DPC)
+\everycr=\toks27
+\minrowclearance=\skip65
+\rownum=\count305
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PDF (HO)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+)) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tabu/tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box66
+\sift@deathcycles=\count306
+\@vwid@loff=\dimen181
+\@vwid@roff=\dimen182
+)
+\c@taburow=\count307
+\tabu@nbcols=\count308
+\tabu@cnt=\count309
+\tabu@Xcol=\count310
+\tabu@alloc=\count311
+\tabu@nested=\count312
+\tabu@target=\dimen183
+\tabu@spreadtarget=\dimen184
+\tabu@naturalX=\dimen185
+\tabucolX=\dimen186
+\tabu@Xsum=\dimen187
+\extrarowdepth=\dimen188
+\abovetabulinesep=\dimen189
+\belowtabulinesep=\dimen190
+\tabustrutrule=\dimen191
+\tabu@thebody=\toks28
+\tabu@footnotes=\toks29
+\tabu@box=\box67
+\tabu@arstrutbox=\box68
+\tabu@hleads=\box69
+\tabu@vleads=\box70
+\tabu@cellskip=\skip66
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box71
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip67
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box72
+\UL@hyphenbox=\box73
+\UL@skip=\skip68
+\UL@hook=\toks30
+\UL@height=\dimen192
+\UL@pe=\count313
+\UL@pixel=\dimen193
+\ULC@box=\box74
+Package: ulem 2019/11/18
+\ULdepth=\dimen194
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen195
+\c@nlinenum=\count314
+\TeXr@lab=\toks31
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip69
+\bibsep=\skip70
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count315
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2023-04-22 v7.00x Hypertext links for LaTeX
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2022-05-17 v2.50 Cross-referencing by name of section
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count316
+)
+\@linkdim=\dimen196
+\Hy@linkcounter=\count317
+\Hy@pagecounter=\count318
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2023-04-22 v7.00x Hyperref: PDFDocEncoding definition (HO)
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count319
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2023-04-22 v7.00x Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4065.
+Package hyperref Info: Hyper figures OFF on input line 4182.
+Package hyperref Info: Link nesting OFF on input line 4187.
+Package hyperref Info: Hyper index ON on input line 4190.
+Package hyperref Info: Plain pages OFF on input line 4197.
+Package hyperref Info: Backreferencing OFF on input line 4202.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4449.
+\c@Hy@tempcnt=\count320
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip18
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4787.
+\XeTeXLinkMargin=\dimen197
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count321
+\Field@Width=\dimen198
+\Fld@charsize=\dimen199
+Package hyperref Info: Hyper figures OFF on input line 6066.
+Package hyperref Info: Link nesting OFF on input line 6071.
+Package hyperref Info: Hyper index ON on input line 6074.
+Package hyperref Info: backreferencing OFF on input line 6081.
+Package hyperref Info: Link coloring OFF on input line 6086.
+Package hyperref Info: Link coloring with OCG OFF on input line 6091.
+Package hyperref Info: PDF/A mode OFF on input line 6096.
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count322
+\c@Item=\count323
+\c@Hfootnote=\count324
+)
+Package hyperref Info: Driver (autodetected): hxetex.
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
+File: hxetex.def 2023-04-22 v7.00x Hyperref driver for XeTeX
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\pdfm@box=\box75
+\c@Hy@AnnotLevel=\count325
+\HyField@AnnotCount=\count326
+\Fld@listcount=\count327
+\c@bookmark@seq@number=\count328
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+with kernel methods
+) (c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+)
+\Hy@SectionHShift=\skip71
+)
+No file _main.aux.
+\openout1 = `_main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 136.
+LaTeX Font Info:    ... okay on input line 136.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 136.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 136.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 136.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 136.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 136.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 136.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 136.
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,BoldFont={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999964596882403]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999964596882403]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 136.
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=8.5-},{Size=6-8.5,Font=latinmodern-math.otf,Style=MathScript},{Size=-6,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <8.5->s*[0.9999964596882403]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<6-8.5>s*[0.9999964596882403]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-6>s*[0.9999964596882403]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999964596882403]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 136.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 136.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 136.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 136.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 136.
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=8.5-},{Size=6-8.5,Font=latinmodern-math.otf,Style=MathScript},{Size=-6,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf},ScaleAgain=1.0001,FontAdjustment={\fontdimen
+(fontspec)             8\font =6.77pt\relax \fontdimen 9\font =3.94pt\relax
+(fontspec)             \fontdimen 10\font =4.44pt\relax \fontdimen 11\font
+(fontspec)             =6.86pt\relax \fontdimen 12\font =3.45pt\relax
+(fontspec)             \fontdimen 13\font =3.63pt\relax \fontdimen 14\font
+(fontspec)             =3.63pt\relax \fontdimen 15\font =2.89pt\relax
+(fontspec)             \fontdimen 16\font =2.47pt\relax \fontdimen 17\font
+(fontspec)             =2.47pt\relax \fontdimen 18\font =2.5pt\relax
+(fontspec)             \fontdimen 19\font =2.0pt\relax \fontdimen 22\font
+(fontspec)             =2.5pt\relax \fontdimen 20\font =0pt\relax \fontdimen
+(fontspec)             21\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <8.5->s*[1.000096459334209]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<6-8.5>s*[1.000096459334209]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-6>s*[1.000096459334209]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =6.77pt\relax \fontdimen 9\font
+(fontspec)             =3.94pt\relax \fontdimen 10\font =4.44pt\relax
+(fontspec)             \fontdimen 11\font =6.86pt\relax \fontdimen 12\font
+(fontspec)             =3.45pt\relax \fontdimen 13\font =3.63pt\relax
+(fontspec)             \fontdimen 14\font =3.63pt\relax \fontdimen 15\font
+(fontspec)             =2.89pt\relax \fontdimen 16\font =2.47pt\relax
+(fontspec)             \fontdimen 17\font =2.47pt\relax \fontdimen 18\font
+(fontspec)             =2.5pt\relax \fontdimen 19\font =2.0pt\relax \fontdimen
+(fontspec)             22\font =2.5pt\relax \fontdimen 20\font =0pt\relax
+(fontspec)             \fontdimen 21\font =0pt\relax 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1.000096459334209]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =6.77pt\relax \fontdimen 9\font
+(fontspec)             =3.94pt\relax \fontdimen 10\font =4.44pt\relax
+(fontspec)             \fontdimen 11\font =6.86pt\relax \fontdimen 12\font
+(fontspec)             =3.45pt\relax \fontdimen 13\font =3.63pt\relax
+(fontspec)             \fontdimen 14\font =3.63pt\relax \fontdimen 15\font
+(fontspec)             =2.89pt\relax \fontdimen 16\font =2.47pt\relax
+(fontspec)             \fontdimen 17\font =2.47pt\relax \fontdimen 18\font
+(fontspec)             =2.5pt\relax \fontdimen 19\font =2.0pt\relax \fontdimen
+(fontspec)             22\font =2.5pt\relax \fontdimen 20\font =0pt\relax
+(fontspec)             \fontdimen 21\font =0pt\relax 
+
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 136.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 136.
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 136.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 136.
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=8.5-},{Size=6-8.5,Font=latinmodern-math.otf,Style=MathScript},{Size=-6,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf},ScaleAgain=0.9999,FontAdjustment={\fontdimen
+(fontspec)             8\font =0.4pt\relax \fontdimen 9\font =2.0pt\relax
+(fontspec)             \fontdimen 10\font =1.67pt\relax \fontdimen 11\font
+(fontspec)             =1.11pt\relax \fontdimen 12\font =6.0pt\relax
+(fontspec)             \fontdimen 13\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <8.5->s*[0.9998964600422715]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<6-8.5>s*[0.9998964600422715]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-6>s*[0.9998964600422715]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =0.4pt\relax \fontdimen 9\font
+(fontspec)             =2.0pt\relax \fontdimen 10\font =1.67pt\relax
+(fontspec)             \fontdimen 11\font =1.11pt\relax \fontdimen 12\font
+(fontspec)             =6.0pt\relax \fontdimen 13\font =0pt\relax 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9998964600422715]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =0.4pt\relax \fontdimen 9\font
+(fontspec)             =2.0pt\relax \fontdimen 10\font =1.67pt\relax
+(fontspec)             \fontdimen 11\font =1.11pt\relax \fontdimen 12\font
+(fontspec)             =6.0pt\relax \fontdimen 13\font =0pt\relax 
+
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 136.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 136.
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 136.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 136.
+Package hyperref Info: Link coloring OFF on input line 136.
+\@outlinefile=\write4
+\openout4 = `_main.out'.
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 138.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 138.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 138.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 138.
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 12.0011pt on input line 138.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 8.00073pt on input line 138.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.00055pt on input line 138.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 138.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.99915pt on input line 138.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 138.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 138.
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 138.
+(c:/Users/mvalle.AZTI_BI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+
+] [2
+
+]
+No file _main.toc.
+\tf@toc=\write5
+\openout5 = `_main.toc'.
+
+[3] [4
+
+]
+
+Package natbib Warning: Citation `citores_etal_2020' on page 5 undefined on input line 147.
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 7.0pt on input line 153.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 153.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.00092pt on input line 153.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.00064pt on input line 153.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 153.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 9.99893pt on input line 153.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 6.99925pt on input line 153.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 153.
+[5] [6
+
+]
+Chapter 1.
+
+Package natbib Warning: Citation `elith_etal_2009' on page 7 undefined on input line 158.
+
+
+Package natbib Warning: Citation `hutchinson_1957' on page 7 undefined on input line 160.
+
+
+Package natbib Warning: Citation `citores_etal_2020' on page 7 undefined on input line 162.
+
+
+Package natbib Warning: Citation `elith_etal_2009' on page 7 undefined on input line 164.
+
+[7] [8]
+Chapter 2.
+[9
+
+]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 212.
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##              here        rstudioapi          maptools           ggplot2[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##              TRUE              TRUE              TRUE              TRUE[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##             robis             rgbif CoordinateCleaner             rgdal[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##              TRUE              TRUE              TRUE              TRUE[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##                sf        data.table             dplyr             tidyr[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##              TRUE              TRUE              TRUE              TRUE[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##            marmap         tidyverse            scales          ggridges[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##              TRUE              TRUE              TRUE              TRUE[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##              maps           mapdata           mapproj          mapplots[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 236--236
+[]\TU/lmtt/m/n/10 ##              TRUE              TRUE              TRUE              TRUE[] 
+ []
+
+[10]
+Overfull \hbox (138.0pt too wide) in paragraph at lines 278--278
+[]\TU/lmtt/m/n/10 ##   `D:\PROJECTS\github\gam-niche\data\spatial\FAO_AREAS.shp' using driver `ESRI Shapefile'[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 278--278
+[]\TU/lmtt/m/n/10 ## Bounding box:  xmin: -180 ymin: -85.58276 xmax: 180 ymax: 89.99[] 
+ []
+
+File: _main_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-4-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[11] [12]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ##  [13] "crawlId"                          "hostingOrganizationKey"[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ##  [37] "dateIdentified"                   "coordinateUncertaintyInMeters"[] 
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ##  [55] "identifier"                       "http://unknown.org/nick"[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ##  [65] "eventTime"                        "http://unknown.org/captive"[] 
+ []
+
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ##  [77] "county"                           "identificationVerificationStatus"[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ##  [97] "higherGeography"                  "georeferenceProtocol"[] 
+ []
+
+[13]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ## [109] "organismQuantity"                 "organismQuantityType"[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ## [115] "nomenclaturalCode"                "associatedReferences"[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ## [117] "taxonRemarks"                     "ownerInstitutionCode"[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ## [141] "acceptedNameUsageID"              "http://unknown.org/language"[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ## [149] "namePublishedInYear"              "verbatimCoordinateSystem"[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ## [151] "parentNameUsage"                  "http://unknown.org/taxonRankID"[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 419--419
+[]\TU/lmtt/m/n/10 ## [157] "distanceFromCentroidInMeters"     "http://unknown.org/orders"[] 
+ []
+
+
+Underfull \vbox (badness 1742) detected at line 437
+ []
+
+[14]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 515--515
+[]\TU/lmtt/m/n/10 ##  [73] "occurrenceID"                   "scientificNameAuthorship"[] 
+ []
+
+[15]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 515--515
+[]\TU/lmtt/m/n/10 ## [107] "minimumElevationInMeters"       "maximumElevationInMeters"[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 515--515
+[]\TU/lmtt/m/n/10 ## [139] "verbatimLocality"               "georeferenceVerificationStatus"[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 515--515
+[]\TU/lmtt/m/n/10 ## [141] "island"                         "identificationQualifier"[] 
+ []
+
+
+Underfull \vbox (badness 1742) detected at line 533
+ []
+
+[16] [17] [18]
+File: _main_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-12-1.pdf>
+
+Package natbib Warning: Citation `mcpherson_2004' on page 19 undefined on input line 678.
+
+
+Package natbib Warning: Citation `barbetmassin_etal_2012' on page 19 undefined on input line 678.
+
+
+Underfull \vbox (badness 2790) has occurred while \output is active []
+
+[19]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 732--732
+[]\TU/lmtt/m/n/10 ##     F_AREA          scientificName          YEAR      occurrenceStatus[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 732--732
+[]\TU/lmtt/m/n/10 ##  Length:14903       Length:14903       Min.   :2000   Min.   :1[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 732--732
+[]\TU/lmtt/m/n/10 ##  Class :character   Class :character   1st Qu.:2001   1st Qu.:1[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 732--732
+[]\TU/lmtt/m/n/10 ##  Mode  :character   Mode  :character   Median :2002   Median :1[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 732--732
+[]\TU/lmtt/m/n/10 ##                                        Mean   :2003   Mean   :1[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 732--732
+[]\TU/lmtt/m/n/10 ##                                        3rd Qu.:2004   3rd Qu.:1[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 732--732
+[]\TU/lmtt/m/n/10 ##                                        Max.   :2013   Max.   :1[] 
+ []
+
+[20]
+File: _main_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-16-1.pdf>
+[21]
+File: _main_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-17-1.pdf>
+[22]
+File: _main_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-19-1.pdf>
+[23]
+File: _main_files/figure-latex/unnamed-chunk-19-2.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-19-2.pdf>
+[24]
+File: _main_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-22-1.pdf>
+
+Overfull \vbox (0.57394pt too high) detected at line 882
+ []
+
+[25]
+File: _main_files/figure-latex/unnamed-chunk-22-2.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-22-2.pdf>
+[26]
+Chapter 3.
+[27
+
+]
+Overfull \hbox (33.0pt too wide) in paragraph at lines 945--945
+[]\TU/lmtt/m/n/10 ##          here    rstudioapi      maptools       ggplot2         knitr[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 945--945
+[]\TU/lmtt/m/n/10 ##          TRUE          TRUE          TRUE          TRUE          TRUE[] 
+ []
+
+
+Package natbib Warning: Citation `tyberghein_etal_2012' on page 28 undefined on input line 960.
+
+
+Package natbib Warning: Citation `assis_etal_2017' on page 28 undefined on input line 960.
+
+
+Overfull \hbox (4539.69025pt too wide) in paragraph at lines 976--991
+ [][] 
+ []
+
+[28]
+Overfull \hbox (4230.31999pt too wide) in paragraph at lines 1018--2859
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 10845.99438pt on input line 2859.
+
+[29] [30]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2923--2923
+[]\TU/lmtt/m/n/10 ## dimensions : 2160, 4320, 9331200, 4  (nrow, ncol, ncell, nlayers)[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 2923--2923
+[]\TU/lmtt/m/n/10 ## names      : BO2_chlomean_ss, BO2_salinitymean_ss, BO_damean, BO_sstmean[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 2923--2923
+[]\TU/lmtt/m/n/10 ## min values :        0.015806,            0.059304,  0.012000,  -1.801000[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 2923--2923
+[]\TU/lmtt/m/n/10 ## max values :        5.394896,           40.651300,  0.972000,  32.918000[] 
+ []
+
+File: _main_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-33-1.pdf>
+[31]
+Overfull \hbox (1146.0pt too wide) in paragraph at lines 2946--2946
+[]\TU/lmtt/m/n/10 ## [1] "Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \"Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\" _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 <https://doi.org/10.1111/geb.12693>."[] 
+ []
+
+
+Overfull \hbox (1319.25pt too wide) in paragraph at lines 2946--2946
+[]\TU/lmtt/m/n/10 ## [2] "Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \"Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\" _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n<https://doi.org/10.1111/j.1466-8238.2011.00656.x>."[] 
+ []
+
+
+Overfull \hbox (1146.0pt too wide) in paragraph at lines 2957--2957
+[]\TU/lmtt/m/n/10 ## [1] "Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \"Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\" _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 <https://doi.org/10.1111/geb.12693>."[] 
+ []
+
+
+Overfull \hbox (1319.25pt too wide) in paragraph at lines 2957--2957
+[]\TU/lmtt/m/n/10 ## [2] "Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \"Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\" _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n<https://doi.org/10.1111/j.1466-8238.2011.00656.x>."[] 
+ []
+
+File: _main_files/figure-latex/unnamed-chunk-35-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-35-1.pdf>
+[32]
+Overfull \hbox (69.75pt too wide) in paragraph at lines 3032--3032
+[]\TU/lmtt/m/n/10 ##       here rstudioapi         sp     raster      dplyr      tidyr    ggplot2[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 3032--3032
+[]\TU/lmtt/m/n/10 ##       TRUE       TRUE       TRUE       TRUE       TRUE       TRUE       TRUE[] 
+ []
+
+[33] [34]
+Overfull \hbox (237.75pt too wide) in paragraph at lines 3118--3118
+[]\TU/lmtt/m/n/10 ##  $ scientificName     : chr  "Thunnus alalunga" "Thunnus alalunga" "Thunnus alalunga" "Thunnus alalunga" ...[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3118--3118
+[]\TU/lmtt/m/n/10 ##  $ BO2_chlomean_ss    : num  1.2041 1.2041 0.0846 1.2041 0.7228 ...[] 
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 3118--3118
+[]\TU/lmtt/m/n/10 ##  $ BO_damean          : num  0.1974 0.1974 0.029 0.1974 0.0818 ...[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3141--3141
+[]\TU/lmtt/m/n/10 ##      scientificName      LON      LAT YEAR occurrenceStatus ID BO2_chlomean_ss[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3141--3141
+[]\TU/lmtt/m/n/10 ## 1  Thunnus alalunga  18.4972 -34.3569 2004                1  1      1.20410309[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3141--3141
+[]\TU/lmtt/m/n/10 ## 5  Thunnus alalunga  18.4972 -34.3569 2004                1  2      1.20410309[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3141--3141
+[]\TU/lmtt/m/n/10 ## 8  Thunnus alalunga -76.6000  28.4000 2000                1  3      0.08455528[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3141--3141
+[]\TU/lmtt/m/n/10 ## 10 Thunnus alalunga  18.4972 -34.3569 2000                1  4      1.20410309[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3141--3141
+[]\TU/lmtt/m/n/10 ## 11 Thunnus alalunga -69.3100  39.8800 2000                1  5      0.72283228[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3141--3141
+[]\TU/lmtt/m/n/10 ## 12 Thunnus alalunga  18.4972 -34.3569 2001                1  6      1.20410309[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  scientificName          LON               LAT               YEAR[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  Length:29806       Min.   :-97.805   Min.   :-82.187   Min.   :2000[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  Class :character   1st Qu.:-69.221   1st Qu.:-29.933   1st Qu.:2001[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  Mode  :character   Median :-28.967   Median : 24.006   Median :2002[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##                     Mean   :-31.118   Mean   :  7.678   Mean   :2003[] 
+ []
+
+
+Overfull \hbox (85.21344pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 3.3.  EXTRACT ENVIRONMENTAL DATA ASSOCIATED TO PRESENCE-ABSENCE DATA \TU/lmr/m/n/10 35
+ []
+
+[35]
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##                     3rd Qu.:  2.933   3rd Qu.: 38.250   3rd Qu.:2004[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##                     Max.   : 67.648   Max.   : 89.418   Max.   :2013[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##                                                         NA's   :14903[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  occurrenceStatus       ID        BO2_chlomean_ss   BO2_salinitymean_ss[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  Min.   :0.0      Min.   :    1   Min.   :0.01585   Min.   : 0.1632[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  1st Qu.:0.0      1st Qu.: 7452   1st Qu.:0.08960   1st Qu.:34.5032[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  Median :0.5      Median :14904   Median :0.24648   Median :35.4267[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  Mean   :0.5      Mean   :14904   Mean   :0.42505   Mean   :35.2388[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  3rd Qu.:1.0      3rd Qu.:22355   3rd Qu.:0.68378   3rd Qu.:36.2156[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3174--3174
+[]\TU/lmtt/m/n/10 ##  Max.   :1.0      Max.   :29806   Max.   :3.44767   Max.   :39.2467[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  scientificName          LON               LAT          occurrenceStatus[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  Length:29661       Min.   :-97.805   Min.   :-77.508   Min.   :0.0000[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  Class :character   1st Qu.:-69.330   1st Qu.:-29.933   1st Qu.:0.0000[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  Mode  :character   Median :-28.946   Median : 24.088   Median :1.0000[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##                     Mean   :-31.138   Mean   :  7.792   Mean   :0.5024[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##                     3rd Qu.:  2.938   3rd Qu.: 38.242   3rd Qu.:1.0000[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##                     Max.   : 67.241   Max.   : 83.660   Max.   :1.0000[] 
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##        ID        BO2_chlomean_ss   BO2_salinitymean_ss   BO_damean[] 
+ []
+
+[36]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  Min.   :    1   Min.   :0.01585   Min.   : 0.1632     Min.   :0.02180[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  1st Qu.: 7416   1st Qu.:0.08954   1st Qu.:34.5100     1st Qu.:0.03504[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  Median :14831   Median :0.24526   Median :35.4267     Median :0.05037[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  Mean   :14865   Mean   :0.42527   Mean   :35.2420     Mean   :0.07833[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  3rd Qu.:22313   3rd Qu.:0.68457   3rd Qu.:36.2163     3rd Qu.:0.08800[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3226--3226
+[]\TU/lmtt/m/n/10 ##  Max.   :29806   Max.   :3.44767   Max.   :39.2467     Max.   :0.69655[] 
+ []
+
+File: _main_files/figure-latex/unnamed-chunk-47-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-47-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[37]
+File: _main_files/figure-latex/unnamed-chunk-47-2.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-47-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[38]
+File: _main_files/figure-latex/unnamed-chunk-47-3.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-47-3.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[39]
+File: _main_files/figure-latex/unnamed-chunk-48-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-48-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[40]
+File: _main_files/figure-latex/unnamed-chunk-48-2.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-48-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (193.93123pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 3.5.  EXPLORATORY PLOTS OF ENVIRONMENTAL VARIABLES DEPENDING ON PRESENCE/ABSENCE DATA \TU/lmr/m/n/10 41
+ []
+
+[41]
+File: _main_files/figure-latex/unnamed-chunk-49-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-49-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[42]
+File: _main_files/figure-latex/unnamed-chunk-50-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-50-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[43]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3369--3369
+[]\TU/lmtt/m/n/10 ##          BO_sstmean BO2_salinitymean_ss     BO2_chlomean_ss           BO_damean[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3369--3369
+[]\TU/lmtt/m/n/10 ##            1.375837            1.493366            5.270639            5.478410[] 
+ []
+
+[44]
+Underfull \hbox (badness 5741) in paragraph at lines 3406--3406
+[]\TU/lmr/bx/n/14.4 Shape Constrained-Generalized Additive
+ []
+
+
+Package natbib Warning: Citation `citores_etal_2020' on page 45 undefined on input line 3408.
+
+
+Package natbib Warning: Citation `pya_etal_2015' on page 45 undefined on input line 3408.
+
+[45]
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3463--3463
+[]\TU/lmtt/m/n/10 ##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3463--3463
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3463--3463
+[]\TU/lmtt/m/n/10 ##        rgdal       fields         maps       raster         scam       plotmo[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3463--3463
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+[46] [47]
+File: _main_files/figure-latex/unnamed-chunk-60-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-60-1.pdf>
+[48]
+File: _main_files/figure-latex/unnamed-chunk-61-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-61-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[49] [50]
+File: _main_files/figure-latex/unnamed-chunk-62-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-62-1.pdf>
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 3660--3660
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ s(BO_sstmean, k = 8, bs = "cv") + s(BO2_salinitymean_ss,[] 
+ []
+
+[51]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3671--3671
+[]\TU/lmtt/m/n/10 ##  plotmo grid:    BO_sstmean BO2_salinitymean_ss BO2_chlomean_ss[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3671--3671
+[]\TU/lmtt/m/n/10 ##                    18.89921            35.42666       0.2452632[] 
+ []
+
+File: _main_files/figure-latex/unnamed-chunk-63-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-63-1.pdf>
+[52]
+File: _main_files/figure-latex/unnamed-chunk-64-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-64-1.pdf>
+[53]
+Overfull \hbox (148.5pt too wide) in paragraph at lines 3732--3732
+[]\TU/lmtt/m/n/10 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_salinitymean_ss,m=2,bs='cv',k=8)[] 
+ []
+
+
+Overfull \hbox (127.5pt too wide) in paragraph at lines 3732--3732
+[]\TU/lmtt/m/n/10 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_chlomean_ss,m=2,bs='cv',k=8)[] 
+ []
+
+
+Overfull \hbox (332.25pt too wide) in paragraph at lines 3732--3732
+[]\TU/lmtt/m/n/10 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_chlomean_ss,m=2,bs='cv',k=8)+s(BO2_salinitymean_ss,m=2,bs='cv',k=8)[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 3744--3744
+[]\TU/lmtt/m/n/10 ## [1] "BO_sstmean"          "BO2_chlomean_ss"     "BO2_salinitymean_ss"[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3757--3757
+[]\TU/lmtt/m/n/10 ##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3757--3757
+[]\TU/lmtt/m/n/10 ##            41120.17            31629.43            28388.33            28032.06[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3770--3770
+[]\TU/lmtt/m/n/10 ##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3770--3770
+[]\TU/lmtt/m/n/10 ##        3.539048e-16        2.309134e-01        3.100285e-01        3.187874e-01[] 
+ []
+
+[54]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3799--3799
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) +[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3799--3799
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) +[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 3799--3799
+[]\TU/lmtt/m/n/10 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss,[] 
+ []
+
+[55]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3903--3903
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) +[] 
+ []
+
+[56]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3903--3903
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) +[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 3903--3903
+[]\TU/lmtt/m/n/10 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss,[] 
+ []
+
+[57] [58
+
+]
+Chapter 4.
+
+Package natbib Warning: Citation `hijmans_2012' on page 59 undefined on input line 3926.
+
+[59]
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3985--3985
+[]\TU/lmtt/m/n/10 ##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3985--3985
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3985--3985
+[]\TU/lmtt/m/n/10 ##    tidyverse      R.utils       ggpubr   hrbrthemes        rgdal       fields[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3985--3985
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3985--3985
+[]\TU/lmtt/m/n/10 ##         maps       raster         scam       plotmo     SDMTools     pkgbuild[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3985--3985
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+[60]
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4031--4031
+[]\TU/lmtt/m/n/10 ##    occurrenceStatus BO_sstmean BO2_chlomean_ss BO2_salinitymean_ss scgam.pred[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4031--4031
+[]\TU/lmtt/m/n/10 ## 1                 1   16.99439      1.20410309            35.42666  0.9804524[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4031--4031
+[]\TU/lmtt/m/n/10 ## 5                 1   16.99439      1.20410309            35.42666  0.9804524[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4031--4031
+[]\TU/lmtt/m/n/10 ## 8                 1   25.52963      0.08455528            36.43070  0.4238477[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4031--4031
+[]\TU/lmtt/m/n/10 ## 10                1   16.99439      1.20410309            35.42666  0.9804524[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4031--4031
+[]\TU/lmtt/m/n/10 ## 11                1   15.21486      0.72283228            34.20426  0.8449155[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4031--4031
+[]\TU/lmtt/m/n/10 ## 12                1   16.99439      1.20410309            35.42666  0.9804524[] 
+ []
+
+
+Package natbib Warning: Citation `jimenez_etal_2007' on page 61 undefined on input line 4033.
+
+[61]
+Underfull \hbox (badness 3199) in paragraph at lines 4080--4081
+\TU/lmr/m/n/10 Characteristic—ROC—curve), sensitivity (true predicted presences) and
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 4094--4094
+[]\TU/lmtt/m/n/10 ##   threshold       AUC omission.rate sensitivity specificity prop.correct[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 4094--4094
+[]\TU/lmtt/m/n/10 ## 1      0.42 0.7415229     0.1985506   0.8014494   0.6815964    0.7418159[] 
+ []
+
+[62]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 4178--4178
+[]\TU/lmtt/m/n/10 ##      Threshold mean_AUC mean_Omision mean_sensitivity mean_specificity[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 4178--4178
+[]\TU/lmtt/m/n/10 ## [1,]      0.42 0.725464    0.2399716        0.7600284        0.6908995[] 
+ []
+
+[63] [64]
+Chapter 5.
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4234--4234
+[]\TU/lmtt/m/n/10 ##         here   rstudioapi      ggplot2    tidyverse        rgdal       raster[] 
+ []
+
+[65
+
+]
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4234--4234
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 4234--4234
+[]\TU/lmtt/m/n/10 ##         maps     maptools RColorBrewer         scam       ggpubr[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 4234--4234
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4291--4291
+[]\TU/lmtt/m/n/10 ##        x                y            mylayers_1        mylayers_2[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4291--4291
+[]\TU/lmtt/m/n/10 ##  Min.   :-97.79   Min.   :-82.96   Min.   :0.0       Min.   : 0.1[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4291--4291
+[]\TU/lmtt/m/n/10 ##  1st Qu.:-56.23   1st Qu.:-39.73   1st Qu.:0.1       1st Qu.:33.8[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4291--4291
+[]\TU/lmtt/m/n/10 ##  Median :-14.67   Median :  3.50   Median :0.3       Median :34.6[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4291--4291
+[]\TU/lmtt/m/n/10 ##  Mean   :-14.67   Mean   :  3.50   Mean   :0.3       Mean   :34.4[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4291--4291
+[]\TU/lmtt/m/n/10 ##  3rd Qu.: 26.90   3rd Qu.: 46.73   3rd Qu.:0.4       3rd Qu.:35.6[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4291--4291
+[]\TU/lmtt/m/n/10 ##  Max.   : 68.46   Max.   : 89.96   Max.   :3.6       Max.   :40.7[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 4291--4291
+[]\TU/lmtt/m/n/10 ##                                    NA's   :1501044   NA's   :1501044[] 
+ []
+
+[66] [67]
+File: _main_files/figure-latex/unnamed-chunk-92-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-92-1.pdf>
+No file _main.bbl.
+
+Package natbib Warning: There were undefined citations.
+
+[68] (./_main.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `_main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `_main.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  437BE43A554DAD6B3573192FA1447993;4236.
+ ) 
+Here is how much of TeX's memory you used:
+ 19060 strings out of 478659
+ 357616 string characters out of 5846107
+ 4553698 words of memory out of 5000000
+ 38889 multiletter control sequences out of 15000+600000
+ 518852 words of font info for 87 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 86i,9n,121p,1003b,472s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on _main.pdf (68 pages).
