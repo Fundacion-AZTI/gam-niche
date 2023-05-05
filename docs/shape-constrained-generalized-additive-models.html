@@ -5,19 +5,19 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Shape Constrained-Generalized Additive Models | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
-  <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Shape Constrained-Generalized Additive Models | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta property="og:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   <meta name="github-repo" content="Fundacion-AZTI/gam-niche" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 5 Shape Constrained-Generalized Additive Models | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   
-  <meta name="twitter:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="twitter:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   
 
 <meta name="author" content="AZTI" />
@@ -158,7 +158,7 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">GAM-NICHE</a></li>
+<li><a href="./">gam-niche</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
@@ -218,7 +218,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="shape-constrained-generalized-additive-models" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Shape Constrained-Generalized Additive Models<a href="shape-constrained-generalized-additive-models.html#shape-constrained-generalized-additive-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In order to fit SDM in agreement with the ecological niche theory, the proposed Shape-Constrained Generalized Additive Models (SC-GAMs) in <span class="citation">(<a href="#ref-citores_etal_2020" role="doc-biblioref">Citores and Chust 2020</a>)</span> are fitted in this section. SC-GAMs are based on Generalized Additive Models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by <span class="citation">(<a href="#ref-pya_etal_2015" role="doc-biblioref">Pya and Wood 2015</a>)</span> using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting Species Distribution Models in agreement with the ecological niche theory, we imposed concavity constraints (<span class="math inline">\(f&#39;&#39;(x) \le 0\)</span>), so that the response can presents at most a single mode.</p>
+<p>In order to fit SDM in agreement with the ecological niche theory, the proposed Shape-Constrained Generalized Additive Models (SC-GAMs) in <span class="citation">(<a href="#ref-citores_etal_2020" role="doc-biblioref">Citores et al. 2020</a>)</span> are fitted in this section. SC-GAMs are based on Generalized Additive Models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by <span class="citation">(<a href="#ref-pya_etal_2015" role="doc-biblioref">Pya and Wood 2015</a>)</span> using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting Species Distribution Models in agreement with the ecological niche theory, we imposed concavity constraints (<span class="math inline">\(f&#39;&#39;(x) \le 0\)</span>), so that the response can presents at most a single mode.</p>
 <p>Alternatively, the R package <code>mboost</code> fits SC-GAMs using boosting methods. We are not going to develop this alternative here.</p>
 <p>First we load the list of required libraries.</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="shape-constrained-generalized-additive-models.html#cb95-1" aria-hidden="true" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
@@ -424,22 +424,22 @@ div.csl-indent {
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="shape-constrained-generalized-additive-models.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span></code></pre></div>
 <pre><code>## $null
 ## occurrenceStatus ~ 1
-## &lt;environment: 0x0000017db90aaa88&gt;
+## &lt;environment: 0x00000247bdda7f88&gt;
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000017db90aaa88&gt;
+## &lt;environment: 0x00000247bdda7f88&gt;
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000017db90aaa88&gt;
+## &lt;environment: 0x00000247bdda7f88&gt;
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000017db90aaa88&gt;</code></pre>
+## &lt;environment: 0x00000247bdda7f88&gt;</code></pre>
 <p>Summaries of the fitted models:</p>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="shape-constrained-generalized-additive-models.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
 <pre><code>## $null
@@ -449,7 +449,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1
-## &lt;environment: 0x0000017db90aaa88&gt;
+## &lt;environment: 0x00000247bdda7f88&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -467,7 +467,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000017db90aaa88&gt;
+## &lt;environment: 0x00000247bdda7f88&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -493,7 +493,7 @@ div.csl-indent {
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000017db90aaa88&gt;
+## &lt;environment: 0x00000247bdda7f88&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -519,7 +519,7 @@ div.csl-indent {
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000017db90aaa88&gt;
+## &lt;environment: 0x00000247bdda7f88&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -546,10 +546,10 @@ div.csl-indent {
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-citores_etal_2020" class="csl-entry">
-Citores, Ibaibarriaga, L., and G. Chust. 2020. <span>“Modelling Species Presence–Absence in the Ecological Niche Theory Framework Using Shape-Constrained Generalized Additive Models.”</span> <em>Ecological Modelling</em> 418: 108926. <a href="https://doi.org/10.1016/j.ecolmodel.2019.108926">https://doi.org/10.1016/j.ecolmodel.2019.108926</a>.
+Citores, L, L Ibaibarriaga, DJ Lee, MJ Brewer, M Santos, and G Chust. 2020. <span>“Modelling Species Presence–Absence in the Ecological Niche Theory Framework Using Shape-Constrained Generalized Additive Models.”</span> <em>Ecological Modelling</em> 418: 108926. <a href="https://doi.org/10.1016/j.ecolmodel.2019.108926">https://doi.org/10.1016/j.ecolmodel.2019.108926</a>.
 </div>
 <div id="ref-pya_etal_2015" class="csl-entry">
-Pya, N., and S. N. Wood. 2015. <span>“Shape Constrained Additive Models.”</span> <em>Statistics and Computing</em> 25: 543–59.
+Pya, N, and SN Wood. 2015. <span>“Shape Constrained Additive Models.”</span> <em>Statistics and Computing</em> 25: 543–59.
 </div>
 </div>
             </section>

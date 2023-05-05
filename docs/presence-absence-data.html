@@ -5,19 +5,19 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Presence-absence data | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
-  <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Presence-absence data | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta property="og:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   <meta name="github-repo" content="Fundacion-AZTI/gam-niche" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 2 Presence-absence data | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   
-  <meta name="twitter:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="twitter:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   
 
 <meta name="author" content="AZTI" />
@@ -158,7 +158,7 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">GAM-NICHE</a></li>
+<li><a href="./">gam-niche</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
@@ -603,7 +603,7 @@ div.csl-indent {
 </div>
 <div id="create-pseudo-absence-data" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Create pseudo-absence data<a href="presence-absence-data.html#create-pseudo-absence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>After saving presence data for the species of interest we need to generate absence data (with a constant prevalence of 50%, <span class="citation">McPherson and Rogers (<a href="#ref-mcpherson_2004" role="doc-biblioref">2004</a>)</span>,<span class="citation">Barbet-Massin and Thuiller (<a href="#ref-barbetmassin_etal_2012" role="doc-biblioref">2012</a>)</span>), in order to work with logistic regression SDM afterwards. For that, we generate a buffer around each presence data point, with a radius of 100km, where no absences can be generated.</p>
+<p>After saving presence data for the species of interest we need to generate absence data (with a constant prevalence of 50%, <span class="citation">McPherson, Jetz, and Rogers (<a href="#ref-mcpherson_2004" role="doc-biblioref">2004</a>)</span>,<span class="citation">Barbet-Massin et al. (<a href="#ref-barbetmassin_etal_2012" role="doc-biblioref">2012</a>)</span>), in order to work with logistic regression SDM afterwards. For that, we generate a buffer around each presence data point, with a radius of 100km, where no absences can be generated.</p>
 <p>Before starting the pseudo-absence generation process, we delete observations in land (positive bathymetry) and select data between 2000 and 2014 (same temporal range as the environmental data that we will load later).</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="presence-absence-data.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#remove points in land</span></span>
 <span id="cb24-2"><a href="presence-absence-data.html#cb24-2" aria-hidden="true" tabindex="-1"></a>df0<span class="ot">&lt;-</span><span class="fu">subset</span>(df0,bathymetry<span class="sc">&lt;</span><span class="dv">0</span>)</span>
@@ -741,10 +741,10 @@ div.csl-indent {
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-barbetmassin_etal_2012" class="csl-entry">
-Barbet-Massin, Jiguet, M., and W. Thuiller. 2012. <span>“Selecting Pseudo-Absences for Species Distribution Models: How, Where and How Many?”</span> Journal Article. <em>Methods in Ecology and Evolution</em> 3 (2): 327–38. <a href="https://doi.org/10.1111/j.2041-210X.2011.00172.x">https://doi.org/10.1111/j.2041-210X.2011.00172.x</a>.
+Barbet-Massin, M, F Jiguet, CH Albert, and W Thuiller. 2012. <span>“Selecting Pseudo-Absences for Species Distribution Models: How, Where and How Many?”</span> Journal Article. <em>Methods in Ecology and Evolution</em> 3 (2): 327–38. <a href="https://doi.org/10.1111/j.2041-210X.2011.00172.x">https://doi.org/10.1111/j.2041-210X.2011.00172.x</a>.
 </div>
 <div id="ref-mcpherson_2004" class="csl-entry">
-McPherson, Jetz, J. M., and D. J. Rogers. 2004. <span>“The Effects of Species’ Range Sizes on the Accuracy of Distribution Models: Ecological Phenomenon or Statistical Artefact?”</span> <em>Journal of Applied Ecology</em> 41 (5): 811–23. https://doi.org/<a href=" https://doi.org/10.1111/j.0021-8901.2004.00943.x"> https://doi.org/10.1111/j.0021-8901.2004.00943.x</a>.
+McPherson, JM, W Jetz, and DJ Rogers. 2004. <span>“The Effects of Species’ Range Sizes on the Accuracy of Distribution Models: Ecological Phenomenon or Statistical Artefact?”</span> <em>Journal of Applied Ecology</em> 41 (5): 811–23. https://doi.org/<a href=" https://doi.org/10.1111/j.0021-8901.2004.00943.x"> https://doi.org/10.1111/j.0021-8901.2004.00943.x</a>.
 </div>
 </div>
             </section>

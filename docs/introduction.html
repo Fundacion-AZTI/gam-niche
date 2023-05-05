@@ -5,19 +5,19 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Introduction | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
-  <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Introduction | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta property="og:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   <meta name="github-repo" content="Fundacion-AZTI/gam-niche" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 1 Introduction | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   
-  <meta name="twitter:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores and Chust (2020)." />
+  <meta name="twitter:description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
   
 
 <meta name="author" content="AZTI" />
@@ -158,7 +158,7 @@ div.csl-indent {
 
 <ul class="summary">
 <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">GAM-NICHE</a></li>
+<li><a href="./">gam-niche</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
@@ -220,20 +220,20 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 1</span> Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Species distribution models (SDMs) are numerical tools that combine observations of species occurrence or abundance at known locations with information on the environmental and/or spatial characteristics of those locations <span class="citation">(<a href="#ref-elith_etal_2009" role="doc-biblioref">Elith and Leathwick 2009</a>)</span>. SDMs are widely used as a tool for understanding species spatial ecology and are also known as ecological niche models (ENM) or habitat suitability models.</p>
 <p>According to ecological niche theory, species response curves are unimodal with respect to environmental gradients <span class="citation">(<a href="#ref-hutchinson_1957" role="doc-biblioref">Hutchinson 1957</a>)</span>. While a variety of statistical methods have been developed for species distribution modelling, a general problem with most of these habitat modelling approaches is that the estimated response curves can display biologically implausible shapes which do not respect ecological niche theory. This is because species response curves are fit statistically with any assumption or restriction, which sometimes do not respect the ecological niche theory. To better understand species response to environmental changes, SDMs should consider theoretical background such as the ecological niche theory and pursue the unimodality of the response curve with respect to environmental gradients.</p>
-<p>This book provides a tutorial on how to use Shape-Constrained Generalized Additive Models (SC-GAMs) to build SDMs under the ecological niche theory framework <span class="citation">(<a href="#ref-citores_etal_2020" role="doc-biblioref">Citores and Chust 2020</a>)</span>. SC-GAMs impose monotonicity and concavity constraints in the linear predictor of the GAMs and avoid overfitting. SC-GAM is an effective alternative to fitting nonsymmetric parametric response curves, while retaining the unimodality constraint, required by ecological niche theory, for direct variables and limiting factors.</p>
+<p>This book provides a tutorial on how to use Shape-Constrained Generalized Additive Models (SC-GAMs) to build SDMs under the ecological niche theory framework <span class="citation">(<a href="#ref-citores_etal_2020" role="doc-biblioref">Citores et al. 2020</a>)</span>. SC-GAMs impose monotonicity and concavity constraints in the linear predictor of the GAMs and avoid overfitting. SC-GAM is an effective alternative to fitting nonsymmetric parametric response curves, while retaining the unimodality constraint, required by ecological niche theory, for direct variables and limiting factors.</p>
 <p>The book is organised following the key steps in good modelling practice of SDMs <span class="citation">(<a href="#ref-elith_etal_2009" role="doc-biblioref">Elith and Leathwick 2009</a>)</span>. First, presence data of a selected species are downloaded from GBIF/OBIS global public datasets and pseudo-absence data are created. Then, environmental data are downloaded from public repositories and extracted at each of the presence/pseudo-absence data points. Based on this dataset, an exploratory analysis is conducted to help deciding on the best modelling approach. The model is fitted to the dataset and the quality of the fit and the realism of the fitted response function are evaluated. After selecting a threshold to transform the continuous probability predictions into binary responses, the model is validated using a k-fold approach. Finally, the predicted maps are generated for visualization.</p>
 
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-citores_etal_2020" class="csl-entry">
-Citores, Ibaibarriaga, L., and G. Chust. 2020. <span>“Modelling Species Presence–Absence in the Ecological Niche Theory Framework Using Shape-Constrained Generalized Additive Models.”</span> <em>Ecological Modelling</em> 418: 108926. <a href="https://doi.org/10.1016/j.ecolmodel.2019.108926">https://doi.org/10.1016/j.ecolmodel.2019.108926</a>.
+Citores, L, L Ibaibarriaga, DJ Lee, MJ Brewer, M Santos, and G Chust. 2020. <span>“Modelling Species Presence–Absence in the Ecological Niche Theory Framework Using Shape-Constrained Generalized Additive Models.”</span> <em>Ecological Modelling</em> 418: 108926. <a href="https://doi.org/10.1016/j.ecolmodel.2019.108926">https://doi.org/10.1016/j.ecolmodel.2019.108926</a>.
 </div>
 <div id="ref-elith_etal_2009" class="csl-entry">
-Elith, J., and J. R. Leathwick. 2009. <span>“Species Distribution Models: Ecological Explanation and Prediction Across Space and Time.”</span> Journal Article. <em>Annual Review of Ecology, Evolution, and Systematics</em> 40 (1): 677–97. <a href="https://doi.org/10.1146/annurev.ecolsys.110308.120159">https://doi.org/10.1146/annurev.ecolsys.110308.120159</a>.
+Elith, J, and JR Leathwick. 2009. <span>“Species Distribution Models: Ecological Explanation and Prediction Across Space and Time.”</span> Journal Article. <em>Annual Review of Ecology, Evolution, and Systematics</em> 40 (1): 677–97. <a href="https://doi.org/10.1146/annurev.ecolsys.110308.120159">https://doi.org/10.1146/annurev.ecolsys.110308.120159</a>.
 </div>
 <div id="ref-hutchinson_1957" class="csl-entry">
-Hutchinson, G. E. 1957. <span>“Concluding Remarks.”</span> Journal Article. <em>Cold Spring Harbor Symposia on Quantitative Biolog</em> 22: 415–27. <a href="https://doi.org/10.1101/SQB.1957.022.01.039">https://doi.org/10.1101/SQB.1957.022.01.039</a>.
+Hutchinson, GE. 1957. <span>“Concluding Remarks.”</span> Journal Article. <em>Cold Spring Harbor Symposia on Quantitative Biolog</em> 22: 415–27. <a href="https://doi.org/10.1101/SQB.1957.022.01.039">https://doi.org/10.1101/SQB.1957.022.01.039</a>.
 </div>
 </div>
             </section>
