@@ -40,9 +40,6 @@ install_load_function(requiredPackages)
 
 We define some overall settings.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# Location of script
-setwd(dirname(getSourceEditorContext()$path))
-
 # General settings for ggplot (black-white background, larger base_size)
 theme_set(theme_bw(base_size = 16))
 ```
@@ -119,8 +116,10 @@ In case we are not interested on the whole area, we can crop the raster objects 
 
 For example, we can load the `study_area` object that is a SpatialPolygonsDataFrame that has been created previously and defines the extent of our spatial data and we can crop the rasterStack to the same extent:
 ```{r, warning=F, message=F}
-load("data/spatial/study_area.RData")
+load(here::here ("data", "spatial", "study_area.RData"))
+
 mylayers <- crop(myBioracle.layers, extent(study_area))
+
 plot(mylayers)
 ```
 

@@ -3,7 +3,7 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-## Shape Constrained-Generalized Additive Models
+# Shape Constrained-Generalized Additive Models
 
 In order to fit SDM in agreement with the ecological niche theory, the proposed Shape-Constrained Generalized Additive Models (SC-GAMs) in [@citores_etal_2020] are fitted in this section. SC-GAMs are based on Generalized Additive Models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by [@pya_etal_2015] using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting Species Distribution Models in agreement with the ecological niche theory, we imposed concavity  constraints ($f''(x) \le 0$), so that the response can presents at most a single mode.  
 
@@ -50,17 +50,14 @@ install_load_function(requiredPackages)
 
 Install and load SDMTools. You need to manually install RTools installed: https://cran.r-project.org/bin/windows/Rtools/history.html 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-find_rtools()
-
-install.packages("remotes")
-remotes::install_version("SDMTools", version = "1.1-221.2")
+# find_rtools()
+# 
+# install.packages("remotes")
+# remotes::install_version("SDMTools", version = "1.1-221.2")
 ```
 
 We define some overall settings.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# Location of script
-setwd(dirname(getSourceEditorContext()$path))
-
 # General settings for ggplot (black-white background, larger base_size)
 theme_set(theme_bw(base_size = 16))
 ```
@@ -70,9 +67,7 @@ theme_set(theme_bw(base_size = 16))
 We set the working directory to the folder where the current script is located and we load the dataset (PAdata_with_env.Rdata) containing the presence-absence data together with the environmental data.
 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-setwd(dirname(getSourceEditorContext()$path))
-
-load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
+load(here::here ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
 ```
 
 To fit a logistic regression model in the SC-GAMs framework, we use the scam function, where we set the binomial family with the logit link function. Our response variable is the presence-absence data and the selected three explanatory variables are the SST, chlorophyll and salinity. Each variable is included in the model through an spline function where the concavity constraint is set using bs="cv". The details about this option can be found in the section "Constructor for concave P-splines in SCAMs" of the SCAM manual (https://cran.r-project.org/web/packages/scam/scam.pdf). The number of knots (k) is fixed at 8 in this example for a good balance between flexibility and computation time.

@@ -40,18 +40,15 @@ install_load_function(requiredPackages)
 
 We define some overall settings.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# Location of script
-setwd(dirname(getSourceEditorContext()$path))
-
 # General settings for ggplot (black-white background, larger base_size)
 theme_set(theme_bw(base_size = 16))
 ```
 
-## Prepare environmental data. 
+## Prepare environmental data
 
 In previous steps (see Chapter 2), we have defined the study area that defines the extent of our spatial data. We load the `study_area` object that is a SpatialPolygonsDataFrame class:
 ```{r, eval=T, warning=F, message=F}
-load("data/spatial/study_area.RData")
+load(here::here ("data", "spatial", "study_area.RData"))
 ```
 
 And we load the rasterStack with the downloaded environmental data.
@@ -73,7 +70,7 @@ names(env_dataframe) <- c("x", "y", "BO2_chlomean_ss", "BO2_salinitymean_ss", "B
 We load the selected model and predict into the whole environmental data. 
 ```{r, eval=T, warning=F, message=F}
 #Load SC-GAM model
-load(file.path("models", "selected_model.Rdata"))
+load(here::here("models", "selected_model.Rdata"))
 
 # predicting 
 predict <- predict(selected_model,newdata=env_dataframe,type ="response",se.fit=T)         
@@ -88,7 +85,7 @@ save(env_dataframe, file="results/projection.Rdata")
 
 ```{r, eval=T, warning=F, message=F}
 #load PA data
-load(file.path ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
+load(here::here ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
 
 
 proj_map <-ggplot()+

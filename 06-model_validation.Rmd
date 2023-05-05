@@ -53,18 +53,13 @@ install_load_function(requiredPackages)
 
 We define some overall settings.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# Location of script
-setwd(dirname(getSourceEditorContext()$path))
-
 # General settings for ggplot (black-white background, larger base_size)
 theme_set(theme_bw(base_size = 16))
 ```
 
 We load output from the selected model saved in the previous step.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-setwd(dirname(getSourceEditorContext()$path))
-
-load(file.path ("models", "selected_model.Rdata"))
+load(here::here ("models", "selected_model.Rdata"))
 ```
 
 ## Optimum threshold

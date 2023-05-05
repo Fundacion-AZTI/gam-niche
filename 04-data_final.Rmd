@@ -3,7 +3,7 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-## Prepare the final dataset
+# Prepare the final dataset
 
 In this chapter we first, extract environmental data associated to the presence-pseudoabsence data, we explore the data we got, we check correlation between variables and we calculate the Variance Inflation Factor (VIF) to make a selection of the variables we are going to use in the model. 
 
@@ -43,9 +43,6 @@ install_load_function(requiredPackages)
 
 We define some overall settings.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# Location of script
-setwd(dirname(getSourceEditorContext()$path))
-
 # General settings for ggplot (black-white background, larger base_size)
 theme_set(theme_bw(base_size = 16))
 ```
@@ -59,10 +56,10 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.width=16, fig.height
 Once we have prepared our species distribution data (occurrences and pseudo-absences) and the environmental rasters, we need to merge both sources of data. First, we load the objects created in previous sections:
 ```{r, eval=T,message=FALSE,warning=FALSE}
 #load presence-absence data
-load("data/outputs_for_modelling/PAdata.RData")
+load(here::here ("data", "outputs_for_modelling", "PAdata.RData"))
 
 # load environmental rasters
-mylayers<-stack("data/env/mylayers.tif")
+mylayers<-stack(here::here ("data", "env", "mylayers.tif"))
 ```
 
 Now we can extract the environmental data associated to each of the species data points using the function `extract` from the `raster` package. The method employed is `bilinear` that returns the interpolated value from the four nearest raster cells.
