@@ -157,8 +157,7 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">gam-niche</a></li>
+<li><a href="./"><img src="images/logo_gam_niche.jpg" width="250"></a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
@@ -71206,7 +71205,7 @@ TRUE
 ## max values :        5.394896,           40.651300,  0.972000,  32.918000</code></pre>
 <p>And we can plot it:</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="environmental-data.html#cb51-1" aria-hidden="true" tabindex="-1"></a>raster<span class="sc">::</span><span class="fu">plot</span>(myBioracle.layers)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>Note that the functions <code>dataset_citations</code> and <code>layer_citations</code> provide the bibliographic entries of the datasets and layers for proper citation:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="environmental-data.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dataset_citations</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \&quot;Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 &lt;https://doi.org/10.1111/geb.12693&gt;.&quot;                                 
@@ -71221,7 +71220,7 @@ TRUE
 <span id="cb56-3"><a href="environmental-data.html#cb56-3" aria-hidden="true" tabindex="-1"></a>mylayers <span class="ot">&lt;-</span> <span class="fu">crop</span>(myBioracle.layers, <span class="fu">extent</span>(study_area))</span>
 <span id="cb56-4"><a href="environmental-data.html#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-5"><a href="environmental-data.html#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mylayers)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p>To facilitate subsequent access, the rasterStack with the downloaded data is saved in a local folder:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="environmental-data.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(mylayers, <span class="at">filename=</span><span class="st">&quot;data/env/mylayers.tif&quot;</span>, <span class="at">options=</span><span class="st">&quot;INTERLEAVE=BAND&quot;</span>, <span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 

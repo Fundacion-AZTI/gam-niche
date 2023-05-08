@@ -157,8 +157,7 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">gam-niche</a></li>
+<li><a href="./"><img src="images/logo_gam_niche.jpg" width="250"></a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
@@ -292,7 +291,7 @@ div.csl-indent {
 <span id="cb5-10"><a href="presence-absence-data.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load FAO (spatial multipolygon)</span></span>
 <span id="cb5-11"><a href="presence-absence-data.html#cb5-11" aria-hidden="true" tabindex="-1"></a>FAO<span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;FAO_AREAS.shp&quot;</span>))</span></code></pre></div>
 <pre><code>## Reading layer `FAO_AREAS&#39; from data source 
-##   `D:\PROJECTS\github\gam-niche\data\spatial\FAO_AREAS.shp&#39; using driver `ESRI Shapefile&#39;
+##   `C:\use\GitHub\gam-niche\data\spatial\FAO_AREAS.shp&#39; using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 50 features and 15 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
@@ -315,7 +314,7 @@ div.csl-indent {
 <span id="cb7-15"><a href="presence-absence-data.html#cb7-15" aria-hidden="true" tabindex="-1"></a>study_area<span class="ot">&lt;-</span> sf<span class="sc">:::</span><span class="fu">as_Spatial</span>(FAO_Atl_no_black_sea)</span>
 <span id="cb7-16"><a href="presence-absence-data.html#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-17"><a href="presence-absence-data.html#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(study_area)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="presence-absence-data.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unused files</span></span>
 <span id="cb8-2"><a href="presence-absence-data.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(FAO, FAO_Atl, FAO_Atl.sf, FAO_Atl_no_black_sea, Black_Sea, Black_Sea.sf)</span></code></pre></div>
 <p>Download occurrence data from OBIS and GBIF using scientific name.</p>
@@ -594,7 +593,7 @@ div.csl-indent {
 <span id="cb20-3"><a href="presence-absence-data.html#cb20-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">group =</span> group),</span>
 <span id="cb20-4"><a href="presence-absence-data.html#cb20-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&#39;gray&#39;</span>, <span class="at">linewidth =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb20-5"><a href="presence-absence-data.html#cb20-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">data=</span>df0, <span class="fu">aes</span>(<span class="at">x=</span>LON, <span class="at">y=</span>LAT)) </span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>And, we save the data.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="presence-absence-data.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(df0, <span class="at">file =</span> <span class="st">&quot;data/occurrences/occ.RData&quot;</span>)</span>
 <span id="cb21-2"><a href="presence-absence-data.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(study_area, <span class="at">file =</span> <span class="st">&quot;data/spatial/study_area.RData&quot;</span>)</span></code></pre></div>
@@ -649,7 +648,7 @@ div.csl-indent {
 <span id="cb25-3"><a href="presence-absence-data.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span><span class="fu">st_union</span>(df.sf),</span>
 <span id="cb25-4"><a href="presence-absence-data.html#cb25-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size=</span><span class="dv">1</span>,</span>
 <span id="cb25-5"><a href="presence-absence-data.html#cb25-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>We save a base plot (p0) with the world map and our area of study in blue.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="presence-absence-data.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic ggplot</span></span>
 <span id="cb26-2"><a href="presence-absence-data.html#cb26-2" aria-hidden="true" tabindex="-1"></a>global <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&quot;worldHires&quot;</span>)</span>
@@ -659,7 +658,7 @@ div.csl-indent {
 <span id="cb26-6"><a href="presence-absence-data.html#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>study_area.sf,<span class="at">fill=</span><span class="dv">5</span>)</span>
 <span id="cb26-7"><a href="presence-absence-data.html#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-8"><a href="presence-absence-data.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p0)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>In order to generate a buffer around each occurrence data point, we need to work with euclidean distances, so first, we need to transform the decimal latitude and longitude values to UTM.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="presence-absence-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to find your UTM. </span></span>
 <span id="cb27-2"><a href="presence-absence-data.html#cb27-2" aria-hidden="true" tabindex="-1"></a>lonlat2UTM <span class="ot">=</span> <span class="cf">function</span>(lonlat) {</span>
@@ -688,13 +687,13 @@ div.csl-indent {
 <span id="cb30-9"><a href="presence-absence-data.html#cb30-9" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span></span>
 <span id="cb30-10"><a href="presence-absence-data.html#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>aux0,<span class="at">fill=</span><span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb30-11"><a href="presence-absence-data.html#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>buffer,<span class="at">fill=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="presence-absence-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#zoom</span></span>
 <span id="cb31-2"><a href="presence-absence-data.html#cb31-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span></span>
 <span id="cb31-3"><a href="presence-absence-data.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>aux0,<span class="at">fill=</span><span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb31-4"><a href="presence-absence-data.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>buffer,<span class="at">fill=</span><span class="dv">2</span>)<span class="sc">+</span></span>
 <span id="cb31-5"><a href="presence-absence-data.html#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">95</span>,<span class="sc">-</span><span class="dv">82</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">22</span>,<span class="dv">31</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
 <p>We create a data frame for pseudo-absences with the same dimensions as the presences data frame.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="presence-absence-data.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the pseudo-absence data frame</span></span>
 <span id="cb32-2"><a href="presence-absence-data.html#cb32-2" aria-hidden="true" tabindex="-1"></a>pseudo <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span><span class="fu">dim</span>(df0)[<span class="dv">1</span>], <span class="at">ncol=</span><span class="fu">dim</span>(df0)[<span class="dv">2</span>])</span>
@@ -721,14 +720,14 @@ div.csl-indent {
 <span id="cb34-2"><a href="presence-absence-data.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>rp.sf, <span class="at">col=</span><span class="dv">6</span>, <span class="at">shape=</span><span class="dv">4</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb34-3"><a href="presence-absence-data.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>df.sf.utm, <span class="at">col=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.8</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb34-4"><a href="presence-absence-data.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">unique</span>(df<span class="sc">$</span>scientificName))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="presence-absence-data.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zoom</span></span>
 <span id="cb35-2"><a href="presence-absence-data.html#cb35-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="sc">+</span></span>
 <span id="cb35-3"><a href="presence-absence-data.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>rp.sf, <span class="at">col=</span><span class="dv">6</span>, <span class="at">shape=</span><span class="dv">4</span>,<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb35-4"><a href="presence-absence-data.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>df.sf.utm, <span class="at">col=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.8</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb35-5"><a href="presence-absence-data.html#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">95</span>,<span class="sc">-</span><span class="dv">82</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">31</span>))<span class="sc">+</span></span>
 <span id="cb35-6"><a href="presence-absence-data.html#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="fu">unique</span>(df<span class="sc">$</span>scientificName))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
 <p>Finally we join the presence and pseudo-absence data frames selecting the columns of interest and save the new data frame.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="presence-absence-data.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join the two data sets </span></span>
 <span id="cb36-2"><a href="presence-absence-data.html#cb36-2" aria-hidden="true" tabindex="-1"></a>PAdata <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df0, pseudo)[,<span class="fu">c</span>(<span class="st">&quot;scientificName&quot;</span>,<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>,<span class="st">&quot;YEAR&quot;</span>,<span class="st">&quot;occurrenceStatus&quot;</span>)]</span>

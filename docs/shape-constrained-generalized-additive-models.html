@@ -157,8 +157,7 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-<li><a href="./">gam-niche</a></li>
+<li><a href="./"><img src="images/logo_gam_niche.jpg" width="250"></a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
@@ -300,7 +299,7 @@ div.csl-indent {
 ## R-sq.(adj) =  0.2607   Deviance explained = 23.1%
 ## UBRE score = 0.066363  Scale est. = 1         n = 29661</code></pre>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="shape-constrained-generalized-additive-models.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(model_sst,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="1536" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="1536" /></p>
 <p>We repeat the same steps for the rest of the variables.</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="shape-constrained-generalized-additive-models.html#cb102-1" aria-hidden="true" tabindex="-1"></a>model_chl <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO2_chlomean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data)</span>
 <span id="cb102-2"><a href="shape-constrained-generalized-additive-models.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_chl)</span></code></pre></div>
@@ -327,7 +326,7 @@ div.csl-indent {
 ## R-sq.(adj) =  0.1546   Deviance explained = 12.4%
 ## UBRE score = 0.21423  Scale est. = 1         n = 29661</code></pre>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="shape-constrained-generalized-additive-models.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(model_chl,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="1536" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="1536" /></p>
 <p>Due to convergence issues, sometimes it is necessary to fix the smoothing parameter (sp) at small value, i.e. <span class="math inline">\(10^{-5}\)</span>, as here when introducing salinity as an explanatory variable. If no value is provided, the smoothing parameter is estimated within the model.</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="shape-constrained-generalized-additive-models.html#cb105-1" aria-hidden="true" tabindex="-1"></a>model_sal <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO2_salinitymean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data,<span class="at">sp=</span><span class="fl">0.00001</span>)</span>
 <span id="cb105-2"><a href="shape-constrained-generalized-additive-models.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_sal)</span></code></pre></div>
@@ -353,7 +352,7 @@ div.csl-indent {
 ## R-sq.(adj) =  0.0514   Deviance explained = 4.38%
 ##   Scale est. = 1         n = 29661</code></pre>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="shape-constrained-generalized-additive-models.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(model_sal,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="1536" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="1536" /></p>
 <p><strong>MODEL WITH ALL VARIABLES</strong></p>
 <p>Now we fit the model including the three selected variables.</p>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="shape-constrained-generalized-additive-models.html#cb108-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO_sstmean, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>)<span class="sc">+</span> <span class="fu">s</span>(BO2_salinitymean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>)<span class="sc">+</span><span class="fu">s</span>(BO2_chlomean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data,<span class="at">sp=</span><span class="fu">rep</span>(<span class="fl">0.00001</span>,<span class="dv">3</span>))</span>
@@ -383,11 +382,11 @@ div.csl-indent {
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="shape-constrained-generalized-additive-models.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotmo</span>(model,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
 <pre><code>##  plotmo grid:    BO_sstmean BO2_salinitymean_ss BO2_chlomean_ss
 ##                    18.89921            35.42666       0.2452632</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="1536" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="1536" /></p>
 <p>We can see in the summary of the fit, that all included variables are statistically significant (with p&lt;0.05) and present a unimodal response curve.</p>
 <p>For a more detailed check of the fitting, we can use the scam.check function:</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="shape-constrained-generalized-additive-models.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scam.check</span>(model)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="1536" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-65-1.png" width="1536" /></p>
 <pre><code>## 
 ## Method: UBRE   Optimizer: NA newton
 ## The optimal smoothing parameter(s): 1e-05 1e-05 1e-05 .</code></pre>
@@ -426,22 +425,22 @@ div.csl-indent {
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="shape-constrained-generalized-additive-models.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span></code></pre></div>
 <pre><code>## $null
 ## occurrenceStatus ~ 1
-## &lt;environment: 0x0000022b10b7d838&gt;
+## &lt;environment: 0x0000029f317aa638&gt;
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000022b10b7d838&gt;
+## &lt;environment: 0x0000029f317aa638&gt;
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000022b10b7d838&gt;
+## &lt;environment: 0x0000029f317aa638&gt;
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000022b10b7d838&gt;</code></pre>
+## &lt;environment: 0x0000029f317aa638&gt;</code></pre>
 <p>Summaries of the fitted models:</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="shape-constrained-generalized-additive-models.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
 <pre><code>## $null
@@ -451,7 +450,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1
-## &lt;environment: 0x0000022b10b7d838&gt;
+## &lt;environment: 0x0000029f317aa638&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -469,7 +468,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000022b10b7d838&gt;
+## &lt;environment: 0x0000029f317aa638&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -495,7 +494,7 @@ div.csl-indent {
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000022b10b7d838&gt;
+## &lt;environment: 0x0000029f317aa638&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -521,7 +520,7 @@ div.csl-indent {
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000022b10b7d838&gt;
+## &lt;environment: 0x0000029f317aa638&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
