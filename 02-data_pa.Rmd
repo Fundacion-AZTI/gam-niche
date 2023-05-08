@@ -5,7 +5,7 @@ editor_options:
 ---
 # Presence-absence data
 
-In this chapter we first, download occurrence data from global open-access datasets such as Global Biodiversity Information Facility (GBIF, https://www.gbif.org/) and Ocean Biodiversity Information System (OBIS, https://obis.org/); second, clean downloaded data reformating, renaming fields and removing outliers data; and lastly, we generate a set of pseudoabsence points along our study area. 
+In this chapter we first, download occurrence data from global open-access datasets such as Global Biodiversity Information Facility (GBIF, https://www.gbif.org/) and Ocean Biodiversity Information System (OBIS, https://obis.org/); second, clean downloaded data reformating, renaming fields and removing outliers data; and lastly, we generate a set of pseudoabsence points along the defined study area. 
 
 First we load a list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
@@ -64,7 +64,7 @@ theme_set(theme_bw(base_size = 16))
 
 In this section we download presence data from global public datasets. 
 
-To do so, we first define our study area, in this case we select the Atlantic ocean based on the The Food and Agriculture Organization (FAO) Major Fishing Areas for Statistical Purposes and we remove Black sea subarea.   
+To do so, we first define a study area, in this case we select the Atlantic Ocean based on the The Food and Agriculture Organization (FAO) Major Fishing Areas for Statistical Purposes and we remove Black Sea subarea.   
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # url where FAO shapfile is stored
 url<-"https://www.fao.org/fishery/geoserver/area/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=area%3AFAO_AREAS&maxFeatures=50&outputFormat=SHAPE-ZIP"
@@ -81,7 +81,7 @@ FAO<- st_read(file.path("data", "spatial", "FAO_AREAS.shp"))
 # Select Atlantic Ocean FAO Area 
 FAO_Atl <- FAO[FAO$OCEAN=="Atlantic",]
 
-# Select Black sea subarea 
+# Select Black Sea subarea 
 Black_Sea <- FAO_Atl[FAO_Atl$ID=="20",]
 
 # Transform to sf objects
@@ -177,10 +177,7 @@ We now clean downloaded raw data.
   mydata.fus$date_year <- as.numeric(mydata.fus$date_year)
   mydata.fus$month <- as.numeric(mydata.fus$month)
 
-# Mutate occurrenceStatus column giving them a value of 1
-unique (mydata.fus$occurrenceStatus)
-
-# Assign 1 value to all occurrences
+# Assign 1 value to occurrenceStatus
 mydata.fus <- mydata.fus  %>% 
     dplyr::mutate(occurrenceStatus = 1)
 ```
@@ -223,7 +220,6 @@ coordinates(ptos) <- ~ X1 + X2
 proj4string(ptos) <-proj4string(study_area)
   
 # Select only occurrences from FAO Atlantic
-
 match2<-data.frame(subset(mydata.fus,!is.na(over(ptos, study_area)[,1])))
   
 # Extract the FAO area of each point
@@ -263,27 +259,30 @@ save(study_area, file = "data/spatial/study_area.RData")
 
 ## Create pseudo-absence data
 
-After saving presence data for the species of interest we need to generate absence data (with a constant prevalence of 50%, @mcpherson_2004,@barbetmassin_etal_2012), in order to work with logistic regression SDM afterwards. For that, we generate a buffer around each presence data point, with a radius of 100km, where no absences can be generated. 
+After saving presence data for the species of interest we need to generate absence information in order to work with logistic regression SDM afterwards. In this case we create pseudo-absence data with a constant prevalence of 50% [@mcpherson_2004]; [@barbetmassin_etal_2012].
 
-Before starting the pseudo-absence generation process, we delete observations in land (positive bathymetry) and select data between 2000 and 2014 (same temporal range as the environmental data that we will load later).
+For that, we generate a buffer around each presence data point, with a radius of 100km, where no points can be generated. 
+
+Before starting the pseudo-absence generation process, we delete observations in land (positive bathymetry) and select data between 2000 and 2014 (same temporal range as the environmental data that we will download later).
 ```{r,  eval=T,message=FALSE,warning=FALSE}
-#remove points in land
+# Remove points in land
 df0<-subset(df0,bathymetry<0)
 
-#use years from 2000 to 2014
+# Select only years from 2000 to 2014
 df0<- subset(df0, YEAR<=2014 & YEAR>=2000)
 
 ```
 
-Then we transform the presence data frame to "SpatialPointsDataFrame" class object and the to "sf" class object so we can operate and plot easily with spatial data. We can see the characteristics of this object through its summary.
+Then we transform the presence data frame to "SpatialPointsDataFrame" class object and to "sf" class object so we can operate and plot easily with spatial data tools. We can see the characteristics of the object through its summary.
 ```{r,  eval=T,message=FALSE,warning=FALSE}
-#convert to spatial point data frame
+# Convert to spatial point data frame
 df<-df0 ; coordinates(df)<- ~LON+LAT
 crs(df)<-crs(study_area)
 
-#convert to sf
-study_area.sf<-st_union(st_as_sf(study_area))
+# Convert to sf
 df.sf<-st_as_sf(df)
+study_area.sf<-st_union(st_as_sf(study_area))
+
 
 summary(df)
 ```
@@ -299,7 +298,7 @@ ggplot(study_area.sf) +
 
 We save a base plot (p0) with the world map and our area of study in blue.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# basic ggplot
+# Basic ggplot
 global <- map_data("worldHires")
 
 p0 <- ggplot() + 
@@ -311,7 +310,7 @@ print(p0)
 
 In order to generate a buffer around each occurrence data point, we need to work with euclidean distances, so first, we need to transform the decimal latitude and longitude values to UTM.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# function to find your UTM. 
+# Function to find your UTM. 
 lonlat2UTM = function(lonlat) {
   utm = (floor((lonlat[1] + 180) / 6) %% 60) + 1
   if(lonlat[2] > 0) {
@@ -323,18 +322,18 @@ lonlat2UTM = function(lonlat) {
 
 (EPSG_2_UTM <- lonlat2UTM(c(mean(df$LON), mean(df$LAT))))
 
-# transform study_area and data points to UTMs (in m)
+# Transform study_area and data points to UTMs (in m)
 aux <- st_transform(study_area.sf, EPSG_2_UTM)
 df.sf.utm <- st_transform(df.sf, EPSG_2_UTM)
 ```
 
 Now, we can create buffers of 100 km around the points and join the resulting polygons. Then this buffer is intersected with the area of study defining the area where the pseudo-absences can be generated. To visualize the defined areas, we plot the buffers in red and the area that we will use to generate pseudo-absences in green.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# create buffers of 100000m
+# Create buffers of 100000m
 buffer <- st_buffer(df.sf.utm, dist=100000)
 buffer <- st_union(buffer)
 
-# intersect the are with the buffer
+# Intersect the are with the buffer
 aux0 <- st_difference(aux, buffer)
 
 # ggplot for all data
@@ -359,19 +358,19 @@ names(pseudo) <- names(df0)
 
 To generate the pseudo-absence data points, we sample randomly from the defined area and we extract their latitude and longitude to incorporate them in the created data frame. We set the occurrenceStatus equal to 0 as they are absences.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# set the seed
+# Set the seed
 set.seed(1)
 
-#sample from the defined area
+# Sample from the defined area
 rp.sf <- st_sample(aux0, size=dim(df.sf.utm)[1], type="random") # randomly sample points
 
-# transform to lat and lon and extract coordinates as data.frame
+# Transform to lat and lon and extract coordinates as data.frame
 rp.sf <- st_transform(rp.sf, 4326)
 rp <- as.data.frame(st_coordinates(rp.sf)) 
 pseudo$LON <- rp$X
 pseudo$LAT <- rp$Y
 
-# complete the rest of columns
+# Complete the rest of columns
 pseudo$scientificName <- df0$scientificName
 pseudo$occurrenceStatus  <- 0
 ```
@@ -383,7 +382,7 @@ p0 +
   geom_sf(data=df.sf.utm, col=1, alpha=0.8,size=0.5)+
   ggtitle(unique(df$scientificName))
 
-#zoom
+# Zoom
 p0 +
   geom_sf(data=rp.sf, col=6, shape=4,size=1)+
   geom_sf(data=df.sf.utm, col=1, alpha=0.8,size=0.5)+
@@ -391,7 +390,7 @@ p0 +
   ggtitle(unique(df$scientificName))
 ```
 
-Finally we join the presence and pseudo-absence data frames selecting the columns of interest and save the new data frame as well as the area object.
+Finally we join the presence and pseudo-absence data frames selecting the columns of interest and save the new data frame.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # Join the two data sets 
 PAdata <- rbind(df0, pseudo)[,c("scientificName","LON","LAT","YEAR","occurrenceStatus")]

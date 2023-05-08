@@ -5,9 +5,9 @@ editor_options:
 ---
 # Prepare the final dataset
 
-In this chapter we first, extract environmental data associated to the presence-pseudoabsence data, we explore the data we got, we check correlation between variables and we calculate the Variance Inflation Factor (VIF) to make a selection of the variables we are going to use in the model. 
+In this chapter we first, extract environmental data associated to the presence/pseudo-absence data, we explore the data we got, we check correlation between variables and we calculate the Variance Inflation Factor (VIF) to make a selection of the variables we are going to use in the model. 
 
-First we load a list of required libraries.
+First, we load a list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
   #GENERAL USE LIBRARIES --------#
@@ -51,14 +51,14 @@ theme_set(theme_bw(base_size = 16))
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.width=16, fig.height=12)
 ```
 
-## Extract environmental data associated to presence-absence data
+## Extract environmental data associated to species distribution data
 
 Once we have prepared our species distribution data (occurrences and pseudo-absences) and the environmental rasters, we need to merge both sources of data. First, we load the objects created in previous sections:
 ```{r, eval=T,message=FALSE,warning=FALSE}
-#load presence-absence data
+# Load presence-absence data
 load(here::here ("data", "outputs_for_modelling", "PAdata.RData"))
 
-# load environmental rasters
+# Load environmental rasters
 mylayers<-stack(here::here ("data", "env", "mylayers.tif"))
 ```
 
@@ -71,7 +71,7 @@ colnames(raster_ex)[-1]<-c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean"
 head(raster_ex)
 ```
 
-We merge the presence/absence data and the environmental data: 
+We merge the presence/pseudo-absence data and the environmental data: 
 ```{r, eval=T,message=FALSE,warning=FALSE}
 data <- cbind(PAdata, raster_ex)
 ```
@@ -127,11 +127,10 @@ ggplot(data=tmp, aes(x=value)) +
   facet_wrap(~name, scales="free")
 ```
 
-## Exploratory plots of environmental variables depending on presence/absence data
+## Exploratory plots of environmental variables depending on species distribution data
 
-To analyse if there are preferences for certain ranges of the environmental variables, we compare the distribution of the environmental variables for presence and absence data:   
+To analyse if there are preferences for certain ranges of the environmental variables, we compare the distribution of the environmental variables for presence and pseudo-absence data:   
 ```{r, eval=T,message=FALSE,warning=FALSE}
-
 tmp <- data[, c("LON", "LAT", "BO2_chlomean_ss","BO2_salinitymean_ss","BO_damean","BO_sstmean","occurrenceStatus")]
 tmp <- pivot_longer(data=tmp, cols=!occurrenceStatus) 
 
@@ -174,22 +173,21 @@ Furthermore, multicollinearity in regression analysis can be explored using the 
 
 There are several packages in `R` that allows to calculate the VIF statistics. In this case we use the package `HH`: 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# select variables for VIF calculation
+# Select variables for VIF calculation
 v.table <- data %>% 
   dplyr::select (BO2_salinitymean_ss, BO_sstmean, BO2_chlomean_ss, BO_damean)
 
-# get VIF results
+# Get VIF results
 out.vif <- vif(v.table)
 sort(out.vif)
 ```
 
 We remove the variable that has the highest VIF value and we test again the multicollinearity: 
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
 v.table <- v.table %>% 
   dplyr::select (-BO_damean)
 
-#  get new VIF results
+# Get new VIF results
 out.vif <- vif(v.table)
 sort(out.vif)
 ```
@@ -199,7 +197,7 @@ Now all the variables have VIF values that are acceptable. So, we proceed to rem
 data <- data %>% dplyr::select (-BO_damean)
 ```
 
-We save the dataset as our output for modelling
+We save the dataset as our output for modelling.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 save(list="data", file="data/outputs_for_modelling/PAdata_with_env.RData")
 ```

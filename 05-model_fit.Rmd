@@ -9,7 +9,7 @@ In order to fit SDM in agreement with the ecological niche theory, the proposed 
 
 Alternatively, the R package `mboost` fits SC-GAMs using boosting methods. We are not going to develop this alternative here.
 
-First we load the list of required libraries.
+First, we load the list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
   #GENERAL USE LIBRARIES --------#
@@ -48,7 +48,7 @@ install_load_function(requiredPackages)
 
 ```
 
-Install and load SDMTools. You need to manually install RTools installed: https://cran.r-project.org/bin/windows/Rtools/history.html 
+Install and load SDMTools. You need to manually install RTools: https://cran.r-project.org/bin/windows/Rtools/history.html 
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # find_rtools()
 # 
@@ -65,7 +65,6 @@ theme_set(theme_bw(base_size = 16))
 ## Model fit
 
 We set the working directory to the folder where the current script is located and we load the dataset (PAdata_with_env.Rdata) containing the presence-absence data together with the environmental data.
-
 ```{r, eval=T,message=FALSE,warning=FALSE}
 load(here::here ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
 ```

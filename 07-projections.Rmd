@@ -7,7 +7,7 @@ editor_options:
 
 In this chapter we predict from the fitted model and produce final SDMs maps.
 
-First we load a list of required libraries.
+First, we load a list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
   #GENERAL USE LIBRARIES --------#
@@ -69,10 +69,10 @@ names(env_dataframe) <- c("x", "y", "BO2_chlomean_ss", "BO2_salinitymean_ss", "B
 
 We load the selected model and predict into the whole environmental data. 
 ```{r, eval=T, warning=F, message=F}
-#Load SC-GAM model
+# Load SC-GAM model
 load(here::here("models", "selected_model.Rdata"))
 
-# predicting 
+# Predicting 
 predict <- predict(selected_model,newdata=env_dataframe,type ="response",se.fit=T)         
 
 env_dataframe$fit<-predict$fit
@@ -84,7 +84,7 @@ save(env_dataframe, file="results/projection.Rdata")
 ## Mapping
 
 ```{r, eval=T, warning=F, message=F}
-#load PA data
+# Load PA data
 load(here::here ("data", "outputs_for_modelling", "PAdata_with_env.Rdata"))
 
 

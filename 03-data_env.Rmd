@@ -7,7 +7,7 @@ editor_options:
 
 In this chapter we first, download environmental data from a public repository; second, we crop the data to our area of interest, and we save it as raster stack. 
 
-As in chapter 2, first, we load a list of required libraries.
+As in Chapter 2, first, we load a list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
   #GENERAL USE LIBRARIES --------#
@@ -47,7 +47,7 @@ theme_set(theme_bw(base_size = 16))
 ## Download from public repositories
 
 Environmental data can be available from different sources. In this case, we used the Bio-ORACLE (ocean
-rasters for analyses of climate and environment) database [@tyberghein_etal_2012; @assis_etal_2017]. These data are publicly available and are easily accessible from the `sdmpredictors` package [`sdmpredictors`](https://cran.r-project.org/web/packages/sdmpredictors/index.html). 
+rasters for analyses of climate and environment) database [@tyberghein_etal_2012; @assis_etal_2017]. These data are publicly available and are easily accessible from the [`sdmpredictors` package](https://cran.r-project.org/web/packages/sdmpredictors/index.html). 
 
 We can check the list of available datasets with the function `list_datasets` from `sdmpredictors` package, as follows: 
 ```{r, eval=T,message=FALSE,warning=FALSE}
@@ -57,6 +57,7 @@ kable(mydat)%>%
   kable_styling("striped") %>% 
   scroll_box(height="600px", width = "100%")
 ```
+
 
 By default this function returns all the supported datasets. To return only marine datasets we can set the `marine` argument equal to `TRUE` or equivalently we could set the `terrestrial` and `freshwater` arguments equal to `FALSE`:
 ```{r, eval=T,message=FALSE,warning=FALSE}
@@ -74,6 +75,7 @@ kable(mytab)%>%
   kable_styling("striped") %>% 
   scroll_box(height="600px", width = "100%")
 ```
+
 
 Once we identify the dataset and the layers we are interested on, we can extract their details from the list. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient and sea surface temperature.
 ```{r, eval=T,message=FALSE,warning=FALSE}

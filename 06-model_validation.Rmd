@@ -8,7 +8,7 @@ editor_options:
 
 In this section, model validation is performed in order to assess the predictive performance of the selected model. This validation is conducted via k-fold cross-validation. The data set is divided into k equally sized groups [@hijmans_2012], using a percentage of randomly selected observations to run the model and the remaining for validation, iteratively for each fold. 
 
-First we load the list of required libraries.
+First, we load the list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
   #GENERAL USE LIBRARIES --------#
@@ -66,93 +66,94 @@ load(here::here ("models", "selected_model.Rdata"))
 
 We generate a data frame with the data used in the selected model and we add the predicted values.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-  #PAdata_enviroment used in the selected model
-  data<-selected_model$model
+#PAdata_enviroment used in the selected model
+data<-selected_model$model
 
-  # Predict 
-  scgam.pred <- predict(selected_model, newdata=data, type="response")
+# Predict 
+scgam.pred <- predict(selected_model, newdata=data, type="response")
   
-  # Add the prediction to the data object
-  data$scgam.pred <- as.vector(scgam.pred)
-  head(data)
+# Add the prediction to the data object
+data$scgam.pred <- as.vector(scgam.pred)
+head(data)
 ``` 
 
 The threshold for presence-absence classification for each species is obtained as the values maximizing sensitivity plus specificity [@jimenez_etal_2007]. If the result was a range (instead of a single value), we would select the mean value of the range. 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-  # Optimizing the threshold probability
-  obs <- data$occurrenceStatus
-  predSCGAM_P <- data$scgam.pred
+# Optimizing the threshold probability
+obs <- data$occurrenceStatus
+predSCGAM_P <- data$scgam.pred
   
-  # threshold optimizing
-  myoptim <- optim.thresh (obs,predSCGAM_P)
-  myoptim
+# Threshold optimizing
+myoptim <- optim.thresh (obs,predSCGAM_P)
+myoptim
   
-  # select the threshold that maximizes the sum of sensitivity and specificity 
-  myThreshold <- as.numeric((myoptim[["max.sensitivity+specificity"]]))
+# Select the threshold that maximizes the sum of sensitivity and specificity 
+myThreshold <- as.numeric((myoptim[["max.sensitivity+specificity"]]))
 ```
 
 Accuracy indicators, such as AUC (Area Under the Receiver Operating Characteristic—ROC—curve), sensitivity (true predicted presences) and specificity (true predicted absences) are first computed for the all observations.
 ```{r, eval=T,message=FALSE,warning=FALSE}
-  # Accuracy values with all observations
-  accuracy (obs, predSCGAM_P, threshold=myThreshold)
+# Accuracy values with all observations
+accuracy (obs, predSCGAM_P, threshold=myThreshold)
   
-  # Create confusion matrix with all observations
-  confusion.matrix(obs, predSCGAM_P, threshold=myThreshold)
+# Create confusion matrix with all observations
+confusion.matrix(obs, predSCGAM_P, threshold=myThreshold)
 ```
 
 ## k-fold validation
 
 In this case we use a 5-fold cross-validation. 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-  # Number of groups
-  k <- 5 
-  # Generate groups
-  groups<-kfold(data, k, by=data$occurrencestatus)
+# Number of groups
+k <- 5 
+
+# Generate groups
+groups<-kfold(data, k, by=data$occurrencestatus)
 ```
 
 
 The model is run for each of the 5 random subset (with a 20% of the observations) and indicators are then computed using the remaining 80% of the observations. Indicators are the averaged across folds. 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-  # Initialise the confusion matrix and the accuracy table: 
-  myCM <- NULL 
-  myACC <- NULL
+# Initialise the confusion matrix and the accuracy table: 
+myCM <- NULL 
+myACC <- NULL
   
-  # get the formula of the selected model  
-  formula <- summary(selected_model)[["formula"]]
+# Get the formula of the selected model  
+formula <- summary(selected_model)[["formula"]]
   
-  # get the smoothing parameters of the selected model  
-  sp <- selected_model$sp
+# Get the smoothing parameters of the selected model  
+sp <- selected_model$sp
 
-  # loop for each group k
-  for (j in 1:k) {
-    # Preparation of Training Sites
-    p_Training <- data[groups != j,]
+# Loop for each group k
+for (j in 1:k) {
+  # Preparation of Training Sites
+  p_Training <- data[groups != j,]
+  
+  # Model fit
+  selected_model.sp.j <- scam (formula, family=binomial(link="logit"),data=p_Training, sp=c(sp))
+  
+  # Predict Model
+  p_validacion<-data[groups == j,]
+  
+  selected_model.sp.j.pred <- predict(selected_model.sp.j, newdata=p_validacion, type="response")
+  p_validacion$Pred <- selected_model.sp.j.pred
     
-    # Model fit
-    selected_model.sp.j <- scam (formula, family=binomial(link="logit"),data=p_Training, sp=c(sp))
-    
-    # Predict Model
-    p_validacion<-data[groups == j,]
-    
-    selected_model.sp.j.pred <- predict(selected_model.sp.j, newdata=p_validacion, type="response")
-    p_validacion$Pred <- selected_model.sp.j.pred
-    
-    # Confussion matrix and accuracy table for fold j
-    obs <- p_validacion$occurrenceStatus
-    predSCGAM <- p_validacion$Pred
-    myCM <- rbind(myCM, as.numeric(confusion.matrix(obs, predSCGAM, threshold=myThreshold)))
-    myACC <- rbind(myACC, accuracy(obs, predSCGAM, threshold=myThreshold))
+  # Confussion matrix and accuracy table for fold j
+  obs <- p_validacion$occurrenceStatus
+  predSCGAM <- p_validacion$Pred
+  myCM <- rbind(myCM, as.numeric(confusion.matrix(obs, predSCGAM, threshold=myThreshold)))
+  myACC <- rbind(myACC, accuracy(obs, predSCGAM, threshold=myThreshold))
   } 
   
-  # Mean values across k-folds
-  validation_summary<-cbind(Threshold=myThreshold,
+# Mean values across k-folds
+validation_summary<-cbind(Threshold=myThreshold,
                             mean_AUC=mean(myACC$AUC),
                             mean_Omision=mean(myACC$omission.rate),
                             mean_sensitivity=mean(myACC$sensitivity),
                             mean_specificity=mean(myACC$specificity),
                             mean_Prop.Corr=mean(myACC$prop.correct))
 
-  validation_summary
+validation_summary
 ```
 
 We save the validation summary object.
