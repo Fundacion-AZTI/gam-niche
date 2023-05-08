@@ -12,7 +12,10 @@ link-citations: yes
 github-repo: Fundacion-AZTI/gam-niche
 ---
 
+
 # About {-}
+
+<!-- ![](images/grafica_GAM_NICHE.png) -->
 
 This is a short tutorial for constructing Species Distribution Models in R using Shape-Constrained Generalized Additive Models, based on the development and application to marine fish by @citores_etal_2020.
 
@@ -22,4 +25,8 @@ To cite this book, please use:
 
 Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. https://doi.org/10.57762/fzpy-6w51
 
-
+<!-- the code below is to have an image over the book title -->
+```{js, echo = FALSE}
+title=document.getElementById('header');
+title.innerHTML = '<img src="images/grafica_GAM_NICHE.png" alt="Test Image">' + title.innerHTML
+```

@@ -3,8 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./"><img src="images/AZTI.png" width="200"></a></li>
-        <li><a href="./">gam-niche</a></li>
+        <li><a href="./"><img src="images/logo_gam_niche.jpg" width="250"></a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/Fundacion-AZTI/gam-niche/edit/master/%s
