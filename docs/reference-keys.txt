@@ -20,3 +20,4 @@ prediction-and-maps
 prepare-environmental-data
 projection
 mapping
+acknowledgements
