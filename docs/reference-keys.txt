@@ -5,9 +5,9 @@ create-pseudo-absence-data
 environmental-data
 download-from-public-repositories
 prepare-the-final-dataset
-extract-environmental-data-associated-to-presence-absence-data
+extract-environmental-data-associated-to-species-distribution-data
 exploratory-plots-of-environmental-variables
-exploratory-plots-of-environmental-variables-depending-on-presenceabsence-data
+exploratory-plots-of-environmental-variables-depending-on-species-distribution-data
 correlation-analysis
 variance-inflation-factor-vif
 shape-constrained-generalized-additive-models
