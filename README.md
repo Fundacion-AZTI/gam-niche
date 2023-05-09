@@ -10,7 +10,7 @@ This tutorial has been supported by the European Union’s Horizon 2020 research
 
 To cite this book, please use:
 
-Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. FALTA EL DOI DE AZTI
+Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. AZTI. [https://doi.org/10.57762/fzpy-6w51](https://doi.org/10.57762/fzpy-6w51)
 
 
 

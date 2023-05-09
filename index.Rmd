@@ -23,7 +23,7 @@ The code is available in [AZTI's github repository](https://github.com/Fundacion
 
 To cite this book, please use:
 
-Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. https://doi.org/10.57762/fzpy-6w51
+Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. AZTI. https://doi.org/10.57762/fzpy-6w51
 
 <!-- the code below is to have an image over the book title -->
 ```{js, echo = FALSE}
