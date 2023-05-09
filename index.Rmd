@@ -28,5 +28,5 @@ Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Cons
 <!-- the code below is to have an image over the book title -->
 ```{js, echo = FALSE}
 title=document.getElementById('header');
-title.innerHTML = '<img src="images/grafica_GAM_NICHE.png" alt="Test Image">' + title.innerHTML
+title.innerHTML = '<img src="docs/images/grafica_GAM_NICHE.png" alt="Test Image">' + title.innerHTML
 ```
