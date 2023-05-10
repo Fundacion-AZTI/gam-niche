@@ -1,0 +1,24 @@
+\contentsline {chapter}{About}{5}{chapter*.2}%
+\contentsline {chapter}{\numberline {1}Introduction}{7}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Presence-absence data}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Download presence data}{10}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Create pseudo-absence data}{19}{section.2.2}%
+\contentsline {chapter}{\numberline {3}Environmental data}{27}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Download from public repositories}{28}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Prepare the final dataset}{35}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Extract environmental data associated to species distribution data}{36}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Exploratory plots of environmental variables}{39}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Exploratory plots of environmental variables depending on species distribution data}{42}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Correlation analysis}{44}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Variance Inflation Factor (VIF)}{46}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Shape Constrained-Generalized Additive Models}{49}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Model fit}{51}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Model selection}{57}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Model validation}{63}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Optimum threshold}{64}{section.6.1}%
+\contentsline {section}{\numberline {6.2}k-fold validation}{66}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Prediction and maps}{69}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Prepare environmental data}{70}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Projection}{71}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Mapping}{71}{section.7.3}%
+\contentsline {chapter}{\numberline {8}Acknowledgements}{73}{chapter.8}%
