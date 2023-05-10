@@ -95,6 +95,8 @@ And we can download them using the function `load_layers`
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # Download layers
 myBioracle.layers <- load_layers(c("BO2_chlomean_ss", "BO2_salinitymean_ss", "BO_damean" ,"BO_sstmean")) 
+
+save (list = "myBioracle.layers", file = "data/env/myBioracle.layers.RData")
 ```
 
 Note that the resulting object is a `rasterStack`, where each variable is a layer
