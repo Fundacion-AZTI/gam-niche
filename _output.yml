@@ -14,7 +14,9 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   #citation_package: biblatex
+  download: 'docs/_main.pdf'
   keep_tex: yes
 bookdown::epub_book: default
+download: 'docs/_main.epub'
 
 
