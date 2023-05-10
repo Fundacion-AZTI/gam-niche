@@ -101,6 +101,8 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
+\usepackage{listings}
+\lstset{breaklines=true}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -3773,22 +3775,22 @@ Formulas of the fitted models:
 \begin{verbatim}
 ## $null
 ## occurrenceStatus ~ 1
-## <environment: 0x000001e7795abf60>
+## <environment: 0x00000200252c1100>
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
-## <environment: 0x000001e7795abf60>
+## <environment: 0x00000200252c1100>
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
-## <environment: 0x000001e7795abf60>
+## <environment: 0x00000200252c1100>
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = "cv", k = 8)
-## <environment: 0x000001e7795abf60>
+## <environment: 0x00000200252c1100>
 \end{verbatim}
 
 Summaries of the fitted models:
@@ -3807,7 +3809,7 @@ Summaries of the fitted models:
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1
-## <environment: 0x000001e7795abf60>
+## <environment: 0x00000200252c1100>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)
@@ -3825,7 +3827,7 @@ Summaries of the fitted models:
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
-## <environment: 0x000001e7795abf60>
+## <environment: 0x00000200252c1100>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
@@ -3851,7 +3853,7 @@ Summaries of the fitted models:
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
-## <environment: 0x000001e7795abf60>
+## <environment: 0x00000200252c1100>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)
@@ -3877,7 +3879,7 @@ Summaries of the fitted models:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = "cv", k = 8)
-## <environment: 0x000001e7795abf60>
+## <environment: 0x00000200252c1100>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)
