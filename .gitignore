@@ -8,8 +8,8 @@ plots/
 
 models/
 
-data/env
+data/env/
 
-data/outputs_for_modelling
+data/outputs_for_modelling/
 
-data/spatial
+data/spatial/
