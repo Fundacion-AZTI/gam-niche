@@ -3,6 +3,15 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
+
+<!-- 
+This file is part of a gitbook that should be cited as: 
+
+Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. AZTI. https://doi.org/10.57762/fzpy-6w51 
+
+This tutorial has been supported by the European Union’s Horizon 2020 research and innovation programme under grant agreements No 862428 MISSION ATLANTIC project
+-->
+
 # Acknowledgements
 
 This tutorial has been supported by the European Union’s Horizon 2020 research and innovation programme under grant agreements No 862428 [MISSION ATLANTIC project](https://missionatlantic.eu/).

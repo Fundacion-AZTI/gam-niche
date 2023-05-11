@@ -1,3 +1,11 @@
+<!-- 
+This file is part of a gitbook that should be cited as: 
+
+Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. AZTI. https://doi.org/10.57762/fzpy-6w51 
+
+This tutorial has been supported by the European Union’s Horizon 2020 research and innovation programme under grant agreements No 862428 MISSION ATLANTIC project
+-->
+
 # Introduction
 
 Species Distribution Models (SDMs) are numerical tools that combine observations of species occurrence or abundance at known locations with information on the environmental and/or spatial characteristics of those locations [@elith_etal_2009]. SDMs are widely used as a tool for understanding species spatial ecology and are also known as ecological niche models (ENM) or habitat suitability models.

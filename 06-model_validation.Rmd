@@ -4,6 +4,14 @@ editor_options:
   chunk_output_type: console
 ---
 
+<!-- 
+This file is part of a gitbook that should be cited as: 
+
+Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. AZTI. https://doi.org/10.57762/fzpy-6w51 
+
+This tutorial has been supported by the European Union’s Horizon 2020 research and innovation programme under grant agreements No 862428 MISSION ATLANTIC project
+-->
+
 # Model validation
 
 In this section, model validation is performed in order to assess the predictive performance of the selected model. This validation is conducted via k-fold cross-validation. The data set is divided into k equally sized groups [@hijmans_2012], using a percentage of randomly selected observations to run the model and the remaining for validation, iteratively for each fold. 
