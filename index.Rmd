@@ -15,11 +15,13 @@ github-repo: Fundacion-AZTI/gam-niche
 
 # About {-}
 
-<!-- ![](images/grafica_GAM_NICHE.png) -->
-
 This is a short tutorial for constructing Species Distribution Models in R using Shape-Constrained Generalized Additive Models, based on the development and application to marine fish by @citores_etal_2020.
 
-The code is available in [AZTI's github repository](https://github.com/Fundacion-AZTI/gam-niche) and the book is readily available [here](https://fundacion-azti.github.io/gam-niche/).
+The code is available in [AZTI's github repository](https://github.com/Fundacion-AZTI/gam-niche) and the book is readily available [here](https://fundacion-azti.github.io/gam-niche/).This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+<img src="images/by-nc-sa.eu.png" width="200">
+
+<!-- ![](images/by-nc-sa.eu.png) -->
 
 To cite this book, please use:
 
