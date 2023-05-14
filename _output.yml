@@ -16,7 +16,7 @@ bookdown::pdf_book:
   #citation_package: biblatex
   download: 'docs/_main.pdf'
   keep_tex: yes
-bookdown::epub_book: default
-download: 'docs/_main.epub'
+# bookdown::epub_book: default
+# download: 'docs/_main.epub'
 
 
