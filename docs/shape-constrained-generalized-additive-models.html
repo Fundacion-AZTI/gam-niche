@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-05-10" />
+<meta name="date" content="2023-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -425,22 +425,22 @@ div.csl-indent {
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="shape-constrained-generalized-additive-models.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span></code></pre></div>
 <pre><code>## $null
 ## occurrenceStatus ~ 1
-## &lt;environment: 0x0000020090550f48&gt;
+## &lt;environment: 0x00000210994d6930&gt;
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000020090550f48&gt;
+## &lt;environment: 0x00000210994d6930&gt;
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000020090550f48&gt;
+## &lt;environment: 0x00000210994d6930&gt;
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000020090550f48&gt;</code></pre>
+## &lt;environment: 0x00000210994d6930&gt;</code></pre>
 <p>Summaries of the fitted models:</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="shape-constrained-generalized-additive-models.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
 <pre><code>## $null
@@ -450,7 +450,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1
-## &lt;environment: 0x0000020090550f48&gt;
+## &lt;environment: 0x00000210994d6930&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -468,7 +468,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000020090550f48&gt;
+## &lt;environment: 0x00000210994d6930&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -494,7 +494,7 @@ div.csl-indent {
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000020090550f48&gt;
+## &lt;environment: 0x00000210994d6930&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -520,7 +520,7 @@ div.csl-indent {
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000020090550f48&gt;
+## &lt;environment: 0x00000210994d6930&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -542,6 +542,13 @@ div.csl-indent {
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="shape-constrained-generalized-additive-models.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="st">&quot;selected_model&quot;</span>, <span class="at">file=</span><span class="st">&quot;models/selected_model.RData&quot;</span>)</span></code></pre></div>
 <p>Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be used also for SC-GAMs.</p>
 
+<!-- 
+This file is part of a gitbook that should be cited as: 
+
+Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. AZTI. https://doi.org/10.57762/fzpy-6w51 
+
+This tutorial has been supported by the European Union’s Horizon 2020 research and innovation programme under grant agreements No 862428 MISSION ATLANTIC project
+-->
 </div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>

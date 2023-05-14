@@ -133,7 +133,7 @@
 
 \title{GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory}
 \author{AZTI}
-\date{2023-05-10}
+\date{2023-05-14}
 
 \begin{document}
 \maketitle
@@ -148,7 +148,7 @@
 
 This is a short tutorial for constructing Species Distribution Models in R using Shape-Constrained Generalized Additive Models, based on the development and application to marine fish by \citet{citores_etal_2020}.
 
-The code is available in \href{https://github.com/Fundacion-AZTI/gam-niche}{AZTI's github repository} and the book is readily available \href{https://fundacion-azti.github.io/gam-niche/}{here}.
+The code is available in \href{https://github.com/Fundacion-AZTI/gam-niche}{AZTI's github repository} and the book is readily available \href{https://fundacion-azti.github.io/gam-niche/}{here}.This work is licensed under a \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)}
 
 To cite this book, please use:
 
@@ -3775,22 +3775,22 @@ Formulas of the fitted models:
 \begin{verbatim}
 ## $null
 ## occurrenceStatus ~ 1
-## <environment: 0x00000200252c1100>
+## <environment: 0x0000022d852afc18>
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
-## <environment: 0x00000200252c1100>
+## <environment: 0x0000022d852afc18>
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
-## <environment: 0x00000200252c1100>
+## <environment: 0x0000022d852afc18>
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = "cv", k = 8)
-## <environment: 0x00000200252c1100>
+## <environment: 0x0000022d852afc18>
 \end{verbatim}
 
 Summaries of the fitted models:
@@ -3809,7 +3809,7 @@ Summaries of the fitted models:
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1
-## <environment: 0x00000200252c1100>
+## <environment: 0x0000022d852afc18>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)
@@ -3827,7 +3827,7 @@ Summaries of the fitted models:
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
-## <environment: 0x00000200252c1100>
+## <environment: 0x0000022d852afc18>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
@@ -3853,7 +3853,7 @@ Summaries of the fitted models:
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
-## <environment: 0x00000200252c1100>
+## <environment: 0x0000022d852afc18>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)
@@ -3879,7 +3879,7 @@ Summaries of the fitted models:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = "cv", k = 8)
-## <environment: 0x00000200252c1100>
+## <environment: 0x0000022d852afc18>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)
