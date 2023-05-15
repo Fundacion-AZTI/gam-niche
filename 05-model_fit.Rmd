@@ -38,7 +38,6 @@ requiredPackages <- c(
   #MODEL FIT --------#
   "scam",
   "plotmo",
-  "SDMTools",
   "pkgbuild",
   "dismo"
   )
@@ -55,14 +54,6 @@ install_load_function <- function(pkg){
 
 install_load_function(requiredPackages)
 
-```
-
-Install and load SDMTools. You need to manually install RTools: https://cran.r-project.org/bin/windows/Rtools/history.html 
-```{r, eval=T,message=FALSE,warning=FALSE}
-# find_rtools()
-# 
-# install.packages("remotes")
-# remotes::install_version("SDMTools", version = "1.1-221.2")
 ```
 
 We define some overall settings.
