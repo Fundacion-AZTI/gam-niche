@@ -6,10 +6,8 @@ results/
 
 plots/
 
-models/
+data/spatial/bathy/
 
-data/env/
+data/spatial/FAO
 
-data/outputs_for_modelling/
-
-data/spatial/
+data/occurrences/
