@@ -2,10 +2,6 @@
 .Rhistory
 .Ruserdata
 
-results/*
-
-plots/*
-
 data/spatial/bathy.RData
 
 data/spatial/FAO_AREAS.cst
