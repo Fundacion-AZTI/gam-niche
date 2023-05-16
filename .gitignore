@@ -2,12 +2,15 @@
 .Rhistory
 .Ruserdata
 
-results/
+results/*
 
-plots/
+plots/*
 
-data/spatial/bathy/
+data/spatial/bathy.RData
 
-data/spatial/FAO
-
-data/occurrences/
+data/spatial/FAO_AREAS.cst
+data/spatial/FAO_AREAS.dbf
+data/spatial/FAO_AREAS.prj
+data/spatial/FAO_AREAS.shp
+data/spatial/FAO_AREAS.shx
+data/spatial/FAO_AREAS.zip
