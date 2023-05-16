@@ -62,7 +62,7 @@ load(here::here ("data", "spatial", "study_area.RData"))
 
 And we load the rasterStack with the downloaded environmental data.
 ```{r, eval=T, warning=F, message=F}
-mylayers<-stack("data/env/mylayers.tif")
+mylayers<-stack(here::here ("data", "env", "mylayers.tif"))
 ```
 
 We transform the environmental data set first into a data frame, and then into a SpatialDataFrame.
