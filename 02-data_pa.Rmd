@@ -82,7 +82,7 @@ url<-"https://www.fao.org/fishery/geoserver/area/ows?service=WFS&version=1.0.0&r
 download.file(url,"data/spatial/FAO_AREAS.zip",mode="wb")
 
 # Unzip downloaded file
-unzip(here::here ("data", "spatial", "FAO_AREAS.zip"),exdir="data/spatial/FAO")
+unzip(here::here ("data", "spatial", "FAO_AREAS.zip"),exdir="data/spatial")
 
 # Load FAO (spatial multipolygon)
 FAO<- st_read(file.path("data", "spatial", "FAO_AREAS.shp"))
@@ -238,7 +238,7 @@ df0<-cbind(F_AREA=match3$F_AREA,match2)[,c("F_AREA","scientificName","decimalLon
 names(df0)[3:5]<-c("LON","LAT","YEAR")
 
 # Add bathymetry from NOAA
-bathy <- marmap::getNOAA.bathy(lon1=-100,lon2=30,lat1=-41,lat2=55, resolution = 1,               keep=TRUE, antimeridian=FALSE, path= here::here("data", "spatial", "bathy"))
+bathy <- marmap::getNOAA.bathy(lon1=-100,lon2=30,lat1=-41,lat2=55, resolution = 1,               keep=TRUE, antimeridian=FALSE, path= here::here("data", "spatial"))
 
 df0$bathymetry <- get.depth(bathy, df0[,c("LON","LAT")], locator=F)$depth
 
