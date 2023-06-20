@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Environmental data | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
   <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Environmental data | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-05-17" />
+<meta name="date" content="2023-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -94,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -381,7 +381,7 @@ FALSE
 <a href="https://www.earthenv.org/streams" class="uri">https://www.earthenv.org/streams</a>
 </td>
 <td style="text-align:left;">
-The dataset consists of near-global, spatially continuous, and freshwater-specific environmental variables in a standardized 1km grid. We delineated the sub-catchment for each grid cell along the HydroSHEDS river network and summarized the upstream environment (climate, topography, land cover, surface geology and soil) to each grid cell using various metrics (average, minimum, maximum, range, sum, inverse distance-weighted average and sum). All variables were subsequently averaged across single lakes and reservoirs of the Global lakes and Wetlands Database that are connected to the river network. Monthly climate variables were summarized into 19 long-term climatic variables following the ÒbioclimÓ framework.
+The dataset consists of near-global, spatially continuous, and freshwater-specific environmental variables in a standardized 1km grid. We delineated the sub-catchment for each grid cell along the HydroSHEDS river network and summarized the upstream environment (climate, topography, land cover, surface geology and soil) to each grid cell using various metrics (average, minimum, maximum, range, sum, inverse distance-weighted average and sum). All variables were subsequently averaged across single lakes and reservoirs of the Global lakes and Wetlands Database that are connected to the river network. Monthly climate variables were summarized into 19 long-term climatic variables following the &lt;d2&gt;bioclim&lt;d3&gt; framework.
 </td>
 <td style="text-align:left;">
 Domisch, S., Amatulli, G., and Jetz, W. (2015) Near-global freshwater-specific environmental variables for biodiversity analyses in 1 km resolution. Scientific Data 2:150073 doi: 10.1038/sdata.2015.73
@@ -1420,7 +1420,7 @@ BO_chlomax
 Chlorophyll A (maximum)
 </td>
 <td style="text-align:left;">
-Chlorophyll A concentration indicates the concentration of photosynthetic pigment chlorophyll A (the most common "“green”" chlorophyll) in oceans. Please note that in shallow water these values may reflect any kind of autotrophic biomass.
+Chlorophyll A concentration indicates the concentration of photosynthetic pigment chlorophyll A (the most common ““green”” chlorophyll) in oceans. Please note that in shallow water these values may reflect any kind of autotrophic biomass.
 </td>
 <td style="text-align:left;">
 FALSE
@@ -1497,7 +1497,7 @@ BO_chlomean
 Chlorophyll A (mean)
 </td>
 <td style="text-align:left;">
-Chlorophyll A concentration indicates the concentration of photosynthetic pigment chlorophyll A (the most common "“green”" chlorophyll) in oceans. Please note that in shallow water these values may reflect any kind of autotrophic biomass.
+Chlorophyll A concentration indicates the concentration of photosynthetic pigment chlorophyll A (the most common ““green”” chlorophyll) in oceans. Please note that in shallow water these values may reflect any kind of autotrophic biomass.
 </td>
 <td style="text-align:left;">
 FALSE
@@ -1574,7 +1574,7 @@ BO_chlomin
 Chlorophyll A (minimum)
 </td>
 <td style="text-align:left;">
-Chlorophyll A concentration indicates the concentration of photosynthetic pigment chlorophyll A (the most common "“green”" chlorophyll) in oceans. Please note that in shallow water these values may reflect any kind of autotrophic biomass.
+Chlorophyll A concentration indicates the concentration of photosynthetic pigment chlorophyll A (the most common ““green”” chlorophyll) in oceans. Please note that in shallow water these values may reflect any kind of autotrophic biomass.
 </td>
 <td style="text-align:left;">
 FALSE
@@ -1651,7 +1651,7 @@ BO_chlorange
 Chlorophyll A (range)
 </td>
 <td style="text-align:left;">
-Chlorophyll A concentration indicates the concentration of photosynthetic pigment chlorophyll A (the most common "“green”" chlorophyll) in oceans. Please note that in shallow water these values may reflect any kind of autotrophic biomass.
+Chlorophyll A concentration indicates the concentration of photosynthetic pigment chlorophyll A (the most common ““green”” chlorophyll) in oceans. Please note that in shallow water these values may reflect any kind of autotrophic biomass.
 </td>
 <td style="text-align:left;">
 FALSE
@@ -71188,7 +71188,9 @@ TRUE
 ## [4] &quot;Sea surface salinity (mean)&quot;</code></pre>
 <p>And we can download them using the function <code>load_layers</code></p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="environmental-data.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download layers</span></span>
-<span id="cb46-2"><a href="environmental-data.html#cb46-2" aria-hidden="true" tabindex="-1"></a>myBioracle.layers <span class="ot">&lt;-</span> <span class="fu">load_layers</span>(<span class="fu">c</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span> ,<span class="st">&quot;BO_sstmean&quot;</span>)) </span></code></pre></div>
+<span id="cb46-2"><a href="environmental-data.html#cb46-2" aria-hidden="true" tabindex="-1"></a>myBioracle.layers <span class="ot">&lt;-</span> <span class="fu">load_layers</span>(<span class="fu">c</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span> ,<span class="st">&quot;BO_sstmean&quot;</span>)) </span>
+<span id="cb46-3"><a href="environmental-data.html#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="environmental-data.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span> (<span class="at">list =</span> <span class="st">&quot;myBioracle.layers&quot;</span>, <span class="at">file =</span> <span class="st">&quot;data/env/myBioracle.layers.RData&quot;</span>)</span></code></pre></div>
 <p>Note that the resulting object is a <code>rasterStack</code>, where each variable is a layer</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="environmental-data.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myBioracle.layers)</span></code></pre></div>
 <pre><code>## [1] &quot;RasterStack&quot;
@@ -71208,11 +71210,11 @@ TRUE
 <p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>Note that the functions <code>dataset_citations</code> and <code>layer_citations</code> provide the bibliographic entries of the datasets and layers for proper citation:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="environmental-data.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dataset_citations</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>))</span></code></pre></div>
-<pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, SerrÃ£o E, De Clerck O, Tittensor D (2018). \&quot;Bioâ\200\220ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi: 10.1111/geb.12693 (URL:\nhttps://doi.org/10.1111/geb.12693).&quot;                             
-## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi: 10.1111/j.1466-8238.2011.00656.x (URL:\nhttps://doi.org/10.1111/j.1466-8238.2011.00656.x).&quot;</code></pre>
+<pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \&quot;Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 &lt;https://doi.org/10.1111/geb.12693&gt;.&quot;                                 
+## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n&lt;https://doi.org/10.1111/j.1466-8238.2011.00656.x&gt;.&quot;</code></pre>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="environmental-data.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">layer_citations</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>))</span></code></pre></div>
-<pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, SerrÃ£o E, De Clerck O, Tittensor D (2018). \&quot;Bioâ\200\220ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi: 10.1111/geb.12693 (URL:\nhttps://doi.org/10.1111/geb.12693).&quot;                             
-## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi: 10.1111/j.1466-8238.2011.00656.x (URL:\nhttps://doi.org/10.1111/j.1466-8238.2011.00656.x).&quot;</code></pre>
+<pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \&quot;Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 &lt;https://doi.org/10.1111/geb.12693&gt;.&quot;                                 
+## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n&lt;https://doi.org/10.1111/j.1466-8238.2011.00656.x&gt;.&quot;</code></pre>
 <p>In case we are not interested on the whole area, we can crop the raster objects to the area of interest.</p>
 <p>For example, we can load the <code>study_area</code> object that is a SpatialPolygonsDataFrame that has been created previously and defines the extent of our spatial data and we can crop the rasterStack to the same extent:</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="environmental-data.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;study_area.RData&quot;</span>))</span>
@@ -71308,7 +71310,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

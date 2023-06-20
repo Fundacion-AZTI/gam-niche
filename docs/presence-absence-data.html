@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Presence-absence data | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
   <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Presence-absence data | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-05-17" />
+<meta name="date" content="2023-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -94,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -291,7 +291,7 @@ div.csl-indent {
 <span id="cb5-10"><a href="presence-absence-data.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load FAO (spatial multipolygon)</span></span>
 <span id="cb5-11"><a href="presence-absence-data.html#cb5-11" aria-hidden="true" tabindex="-1"></a>FAO<span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;FAO_AREAS.shp&quot;</span>))</span></code></pre></div>
 <pre><code>## Reading layer `FAO_AREAS&#39; from data source 
-##   `C:\use\GitHub\gam-niche\data\spatial\FAO_AREAS.shp&#39; using driver `ESRI Shapefile&#39;
+##   `D:\PROJECTS\github\gam-niche\data\spatial\FAO_AREAS.shp&#39; using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 50 features and 15 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
@@ -320,10 +320,14 @@ div.csl-indent {
 <p>Download occurrence data from OBIS and GBIF using scientific name.</p>
 <p>In this case we select Albacore tuna species (<em>Thunnus alalunga</em>).</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="presence-absence-data.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from OBIS</span></span>
-<span id="cb9-2"><a href="presence-absence-data.html#cb9-2" aria-hidden="true" tabindex="-1"></a>mydata.obis<span class="ot">&lt;-</span>robis<span class="sc">::</span><span class="fu">occurrence</span>(<span class="at">scientificname=</span><span class="st">&quot;Thunnus alalunga&quot;</span>)</span>
-<span id="cb9-3"><a href="presence-absence-data.html#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="presence-absence-data.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from GBIF</span></span>
-<span id="cb9-5"><a href="presence-absence-data.html#cb9-5" aria-hidden="true" tabindex="-1"></a>mydata.gbif<span class="ot">&lt;-</span><span class="fu">occ_data</span>(<span class="at">scientificName=</span><span class="st">&quot;Thunnus alalunga&quot;</span>, <span class="at">hasCoordinate =</span> <span class="cn">TRUE</span>, <span class="at">limit=</span><span class="dv">100000</span>)<span class="sc">$</span>data</span></code></pre></div>
+<span id="cb9-2"><a href="presence-absence-data.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#mydata.obis&lt;-robis::occurrence(scientificname=&quot;Thunnus alalunga&quot;)</span></span>
+<span id="cb9-3"><a href="presence-absence-data.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#save(mydata.obis, file=file.path(&quot;data&quot;,&quot;occurrences&quot;,file=&quot;mydata.obis.RData&quot;))</span></span>
+<span id="cb9-4"><a href="presence-absence-data.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;occurrences&quot;</span>, <span class="st">&quot;mydata.obis.RData&quot;</span>))</span>
+<span id="cb9-5"><a href="presence-absence-data.html#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="presence-absence-data.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from GBIF</span></span>
+<span id="cb9-7"><a href="presence-absence-data.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#mydata.gbif&lt;-occ_data(scientificName=&quot;Thunnus alalunga&quot;, hasCoordinate = TRUE, limit=100000)$data</span></span>
+<span id="cb9-8"><a href="presence-absence-data.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#save(mydata.gbif,file=file.path(&quot;data&quot;,&quot;occurrences&quot;,file=&quot;mydata.gbif.RData&quot;))</span></span>
+<span id="cb9-9"><a href="presence-absence-data.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;occurrences&quot;</span>, <span class="st">&quot;mydata.gbif.RData&quot;</span>))</span></code></pre></div>
 <p>We now check the downloaded data and select the fields of interest.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="presence-absence-data.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check names for GBIF data</span></span>
 <span id="cb10-2"><a href="presence-absence-data.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mydata.gbif)</span></code></pre></div>
@@ -450,53 +454,51 @@ div.csl-indent {
 ##  [55] &quot;parvphylumid&quot;                   &quot;node_id&quot;                       
 ##  [57] &quot;flags&quot;                          &quot;sss&quot;                           
 ##  [59] &quot;shoredistance&quot;                  &quot;sst&quot;                           
-##  [61] &quot;bathymetry&quot;                     &quot;sex&quot;                           
-##  [63] &quot;occurrenceRemarks&quot;              &quot;coordinatePrecision&quot;           
-##  [65] &quot;verbatimCoordinates&quot;            &quot;maximumDepthInMeters&quot;          
-##  [67] &quot;minimumDepthInMeters&quot;           &quot;depth&quot;                         
-##  [69] &quot;modified&quot;                       &quot;datasetID&quot;                     
-##  [71] &quot;taxonRank&quot;                      &quot;occurrenceID&quot;                  
-##  [73] &quot;individualCount&quot;                &quot;materialSampleID&quot;              
-##  [75] &quot;occurrenceStatus&quot;               &quot;scientificNameAuthorship&quot;      
-##  [77] &quot;superdomainid&quot;                  &quot;superdomain&quot;                   
-##  [79] &quot;associatedReferences&quot;           &quot;bibliographicCitation&quot;         
-##  [81] &quot;coordinateUncertaintyInMeters&quot;  &quot;vernacularName&quot;                
-##  [83] &quot;footprintWKT&quot;                   &quot;specificEpithet&quot;               
-##  [85] &quot;organismQuantity&quot;               &quot;organismQuantityType&quot;          
-##  [87] &quot;superclass&quot;                     &quot;superclassid&quot;                  
-##  [89] &quot;continent&quot;                      &quot;recordedBy&quot;                    
-##  [91] &quot;recordNumber&quot;                   &quot;stateProvince&quot;                 
-##  [93] &quot;georeferenceRemarks&quot;            &quot;rightsHolder&quot;                  
-##  [95] &quot;language&quot;                       &quot;type&quot;                          
-##  [97] &quot;license&quot;                        &quot;ownerInstitutionCode&quot;          
-##  [99] &quot;datasetName&quot;                    &quot;geodeticDatum&quot;                 
-## [101] &quot;accessRights&quot;                   &quot;dynamicProperties&quot;             
-## [103] &quot;county&quot;                         &quot;lifeStage&quot;                     
-## [105] &quot;samplingEffort&quot;                 &quot;eventID&quot;                       
-## [107] &quot;eventRemarks&quot;                   &quot;footprintSRS&quot;                  
-## [109] &quot;identifiedBy&quot;                   &quot;parentEventID&quot;                 
-## [111] &quot;samplingProtocol&quot;               &quot;endDayOfYear&quot;                  
-## [113] &quot;eventTime&quot;                      &quot;fieldNumber&quot;                   
-## [115] &quot;references&quot;                     &quot;startDayOfYear&quot;                
-## [117] &quot;verbatimDepth&quot;                  &quot;behavior&quot;                      
-## [119] &quot;dateIdentified&quot;                 &quot;georeferencedBy&quot;               
-## [121] &quot;georeferenceProtocol&quot;           &quot;maximumElevationInMeters&quot;      
-## [123] &quot;minimumElevationInMeters&quot;       &quot;collectionID&quot;                  
-## [125] &quot;typeStatus&quot;                     &quot;institutionID&quot;                 
-## [127] &quot;acceptedNameUsage&quot;              &quot;preparations&quot;                  
-## [129] &quot;countryCode&quot;                    &quot;otherCatalogNumbers&quot;           
-## [131] &quot;locationID&quot;                     &quot;taxonRemarks&quot;                  
-## [133] &quot;georeferencedDate&quot;              &quot;verbatimEventDate&quot;             
-## [135] &quot;identificationRemarks&quot;          &quot;nomenclaturalCode&quot;             
-## [137] &quot;taxonomicStatus&quot;                &quot;higherGeography&quot;               
-## [139] &quot;verbatimLocality&quot;               &quot;establishmentMeans&quot;            
-## [141] &quot;higherClassification&quot;           &quot;georeferenceVerificationStatus&quot;
-## [143] &quot;island&quot;                         &quot;identificationQualifier&quot;       
-## [145] &quot;verbatimLatitude&quot;               &quot;verbatimLongitude&quot;             
-## [147] &quot;islandGroup&quot;                    &quot;acceptedNameUsageID&quot;           
-## [149] &quot;identificationID&quot;               &quot;locationRemarks&quot;               
-## [151] &quot;previousIdentifications&quot;        &quot;verbatimSRS&quot;                   
-## [153] &quot;informationWithheld&quot;</code></pre>
+##  [61] &quot;bathymetry&quot;                     &quot;maximumDepthInMeters&quot;          
+##  [63] &quot;minimumDepthInMeters&quot;           &quot;sex&quot;                           
+##  [65] &quot;depth&quot;                          &quot;coordinatePrecision&quot;           
+##  [67] &quot;verbatimCoordinates&quot;            &quot;occurrenceRemarks&quot;             
+##  [69] &quot;individualCount&quot;                &quot;occurrenceStatus&quot;              
+##  [71] &quot;modified&quot;                       &quot;materialSampleID&quot;              
+##  [73] &quot;occurrenceID&quot;                   &quot;scientificNameAuthorship&quot;      
+##  [75] &quot;taxonRank&quot;                      &quot;datasetID&quot;                     
+##  [77] &quot;associatedReferences&quot;           &quot;bibliographicCitation&quot;         
+##  [79] &quot;coordinateUncertaintyInMeters&quot;  &quot;vernacularName&quot;                
+##  [81] &quot;footprintWKT&quot;                   &quot;specificEpithet&quot;               
+##  [83] &quot;recordNumber&quot;                   &quot;georeferenceRemarks&quot;           
+##  [85] &quot;stateProvince&quot;                  &quot;continent&quot;                     
+##  [87] &quot;recordedBy&quot;                     &quot;rightsHolder&quot;                  
+##  [89] &quot;language&quot;                       &quot;type&quot;                          
+##  [91] &quot;license&quot;                        &quot;ownerInstitutionCode&quot;          
+##  [93] &quot;datasetName&quot;                    &quot;geodeticDatum&quot;                 
+##  [95] &quot;accessRights&quot;                   &quot;dynamicProperties&quot;             
+##  [97] &quot;county&quot;                         &quot;samplingEffort&quot;                
+##  [99] &quot;lifeStage&quot;                      &quot;footprintSRS&quot;                  
+## [101] &quot;samplingProtocol&quot;               &quot;parentEventID&quot;                 
+## [103] &quot;eventID&quot;                        &quot;eventRemarks&quot;                  
+## [105] &quot;identifiedBy&quot;                   &quot;georeferencedBy&quot;               
+## [107] &quot;minimumElevationInMeters&quot;       &quot;maximumElevationInMeters&quot;      
+## [109] &quot;dateIdentified&quot;                 &quot;behavior&quot;                      
+## [111] &quot;georeferenceProtocol&quot;           &quot;verbatimDepth&quot;                 
+## [113] &quot;organismQuantity&quot;               &quot;organismQuantityType&quot;          
+## [115] &quot;startDayOfYear&quot;                 &quot;collectionID&quot;                  
+## [117] &quot;typeStatus&quot;                     &quot;institutionID&quot;                 
+## [119] &quot;acceptedNameUsage&quot;              &quot;preparations&quot;                  
+## [121] &quot;countryCode&quot;                    &quot;otherCatalogNumbers&quot;           
+## [123] &quot;references&quot;                     &quot;fieldNumber&quot;                   
+## [125] &quot;endDayOfYear&quot;                   &quot;eventTime&quot;                     
+## [127] &quot;locationID&quot;                     &quot;taxonRemarks&quot;                  
+## [129] &quot;georeferencedDate&quot;              &quot;verbatimEventDate&quot;             
+## [131] &quot;identificationRemarks&quot;          &quot;nomenclaturalCode&quot;             
+## [133] &quot;taxonomicStatus&quot;                &quot;higherClassification&quot;          
+## [135] &quot;higherGeography&quot;                &quot;verbatimLatitude&quot;              
+## [137] &quot;verbatimLongitude&quot;              &quot;establishmentMeans&quot;            
+## [139] &quot;verbatimLocality&quot;               &quot;georeferenceVerificationStatus&quot;
+## [141] &quot;island&quot;                         &quot;identificationQualifier&quot;       
+## [143] &quot;identificationID&quot;               &quot;informationWithheld&quot;           
+## [145] &quot;islandGroup&quot;                    &quot;acceptedNameUsageID&quot;           
+## [147] &quot;locationRemarks&quot;                &quot;verbatimSRS&quot;                   
+## [149] &quot;previousIdentifications&quot;</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="presence-absence-data.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select columns of interest</span></span>
 <span id="cb14-2"><a href="presence-absence-data.html#cb14-2" aria-hidden="true" tabindex="-1"></a>mydata.obis <span class="ot">&lt;-</span>  mydata.obis <span class="sc">%&gt;%</span></span>
 <span id="cb14-3"><a href="presence-absence-data.html#cb14-3" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">&quot;scientificName&quot;</span>,</span>
@@ -578,12 +580,13 @@ div.csl-indent {
 <span id="cb19-20"><a href="presence-absence-data.html#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df0)[<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>]<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>,<span class="st">&quot;YEAR&quot;</span>)</span>
 <span id="cb19-21"><a href="presence-absence-data.html#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-22"><a href="presence-absence-data.html#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Add bathymetry from NOAA</span></span>
-<span id="cb19-23"><a href="presence-absence-data.html#cb19-23" aria-hidden="true" tabindex="-1"></a>bathy <span class="ot">&lt;-</span> marmap<span class="sc">::</span><span class="fu">getNOAA.bathy</span>(<span class="at">lon1=</span><span class="sc">-</span><span class="dv">100</span>,<span class="at">lon2=</span><span class="dv">30</span>,<span class="at">lat1=</span><span class="sc">-</span><span class="dv">41</span>,<span class="at">lat2=</span><span class="dv">55</span>, <span class="at">resolution =</span> <span class="dv">1</span>,<span class="at">keep=</span><span class="cn">TRUE</span>, <span class="at">antimeridian=</span><span class="cn">FALSE</span>, <span class="at">path=</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>))</span>
-<span id="cb19-24"><a href="presence-absence-data.html#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-25"><a href="presence-absence-data.html#cb19-25" aria-hidden="true" tabindex="-1"></a>df0<span class="sc">$</span>bathymetry <span class="ot">&lt;-</span> <span class="fu">get.depth</span>(bathy, df0[,<span class="fu">c</span>(<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>)], <span class="at">locator=</span>F)<span class="sc">$</span>depth</span>
-<span id="cb19-26"><a href="presence-absence-data.html#cb19-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-27"><a href="presence-absence-data.html#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unused files</span></span>
-<span id="cb19-28"><a href="presence-absence-data.html#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mydata.fus, match2, match3, dat, ptos)</span></code></pre></div>
+<span id="cb19-23"><a href="presence-absence-data.html#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="co">#bathy &lt;- marmap::getNOAA.bathy(lon1=-100,lon2=30,lat1=-41,lat2=55, resolution = 1,               keep=TRUE, antimeridian=FALSE, path= here::here(&quot;data&quot;, &quot;spatial&quot;))</span></span>
+<span id="cb19-24"><a href="presence-absence-data.html#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;bathy.RData&quot;</span>))</span>
+<span id="cb19-25"><a href="presence-absence-data.html#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="presence-absence-data.html#cb19-26" aria-hidden="true" tabindex="-1"></a>df0<span class="sc">$</span>bathymetry <span class="ot">&lt;-</span> <span class="fu">get.depth</span>(bathy, df0[,<span class="fu">c</span>(<span class="st">&quot;LON&quot;</span>,<span class="st">&quot;LAT&quot;</span>)], <span class="at">locator=</span>F)<span class="sc">$</span>depth</span>
+<span id="cb19-27"><a href="presence-absence-data.html#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-28"><a href="presence-absence-data.html#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unused files</span></span>
+<span id="cb19-29"><a href="presence-absence-data.html#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mydata.fus, match2, match3, dat, ptos)</span></code></pre></div>
 <p>We plot the occurrence data.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="presence-absence-data.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb20-2"><a href="presence-absence-data.html#cb20-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_path</span>(<span class="at">data =</span> study_area, </span>
@@ -623,10 +626,10 @@ div.csl-indent {
 ## LAT -34.71 54.15014
 ## Is projected: FALSE 
 ## proj4string : [+proj=longlat +datum=WGS84 +no_defs]
-## Number of points: 15304
+## Number of points: 14903
 ## Data attributes:
 ##     F_AREA          scientificName          YEAR      occurrenceStatus
-##  Length:15304       Length:15304       Min.   :2000   Min.   :1       
+##  Length:14903       Length:14903       Min.   :2000   Min.   :1       
 ##  Class :character   Class :character   1st Qu.:2001   1st Qu.:1       
 ##  Mode  :character   Mode  :character   Median :2002   Median :1       
 ##                                        Mean   :2003   Mean   :1       
@@ -634,10 +637,10 @@ div.csl-indent {
 ##                                        Max.   :2013   Max.   :1       
 ##    bathymetry      
 ##  Min.   :-8404.09  
-##  1st Qu.:-1923.60  
-##  Median :-1046.93  
-##  Mean   :-1441.64  
-##  3rd Qu.: -379.67  
+##  1st Qu.:-1916.92  
+##  Median :-1030.77  
+##  Mean   :-1433.61  
+##  3rd Qu.: -351.32  
 ##  Max.   :   -1.13</code></pre>
 <p>We can easily plot sf objects using ggplot, here we plot the area of study and the presence data points.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="presence-absence-data.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(study_area.sf) <span class="sc">+</span> </span>
@@ -816,7 +819,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

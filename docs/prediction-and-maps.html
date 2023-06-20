@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Prediction and maps | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
   <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Prediction and maps | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-05-17" />
+<meta name="date" content="2023-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -94,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -256,12 +256,12 @@ div.csl-indent {
 <p>In previous steps (see Chapter 2), we have defined the study area that defines the extent of our spatial data. We load the <code>study_area</code> object that is a SpatialPolygonsDataFrame class:</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="prediction-and-maps.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;study_area.RData&quot;</span>))</span></code></pre></div>
 <p>And we load the rasterStack with the downloaded environmental data.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="prediction-and-maps.html#cb153-1" aria-hidden="true" tabindex="-1"></a>mylayers<span class="ot">&lt;-</span><span class="fu">stack</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;env&quot;</span>, <span class="st">&quot;mylayers.tif&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="prediction-and-maps.html#cb153-1" aria-hidden="true" tabindex="-1"></a>mylayers<span class="ot">&lt;-</span><span class="fu">stack</span>(<span class="st">&quot;data/env/mylayers.tif&quot;</span>)</span></code></pre></div>
 <p>We transform the environmental data set first into a data frame, and then into a SpatialDataFrame.</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="prediction-and-maps.html#cb154-1" aria-hidden="true" tabindex="-1"></a>env_dataframe <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">as.data.frame</span>(mylayers, <span class="at">xy=</span><span class="cn">TRUE</span>)</span>
 <span id="cb154-2"><a href="prediction-and-maps.html#cb154-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-3"><a href="prediction-and-maps.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(env_dataframe)</span></code></pre></div>
-<pre><code>##        x                y            mylayers.1        mylayers.2     
+<pre><code>##        x                y            mylayers_1        mylayers_2     
 ##  Min.   :-97.79   Min.   :-82.96   Min.   :0.0       Min.   : 0.1     
 ##  1st Qu.:-56.23   1st Qu.:-39.73   1st Qu.:0.1       1st Qu.:33.8     
 ##  Median :-14.67   Median :  3.50   Median :0.3       Median :34.6     
@@ -269,7 +269,7 @@ div.csl-indent {
 ##  3rd Qu.: 26.90   3rd Qu.: 46.73   3rd Qu.:0.4       3rd Qu.:35.6     
 ##  Max.   : 68.46   Max.   : 89.96   Max.   :3.6       Max.   :40.7     
 ##                                    NA&#39;s   :1501044   NA&#39;s   :1501044  
-##    mylayers.3        mylayers.4     
+##    mylayers_3        mylayers_4     
 ##  Min.   :0.0       Min.   :-1.8     
 ##  1st Qu.:0.0       1st Qu.: 1.9     
 ##  Median :0.0       Median :15.1     
@@ -406,7 +406,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

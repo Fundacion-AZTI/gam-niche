@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Model validation | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory</title>
   <meta name="description" content="This is a short tutorial for constructing species distribution models in R using shape-constrained generalized additive models, based on the development and application to marine fish by Citores et al. (2020)." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Model validation | GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2023-05-17" />
+<meta name="date" content="2023-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -94,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -221,41 +221,41 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 6</span> Model validation<a href="model-validation.html#model-validation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this section, model validation is performed in order to assess the predictive performance of the selected model. This validation is conducted via k-fold cross-validation. The data set is divided into k equally sized groups <span class="citation">(<a href="#ref-hijmans_2012" role="doc-biblioref">Hijmans 2012</a>)</span>, using a percentage of randomly selected observations to run the model and the remaining for validation, iteratively for each fold.</p>
 <p>First, we load the list of required libraries.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="model-validation.html#cb129-1" aria-hidden="true" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb129-2"><a href="model-validation.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
-<span id="cb129-3"><a href="model-validation.html#cb129-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb129-4"><a href="model-validation.html#cb129-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>,  <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb129-5"><a href="model-validation.html#cb129-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;stringr&quot;</span>,</span>
-<span id="cb129-6"><a href="model-validation.html#cb129-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;RColorBrewer&quot;</span>,  </span>
-<span id="cb129-7"><a href="model-validation.html#cb129-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>,</span>
-<span id="cb129-8"><a href="model-validation.html#cb129-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>,</span>
-<span id="cb129-9"><a href="model-validation.html#cb129-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tidyverse&quot;</span>,</span>
-<span id="cb129-10"><a href="model-validation.html#cb129-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;R.utils&quot;</span>,</span>
-<span id="cb129-11"><a href="model-validation.html#cb129-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ggpubr&quot;</span>,</span>
-<span id="cb129-12"><a href="model-validation.html#cb129-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;hrbrthemes&quot;</span>,</span>
-<span id="cb129-13"><a href="model-validation.html#cb129-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb129-14"><a href="model-validation.html#cb129-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">#SPATIAL DATA --------#</span></span>
-<span id="cb129-15"><a href="model-validation.html#cb129-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rgdal&quot;</span>,</span>
-<span id="cb129-16"><a href="model-validation.html#cb129-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fields&quot;</span>,</span>
-<span id="cb129-17"><a href="model-validation.html#cb129-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;maps&quot;</span> ,</span>
-<span id="cb129-18"><a href="model-validation.html#cb129-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>,</span>
-<span id="cb129-19"><a href="model-validation.html#cb129-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-20"><a href="model-validation.html#cb129-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#MODEL FIT --------#</span></span>
-<span id="cb129-21"><a href="model-validation.html#cb129-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;scam&quot;</span>,</span>
-<span id="cb129-22"><a href="model-validation.html#cb129-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;plotmo&quot;</span>,</span>
-<span id="cb129-23"><a href="model-validation.html#cb129-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;SDMTools&quot;</span>,</span>
-<span id="cb129-24"><a href="model-validation.html#cb129-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;pkgbuild&quot;</span>,</span>
-<span id="cb129-25"><a href="model-validation.html#cb129-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dismo&quot;</span></span>
-<span id="cb129-26"><a href="model-validation.html#cb129-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="model-validation.html#cb130-1" aria-hidden="true" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb130-2"><a href="model-validation.html#cb130-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
+<span id="cb130-3"><a href="model-validation.html#cb130-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
+<span id="cb130-4"><a href="model-validation.html#cb130-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>,  <span class="co"># Library for reproducible workflow</span></span>
+<span id="cb130-5"><a href="model-validation.html#cb130-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;stringr&quot;</span>,</span>
+<span id="cb130-6"><a href="model-validation.html#cb130-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;RColorBrewer&quot;</span>,  </span>
+<span id="cb130-7"><a href="model-validation.html#cb130-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>,</span>
+<span id="cb130-8"><a href="model-validation.html#cb130-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>,</span>
+<span id="cb130-9"><a href="model-validation.html#cb130-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tidyverse&quot;</span>,</span>
+<span id="cb130-10"><a href="model-validation.html#cb130-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;R.utils&quot;</span>,</span>
+<span id="cb130-11"><a href="model-validation.html#cb130-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;ggpubr&quot;</span>,</span>
+<span id="cb130-12"><a href="model-validation.html#cb130-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;hrbrthemes&quot;</span>,</span>
+<span id="cb130-13"><a href="model-validation.html#cb130-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb130-14"><a href="model-validation.html#cb130-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">#SPATIAL DATA --------#</span></span>
+<span id="cb130-15"><a href="model-validation.html#cb130-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rgdal&quot;</span>,</span>
+<span id="cb130-16"><a href="model-validation.html#cb130-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fields&quot;</span>,</span>
+<span id="cb130-17"><a href="model-validation.html#cb130-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;maps&quot;</span> ,</span>
+<span id="cb130-18"><a href="model-validation.html#cb130-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>,</span>
+<span id="cb130-19"><a href="model-validation.html#cb130-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-20"><a href="model-validation.html#cb130-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#MODEL FIT --------#</span></span>
+<span id="cb130-21"><a href="model-validation.html#cb130-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;scam&quot;</span>,</span>
+<span id="cb130-22"><a href="model-validation.html#cb130-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;plotmo&quot;</span>,</span>
+<span id="cb130-23"><a href="model-validation.html#cb130-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;SDMTools&quot;</span>,</span>
+<span id="cb130-24"><a href="model-validation.html#cb130-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;pkgbuild&quot;</span>,</span>
+<span id="cb130-25"><a href="model-validation.html#cb130-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dismo&quot;</span></span>
+<span id="cb130-26"><a href="model-validation.html#cb130-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="model-validation.html#cb130-1" aria-hidden="true" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
-<span id="cb130-2"><a href="model-validation.html#cb130-2" aria-hidden="true" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
-<span id="cb130-3"><a href="model-validation.html#cb130-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
-<span id="cb130-4"><a href="model-validation.html#cb130-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb130-5"><a href="model-validation.html#cb130-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb130-6"><a href="model-validation.html#cb130-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb130-7"><a href="model-validation.html#cb130-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb130-8"><a href="model-validation.html#cb130-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="model-validation.html#cb131-1" aria-hidden="true" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb131-2"><a href="model-validation.html#cb131-2" aria-hidden="true" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
+<span id="cb131-3"><a href="model-validation.html#cb131-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
+<span id="cb131-4"><a href="model-validation.html#cb131-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb131-5"><a href="model-validation.html#cb131-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb131-6"><a href="model-validation.html#cb131-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb131-7"><a href="model-validation.html#cb131-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-8"><a href="model-validation.html#cb131-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
 <pre><code>##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
 ##    tidyverse      R.utils       ggpubr   hrbrthemes        rgdal       fields 
@@ -264,11 +264,6 @@ div.csl-indent {
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
 ##        dismo 
 ##         TRUE</code></pre>
-<p>Note: in case <code>SDMTools</code> failed to load you will have to first manually install <a href="https://cran.r-project.org/bin/windows/Rtools/history.html">RTools</a> and then run this code bellow:</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="model-validation.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find_rtools()</span></span>
-<span id="cb132-2"><a href="model-validation.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb132-3"><a href="model-validation.html#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;remotes&quot;)</span></span>
-<span id="cb132-4"><a href="model-validation.html#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_version(&quot;SDMTools&quot;, version = &quot;1.1-221.2&quot;)</span></span></code></pre></div>
 <p>We define some overall settings.</p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="model-validation.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General settings for ggplot (black-white background, larger base_size)</span></span>
 <span id="cb133-2"><a href="model-validation.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
@@ -287,12 +282,12 @@ div.csl-indent {
 <span id="cb135-8"><a href="model-validation.html#cb135-8" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>scgam.pred <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(scgam.pred)</span>
 <span id="cb135-9"><a href="model-validation.html#cb135-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
 <pre><code>##    occurrenceStatus BO_sstmean BO2_chlomean_ss BO2_salinitymean_ss scgam.pred
-## 1                 1   16.99439      1.20410309            35.42666  0.9798438
-## 5                 1   16.99439      1.20410309            35.42666  0.9798438
-## 8                 1   25.52963      0.08455528            36.43070  0.4626237
-## 10                1   16.99439      1.20410309            35.42666  0.9798438
-## 11                1   15.21486      0.72283228            34.20426  0.8312120
-## 12                1   16.99439      1.20410309            35.42666  0.9798438</code></pre>
+## 1                 1   16.99439      1.20410309            35.42666  0.9804524
+## 5                 1   16.99439      1.20410309            35.42666  0.9804524
+## 8                 1   25.52963      0.08455528            36.43070  0.4238477
+## 10                1   16.99439      1.20410309            35.42666  0.9804524
+## 11                1   15.21486      0.72283228            34.20426  0.8449155
+## 12                1   16.99439      1.20410309            35.42666  0.9804524</code></pre>
 <p>The threshold for presence-absence classification for each species is obtained as the values maximizing sensitivity plus specificity <span class="citation">(<a href="#ref-jimenez_etal_2007" role="doc-biblioref">Jiménez-Valverde and Lobo 2007</a>)</span>. If the result was a range (instead of a single value), we would select the mean value of the range.</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="model-validation.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizing the threshold probability</span></span>
 <span id="cb137-2"><a href="model-validation.html#cb137-2" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> data<span class="sc">$</span>occurrenceStatus</span>
@@ -302,43 +297,43 @@ div.csl-indent {
 <span id="cb137-6"><a href="model-validation.html#cb137-6" aria-hidden="true" tabindex="-1"></a>myoptim <span class="ot">&lt;-</span> <span class="fu">optim.thresh</span> (obs,predSCGAM_P)</span>
 <span id="cb137-7"><a href="model-validation.html#cb137-7" aria-hidden="true" tabindex="-1"></a>myoptim</span></code></pre></div>
 <pre><code>## $min.occurence.prediction
-## [1] 0.006004805
+## [1] 0.01156124
 ## 
 ## $mean.occurence.prediction
-## [1] 0.6628761
+## [1] 0.6642745
 ## 
 ## $`10.percent.omission`
-## [1] 0.39
+## [1] 0.36
 ## 
 ## $`sensitivity=specificity`
-## [1] 0.45
+## [1] 0.44
 ## 
 ## $`max.sensitivity+specificity`
-## [1] 0.4
+## [1] 0.42
 ## 
 ## $maxKappa
-## [1] 0.4
+## [1] 0.42
 ## 
 ## $max.prop.correct
-## [1] 0.4
+## [1] 0.42
 ## 
 ## $min.ROC.plot.distance
-## [1] 0.43</code></pre>
+## [1] 0.42</code></pre>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="model-validation.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the threshold that maximizes the sum of sensitivity and specificity </span></span>
 <span id="cb139-2"><a href="model-validation.html#cb139-2" aria-hidden="true" tabindex="-1"></a>myThreshold <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>((myoptim[[<span class="st">&quot;max.sensitivity+specificity&quot;</span>]]))</span></code></pre></div>
 <p>Accuracy indicators, such as AUC (Area Under the Receiver Operating Characteristic—ROC—curve), sensitivity (true predicted presences) and specificity (true predicted absences) are first computed for the all observations.</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="model-validation.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Accuracy values with all observations</span></span>
 <span id="cb140-2"><a href="model-validation.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span> (obs, predSCGAM_P, <span class="at">threshold=</span>myThreshold)</span></code></pre></div>
 <pre><code>##   threshold       AUC omission.rate sensitivity specificity prop.correct
-## 1       0.4 0.7423357     0.1153947   0.8846053    0.600066    0.7430786
-##       Kappa
-## 1 0.4853858</code></pre>
+## 1      0.42 0.7415229     0.1985506   0.8014494   0.6815964    0.7418159
+##      Kappa
+## 1 0.483323</code></pre>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="model-validation.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create confusion matrix with all observations</span></span>
 <span id="cb142-2"><a href="model-validation.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confusion.matrix</span>(obs, predSCGAM_P, <span class="at">threshold=</span>myThreshold)</span></code></pre></div>
 <pre><code>##     obs
-## pred    0     1
-##    0 9088  1766
-##    1 6057 13538
+## pred     0     1
+##    0 10059  2959
+##    1  4699 11944
 ## attr(,&quot;class&quot;)
 ## [1] &quot;confusion.matrix&quot;</code></pre>
 </div>
@@ -391,10 +386,10 @@ div.csl-indent {
 <span id="cb145-38"><a href="model-validation.html#cb145-38" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mean_Prop.Corr=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>prop.correct))</span>
 <span id="cb145-39"><a href="model-validation.html#cb145-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb145-40"><a href="model-validation.html#cb145-40" aria-hidden="true" tabindex="-1"></a>validation_summary</span></code></pre></div>
-<pre><code>##      Threshold  mean_AUC mean_Omision mean_sensitivity mean_specificity
-## [1,]       0.4 0.7402425    0.1305616        0.8694384        0.6110467
+<pre><code>##      Threshold mean_AUC mean_Omision mean_sensitivity mean_specificity
+## [1,]      0.42 0.725464    0.2399716        0.7600284        0.6908995
 ##      mean_Prop.Corr
-## [1,]      0.7410426</code></pre>
+## [1,]      0.7256674</code></pre>
 <p>We save the validation summary object.</p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="model-validation.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(validation_summary, <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;models/validation_summary.RData&quot;</span>))</span></code></pre></div>
 
@@ -482,7 +477,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
