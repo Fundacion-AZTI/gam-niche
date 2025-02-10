@@ -128,42 +128,42 @@ vars <- c("BO_sstmean",
 ```
 
 The default AIC tolerance is 2 and there is not a limit on selected terms in this example. These options can be modified through aic.tol and vmax arguments in the function. The number of knots and the sp can be also modified.
-```{r, eval=F, message=FALSE,warning=FALSE}
+```{r, eval=T, message=FALSE,warning=FALSE}
 model_SCGAM <- try(modsel.scam(basef="occurrenceStatus ~ 1", vars=vars, dat=data,sp=0.00001), silent=T)  
 ```
 
 We check results of the selected model, such as, selected variable names:
-```{r, eval=F, message=FALSE,warning=FALSE}
+```{r, eval=T, message=FALSE,warning=FALSE}
 model_SCGAM$svars
 ```
 
 AICs of the fitted models:
-```{r, eval=F, message=FALSE,warning=FALSE}
+```{r, eval=T, message=FALSE,warning=FALSE}
 sapply(model_SCGAM$smod, AIC)
 ```
 
 Explained deviance of fitted models:
-```{r, eval=F, message=FALSE,warning=FALSE}
+```{r, eval=T, message=FALSE,warning=FALSE}
 sapply(model_SCGAM$smod, function(x) summary(x)$dev.expl)
 ```
 
 Formulas of the fitted models:
-```{r, eval=F,message=FALSE,warning=FALSE}
+```{r, eval=T,message=FALSE,warning=FALSE}
 lapply(model_SCGAM$smod, formula)
 ```
 
 Summaries of the fitted models:
-```{r, eval=F,message=FALSE,warning=FALSE}
+```{r, eval=T,message=FALSE,warning=FALSE}
 lapply(model_SCGAM$smod, summary)
 ```
 
 The last model of the list, is the selected one. Which in this case contains the considered three variables.
-```{r, eval=F,message=FALSE,warning=FALSE}
+```{r, eval=T,message=FALSE,warning=FALSE}
 selected_model <- model_SCGAM$smod[[length(model_SCGAM$smod)]]
 ```
 
 We save the selected model
-```{r, eval=F}
+```{r, eval=T}
 save(list="selected_model", file="models/selected_model.RData")
 ```
 

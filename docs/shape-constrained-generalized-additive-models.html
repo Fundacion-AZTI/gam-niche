@@ -400,20 +400,142 @@ div.csl-indent {
 <span id="cb114-3"><a href="shape-constrained-generalized-additive-models.html#cb114-3" tabindex="-1"></a>          <span class="st">&quot;BO2_chlomean_ss&quot;</span>)</span></code></pre></div>
 <p>The default AIC tolerance is 2 and there is not a limit on selected terms in this example. These options can be modified through aic.tol and vmax arguments in the function. The number of knots and the sp can be also modified.</p>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="shape-constrained-generalized-additive-models.html#cb115-1" tabindex="-1"></a>model_SCGAM <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">modsel.scam</span>(<span class="at">basef=</span><span class="st">&quot;occurrenceStatus ~ 1&quot;</span>, <span class="at">vars=</span>vars, <span class="at">dat=</span>data,<span class="at">sp=</span><span class="fl">0.00001</span>), <span class="at">silent=</span>T)  </span></code></pre></div>
+<pre><code>## [1] &quot;Fitting models with 1 terms&quot;
+##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs=&#39;cv&#39;,k=8) 
+##   occurrenceStatus ~ 1+s(BO2_salinitymean_ss,m=2,bs=&#39;cv&#39;,k=8) 
+##   occurrenceStatus ~ 1+s(BO2_chlomean_ss,m=2,bs=&#39;cv&#39;,k=8) 
+## [1] &quot;Fitting models with 2 terms&quot;
+##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs=&#39;cv&#39;,k=8)+s(BO2_salinitymean_ss,m=2,bs=&#39;cv&#39;,k=8) 
+##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs=&#39;cv&#39;,k=8)+s(BO2_chlomean_ss,m=2,bs=&#39;cv&#39;,k=8) 
+## [1] &quot;Fitting models with 3 terms&quot;
+##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs=&#39;cv&#39;,k=8)+s(BO2_chlomean_ss,m=2,bs=&#39;cv&#39;,k=8)+s(BO2_salinitymean_ss,m=2,bs=&#39;cv&#39;,k=8)</code></pre>
 <p>We check results of the selected model, such as, selected variable names:</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="shape-constrained-generalized-additive-models.html#cb116-1" tabindex="-1"></a>model_SCGAM<span class="sc">$</span>svars</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="shape-constrained-generalized-additive-models.html#cb117-1" tabindex="-1"></a>model_SCGAM<span class="sc">$</span>svars</span></code></pre></div>
+<pre><code>## [1] &quot;BO_sstmean&quot;          &quot;BO2_chlomean_ss&quot;     &quot;BO2_salinitymean_ss&quot;</code></pre>
 <p>AICs of the fitted models:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="shape-constrained-generalized-additive-models.html#cb117-1" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, AIC)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="shape-constrained-generalized-additive-models.html#cb119-1" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, AIC)</span></code></pre></div>
+<pre><code>##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss 
+##            41120.17            31629.40            28318.30            27990.07</code></pre>
 <p>Explained deviance of fitted models:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="shape-constrained-generalized-additive-models.html#cb118-1" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, <span class="cf">function</span>(x) <span class="fu">summary</span>(x)<span class="sc">$</span>dev.expl)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="shape-constrained-generalized-additive-models.html#cb121-1" tabindex="-1"></a><span class="fu">sapply</span>(model_SCGAM<span class="sc">$</span>smod, <span class="cf">function</span>(x) <span class="fu">summary</span>(x)<span class="sc">$</span>dev.expl)</span></code></pre></div>
+<pre><code>##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss 
+##       -1.769524e-16        2.309141e-01        3.117433e-01        3.198121e-01</code></pre>
 <p>Formulas of the fitted models:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="shape-constrained-generalized-additive-models.html#cb119-1" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="shape-constrained-generalized-additive-models.html#cb123-1" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, formula)</span></code></pre></div>
+<pre><code>## $null
+## occurrenceStatus ~ 1
+## 
+## $BO_sstmean
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x0000019d143beeb0&gt;
+## 
+## $BO2_chlomean_ss
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x0000019d143beeb0&gt;
+## 
+## $BO2_salinitymean_ss
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
+##     m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x0000019d143beeb0&gt;</code></pre>
 <p>Summaries of the fitted models:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="shape-constrained-generalized-additive-models.html#cb120-1" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="shape-constrained-generalized-additive-models.html#cb125-1" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
+<pre><code>## $null
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept) 0.009777   0.011613   0.842      0.4
+## 
+## 
+## R-sq.(adj) =      0   Deviance explained = -1.77e-14%
+## UBRE = 0.38634  Scale est. = 1         n = 29661
+## 
+## $BO_sstmean
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x0000019d143beeb0&gt;
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -2.24678    0.08094  -27.76   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##               edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)   2      2   1082  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.2607   Deviance explained = 23.1%
+##   Scale est. = 1         n = 29661
+## 
+## 
+## $BO2_chlomean_ss
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x0000019d143beeb0&gt;
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)   -3.057      9.021  -0.339    0.735
+## 
+## Approximate significance of smooth terms:
+##                      edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)      4.000  4.000  939.7  &lt;2e-16 ***
+## s(BO2_chlomean_ss) 4.221  3.952 2225.6  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.341   Deviance explained = 31.2%
+##   Scale est. = 1         n = 29661
+## 
+## 
+## $BO2_salinitymean_ss
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
+##     m = 2, bs = &quot;cv&quot;, k = 8)
+## &lt;environment: 0x0000019d143beeb0&gt;
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)   -1.813      3.163  -0.573    0.567
+## 
+## Approximate significance of smooth terms:
+##                          edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)          4.001  4.003  765.8  &lt;2e-16 ***
+## s(BO2_chlomean_ss)     3.987  4.003 1778.1  &lt;2e-16 ***
+## s(BO2_salinitymean_ss) 2.004  2.008  178.7  &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.3491   Deviance explained =   32%
+##   Scale est. = 1         n = 29661</code></pre>
 <p>The last model of the list, is the selected one. Which in this case contains the considered three variables.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="shape-constrained-generalized-additive-models.html#cb121-1" tabindex="-1"></a>selected_model <span class="ot">&lt;-</span> model_SCGAM<span class="sc">$</span>smod[[<span class="fu">length</span>(model_SCGAM<span class="sc">$</span>smod)]]</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="shape-constrained-generalized-additive-models.html#cb127-1" tabindex="-1"></a>selected_model <span class="ot">&lt;-</span> model_SCGAM<span class="sc">$</span>smod[[<span class="fu">length</span>(model_SCGAM<span class="sc">$</span>smod)]]</span></code></pre></div>
 <p>We save the selected model</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="shape-constrained-generalized-additive-models.html#cb122-1" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="st">&quot;selected_model&quot;</span>, <span class="at">file=</span><span class="st">&quot;models/selected_model.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="shape-constrained-generalized-additive-models.html#cb128-1" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="st">&quot;selected_model&quot;</span>, <span class="at">file=</span><span class="st">&quot;models/selected_model.RData&quot;</span>)</span></code></pre></div>
 <p>Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be used also for SC-GAMs.</p>
 
 <!-- 

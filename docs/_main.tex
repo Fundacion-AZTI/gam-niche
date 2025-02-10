@@ -627,10 +627,12 @@ Mask retrieved occurrence data to our study area and add bathymetry value to eac
 \CommentTok{\# Rename some columns}
 \FunctionTok{names}\NormalTok{(df0)[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"LON"}\NormalTok{,}\StringTok{"LAT"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)}
 
-\CommentTok{\# Add bathymetry from NOAA}
-\CommentTok{\# bathy \textless{}{-} marmap::getNOAA.bathy(lon1={-}100,lon2=30,lat1={-}41,lat2=55, resolution = 1,keep=TRUE, antimeridian=FALSE, path= here::here("data", "spatial"))}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{timeout=}\DecValTok{600}\NormalTok{)}
 
-\FunctionTok{load}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"spatial"}\NormalTok{,}\StringTok{"bathy.RData"}\NormalTok{)) }\CommentTok{\# we upload a file already downloaded}
+\CommentTok{\# Add bathymetry from NOAA}
+\NormalTok{bathy }\OtherTok{\textless{}{-}}\NormalTok{ marmap}\SpecialCharTok{::}\FunctionTok{getNOAA.bathy}\NormalTok{(}\AttributeTok{lon1=}\SpecialCharTok{{-}}\DecValTok{100}\NormalTok{,}\AttributeTok{lon2=}\DecValTok{30}\NormalTok{,}\AttributeTok{lat1=}\SpecialCharTok{{-}}\DecValTok{41}\NormalTok{,}\AttributeTok{lat2=}\DecValTok{55}\NormalTok{, }\AttributeTok{resolution =} \DecValTok{1}\NormalTok{,}\AttributeTok{keep=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{antimeridian=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{path=}\NormalTok{ here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"spatial"}\NormalTok{))}
+
+\CommentTok{\# load(here::here("data", "spatial","bathy.RData")) \# we upload a file already downloaded}
 
 \NormalTok{df0}\SpecialCharTok{$}\NormalTok{bathymetry }\OtherTok{\textless{}{-}} \FunctionTok{get.depth}\NormalTok{(bathy, df0[,}\FunctionTok{c}\NormalTok{(}\StringTok{"LON"}\NormalTok{,}\StringTok{"LAT"}\NormalTok{)], }\AttributeTok{locator=}\NormalTok{F)}\SpecialCharTok{$}\NormalTok{depth}
 
@@ -3691,6 +3693,18 @@ The default AIC tolerance is 2 and there is not a limit on selected terms in thi
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## [1] "Fitting models with 1 terms"
+##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8) 
+##   occurrenceStatus ~ 1+s(BO2_salinitymean_ss,m=2,bs='cv',k=8) 
+##   occurrenceStatus ~ 1+s(BO2_chlomean_ss,m=2,bs='cv',k=8) 
+## [1] "Fitting models with 2 terms"
+##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_salinitymean_ss,m=2,bs='cv',k=8) 
+##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_chlomean_ss,m=2,bs='cv',k=8) 
+## [1] "Fitting models with 3 terms"
+##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_chlomean_ss,m=2,bs='cv',k=8)+s(BO2_salinitymean_ss,m=2,bs='cv',k=8)
+\end{verbatim}
+
 We check results of the selected model, such as, selected variable names:
 
 \begin{Shaded}
@@ -3698,6 +3712,10 @@ We check results of the selected model, such as, selected variable names:
 \NormalTok{model\_SCGAM}\SpecialCharTok{$}\NormalTok{svars}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## [1] "BO_sstmean"          "BO2_chlomean_ss"     "BO2_salinitymean_ss"
+\end{verbatim}
 
 AICs of the fitted models:
 
@@ -3707,6 +3725,11 @@ AICs of the fitted models:
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss 
+##            41120.17            31629.40            28318.30            27990.07
+\end{verbatim}
+
 Explained deviance of fitted models:
 
 \begin{Shaded}
@@ -3714,6 +3737,11 @@ Explained deviance of fitted models:
 \FunctionTok{sapply}\NormalTok{(model\_SCGAM}\SpecialCharTok{$}\NormalTok{smod, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{summary}\NormalTok{(x)}\SpecialCharTok{$}\NormalTok{dev.expl)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss 
+##       -1.769524e-16        2.309141e-01        3.117433e-01        3.198121e-01
+\end{verbatim}
 
 Formulas of the fitted models:
 
@@ -3723,6 +3751,26 @@ Formulas of the fitted models:
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## $null
+## occurrenceStatus ~ 1
+## 
+## $BO_sstmean
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
+## <environment: 0x000001b940db7070>
+## 
+## $BO2_chlomean_ss
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
+## <environment: 0x000001b940db7070>
+## 
+## $BO2_salinitymean_ss
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
+##     m = 2, bs = "cv", k = 8)
+## <environment: 0x000001b940db7070>
+\end{verbatim}
+
 Summaries of the fitted models:
 
 \begin{Shaded}
@@ -3730,6 +3778,100 @@ Summaries of the fitted models:
 \FunctionTok{lapply}\NormalTok{(model\_SCGAM}\SpecialCharTok{$}\NormalTok{smod, summary)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## $null
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept) 0.009777   0.011613   0.842      0.4
+## 
+## 
+## R-sq.(adj) =      0   Deviance explained = -1.77e-14%
+## UBRE = 0.38634  Scale est. = 1         n = 29661
+## 
+## $BO_sstmean
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
+## <environment: 0x000001b940db7070>
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -2.24678    0.08094  -27.76   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Approximate significance of smooth terms:
+##               edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)   2      2   1082  <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## R-sq.(adj) =  0.2607   Deviance explained = 23.1%
+##   Scale est. = 1         n = 29661
+## 
+## 
+## $BO2_chlomean_ss
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
+## <environment: 0x000001b940db7070>
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)   -3.057      9.021  -0.339    0.735
+## 
+## Approximate significance of smooth terms:
+##                      edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)      4.000  4.000  939.7  <2e-16 ***
+## s(BO2_chlomean_ss) 4.221  3.952 2225.6  <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## R-sq.(adj) =  0.341   Deviance explained = 31.2%
+##   Scale est. = 1         n = 29661
+## 
+## 
+## $BO2_salinitymean_ss
+## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
+##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
+##     m = 2, bs = "cv", k = 8)
+## <environment: 0x000001b940db7070>
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)   -1.813      3.163  -0.573    0.567
+## 
+## Approximate significance of smooth terms:
+##                          edf Ref.df Chi.sq p-value    
+## s(BO_sstmean)          4.001  4.003  765.8  <2e-16 ***
+## s(BO2_chlomean_ss)     3.987  4.003 1778.1  <2e-16 ***
+## s(BO2_salinitymean_ss) 2.004  2.008  178.7  <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## R-sq.(adj) =  0.3491   Deviance explained =   32%
+##   Scale est. = 1         n = 29661
+\end{verbatim}
 
 The last model of the list, is the selected one. Which in this case contains the considered three variables.
 
@@ -3860,12 +4002,12 @@ We generate a data frame with the data used in the selected model and we add the
 
 \begin{verbatim}
 ##    occurrenceStatus BO_sstmean BO2_chlomean_ss BO2_salinitymean_ss scgam.pred
-## 1                 1   16.99439      1.20410309            35.42666  0.9804524
-## 5                 1   16.99439      1.20410309            35.42666  0.9804524
-## 8                 1   25.52963      0.08455528            36.43070  0.4238477
-## 10                1   16.99439      1.20410309            35.42666  0.9804524
-## 11                1   15.21486      0.72283228            34.20426  0.8449155
-## 12                1   16.99439      1.20410309            35.42666  0.9804524
+## 1                 1   16.99439      1.20410309            35.42666  0.9814526
+## 5                 1   16.99439      1.20410309            35.42666  0.9814526
+## 8                 1   25.52963      0.08455528            36.43070  0.4357622
+## 10                1   16.99439      1.20410309            35.42666  0.9814526
+## 11                1   15.21486      0.72283228            34.20426  0.8506453
+## 12                1   16.99439      1.20410309            35.42666  0.9814526
 \end{verbatim}
 
 The threshold for presence-absence classification for each species is obtained as the values maximizing sensitivity plus specificity \citep{jimenez_etal_2007}. If the result was a range (instead of a single value), we would select the mean value of the range.
@@ -3884,28 +4026,28 @@ The threshold for presence-absence classification for each species is obtained a
 
 \begin{verbatim}
 ## $min.occurence.prediction
-## [1] 0.01156124
+## [1] 0.01055724
 ## 
 ## $mean.occurence.prediction
-## [1] 0.6642745
+## [1] 0.671467
 ## 
 ## $`10.percent.omission`
-## [1] 0.36
+## [1] 0.37
 ## 
 ## $`sensitivity=specificity`
-## [1] 0.44
+## [1] 0.45
 ## 
 ## $`max.sensitivity+specificity`
-## [1] 0.42
+## [1] 0.43
 ## 
 ## $maxKappa
-## [1] 0.42
+## [1] 0.43
 ## 
 ## $max.prop.correct
-## [1] 0.42
+## [1] 0.43
 ## 
 ## $min.ROC.plot.distance
-## [1] 0.42
+## [1] 0.43
 \end{verbatim}
 
 \begin{Shaded}
@@ -3926,9 +4068,9 @@ Accuracy indicators, such as AUC (Area Under the Receiver Operating Characterist
 
 \begin{verbatim}
 ##   threshold       AUC omission.rate sensitivity specificity prop.correct
-## 1      0.42 0.7415229     0.1985506   0.8014494   0.6815964    0.7418159
-##      Kappa
-## 1 0.483323
+## 1      0.43 0.7409775     0.1978796   0.8021204   0.6798347    0.7412764
+##       Kappa
+## 1 0.4822374
 \end{verbatim}
 
 \begin{Shaded}
@@ -3941,8 +4083,8 @@ Accuracy indicators, such as AUC (Area Under the Receiver Operating Characterist
 \begin{verbatim}
 ##     obs
 ## pred     0     1
-##    0 10059  2959
-##    1  4699 11944
+##    0 10033  2949
+##    1  4725 11954
 ## attr(,"class")
 ## [1] "confusion.matrix"
 \end{verbatim}
@@ -4010,9 +4152,9 @@ The model is run for each of the 5 random subset (with a 20\% of the observation
 
 \begin{verbatim}
 ##      Threshold  mean_AUC mean_Omision mean_sensitivity mean_specificity
-## [1,]      0.42 0.7355966    0.1814137        0.8185863        0.6526069
+## [1,]      0.43 0.7396357    0.1912325        0.8087675        0.6705039
 ##      mean_Prop.Corr
-## [1,]      0.7358485
+## [1,]      0.7398605
 \end{verbatim}
 
 We save the validation summary object.

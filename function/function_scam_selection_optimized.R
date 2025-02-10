@@ -25,7 +25,7 @@ modsel.scam <- function(basef, vars, dat, vmax=NULL, aic.tol=2, k=8, sp= NULL, p
   # initialise the list of selected models at each step
   smod <- list() 
   # base model 
-  m0 <- scam(formula(basef), family=binomial(link="logit"), data=dat)
+  m0 <- gam(formula(basef), family=binomial(link="logit"), data=dat)
   aic0 <- AIC(m0)
   smod[[1]] <- m0
   # maximum number of variables to be included

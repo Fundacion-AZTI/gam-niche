@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2025.2.10)  10 FEB 2025 14:03
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2025.2.10)  10 FEB 2025 15:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1032,37 +1032,37 @@ File: _main_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 
 
 [19]
-Overfull \hbox (38.25pt too wide) in paragraph at lines 724--724
+Overfull \hbox (38.25pt too wide) in paragraph at lines 726--726
 []\TU/lmtt/m/n/10 ##     F_AREA          scientificName          YEAR      occurrenceStatus[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 724--724
+Overfull \hbox (1.5pt too wide) in paragraph at lines 726--726
 []\TU/lmtt/m/n/10 ##  Length:14903       Length:14903       Min.   :2000   Min.   :1[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 724--724
+Overfull \hbox (1.5pt too wide) in paragraph at lines 726--726
 []\TU/lmtt/m/n/10 ##  Class :character   Class :character   1st Qu.:2001   1st Qu.:1[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 724--724
+Overfull \hbox (1.5pt too wide) in paragraph at lines 726--726
 []\TU/lmtt/m/n/10 ##  Mode  :character   Mode  :character   Median :2002   Median :1[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 724--724
+Overfull \hbox (1.5pt too wide) in paragraph at lines 726--726
 []\TU/lmtt/m/n/10 ##                                        Mean   :2003   Mean   :1[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 724--724
+Overfull \hbox (1.5pt too wide) in paragraph at lines 726--726
 []\TU/lmtt/m/n/10 ##                                        3rd Qu.:2004   3rd Qu.:1[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 724--724
+Overfull \hbox (1.5pt too wide) in paragraph at lines 726--726
 []\TU/lmtt/m/n/10 ##                                        Max.   :2013   Max.   :1[] 
  []
 
@@ -1071,11 +1071,12 @@ Overfull \hbox (1.5pt too wide) in paragraph at lines 724--724
 [20]
 File: _main_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
 <use _main_files/figure-latex/unnamed-chunk-17-1.pdf>
-File: _main_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
-<use _main_files/figure-latex/unnamed-chunk-18-1.pdf>
 
 
 [21]
+File: _main_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-18-1.pdf>
+
 
 [22]
 File: _main_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
@@ -1114,51 +1115,51 @@ Chapter 3.
 
 
 [29]
-Overfull \hbox (33.0pt too wide) in paragraph at lines 936--936
+Overfull \hbox (33.0pt too wide) in paragraph at lines 938--938
 []\TU/lmtt/m/n/10 ##          here    rstudioapi       ggplot2         knitr    kableExtra[] 
  []
 
 
-Overfull \hbox (33.0pt too wide) in paragraph at lines 936--936
+Overfull \hbox (33.0pt too wide) in paragraph at lines 938--938
 []\TU/lmtt/m/n/10 ##          TRUE          TRUE          TRUE          TRUE          TRUE[] 
  []
 
 
-Overfull \hbox (4539.69025pt too wide) in paragraph at lines 969--984
+Overfull \hbox (4539.69025pt too wide) in paragraph at lines 971--986
  [][] 
  []
 
 
 
 [30]
-Overfull \hbox (4230.31999pt too wide) in paragraph at lines 1011--2852
+Overfull \hbox (4230.31999pt too wide) in paragraph at lines 1013--2854
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 10845.99438pt on input line 2852.
+LaTeX Warning: Float too large for page by 10845.99438pt on input line 2854.
 
 
 
 [31]
 
 [32]
-Overfull \hbox (12.0pt too wide) in paragraph at lines 2916--2916
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2918--2918
 []\TU/lmtt/m/n/10 ## dimensions : 2160, 4320, 9331200, 4  (nrow, ncol, ncell, nlayers)[] 
  []
 
 
-Overfull \hbox (48.75pt too wide) in paragraph at lines 2916--2916
+Overfull \hbox (48.75pt too wide) in paragraph at lines 2918--2918
 []\TU/lmtt/m/n/10 ## names      : BO2_chlomean_ss, BO2_salinitymean_ss, BO_damean, BO_sstmean[] 
  []
 
 
-Overfull \hbox (48.75pt too wide) in paragraph at lines 2916--2916
+Overfull \hbox (48.75pt too wide) in paragraph at lines 2918--2918
 []\TU/lmtt/m/n/10 ## min values :        0.015806,            0.059304,  0.012000,  -1.801000[] 
  []
 
 
-Overfull \hbox (48.75pt too wide) in paragraph at lines 2916--2916
+Overfull \hbox (48.75pt too wide) in paragraph at lines 2918--2918
 []\TU/lmtt/m/n/10 ## max values :        5.394896,           40.651300,  0.972000,  32.918000[] 
  []
 
@@ -1167,22 +1168,22 @@ File: _main_files/figure-latex/unnamed-chunk-34-1.pdf Graphic file (type pdf)
 
 
 [33]
-Overfull \hbox (1146.0pt too wide) in paragraph at lines 2939--2939
+Overfull \hbox (1146.0pt too wide) in paragraph at lines 2941--2941
 []\TU/lmtt/m/n/10 ## [1] "Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \"Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\" _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 <https://doi.org/10.1111/geb.12693>."[] 
  []
 
 
-Overfull \hbox (1319.25pt too wide) in paragraph at lines 2939--2939
+Overfull \hbox (1319.25pt too wide) in paragraph at lines 2941--2941
 []\TU/lmtt/m/n/10 ## [2] "Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \"Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\" _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n<https://doi.org/10.1111/j.1466-8238.2011.00656.x>."[] 
  []
 
 
-Overfull \hbox (1146.0pt too wide) in paragraph at lines 2950--2950
+Overfull \hbox (1146.0pt too wide) in paragraph at lines 2952--2952
 []\TU/lmtt/m/n/10 ## [1] "Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \"Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\" _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 <https://doi.org/10.1111/geb.12693>."[] 
  []
 
 
-Overfull \hbox (1319.25pt too wide) in paragraph at lines 2950--2950
+Overfull \hbox (1319.25pt too wide) in paragraph at lines 2952--2952
 []\TU/lmtt/m/n/10 ## [2] "Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \"Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\" _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n<https://doi.org/10.1111/j.1466-8238.2011.00656.x>."[] 
  []
 
@@ -1199,71 +1200,71 @@ File: _main_files/figure-latex/unnamed-chunk-36-1.pdf Graphic file (type pdf)
 ]
 Chapter 4.
 
-Underfull \hbox (badness 1596) in paragraph at lines 2978--2979
+Underfull \hbox (badness 1596) in paragraph at lines 2980--2981
 \TU/lmr/m/n/10 In this chapter we first, extract environmental data associated to the
  []
 
 
 
 [37]
-Overfull \hbox (69.75pt too wide) in paragraph at lines 3024--3024
+Overfull \hbox (69.75pt too wide) in paragraph at lines 3026--3026
 []\TU/lmtt/m/n/10 ##       here rstudioapi         sp     raster      dplyr      tidyr    ggplot2[] 
  []
 
 
-Overfull \hbox (69.75pt too wide) in paragraph at lines 3024--3024
+Overfull \hbox (69.75pt too wide) in paragraph at lines 3026--3026
 []\TU/lmtt/m/n/10 ##       TRUE       TRUE       TRUE       TRUE       TRUE       TRUE       TRUE[] 
  []
 
 
 
 [38]
-Overfull \hbox (237.75pt too wide) in paragraph at lines 3109--3109
+Overfull \hbox (237.75pt too wide) in paragraph at lines 3111--3111
 []\TU/lmtt/m/n/10 ##  $ scientificName     : chr  "Thunnus alalunga" "Thunnus alalunga" "Thunnus alalunga" "Thunnus alalunga" ...[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 3109--3109
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3111--3111
 []\TU/lmtt/m/n/10 ##  $ BO2_chlomean_ss    : num  1.2041 1.2041 0.0846 1.2041 0.7228 ...[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 3109--3109
+Overfull \hbox (17.25pt too wide) in paragraph at lines 3111--3111
 []\TU/lmtt/m/n/10 ##  $ BO_damean          : num  0.1974 0.1974 0.029 0.1974 0.0818 ...[] 
  []
 
 
-Overfull \hbox (80.25pt too wide) in paragraph at lines 3132--3132
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3134--3134
 []\TU/lmtt/m/n/10 ##      scientificName      LON      LAT YEAR occurrenceStatus ID BO2_chlomean_ss[] 
  []
 
 
-Overfull \hbox (80.25pt too wide) in paragraph at lines 3132--3132
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3134--3134
 []\TU/lmtt/m/n/10 ## 1  Thunnus alalunga  18.4972 -34.3569 2004                1  1      1.20410309[] 
  []
 
 
-Overfull \hbox (80.25pt too wide) in paragraph at lines 3132--3132
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3134--3134
 []\TU/lmtt/m/n/10 ## 5  Thunnus alalunga  18.4972 -34.3569 2004                1  2      1.20410309[] 
  []
 
 
-Overfull \hbox (80.25pt too wide) in paragraph at lines 3132--3132
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3134--3134
 []\TU/lmtt/m/n/10 ## 8  Thunnus alalunga -76.6000  28.4000 2000                1  3      0.08455528[] 
  []
 
 
-Overfull \hbox (80.25pt too wide) in paragraph at lines 3132--3132
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3134--3134
 []\TU/lmtt/m/n/10 ## 10 Thunnus alalunga  18.4972 -34.3569 2000                1  4      1.20410309[] 
  []
 
 
-Overfull \hbox (80.25pt too wide) in paragraph at lines 3132--3132
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3134--3134
 []\TU/lmtt/m/n/10 ## 11 Thunnus alalunga -69.3100  39.8800 2000                1  5      0.72283228[] 
  []
 
 
-Overfull \hbox (80.25pt too wide) in paragraph at lines 3132--3132
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3134--3134
 []\TU/lmtt/m/n/10 ## 12 Thunnus alalunga  18.4972 -34.3569 2001                1  6      1.20410309[] 
  []
 
@@ -1275,149 +1276,149 @@ Overfull \hbox (98.81235pt too wide) has occurred while \output is active
  []
 
 [39]
-Overfull \hbox (12.0pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (12.0pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  scientificName          LON               LAT               YEAR[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  Length:29806       Min.   :-97.805   Min.   :-82.187   Min.   :2000[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  Class :character   1st Qu.:-69.221   1st Qu.:-29.933   1st Qu.:2001[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  Mode  :character   Median :-28.967   Median : 24.006   Median :2002[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##                     Mean   :-31.118   Mean   :  7.678   Mean   :2003[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##                     3rd Qu.:  2.933   3rd Qu.: 38.250   3rd Qu.:2004[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (27.75pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##                     Max.   : 67.648   Max.   : 89.418   Max.   :2013[] 
  []
 
 
-Overfull \hbox (33.0pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (33.0pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##                                                         NA's   :14903[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (43.5pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  occurrenceStatus       ID        BO2_chlomean_ss   BO2_salinitymean_ss[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  Min.   :0.0      Min.   :    1   Min.   :0.01585   Min.   : 0.1632[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  1st Qu.:0.0      1st Qu.: 7452   1st Qu.:0.08960   1st Qu.:34.5032[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  Median :0.5      Median :14904   Median :0.24648   Median :35.4267[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  Mean   :0.5      Mean   :14904   Mean   :0.42505   Mean   :35.2388[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  3rd Qu.:1.0      3rd Qu.:22355   3rd Qu.:0.68378   3rd Qu.:36.2156[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 3165--3165
+Overfull \hbox (22.5pt too wide) in paragraph at lines 3167--3167
 []\TU/lmtt/m/n/10 ##  Max.   :1.0      Max.   :29806   Max.   :3.44767   Max.   :39.2467[] 
  []
 
 
 
 [40]
-Overfull \hbox (48.75pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (48.75pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  scientificName          LON               LAT          occurrenceStatus[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  Length:29661       Min.   :-97.805   Min.   :-77.508   Min.   :0.0000[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  Class :character   1st Qu.:-69.330   1st Qu.:-29.933   1st Qu.:0.0000[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  Mode  :character   Median :-28.946   Median : 24.088   Median :1.0000[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##                     Mean   :-31.138   Mean   :  7.792   Mean   :0.5024[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##                     3rd Qu.:  2.938   3rd Qu.: 38.242   3rd Qu.:1.0000[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##                     Max.   : 67.241   Max.   : 83.660   Max.   :1.0000[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (17.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##        ID        BO2_chlomean_ss   BO2_salinitymean_ss   BO_damean[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  Min.   :    1   Min.   :0.01585   Min.   : 0.1632     Min.   :0.02180[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  1st Qu.: 7416   1st Qu.:0.08954   1st Qu.:34.5100     1st Qu.:0.03504[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  Median :14831   Median :0.24526   Median :35.4267     Median :0.05037[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  Mean   :14865   Mean   :0.42527   Mean   :35.2420     Mean   :0.07833[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  3rd Qu.:22313   3rd Qu.:0.68457   3rd Qu.:36.2163     3rd Qu.:0.08800[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3219--3219
 []\TU/lmtt/m/n/10 ##  Max.   :29806   Max.   :3.44767   Max.   :39.2467     Max.   :0.69655[] 
  []
 
@@ -1481,12 +1482,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [47]
 
 [48]
-Overfull \hbox (85.5pt too wide) in paragraph at lines 3356--3356
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3358--3358
 []\TU/lmtt/m/n/10 ##          BO_sstmean BO2_salinitymean_ss     BO2_chlomean_ss           BO_damean[] 
  []
 
 
-Overfull \hbox (85.5pt too wide) in paragraph at lines 3356--3356
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3358--3358
 []\TU/lmtt/m/n/10 ##            1.375837            1.493366            5.270639            5.478410[] 
  []
 
@@ -1501,22 +1502,22 @@ Chapter 5.
 
 
 [51]
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3448--3448
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3450--3450
 []\TU/lmtt/m/n/10 ##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3448--3448
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3450--3450
 []\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3448--3448
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3450--3450
 []\TU/lmtt/m/n/10 ##       fields         maps       raster         scam       plotmo     pkgbuild[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3448--3448
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3450--3450
 []\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
  []
 
@@ -1555,17 +1556,17 @@ Overfull \hbox (20.56673pt too wide) has occurred while \output is active
  []
 
 [56]
-Overfull \hbox (64.5pt too wide) in paragraph at lines 3632--3632
+Overfull \hbox (64.5pt too wide) in paragraph at lines 3634--3634
 []\TU/lmtt/m/n/10 ## occurrenceStatus ~ s(BO_sstmean, k = 8, bs = "cv") + s(BO2_salinitymean_ss,[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 3643--3643
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3645--3645
 []\TU/lmtt/m/n/10 ##  plotmo grid:    BO_sstmean BO2_salinitymean_ss BO2_chlomean_ss[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 3643--3643
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3645--3645
 []\TU/lmtt/m/n/10 ##                    18.89921            35.42666       0.2452632[] 
  []
 
@@ -1592,6 +1593,46 @@ Overfull \hbox (20.56673pt too wide) has occurred while \output is active
 [58]
 
 [59]
+Overfull \hbox (148.5pt too wide) in paragraph at lines 3706--3706
+[]\TU/lmtt/m/n/10 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_salinitymean_ss,m=2,bs='cv',k=8)[] 
+ []
+
+
+Overfull \hbox (127.5pt too wide) in paragraph at lines 3706--3706
+[]\TU/lmtt/m/n/10 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_chlomean_ss,m=2,bs='cv',k=8)[] 
+ []
+
+
+Overfull \hbox (332.25pt too wide) in paragraph at lines 3706--3706
+[]\TU/lmtt/m/n/10 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_chlomean_ss,m=2,bs='cv',k=8)+s(BO2_salinitymean_ss,m=2,bs='cv',k=8)[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 3718--3718
+[]\TU/lmtt/m/n/10 ## [1] "BO_sstmean"          "BO2_chlomean_ss"     "BO2_salinitymean_ss"[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3731--3731
+[]\TU/lmtt/m/n/10 ##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3731--3731
+[]\TU/lmtt/m/n/10 ##            41120.17            31629.40            28318.30            27990.07[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3744--3744
+[]\TU/lmtt/m/n/10 ##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3744--3744
+[]\TU/lmtt/m/n/10 ##       -1.769524e-16        2.309141e-01        3.117433e-01        3.198121e-01[] 
+ []
+
+
 
 
 Overfull \hbox (20.56673pt too wide) has occurred while \output is active
@@ -1599,165 +1640,141 @@ Overfull \hbox (20.56673pt too wide) has occurred while \output is active
  []
 
 [60]
-Chapter 6.
-
-
-[61
-
-]
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3811--3811
-[]\TU/lmtt/m/n/10 ##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr[] 
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3772--3772
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) +[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3811--3811
-[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3772--3772
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) +[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3811--3811
-[]\TU/lmtt/m/n/10 ##    tidyverse      R.utils       ggpubr   hrbrthemes       fields         maps[] 
+Overfull \hbox (48.75pt too wide) in paragraph at lines 3772--3772
+[]\TU/lmtt/m/n/10 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss,[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3811--3811
-[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+
+[61]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3874--3874
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) +[] 
  []
 
 
-Overfull \hbox (6.75pt too wide) in paragraph at lines 3811--3811
-[]\TU/lmtt/m/n/10 ##       raster         scam       plotmo     pkgbuild        dismo[] 
+
+
+Overfull \hbox (20.56673pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 62 \TU/lmr/m/sl/10 CHAPTER 5.  SHAPE CONSTRAINED-GENERALIZED ADDITIVE MODELS
  []
-
-
-Overfull \hbox (6.75pt too wide) in paragraph at lines 3811--3811
-[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE[] 
- []
-
-
 
 [62]
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3869--3869
-[]\TU/lmtt/m/n/10 ##    occurrenceStatus BO_sstmean BO2_chlomean_ss BO2_salinitymean_ss scgam.pred[] 
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3874--3874
+[]\TU/lmtt/m/n/10 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) +[] 
  []
 
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3869--3869
-[]\TU/lmtt/m/n/10 ## 1                 1   16.99439      1.20410309            35.42666  0.9804524[] 
- []
-
-
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3869--3869
-[]\TU/lmtt/m/n/10 ## 5                 1   16.99439      1.20410309            35.42666  0.9804524[] 
- []
-
-
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3869--3869
-[]\TU/lmtt/m/n/10 ## 8                 1   25.52963      0.08455528            36.43070  0.4238477[] 
- []
-
-
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3869--3869
-[]\TU/lmtt/m/n/10 ## 10                1   16.99439      1.20410309            35.42666  0.9804524[] 
- []
-
-
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3869--3869
-[]\TU/lmtt/m/n/10 ## 11                1   15.21486      0.72283228            34.20426  0.8449155[] 
- []
-
-
-Overfull \hbox (75.0pt too wide) in paragraph at lines 3869--3869
-[]\TU/lmtt/m/n/10 ## 12                1   16.99439      1.20410309            35.42666  0.9804524[] 
+Overfull \hbox (48.75pt too wide) in paragraph at lines 3874--3874
+[]\TU/lmtt/m/n/10 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss,[] 
  []
 
 
 
 [63]
-Underfull \hbox (badness 3199) in paragraph at lines 3918--3919
-\TU/lmr/m/n/10 Characteristic—ROC—curve), sensitivity (true predicted presences) and
+
+
+Overfull \hbox (20.56673pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 64 \TU/lmr/m/sl/10 CHAPTER 5.  SHAPE CONSTRAINED-GENERALIZED ADDITIVE MODELS
  []
 
+[64
 
-Overfull \hbox (48.75pt too wide) in paragraph at lines 3932--3932
-[]\TU/lmtt/m/n/10 ##   threshold       AUC omission.rate sensitivity specificity prop.correct[] 
- []
+]
+Chapter 6.
 
-
-Overfull \hbox (48.75pt too wide) in paragraph at lines 3932--3932
-[]\TU/lmtt/m/n/10 ## 1      0.42 0.7415229     0.1985506   0.8014494   0.6815964    0.7418159[] 
- []
-
-
-
-[64]
 
 [65]
-Overfull \hbox (43.5pt too wide) in paragraph at lines 4016--4016
-[]\TU/lmtt/m/n/10 ##      Threshold  mean_AUC mean_Omision mean_sensitivity mean_specificity[] 
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3953--3953
+[]\TU/lmtt/m/n/10 ##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 4016--4016
-[]\TU/lmtt/m/n/10 ## [1,]      0.42 0.7355966    0.1814137        0.8185863        0.6526069[] 
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3953--3953
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3953--3953
+[]\TU/lmtt/m/n/10 ##    tidyverse      R.utils       ggpubr   hrbrthemes       fields         maps[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 3953--3953
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 3953--3953
+[]\TU/lmtt/m/n/10 ##       raster         scam       plotmo     pkgbuild        dismo[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 3953--3953
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE[] 
  []
 
 
 
 [66]
-Chapter 7.
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4011--4011
+[]\TU/lmtt/m/n/10 ##    occurrenceStatus BO_sstmean BO2_chlomean_ss BO2_salinitymean_ss scgam.pred[] 
+ []
 
-Overfull \hbox (75.0pt too wide) in paragraph at lines 4071--4071
-[]\TU/lmtt/m/n/10 ##         here   rstudioapi      ggplot2    tidyverse       raster         maps[] 
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4011--4011
+[]\TU/lmtt/m/n/10 ## 1                 1   16.99439      1.20410309            35.42666  0.9814526[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4011--4011
+[]\TU/lmtt/m/n/10 ## 5                 1   16.99439      1.20410309            35.42666  0.9814526[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4011--4011
+[]\TU/lmtt/m/n/10 ## 8                 1   25.52963      0.08455528            36.43070  0.4357622[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4011--4011
+[]\TU/lmtt/m/n/10 ## 10                1   16.99439      1.20410309            35.42666  0.9814526[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4011--4011
+[]\TU/lmtt/m/n/10 ## 11                1   15.21486      0.72283228            34.20426  0.8506453[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4011--4011
+[]\TU/lmtt/m/n/10 ## 12                1   16.99439      1.20410309            35.42666  0.9814526[] 
  []
 
 
 
-[67
-
-]
-Overfull \hbox (75.0pt too wide) in paragraph at lines 4071--4071
-[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+[67]
+Underfull \hbox (badness 3199) in paragraph at lines 4060--4061
+\TU/lmr/m/n/10 Characteristic—ROC—curve), sensitivity (true predicted presences) and
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 4127--4127
-[]\TU/lmtt/m/n/10 ##        x                y            mylayers_1        mylayers_2[] 
+Overfull \hbox (48.75pt too wide) in paragraph at lines 4074--4074
+[]\TU/lmtt/m/n/10 ##   threshold       AUC omission.rate sensitivity specificity prop.correct[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 4127--4127
-[]\TU/lmtt/m/n/10 ##  Min.   :-97.79   Min.   :-82.96   Min.   :0.0       Min.   : 0.1[] 
- []
-
-
-Overfull \hbox (12.0pt too wide) in paragraph at lines 4127--4127
-[]\TU/lmtt/m/n/10 ##  1st Qu.:-56.23   1st Qu.:-39.73   1st Qu.:0.1       1st Qu.:33.8[] 
- []
-
-
-Overfull \hbox (12.0pt too wide) in paragraph at lines 4127--4127
-[]\TU/lmtt/m/n/10 ##  Median :-14.67   Median :  3.50   Median :0.3       Median :34.6[] 
- []
-
-
-Overfull \hbox (12.0pt too wide) in paragraph at lines 4127--4127
-[]\TU/lmtt/m/n/10 ##  Mean   :-14.67   Mean   :  3.50   Mean   :0.3       Mean   :34.4[] 
- []
-
-
-Overfull \hbox (12.0pt too wide) in paragraph at lines 4127--4127
-[]\TU/lmtt/m/n/10 ##  3rd Qu.: 26.90   3rd Qu.: 46.73   3rd Qu.:0.4       3rd Qu.:35.6[] 
- []
-
-
-Overfull \hbox (12.0pt too wide) in paragraph at lines 4127--4127
-[]\TU/lmtt/m/n/10 ##  Max.   : 68.46   Max.   : 89.96   Max.   :3.6       Max.   :40.7[] 
- []
-
-
-Overfull \hbox (27.75pt too wide) in paragraph at lines 4127--4127
-[]\TU/lmtt/m/n/10 ##                                    NA's   :1501044   NA's   :1501044[] 
+Overfull \hbox (48.75pt too wide) in paragraph at lines 4074--4074
+[]\TU/lmtt/m/n/10 ## 1      0.43 0.7409775     0.1978796   0.8021204   0.6798347    0.7412764[] 
  []
 
 
@@ -1765,25 +1782,97 @@ Overfull \hbox (27.75pt too wide) in paragraph at lines 4127--4127
 [68]
 
 [69]
-File: _main_files/figure-latex/unnamed-chunk-93-1.pdf Graphic file (type pdf)
-<use _main_files/figure-latex/unnamed-chunk-93-1.pdf>
+Overfull \hbox (43.5pt too wide) in paragraph at lines 4158--4158
+[]\TU/lmtt/m/n/10 ##      Threshold  mean_AUC mean_Omision mean_sensitivity mean_specificity[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 4158--4158
+[]\TU/lmtt/m/n/10 ## [1,]      0.43 0.7396357    0.1912325        0.8087675        0.6705039[] 
+ []
+
 
 
 [70]
-Chapter 8.
-(./_main.bbl
+Chapter 7.
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4213--4213
+[]\TU/lmtt/m/n/10 ##         here   rstudioapi      ggplot2    tidyverse       raster         maps[] 
+ []
+
+
 
 [71
 
 ]
+Overfull \hbox (75.0pt too wide) in paragraph at lines 4213--4213
+[]\TU/lmtt/m/n/10 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE[] 
+ []
 
-[72
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4269--4269
+[]\TU/lmtt/m/n/10 ##        x                y            mylayers_1        mylayers_2[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4269--4269
+[]\TU/lmtt/m/n/10 ##  Min.   :-97.79   Min.   :-82.96   Min.   :0.0       Min.   : 0.1[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4269--4269
+[]\TU/lmtt/m/n/10 ##  1st Qu.:-56.23   1st Qu.:-39.73   1st Qu.:0.1       1st Qu.:33.8[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4269--4269
+[]\TU/lmtt/m/n/10 ##  Median :-14.67   Median :  3.50   Median :0.3       Median :34.6[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4269--4269
+[]\TU/lmtt/m/n/10 ##  Mean   :-14.67   Mean   :  3.50   Mean   :0.3       Mean   :34.4[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4269--4269
+[]\TU/lmtt/m/n/10 ##  3rd Qu.: 26.90   3rd Qu.: 46.73   3rd Qu.:0.4       3rd Qu.:35.6[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4269--4269
+[]\TU/lmtt/m/n/10 ##  Max.   : 68.46   Max.   : 89.96   Max.   :3.6       Max.   :40.7[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 4269--4269
+[]\TU/lmtt/m/n/10 ##                                    NA's   :1501044   NA's   :1501044[] 
+ []
+
+
+
+[72]
+
+[73]
+File: _main_files/figure-latex/unnamed-chunk-93-1.pdf Graphic file (type pdf)
+<use _main_files/figure-latex/unnamed-chunk-93-1.pdf>
+
+
+[74]
+Chapter 8.
+(./_main.bbl
+
+[75
 
 ]
 
-[73])
+[76
 
-[74] (./_main.aux)
+]
+
+[77])
+
+[78] (./_main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1792,10 +1881,10 @@ L3 programming layer <2025-01-18>
 Here is how much of TeX's memory you used:
  20363 strings out of 475846
  374812 string characters out of 5772451
- 3627194 words of memory out of 5000000
+ 3626194 words of memory out of 5000000
  42977 multiletter control sequences out of 15000+600000
  565410 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  90i,9n,114p,1017b,516s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on _main.pdf (74 pages).
+Output written on _main.pdf (78 pages).
