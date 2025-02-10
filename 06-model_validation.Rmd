@@ -32,7 +32,7 @@ requiredPackages <- c(
   "hrbrthemes",
   
   #SPATIAL DATA --------#
-  "rgdal",
+  # "rgdal",
   "fields",
   "maps" ,
   "raster",
@@ -40,7 +40,7 @@ requiredPackages <- c(
   #MODEL FIT --------#
   "scam",
   "plotmo",
-  "SDMTools",
+  # "SDMTools",
   "pkgbuild",
   "dismo"
   )
@@ -61,10 +61,12 @@ install_load_function(requiredPackages)
 
 Note: in case `SDMTools` failed to load you will have to first manually install [RTools](https://cran.r-project.org/bin/windows/Rtools/history.html) and then run this code bellow: 
 ```{r, eval=T,message=FALSE,warning=FALSE}
-# find_rtools()
-# 
-# install.packages("remotes")
-# remotes::install_version("SDMTools", version = "1.1-221.2")
+#find_rtools()
+ 
+#install.packages("remotes")
+#remotes::install_version("SDMTools", version = "1.1-221.2")
+
+library(SDMTools)
 ```
 
 We define some overall settings.

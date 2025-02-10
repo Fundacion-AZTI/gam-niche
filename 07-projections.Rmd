@@ -24,10 +24,10 @@ requiredPackages <- c(
   "rstudioapi",  # Library for reproducible workflow
   "ggplot2", #for plotting
   "tidyverse", 
-  "rgdal", # to work with Spatial data
+  # "rgdal", # to work with Spatial data
   "raster", #spatial 
   "maps", #world map
-  "maptools", #plotting world map
+  # "maptools", #plotting world map
   "RColorBrewer", #color palette
   "scam", #sdm models under the ecological niche theory framework
   "ggpubr"

@@ -5,16 +5,19 @@
 \documentclass[
 ]{book}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -44,13 +47,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -58,7 +61,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -67,7 +70,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -122,9 +125,9 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{plainnat}
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory},
   pdfauthor={AZTI},
@@ -133,7 +136,7 @@
 
 \title{GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory}
 \author{AZTI}
-\date{2023-05-14}
+\date{2025-02-10}
 
 \begin{document}
 \maketitle
@@ -142,8 +145,7 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{about}{%
-\chapter*{About}\label{about}}
+\chapter*{About}\label{about}
 \addcontentsline{toc}{chapter}{About}
 
 This is a short tutorial for constructing Species Distribution Models in R using Shape-Constrained Generalized Additive Models, based on the development and application to marine fish by \citet{citores_etal_2020}.
@@ -154,8 +156,7 @@ To cite this book, please use:
 
 Valle, M., Citores, L., Ibaibarriaga, L., Chust, C. (2023) GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory. AZTI. \url{https://doi.org/10.57762/fzpy-6w51}
 
-\hypertarget{introduction}{%
-\chapter{Introduction}\label{introduction}}
+\chapter{Introduction}\label{introduction}
 
 Species Distribution Models (SDMs) are numerical tools that combine observations of species occurrence or abundance at known locations with information on the environmental and/or spatial characteristics of those locations \citep{elith_etal_2009}. SDMs are widely used as a tool for understanding species spatial ecology and are also known as ecological niche models (ENM) or habitat suitability models.
 
@@ -165,8 +166,7 @@ This book provides a tutorial on how to use Shape-Constrained Generalized Additi
 
 The book is organised following the key steps in good modelling practice of SDMs \citep{elith_etal_2009}. First, presence data of a selected species are downloaded from GBIF/OBIS global public datasets and pseudo-absence data are created. Then, environmental data are downloaded from public repositories and extracted at each of the presence/pseudo-absence data points. Based on this dataset, an exploratory analysis is conducted to help deciding on the best modelling approach. The model is fitted to the dataset and the quality of the fit and the realism of the fitted response function are evaluated. After selecting a threshold to transform the continuous probability predictions into binary responses, the model is validated using a k-fold approach. Finally, the predicted maps are generated for visualization.
 
-\hypertarget{presence-absence-data}{%
-\chapter{Presence-absence data}\label{presence-absence-data}}
+\chapter{Presence-absence data}\label{presence-absence-data}
 
 In this chapter we first, download occurrence data from global open-access datasets such as Global Biodiversity Information Facility (GBIF, \url{https://www.gbif.org/}) and Ocean Biodiversity Information System (OBIS, \url{https://obis.org/}); second, clean downloaded data reformating, renaming fields and removing outliers data; and lastly, we generate a set of pseudoabsence points along the defined study area.
 
@@ -178,14 +178,14 @@ First we load a list of required libraries.
   \CommentTok{\#GENERAL USE LIBRARIES {-}{-}{-}{-}{-}{-}{-}{-}\#}
   \StringTok{"here"}\NormalTok{, }\CommentTok{\# Library for reproducible workflow}
   \StringTok{"rstudioapi"}\NormalTok{,  }\CommentTok{\# Library for reproducible workflow}
-  \StringTok{"maptools"}\NormalTok{, }\CommentTok{\#plotting world map}
+  \CommentTok{\# "maptools", \#plotting world map}
   \StringTok{"ggplot2"}\NormalTok{, }\CommentTok{\#for plotting}
   
   \CommentTok{\#Download presence data{-}{-}{-}{-}{-}{-}{-}{-}\#}
   \StringTok{"robis"}\NormalTok{, }\CommentTok{\# Specific library to get the occurrence data}
   \StringTok{"rgbif"}\NormalTok{,}\CommentTok{\# Specific library to get the occurrence data}
   \StringTok{"CoordinateCleaner"}\NormalTok{, }\CommentTok{\#to remove outlier}
-  \StringTok{"rgdal"}\NormalTok{, }\CommentTok{\# to work with Spatial data}
+  \CommentTok{\# "rgdal", \# to work with Spatial data}
   \StringTok{"sf"}\NormalTok{, }\CommentTok{\# to work with spatial data (shapefiles)}
   \StringTok{"data.table"}\NormalTok{, }\CommentTok{\#for reading data,}
   \StringTok{"dplyr"}\NormalTok{, }\CommentTok{\#for reading data,}
@@ -223,18 +223,18 @@ We run a function to install the required packages that are not in our system an
 \end{Shaded}
 
 \begin{verbatim}
-##              here        rstudioapi          maptools           ggplot2 
+##              here        rstudioapi           ggplot2             robis 
 ##              TRUE              TRUE              TRUE              TRUE 
-##             robis             rgbif CoordinateCleaner             rgdal 
+##             rgbif CoordinateCleaner                sf        data.table 
 ##              TRUE              TRUE              TRUE              TRUE 
-##                sf        data.table             dplyr             tidyr 
+##             dplyr             tidyr            marmap         tidyverse 
 ##              TRUE              TRUE              TRUE              TRUE 
-##            marmap         tidyverse            scales          ggridges 
+##            scales          ggridges              maps           mapdata 
 ##              TRUE              TRUE              TRUE              TRUE 
-##              maps           mapdata           mapproj          mapplots 
+##           mapproj          mapplots         gridExtra         lubridate 
 ##              TRUE              TRUE              TRUE              TRUE 
-##         gridExtra         lubridate            raster 
-##              TRUE              TRUE              TRUE
+##            raster 
+##              TRUE
 \end{verbatim}
 
 We define some overall settings.
@@ -246,8 +246,7 @@ We define some overall settings.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{download-presence-data}{%
-\section{Download presence data}\label{download-presence-data}}
+\section{Download presence data}\label{download-presence-data}
 
 In this section we download presence data from global public datasets.
 
@@ -255,11 +254,11 @@ To do so, we first define a study area, in this case we select the Atlantic Ocea
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# url where FAO shapfile is stored}
-\NormalTok{url}\OtherTok{\textless{}{-}}\StringTok{"https://www.fao.org/fishery/geoserver/area/ows?service=WFS\&version=1.0.0\&request=GetFeature\&typeName=area\%3AFAO\_AREAS\&maxFeatures=50\&outputFormat=SHAPE{-}ZIP"}
+\CommentTok{\# we could download the shapefile with the FAO fishing areas from the url where FAO shapefile is stored}
+\CommentTok{\# uncommenting the next two lines: }
 
-\CommentTok{\# Download file}
-\FunctionTok{download.file}\NormalTok{(url,}\StringTok{"data/spatial/FAO\_AREAS.zip"}\NormalTok{,}\AttributeTok{mode=}\StringTok{"wb"}\NormalTok{)}
+\CommentTok{\# url\textless{}{-}"https://www.fao.org/fishery/geoserver/area/ows?service=WFS\&version=1.0.0\&request=GetFeature\&typeName=area\%3AFAO\_AREAS\&maxFeatures=50\&outputFormat=SHAPE{-}ZIP"}
+\CommentTok{\# download.file(url,"data/spatial/FAO\_AREAS.zip",mode="wb")}
 
 \CommentTok{\# Unzip downloaded file}
 \FunctionTok{unzip}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{ (}\StringTok{"data"}\NormalTok{, }\StringTok{"spatial"}\NormalTok{, }\StringTok{"FAO\_AREAS.zip"}\NormalTok{),}\AttributeTok{exdir=}\StringTok{"data/spatial"}\NormalTok{)}
@@ -271,7 +270,7 @@ To do so, we first define a study area, in this case we select the Atlantic Ocea
 
 \begin{verbatim}
 ## Reading layer `FAO_AREAS' from data source 
-##   `D:\PROJECTS\github\gam-niche\data\spatial\FAO_AREAS.shp' using driver `ESRI Shapefile'
+##   `C:\USE\GitHub\gam-niche\data\spatial\FAO_AREAS.shp' using driver `ESRI Shapefile'
 ## Simple feature collection with 50 features and 15 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
@@ -312,18 +311,18 @@ To do so, we first define a study area, in this case we select the Atlantic Ocea
 
 Download occurrence data from OBIS and GBIF using scientific name.
 
-In this case we select Albacore tuna species (Thunnus alalunga).
+In this case we select Albacore tuna species (Thunnus alalunga). This can take a long time, so we upload data downloaded previously.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Get data from OBIS}
-\CommentTok{\#mydata.obis\textless{}{-}robis::occurrence(scientificname="Thunnus alalunga")}
-\CommentTok{\#save(mydata.obis, file=file.path("data","occurrences",file="mydata.obis.RData"))}
-\FunctionTok{load}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{ (}\StringTok{"data"}\NormalTok{, }\StringTok{"occurrences"}\NormalTok{, }\StringTok{"mydata.obis.RData"}\NormalTok{))}
+\CommentTok{\# To get data from OBIS}
+\CommentTok{\# mydata.obis\textless{}{-}robis::occurrence(scientificname="Thunnus alalunga")}
 
-\CommentTok{\# Get data from GBIF}
-\CommentTok{\#mydata.gbif\textless{}{-}occ\_data(scientificName="Thunnus alalunga", hasCoordinate = TRUE, limit=100000)$data}
-\CommentTok{\#save(mydata.gbif,file=file.path("data","occurrences",file="mydata.gbif.RData"))}
+\CommentTok{\# To get data from GBIF}
+\CommentTok{\# mydata.gbif\textless{}{-}occ\_data(scientificName="Thunnus alalunga", hasCoordinate = TRUE, limit=100000)$data}
+
+\CommentTok{\# Given that this can take a long time, we upload data downloaded previously}
+\FunctionTok{load}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{ (}\StringTok{"data"}\NormalTok{, }\StringTok{"occurrences"}\NormalTok{, }\StringTok{"mydata.obis.RData"}\NormalTok{))}
 \FunctionTok{load}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{ (}\StringTok{"data"}\NormalTok{, }\StringTok{"occurrences"}\NormalTok{, }\StringTok{"mydata.gbif.RData"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -572,7 +571,7 @@ We now clean downloaded raw data.
 \end{Highlighting}
 \end{Shaded}
 
-We remove outliers based on distance method (total distance= 1000 km).
+We remove outliers based on distance method (total distance= 1000 km) available in the \texttt{CoordinateCleaner} package.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -629,8 +628,9 @@ Mask retrieved occurrence data to our study area and add bathymetry value to eac
 \FunctionTok{names}\NormalTok{(df0)[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"LON"}\NormalTok{,}\StringTok{"LAT"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)}
 
 \CommentTok{\# Add bathymetry from NOAA}
-\CommentTok{\#bathy \textless{}{-} marmap::getNOAA.bathy(lon1={-}100,lon2=30,lat1={-}41,lat2=55, resolution = 1,               keep=TRUE, antimeridian=FALSE, path= here::here("data", "spatial"))}
-\FunctionTok{load}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{ (}\StringTok{"data"}\NormalTok{, }\StringTok{"spatial"}\NormalTok{, }\StringTok{"bathy.RData"}\NormalTok{))}
+\CommentTok{\# bathy \textless{}{-} marmap::getNOAA.bathy(lon1={-}100,lon2=30,lat1={-}41,lat2=55, resolution = 1,keep=TRUE, antimeridian=FALSE, path= here::here("data", "spatial"))}
+
+\FunctionTok{load}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"spatial"}\NormalTok{,}\StringTok{"bathy.RData"}\NormalTok{)) }\CommentTok{\# we upload a file already downloaded}
 
 \NormalTok{df0}\SpecialCharTok{$}\NormalTok{bathymetry }\OtherTok{\textless{}{-}} \FunctionTok{get.depth}\NormalTok{(bathy, df0[,}\FunctionTok{c}\NormalTok{(}\StringTok{"LON"}\NormalTok{,}\StringTok{"LAT"}\NormalTok{)], }\AttributeTok{locator=}\NormalTok{F)}\SpecialCharTok{$}\NormalTok{depth}
 
@@ -662,8 +662,7 @@ And, we save the data.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{create-pseudo-absence-data}{%
-\section{Create pseudo-absence data}\label{create-pseudo-absence-data}}
+\section{Create pseudo-absence data}\label{create-pseudo-absence-data}
 
 After saving presence data for the species of interest we need to generate absence information in order to work with logistic regression SDM afterwards. In this case we create pseudo-absence data with a constant prevalence of 50\% \citep{mcpherson_2004}; \citep{barbetmassin_etal_2012}.
 
@@ -888,8 +887,7 @@ Finally we join the presence and pseudo-absence data frames selecting the column
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{environmental-data}{%
-\chapter{Environmental data}\label{environmental-data}}
+\chapter{Environmental data}\label{environmental-data}
 
 In this chapter we first, download environmental data from a public repository; second, we crop the data to our area of interest, and we save it as raster stack.
 
@@ -901,7 +899,7 @@ As in Chapter 2, first, we load a list of required libraries.
   \CommentTok{\#GENERAL USE LIBRARIES {-}{-}{-}{-}{-}{-}{-}{-}\#}
   \StringTok{"here"}\NormalTok{, }\CommentTok{\# Library for reproducible workflow}
   \StringTok{"rstudioapi"}\NormalTok{,  }\CommentTok{\# Library for reproducible workflow}
-  \StringTok{"maptools"}\NormalTok{, }\CommentTok{\#plotting world map}
+  \CommentTok{\# "maptools", \#plotting world map}
   \StringTok{"ggplot2"}\NormalTok{, }\CommentTok{\#for plotting}
   \StringTok{"knitr"}\NormalTok{,  }\CommentTok{\# format tables}
   \StringTok{"kableExtra"}\NormalTok{, }\CommentTok{\# format tables}
@@ -931,10 +929,10 @@ We run a function to install the required packages that are not in our system an
 \end{Shaded}
 
 \begin{verbatim}
-##          here    rstudioapi      maptools       ggplot2         knitr 
+##          here    rstudioapi       ggplot2         knitr    kableExtra 
 ##          TRUE          TRUE          TRUE          TRUE          TRUE 
-##    kableExtra        raster         dplyr sdmpredictors 
-##          TRUE          TRUE          TRUE          TRUE
+##        raster         dplyr sdmpredictors 
+##          TRUE          TRUE          TRUE
 \end{verbatim}
 
 We define some overall settings.
@@ -946,8 +944,7 @@ We define some overall settings.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{download-from-public-repositories}{%
-\section{Download from public repositories}\label{download-from-public-repositories}}
+\section{Download from public repositories}\label{download-from-public-repositories}
 
 Environmental data can be available from different sources. In this case, we used the Bio-ORACLE (ocean
 rasters for analyses of climate and environment) database \citep{tyberghein_etal_2012, assis_etal_2017}. These data are publicly available and are easily accessible from the \href{https://cran.r-project.org/web/packages/sdmpredictors/index.html}{\texttt{sdmpredictors} package}.
@@ -957,6 +954,9 @@ We can check the list of available datasets with the function \texttt{list\_data
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{mydat }\OtherTok{\textless{}{-}} \FunctionTok{list\_datasets}\NormalTok{()}
+
+\CommentTok{\# to solve problems with encoding in column 5:}
+\NormalTok{mydat[,}\DecValTok{5}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{iconv}\NormalTok{(mydat[,}\DecValTok{5}\NormalTok{], }\AttributeTok{to=}\StringTok{"UTF{-}8"}\NormalTok{)}
 
 \FunctionTok{kable}\NormalTok{(mydat)}\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{kable\_styling}\NormalTok{(}\StringTok{"striped"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
@@ -978,7 +978,7 @@ MARSPEC & FALSE & TRUE & http://marspec.org/ & MARSPEC is a set of high resoluti
 \hline
 ENVIREM & TRUE & FALSE & https://envirem.github.io/ & The ENVIREM dataset is a set of 16 climatic and 2 topographic variables that can be used in modeling species' distributions. The strengths of this dataset include their close ties to ecological processes, and their availability at a global scale, at several spatial resolutions, and for several time periods. The underlying temperature and precipitation data that went into their construction comes from the WorldClim dataset (www.worldclim.org), and the solar radiation data comes from the Consortium for Spatial Information (www.cgiar-csi.org). The data are compatible with and expand the set of variables from WorldClim v1.4 (www.worldclim.org). & Title, P.O., Bemmels, J.B. 2017. ENVIREM: An expanded set of bioclimatic and topographic variables increases flexibility and improves performance of ecological niche modeling. Ecography doi: 10.1111/ecog.02880.\\
 \hline
-Freshwater & TRUE & FALSE & https://www.earthenv.org/streams & The dataset consists of near-global, spatially continuous, and freshwater-specific environmental variables in a standardized 1km grid. We delineated the sub-catchment for each grid cell along the HydroSHEDS river network and summarized the upstream environment (climate, topography, land cover, surface geology and soil) to each grid cell using various metrics (average, minimum, maximum, range, sum, inverse distance-weighted average and sum). All variables were subsequently averaged across single lakes and reservoirs of the Global lakes and Wetlands Database that are connected to the river network. Monthly climate variables were summarized into 19 long-term climatic variables following the <d2>bioclim<d3> framework. & Domisch, S., Amatulli, G., and Jetz, W. (2015) Near-global freshwater-specific environmental variables for biodiversity analyses in 1 km resolution. Scientific Data 2:150073 doi: 10.1038/sdata.2015.73\\
+Freshwater & TRUE & FALSE & https://www.earthenv.org/streams & NA & Domisch, S., Amatulli, G., and Jetz, W. (2015) Near-global freshwater-specific environmental variables for biodiversity analyses in 1 km resolution. Scientific Data 2:150073 doi: 10.1038/sdata.2015.73\\
 \hline
 \end{tabular}
 \end{table}
@@ -2881,8 +2881,6 @@ And we can download them using the function \texttt{load\_layers}
 \begin{Highlighting}[]
 \CommentTok{\# Download layers}
 \NormalTok{myBioracle.layers }\OtherTok{\textless{}{-}} \FunctionTok{load\_layers}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"BO2\_chlomean\_ss"}\NormalTok{, }\StringTok{"BO2\_salinitymean\_ss"}\NormalTok{, }\StringTok{"BO\_damean"}\NormalTok{ ,}\StringTok{"BO\_sstmean"}\NormalTok{)) }
-
-\FunctionTok{save}\NormalTok{ (}\AttributeTok{list =} \StringTok{"myBioracle.layers"}\NormalTok{, }\AttributeTok{file =} \StringTok{"data/env/myBioracle.layers.RData"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2975,8 +2973,7 @@ To facilitate subsequent access, the rasterStack with the downloaded data is sav
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{prepare-the-final-dataset}{%
-\chapter{Prepare the final dataset}\label{prepare-the-final-dataset}}
+\chapter{Prepare the final dataset}\label{prepare-the-final-dataset}
 
 In this chapter we first, extract environmental data associated to the presence/pseudo-absence data, we explore the data we got, we check correlation between variables and we calculate the Variance Inflation Factor (VIF) to make a selection of the variables we are going to use in the model.
 
@@ -3035,8 +3032,7 @@ We define some overall settings.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{extract-environmental-data-associated-to-species-distribution-data}{%
-\section{Extract environmental data associated to species distribution data}\label{extract-environmental-data-associated-to-species-distribution-data}}
+\section{Extract environmental data associated to species distribution data}\label{extract-environmental-data-associated-to-species-distribution-data}
 
 Once we have prepared our species distribution data (occurrences and pseudo-absences) and the environmental rasters, we need to merge both sources of data. First, we load the objects created in previous sections:
 
@@ -3228,8 +3224,7 @@ The resulting dataset has 29661. We save this dataset in a local file to work on
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exploratory-plots-of-environmental-variables}{%
-\section{Exploratory plots of environmental variables}\label{exploratory-plots-of-environmental-variables}}
+\section{Exploratory plots of environmental variables}\label{exploratory-plots-of-environmental-variables}
 
 Before starting the modelling process, we are going to explore the individual variables in the dataset.
 
@@ -3270,8 +3265,7 @@ We can explore the distributions of each of the environmental variables by looki
 
 \includegraphics{_main_files/figure-latex/unnamed-chunk-48-3.pdf}
 
-\hypertarget{exploratory-plots-of-environmental-variables-depending-on-species-distribution-data}{%
-\section{Exploratory plots of environmental variables depending on species distribution data}\label{exploratory-plots-of-environmental-variables-depending-on-species-distribution-data}}
+\section{Exploratory plots of environmental variables depending on species distribution data}\label{exploratory-plots-of-environmental-variables-depending-on-species-distribution-data}
 
 To analyse if there are preferences for certain ranges of the environmental variables, we compare the distribution of the environmental variables for presence and pseudo-absence data:
 
@@ -3301,8 +3295,7 @@ To analyse if there are preferences for certain ranges of the environmental vari
 
 \includegraphics{_main_files/figure-latex/unnamed-chunk-49-2.pdf}
 
-\hypertarget{correlation-analysis}{%
-\section{Correlation analysis}\label{correlation-analysis}}
+\section{Correlation analysis}\label{correlation-analysis}
 
 Some of the environmental variables can be correlated. The \texttt{GGally} package allows to easily produce pairplots of the variables and their correlation.
 
@@ -3329,8 +3322,7 @@ A more detailed analysis of the potential correlations can be conducted using th
 
 \includegraphics{_main_files/figure-latex/unnamed-chunk-51-1.pdf}
 
-\hypertarget{variance-inflation-factor-vif}{%
-\section{Variance Inflation Factor (VIF)}\label{variance-inflation-factor-vif}}
+\section{Variance Inflation Factor (VIF)}\label{variance-inflation-factor-vif}
 
 Furthermore, multicollinearity in regression analysis can be explored using the VIF (Variance Inflation Factor). The value of the VIF statistics indicate the level of multicollinearity with the rest of the variables:
 
@@ -3397,8 +3389,7 @@ We save the dataset as our output for modelling.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{shape-constrained-generalized-additive-models}{%
-\chapter{Shape Constrained-Generalized Additive Models}\label{shape-constrained-generalized-additive-models}}
+\chapter{Shape Constrained-Generalized Additive Models}\label{shape-constrained-generalized-additive-models}
 
 In order to fit SDM in agreement with the ecological niche theory, the proposed Shape-Constrained Generalized Additive Models (SC-GAMs) in \citep{citores_etal_2020} are fitted in this section. SC-GAMs are based on Generalized Additive Models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by \citep{pya_etal_2015} using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting Species Distribution Models in agreement with the ecological niche theory, we imposed concavity constraints (\(f''(x) \le 0\)), so that the response can presents at most a single mode.
 
@@ -3418,7 +3409,7 @@ First, we load the list of required libraries.
   \StringTok{"dplyr"}\NormalTok{,}
   
   \CommentTok{\#SPATIAL DATA {-}{-}{-}{-}{-}{-}{-}{-}\#}
-  \StringTok{"rgdal"}\NormalTok{,}
+  \CommentTok{\#"rgdal",}
   \StringTok{"fields"}\NormalTok{,}
   \StringTok{"maps"}\NormalTok{ ,}
   \StringTok{"raster"}\NormalTok{,}
@@ -3426,7 +3417,6 @@ First, we load the list of required libraries.
   \CommentTok{\#MODEL FIT {-}{-}{-}{-}{-}{-}{-}{-}\#}
   \StringTok{"scam"}\NormalTok{,}
   \StringTok{"plotmo"}\NormalTok{,}
-  \StringTok{"SDMTools"}\NormalTok{,}
   \StringTok{"pkgbuild"}\NormalTok{,}
   \StringTok{"dismo"}
 \NormalTok{  )}
@@ -3451,22 +3441,11 @@ We run a function to install the required packages that are not in our system an
 \begin{verbatim}
 ##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
-##        rgdal       fields         maps       raster         scam       plotmo 
+##       fields         maps       raster         scam       plotmo     pkgbuild 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
-##     SDMTools     pkgbuild        dismo 
-##         TRUE         TRUE         TRUE
+##        dismo 
+##         TRUE
 \end{verbatim}
-
-Install and load SDMTools. You need to manually install RTools: \url{https://cran.r-project.org/bin/windows/Rtools/history.html}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# find\_rtools()}
-\CommentTok{\# }
-\CommentTok{\# install.packages("remotes")}
-\CommentTok{\# remotes::install\_version("SDMTools", version = "1.1{-}221.2")}
-\end{Highlighting}
-\end{Shaded}
 
 We define some overall settings.
 
@@ -3477,8 +3456,7 @@ We define some overall settings.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{model-fit}{%
-\section{Model fit}\label{model-fit}}
+\section{Model fit}\label{model-fit}
 
 We set the working directory to the folder where the current script is located and we load the dataset (PAdata\_with\_env.Rdata) containing the presence-absence data together with the environmental data.
 
@@ -3513,13 +3491,13 @@ We fit the univariate model for SST, we print the summary of the model fit, and 
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)  -47.180      2.182  -21.62   <2e-16 ***
+## (Intercept) -2.24702    0.08182  -27.46   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
 ##               edf Ref.df Chi.sq p-value    
-## s(BO_sstmean)   2      2   1111  <2e-16 ***
+## s(BO_sstmean)   2      2   1078  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3533,7 +3511,7 @@ We fit the univariate model for SST, we print the summary of the model fit, and 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{_main_files/figure-latex/unnamed-chunk-61-1.pdf}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 We repeat the same steps for the rest of the variables.
 
@@ -3554,7 +3532,7 @@ We repeat the same steps for the rest of the variables.
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)  -2.3878     0.0417  -57.27   <2e-16 ***
+## (Intercept)  0.12663    0.01333   9.499   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3563,7 +3541,6 @@ We repeat the same steps for the rest of the variables.
 ## s(BO2_chlomean_ss)   1      1   3263  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## Rank: 7/8
 ## 
 ## R-sq.(adj) =  0.1546   Deviance explained = 12.4%
 ## UBRE score = 0.21423  Scale est. = 1         n = 29661
@@ -3575,7 +3552,7 @@ We repeat the same steps for the rest of the variables.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{_main_files/figure-latex/unnamed-chunk-62-1.pdf}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-61-1.pdf}
 
 Due to convergence issues, sometimes it is necessary to fix the smoothing parameter (sp) at small value, i.e.~\(10^{-5}\), as here when introducing salinity as an explanatory variable. If no value is provided, the smoothing parameter is estimated within the model.
 
@@ -3596,13 +3573,13 @@ Due to convergence issues, sometimes it is necessary to fix the smoothing parame
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)  -50.076      1.853  -27.02   <2e-16 ***
+## (Intercept)  -0.1445     0.0138  -10.47   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
 ##                        edf Ref.df Chi.sq p-value    
-## s(BO2_salinitymean_ss)   2      2  913.1  <2e-16 ***
+## s(BO2_salinitymean_ss)   2      2  893.8  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3616,7 +3593,7 @@ Due to convergence issues, sometimes it is necessary to fix the smoothing parame
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{_main_files/figure-latex/unnamed-chunk-63-1.pdf}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-62-1.pdf}
 
 \textbf{MODEL WITH ALL VARIABLES}
 
@@ -3640,17 +3617,17 @@ Now we fit the model including the three selected variables.
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)
-## (Intercept)   -56.08      45.69  -1.227     0.22
+## (Intercept)   -1.813      3.163  -0.573    0.567
 ## 
 ## Approximate significance of smooth terms:
 ##                          edf Ref.df Chi.sq p-value    
-## s(BO_sstmean)          3.936  3.999  772.6  <2e-16 ***
-## s(BO2_salinitymean_ss) 2.001  2.001  191.4  <2e-16 ***
-## s(BO2_chlomean_ss)     3.985  4.003 1820.7  <2e-16 ***
+## s(BO_sstmean)          4.001  4.003  765.8  <2e-16 ***
+## s(BO2_salinitymean_ss) 2.004  2.008  178.7  <2e-16 ***
+## s(BO2_chlomean_ss)     3.987  4.003 1778.0  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## R-sq.(adj) =  0.3488   Deviance explained = 31.9%
+## R-sq.(adj) =  0.3491   Deviance explained =   32%
 ##   Scale est. = 1         n = 29661
 \end{verbatim}
 
@@ -3665,7 +3642,7 @@ Now we fit the model including the three selected variables.
 ##                    18.89921            35.42666       0.2452632
 \end{verbatim}
 
-\includegraphics{_main_files/figure-latex/unnamed-chunk-64-1.pdf}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-63-1.pdf}
 
 We can see in the summary of the fit, that all included variables are statistically significant (with p\textless0.05) and present a unimodal response curve.
 
@@ -3673,11 +3650,12 @@ For a more detailed check of the fitting, we can use the scam.check function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{old.par }\OtherTok{\textless{}{-}} \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
 \FunctionTok{scam.check}\NormalTok{(model)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{_main_files/figure-latex/unnamed-chunk-65-1.pdf}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-64-1.pdf}
 
 \begin{verbatim}
 ## 
@@ -3685,8 +3663,7 @@ For a more detailed check of the fitting, we can use the scam.check function:
 ## The optimal smoothing parameter(s): 1e-05 1e-05 1e-05 .
 \end{verbatim}
 
-\hypertarget{model-selection}{%
-\section{Model selection}\label{model-selection}}
+\section{Model selection}\label{model-selection}
 
 When several explanatory variables are available, a variable selection process can be carried out. Here we provide as an example, a function that performs forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits.
 
@@ -3714,18 +3691,6 @@ The default AIC tolerance is 2 and there is not a limit on selected terms in thi
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] "Fitting models with 1 terms"
-##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8) 
-##   occurrenceStatus ~ 1+s(BO2_salinitymean_ss,m=2,bs='cv',k=8) 
-##   occurrenceStatus ~ 1+s(BO2_chlomean_ss,m=2,bs='cv',k=8) 
-## [1] "Fitting models with 2 terms"
-##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_salinitymean_ss,m=2,bs='cv',k=8) 
-##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_chlomean_ss,m=2,bs='cv',k=8) 
-## [1] "Fitting models with 3 terms"
-##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs='cv',k=8)+s(BO2_chlomean_ss,m=2,bs='cv',k=8)+s(BO2_salinitymean_ss,m=2,bs='cv',k=8)
-\end{verbatim}
-
 We check results of the selected model, such as, selected variable names:
 
 \begin{Shaded}
@@ -3733,10 +3698,6 @@ We check results of the selected model, such as, selected variable names:
 \NormalTok{model\_SCGAM}\SpecialCharTok{$}\NormalTok{svars}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] "BO_sstmean"          "BO2_chlomean_ss"     "BO2_salinitymean_ss"
-\end{verbatim}
 
 AICs of the fitted models:
 
@@ -3746,11 +3707,6 @@ AICs of the fitted models:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss 
-##            41120.17            31629.43            28388.33            28032.06
-\end{verbatim}
-
 Explained deviance of fitted models:
 
 \begin{Shaded}
@@ -3758,11 +3714,6 @@ Explained deviance of fitted models:
 \FunctionTok{sapply}\NormalTok{(model\_SCGAM}\SpecialCharTok{$}\NormalTok{smod, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{summary}\NormalTok{(x)}\SpecialCharTok{$}\NormalTok{dev.expl)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-##                null          BO_sstmean     BO2_chlomean_ss BO2_salinitymean_ss 
-##        3.539048e-16        2.309134e-01        3.100285e-01        3.187874e-01
-\end{verbatim}
 
 Formulas of the fitted models:
 
@@ -3772,27 +3723,6 @@ Formulas of the fitted models:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## $null
-## occurrenceStatus ~ 1
-## <environment: 0x0000025d005b6100>
-## 
-## $BO_sstmean
-## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
-## <environment: 0x0000025d005b6100>
-## 
-## $BO2_chlomean_ss
-## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
-##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
-## <environment: 0x0000025d005b6100>
-## 
-## $BO2_salinitymean_ss
-## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
-##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
-##     m = 2, bs = "cv", k = 8)
-## <environment: 0x0000025d005b6100>
-\end{verbatim}
-
 Summaries of the fitted models:
 
 \begin{Shaded}
@@ -3800,102 +3730,6 @@ Summaries of the fitted models:
 \FunctionTok{lapply}\NormalTok{(model\_SCGAM}\SpecialCharTok{$}\NormalTok{smod, summary)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## $null
-## 
-## Family: binomial 
-## Link function: logit 
-## 
-## Formula:
-## occurrenceStatus ~ 1
-## <environment: 0x0000025d005b6100>
-## 
-## Parametric coefficients:
-##             Estimate Std. Error z value Pr(>|z|)
-## (Intercept) 0.009777   0.011613   0.842      0.4
-## 
-## 
-## R-sq.(adj) =      0   Deviance explained = 3.54e-14%
-##   Scale est. = 1         n = 29661
-## 
-## 
-## $BO_sstmean
-## 
-## Family: binomial 
-## Link function: logit 
-## 
-## Formula:
-## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
-## <environment: 0x0000025d005b6100>
-## 
-## Parametric coefficients:
-##             Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)   -47.30       3.12  -15.16   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##               edf Ref.df Chi.sq p-value    
-## s(BO_sstmean)   2      2  987.3  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.2607   Deviance explained = 23.1%
-##   Scale est. = 1         n = 29661
-## 
-## 
-## $BO2_chlomean_ss
-## 
-## Family: binomial 
-## Link function: logit 
-## 
-## Formula:
-## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
-##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
-## <environment: 0x0000025d005b6100>
-## 
-## Parametric coefficients:
-##             Estimate Std. Error z value Pr(>|z|)
-## (Intercept)   -40.38      89.57  -0.451    0.652
-## 
-## Approximate significance of smooth terms:
-##                      edf Ref.df Chi.sq p-value    
-## s(BO_sstmean)      3.978  4.004  938.3  <2e-16 ***
-## s(BO2_chlomean_ss) 4.002  4.005 2374.3  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.3399   Deviance explained =   31%
-##   Scale est. = 1         n = 29661
-## 
-## 
-## $BO2_salinitymean_ss
-## 
-## Family: binomial 
-## Link function: logit 
-## 
-## Formula:
-## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
-##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
-##     m = 2, bs = "cv", k = 8)
-## <environment: 0x0000025d005b6100>
-## 
-## Parametric coefficients:
-##             Estimate Std. Error z value Pr(>|z|)
-## (Intercept)   -56.08      45.69  -1.227     0.22
-## 
-## Approximate significance of smooth terms:
-##                          edf Ref.df Chi.sq p-value    
-## s(BO_sstmean)          3.936  3.999  772.6  <2e-16 ***
-## s(BO2_chlomean_ss)     3.985  4.003 1820.7  <2e-16 ***
-## s(BO2_salinitymean_ss) 2.001  2.001  191.4  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.3488   Deviance explained = 31.9%
-##   Scale est. = 1         n = 29661
-\end{verbatim}
 
 The last model of the list, is the selected one. Which in this case contains the considered three variables.
 
@@ -3915,8 +3749,7 @@ We save the selected model
 
 Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be used also for SC-GAMs.
 
-\hypertarget{model-validation}{%
-\chapter{Model validation}\label{model-validation}}
+\chapter{Model validation}\label{model-validation}
 
 In this section, model validation is performed in order to assess the predictive performance of the selected model. This validation is conducted via k-fold cross-validation. The data set is divided into k equally sized groups \citep{hijmans_2012}, using a percentage of randomly selected observations to run the model and the remaining for validation, iteratively for each fold.
 
@@ -3938,7 +3771,7 @@ First, we load the list of required libraries.
   \StringTok{"hrbrthemes"}\NormalTok{,}
   
   \CommentTok{\#SPATIAL DATA {-}{-}{-}{-}{-}{-}{-}{-}\#}
-  \StringTok{"rgdal"}\NormalTok{,}
+  \CommentTok{\# "rgdal",}
   \StringTok{"fields"}\NormalTok{,}
   \StringTok{"maps"}\NormalTok{ ,}
   \StringTok{"raster"}\NormalTok{,}
@@ -3946,7 +3779,7 @@ First, we load the list of required libraries.
   \CommentTok{\#MODEL FIT {-}{-}{-}{-}{-}{-}{-}{-}\#}
   \StringTok{"scam"}\NormalTok{,}
   \StringTok{"plotmo"}\NormalTok{,}
-  \StringTok{"SDMTools"}\NormalTok{,}
+  \CommentTok{\# "SDMTools",}
   \StringTok{"pkgbuild"}\NormalTok{,}
   \StringTok{"dismo"}
 \NormalTok{  )}
@@ -3971,13 +3804,24 @@ We run a function to install the required packages that are not in our system an
 \begin{verbatim}
 ##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
-##    tidyverse      R.utils       ggpubr   hrbrthemes        rgdal       fields 
+##    tidyverse      R.utils       ggpubr   hrbrthemes       fields         maps 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
-##         maps       raster         scam       plotmo     SDMTools     pkgbuild 
-##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
-##        dismo 
-##         TRUE
+##       raster         scam       plotmo     pkgbuild        dismo 
+##         TRUE         TRUE         TRUE         TRUE         TRUE
 \end{verbatim}
+
+Note: in case \texttt{SDMTools} failed to load you will have to first manually install \href{https://cran.r-project.org/bin/windows/Rtools/history.html}{RTools} and then run this code bellow:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#find\_rtools()}
+ 
+\CommentTok{\#install.packages("remotes")}
+\CommentTok{\#remotes::install\_version("SDMTools", version = "1.1{-}221.2")}
+
+\FunctionTok{library}\NormalTok{(SDMTools)}
+\end{Highlighting}
+\end{Shaded}
 
 We define some overall settings.
 
@@ -3996,8 +3840,7 @@ We load output from the selected model saved in the previous step.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{optimum-threshold}{%
-\section{Optimum threshold}\label{optimum-threshold}}
+\section{Optimum threshold}\label{optimum-threshold}
 
 We generate a data frame with the data used in the selected model and we add the predicted values.
 
@@ -4104,8 +3947,7 @@ Accuracy indicators, such as AUC (Area Under the Receiver Operating Characterist
 ## [1] "confusion.matrix"
 \end{verbatim}
 
-\hypertarget{k-fold-validation}{%
-\section{k-fold validation}\label{k-fold-validation}}
+\section{k-fold validation}\label{k-fold-validation}
 
 In this case we use a 5-fold cross-validation.
 
@@ -4167,10 +4009,10 @@ The model is run for each of the 5 random subset (with a 20\% of the observation
 \end{Shaded}
 
 \begin{verbatim}
-##      Threshold mean_AUC mean_Omision mean_sensitivity mean_specificity
-## [1,]      0.42 0.725464    0.2399716        0.7600284        0.6908995
+##      Threshold  mean_AUC mean_Omision mean_sensitivity mean_specificity
+## [1,]      0.42 0.7355966    0.1814137        0.8185863        0.6526069
 ##      mean_Prop.Corr
-## [1,]      0.7256674
+## [1,]      0.7358485
 \end{verbatim}
 
 We save the validation summary object.
@@ -4181,8 +4023,7 @@ We save the validation summary object.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{prediction-and-maps}{%
-\chapter{Prediction and maps}\label{prediction-and-maps}}
+\chapter{Prediction and maps}\label{prediction-and-maps}
 
 In this chapter we predict from the fitted model and produce final SDMs maps.
 
@@ -4196,10 +4037,10 @@ First, we load a list of required libraries.
   \StringTok{"rstudioapi"}\NormalTok{,  }\CommentTok{\# Library for reproducible workflow}
   \StringTok{"ggplot2"}\NormalTok{, }\CommentTok{\#for plotting}
   \StringTok{"tidyverse"}\NormalTok{, }
-  \StringTok{"rgdal"}\NormalTok{, }\CommentTok{\# to work with Spatial data}
+  \CommentTok{\# "rgdal", \# to work with Spatial data}
   \StringTok{"raster"}\NormalTok{, }\CommentTok{\#spatial }
   \StringTok{"maps"}\NormalTok{, }\CommentTok{\#world map}
-  \StringTok{"maptools"}\NormalTok{, }\CommentTok{\#plotting world map}
+  \CommentTok{\# "maptools", \#plotting world map}
   \StringTok{"RColorBrewer"}\NormalTok{, }\CommentTok{\#color palette}
   \StringTok{"scam"}\NormalTok{, }\CommentTok{\#sdm models under the ecological niche theory framework}
   \StringTok{"ggpubr"}
@@ -4223,10 +4064,10 @@ We run a function to install the required packages that are not in our system an
 \end{Shaded}
 
 \begin{verbatim}
-##         here   rstudioapi      ggplot2    tidyverse        rgdal       raster 
+##         here   rstudioapi      ggplot2    tidyverse       raster         maps 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
-##         maps     maptools RColorBrewer         scam       ggpubr 
-##         TRUE         TRUE         TRUE         TRUE         TRUE
+## RColorBrewer         scam       ggpubr 
+##         TRUE         TRUE         TRUE
 \end{verbatim}
 
 We define some overall settings.
@@ -4238,8 +4079,7 @@ We define some overall settings.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{prepare-environmental-data}{%
-\section{Prepare environmental data}\label{prepare-environmental-data}}
+\section{Prepare environmental data}\label{prepare-environmental-data}
 
 In previous steps (see Chapter 2), we have defined the study area that defines the extent of our spatial data. We load the \texttt{study\_area} object that is a SpatialPolygonsDataFrame class:
 
@@ -4253,7 +4093,7 @@ And we load the rasterStack with the downloaded environmental data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mylayers}\OtherTok{\textless{}{-}}\FunctionTok{stack}\NormalTok{(}\StringTok{"data/env/mylayers.tif"}\NormalTok{)}
+\NormalTok{mylayers}\OtherTok{\textless{}{-}}\FunctionTok{stack}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{ (}\StringTok{"data"}\NormalTok{, }\StringTok{"env"}\NormalTok{, }\StringTok{"mylayers.tif"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4292,8 +4132,7 @@ We transform the environmental data set first into a data frame, and then into a
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{projection}{%
-\section{Projection}\label{projection}}
+\section{Projection}\label{projection}
 
 We load the selected model and predict into the whole environmental data.
 
@@ -4312,8 +4151,7 @@ We load the selected model and predict into the whole environmental data.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{mapping}{%
-\section{Mapping}\label{mapping}}
+\section{Mapping}\label{mapping}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4362,8 +4200,7 @@ We finally save the projection map.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{acknowledgements}{%
-\chapter{Acknowledgements}\label{acknowledgements}}
+\chapter{Acknowledgements}\label{acknowledgements}
 
 This tutorial has been supported by the European Union's Horizon 2020 research and innovation programme under grant agreements No 862428 \href{https://missionatlantic.eu/}{MISSION ATLANTIC project}.
 

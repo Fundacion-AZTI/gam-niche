@@ -22,7 +22,7 @@ requiredPackages <- c(
   #GENERAL USE LIBRARIES --------#
   "here", # Library for reproducible workflow
   "rstudioapi",  # Library for reproducible workflow
-  "maptools", #plotting world map
+  # "maptools", #plotting world map
   "ggplot2", #for plotting
   "knitr",  # format tables
   "kableExtra", # format tables
@@ -61,6 +61,9 @@ rasters for analyses of climate and environment) database [@tyberghein_etal_2012
 We can check the list of available datasets with the function `list_datasets` from `sdmpredictors` package, as follows: 
 ```{r, eval=T,message=FALSE,warning=FALSE}
 mydat <- list_datasets()
+
+# to solve problems with encoding in column 5:
+mydat[,5] <- iconv(mydat[,5], to="UTF-8")
 
 kable(mydat)%>% 
   kable_styling("striped") %>% 
