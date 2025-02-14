@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-10" />
+<meta name="date" content="2025-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -253,14 +253,15 @@ div.csl-indent {
 <span id="cb129-25"><a href="model-validation.html#cb129-25" tabindex="-1"></a>  <span class="st">&quot;dismo&quot;</span></span>
 <span id="cb129-26"><a href="model-validation.html#cb129-26" tabindex="-1"></a>  )</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="model-validation.html#cb130-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
-<span id="cb130-2"><a href="model-validation.html#cb130-2" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
-<span id="cb130-3"><a href="model-validation.html#cb130-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
-<span id="cb130-4"><a href="model-validation.html#cb130-4" tabindex="-1"></a>    <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb130-5"><a href="model-validation.html#cb130-5" tabindex="-1"></a>  <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb130-6"><a href="model-validation.html#cb130-6" tabindex="-1"></a>}</span>
-<span id="cb130-7"><a href="model-validation.html#cb130-7" tabindex="-1"></a></span>
-<span id="cb130-8"><a href="model-validation.html#cb130-8" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="model-validation.html#cb130-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg) {</span>
+<span id="cb130-2"><a href="model-validation.html#cb130-2" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,</span>
+<span id="cb130-3"><a href="model-validation.html#cb130-3" tabindex="-1"></a>        <span class="st">&quot;Package&quot;</span>])]</span>
+<span id="cb130-4"><a href="model-validation.html#cb130-4" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
+<span id="cb130-5"><a href="model-validation.html#cb130-5" tabindex="-1"></a>        <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb130-6"><a href="model-validation.html#cb130-6" tabindex="-1"></a>    <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb130-7"><a href="model-validation.html#cb130-7" tabindex="-1"></a>}</span>
+<span id="cb130-8"><a href="model-validation.html#cb130-8" tabindex="-1"></a></span>
+<span id="cb130-9"><a href="model-validation.html#cb130-9" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
 <pre><code>##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
 ##    tidyverse      R.utils       ggpubr   hrbrthemes       fields         maps 
@@ -268,29 +269,34 @@ div.csl-indent {
 ##       raster         scam       plotmo     pkgbuild        dismo 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE</code></pre>
 <p>Note: in case <code>SDMTools</code> failed to load you will have to first manually install <a href="https://cran.r-project.org/bin/windows/Rtools/history.html">RTools</a> and then run this code bellow:</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="model-validation.html#cb132-1" tabindex="-1"></a><span class="co">#find_rtools()</span></span>
-<span id="cb132-2"><a href="model-validation.html#cb132-2" tabindex="-1"></a> </span>
-<span id="cb132-3"><a href="model-validation.html#cb132-3" tabindex="-1"></a><span class="co">#install.packages(&quot;remotes&quot;)</span></span>
-<span id="cb132-4"><a href="model-validation.html#cb132-4" tabindex="-1"></a><span class="co">#remotes::install_version(&quot;SDMTools&quot;, version = &quot;1.1-221.2&quot;)</span></span>
-<span id="cb132-5"><a href="model-validation.html#cb132-5" tabindex="-1"></a></span>
-<span id="cb132-6"><a href="model-validation.html#cb132-6" tabindex="-1"></a><span class="fu">library</span>(SDMTools)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="model-validation.html#cb132-1" tabindex="-1"></a><span class="co"># find_rtools()</span></span>
+<span id="cb132-2"><a href="model-validation.html#cb132-2" tabindex="-1"></a></span>
+<span id="cb132-3"><a href="model-validation.html#cb132-3" tabindex="-1"></a><span class="co"># install.packages(&#39;remotes&#39;)</span></span>
+<span id="cb132-4"><a href="model-validation.html#cb132-4" tabindex="-1"></a><span class="co"># remotes::install_version(&#39;SDMTools&#39;,</span></span>
+<span id="cb132-5"><a href="model-validation.html#cb132-5" tabindex="-1"></a><span class="co"># version = &#39;1.1-221.2&#39;)</span></span>
+<span id="cb132-6"><a href="model-validation.html#cb132-6" tabindex="-1"></a></span>
+<span id="cb132-7"><a href="model-validation.html#cb132-7" tabindex="-1"></a><span class="fu">library</span>(SDMTools)</span></code></pre></div>
 <p>We define some overall settings.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="model-validation.html#cb133-1" tabindex="-1"></a><span class="co"># General settings for ggplot (black-white background, larger base_size)</span></span>
-<span id="cb133-2"><a href="model-validation.html#cb133-2" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="model-validation.html#cb133-1" tabindex="-1"></a><span class="co"># General settings for ggplot</span></span>
+<span id="cb133-2"><a href="model-validation.html#cb133-2" tabindex="-1"></a><span class="co"># (black-white background, larger</span></span>
+<span id="cb133-3"><a href="model-validation.html#cb133-3" tabindex="-1"></a><span class="co"># base_size)</span></span>
+<span id="cb133-4"><a href="model-validation.html#cb133-4" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
 <p>We load output from the selected model saved in the previous step.</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="model-validation.html#cb134-1" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;models&quot;</span>, <span class="st">&quot;selected_model.Rdata&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="model-validation.html#cb134-1" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;selected_model.Rdata&quot;</span>))</span></code></pre></div>
 <div id="optimum-threshold" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Optimum threshold<a href="model-validation.html#optimum-threshold" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We generate a data frame with the data used in the selected model and we add the predicted values.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="model-validation.html#cb135-1" tabindex="-1"></a><span class="co">#PAdata_enviroment used in the selected model</span></span>
-<span id="cb135-2"><a href="model-validation.html#cb135-2" tabindex="-1"></a>data<span class="ot">&lt;-</span>selected_model<span class="sc">$</span>model</span>
-<span id="cb135-3"><a href="model-validation.html#cb135-3" tabindex="-1"></a></span>
-<span id="cb135-4"><a href="model-validation.html#cb135-4" tabindex="-1"></a><span class="co"># Predict </span></span>
-<span id="cb135-5"><a href="model-validation.html#cb135-5" tabindex="-1"></a>scgam.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model, <span class="at">newdata=</span>data, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
-<span id="cb135-6"><a href="model-validation.html#cb135-6" tabindex="-1"></a>  </span>
-<span id="cb135-7"><a href="model-validation.html#cb135-7" tabindex="-1"></a><span class="co"># Add the prediction to the data object</span></span>
-<span id="cb135-8"><a href="model-validation.html#cb135-8" tabindex="-1"></a>data<span class="sc">$</span>scgam.pred <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(scgam.pred)</span>
-<span id="cb135-9"><a href="model-validation.html#cb135-9" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="model-validation.html#cb135-1" tabindex="-1"></a><span class="co"># PAdata_enviroment used in the</span></span>
+<span id="cb135-2"><a href="model-validation.html#cb135-2" tabindex="-1"></a><span class="co"># selected model</span></span>
+<span id="cb135-3"><a href="model-validation.html#cb135-3" tabindex="-1"></a>data <span class="ot">&lt;-</span> selected_model<span class="sc">$</span>model</span>
+<span id="cb135-4"><a href="model-validation.html#cb135-4" tabindex="-1"></a></span>
+<span id="cb135-5"><a href="model-validation.html#cb135-5" tabindex="-1"></a><span class="co"># Predict</span></span>
+<span id="cb135-6"><a href="model-validation.html#cb135-6" tabindex="-1"></a>scgam.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model, <span class="at">newdata =</span> data,</span>
+<span id="cb135-7"><a href="model-validation.html#cb135-7" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb135-8"><a href="model-validation.html#cb135-8" tabindex="-1"></a></span>
+<span id="cb135-9"><a href="model-validation.html#cb135-9" tabindex="-1"></a><span class="co"># Add the prediction to the data object</span></span>
+<span id="cb135-10"><a href="model-validation.html#cb135-10" tabindex="-1"></a>data<span class="sc">$</span>scgam.pred <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(scgam.pred)</span>
+<span id="cb135-11"><a href="model-validation.html#cb135-11" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
 <pre><code>##    occurrenceStatus BO_sstmean BO2_chlomean_ss BO2_salinitymean_ss scgam.pred
 ## 1                 1   16.99439      1.20410309            35.42666  0.9814526
 ## 5                 1   16.99439      1.20410309            35.42666  0.9814526
@@ -302,9 +308,9 @@ div.csl-indent {
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="model-validation.html#cb137-1" tabindex="-1"></a><span class="co"># Optimizing the threshold probability</span></span>
 <span id="cb137-2"><a href="model-validation.html#cb137-2" tabindex="-1"></a>obs <span class="ot">&lt;-</span> data<span class="sc">$</span>occurrenceStatus</span>
 <span id="cb137-3"><a href="model-validation.html#cb137-3" tabindex="-1"></a>predSCGAM_P <span class="ot">&lt;-</span> data<span class="sc">$</span>scgam.pred</span>
-<span id="cb137-4"><a href="model-validation.html#cb137-4" tabindex="-1"></a>  </span>
+<span id="cb137-4"><a href="model-validation.html#cb137-4" tabindex="-1"></a></span>
 <span id="cb137-5"><a href="model-validation.html#cb137-5" tabindex="-1"></a><span class="co"># Threshold optimizing</span></span>
-<span id="cb137-6"><a href="model-validation.html#cb137-6" tabindex="-1"></a>myoptim <span class="ot">&lt;-</span> <span class="fu">optim.thresh</span> (obs,predSCGAM_P)</span>
+<span id="cb137-6"><a href="model-validation.html#cb137-6" tabindex="-1"></a>myoptim <span class="ot">&lt;-</span> <span class="fu">optim.thresh</span>(obs, predSCGAM_P)</span>
 <span id="cb137-7"><a href="model-validation.html#cb137-7" tabindex="-1"></a>myoptim</span></code></pre></div>
 <pre><code>## $min.occurence.prediction
 ## [1] 0.01055724
@@ -329,17 +335,20 @@ div.csl-indent {
 ## 
 ## $min.ROC.plot.distance
 ## [1] 0.43</code></pre>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="model-validation.html#cb139-1" tabindex="-1"></a><span class="co"># Select the threshold that maximizes the sum of sensitivity and specificity </span></span>
-<span id="cb139-2"><a href="model-validation.html#cb139-2" tabindex="-1"></a>myThreshold <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>((myoptim[[<span class="st">&quot;max.sensitivity+specificity&quot;</span>]]))</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="model-validation.html#cb139-1" tabindex="-1"></a><span class="co"># Select the threshold that maximizes</span></span>
+<span id="cb139-2"><a href="model-validation.html#cb139-2" tabindex="-1"></a><span class="co"># the sum of sensitivity and</span></span>
+<span id="cb139-3"><a href="model-validation.html#cb139-3" tabindex="-1"></a><span class="co"># specificity</span></span>
+<span id="cb139-4"><a href="model-validation.html#cb139-4" tabindex="-1"></a>myThreshold <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>((myoptim[[<span class="st">&quot;max.sensitivity+specificity&quot;</span>]]))</span></code></pre></div>
 <p>Accuracy indicators, such as AUC (Area Under the Receiver Operating Characteristic—ROC—curve), sensitivity (true predicted presences) and specificity (true predicted absences) are first computed for the all observations.</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="model-validation.html#cb140-1" tabindex="-1"></a><span class="co"># Accuracy values with all observations</span></span>
-<span id="cb140-2"><a href="model-validation.html#cb140-2" tabindex="-1"></a><span class="fu">accuracy</span> (obs, predSCGAM_P, <span class="at">threshold=</span>myThreshold)</span></code></pre></div>
+<span id="cb140-2"><a href="model-validation.html#cb140-2" tabindex="-1"></a><span class="fu">accuracy</span>(obs, predSCGAM_P, <span class="at">threshold =</span> myThreshold)</span></code></pre></div>
 <pre><code>##   threshold       AUC omission.rate sensitivity specificity prop.correct
 ## 1      0.43 0.7409775     0.1978796   0.8021204   0.6798347    0.7412764
 ##       Kappa
 ## 1 0.4822374</code></pre>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="model-validation.html#cb142-1" tabindex="-1"></a><span class="co"># Create confusion matrix with all observations</span></span>
-<span id="cb142-2"><a href="model-validation.html#cb142-2" tabindex="-1"></a><span class="fu">confusion.matrix</span>(obs, predSCGAM_P, <span class="at">threshold=</span>myThreshold)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="model-validation.html#cb142-1" tabindex="-1"></a><span class="co"># Create confusion matrix with all</span></span>
+<span id="cb142-2"><a href="model-validation.html#cb142-2" tabindex="-1"></a><span class="co"># observations</span></span>
+<span id="cb142-3"><a href="model-validation.html#cb142-3" tabindex="-1"></a><span class="fu">confusion.matrix</span>(obs, predSCGAM_P, <span class="at">threshold =</span> myThreshold)</span></code></pre></div>
 <pre><code>##     obs
 ## pred     0     1
 ##    0 10033  2949
@@ -351,51 +360,58 @@ div.csl-indent {
 <h2><span class="header-section-number">6.2</span> k-fold validation<a href="model-validation.html#k-fold-validation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this case we use a 5-fold cross-validation.</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="model-validation.html#cb144-1" tabindex="-1"></a><span class="co"># Number of groups</span></span>
-<span id="cb144-2"><a href="model-validation.html#cb144-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span> </span>
+<span id="cb144-2"><a href="model-validation.html#cb144-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span></span>
 <span id="cb144-3"><a href="model-validation.html#cb144-3" tabindex="-1"></a></span>
 <span id="cb144-4"><a href="model-validation.html#cb144-4" tabindex="-1"></a><span class="co"># Generate groups</span></span>
-<span id="cb144-5"><a href="model-validation.html#cb144-5" tabindex="-1"></a>groups<span class="ot">&lt;-</span><span class="fu">kfold</span>(data, k, <span class="at">by=</span>data<span class="sc">$</span>occurrencestatus)</span></code></pre></div>
+<span id="cb144-5"><a href="model-validation.html#cb144-5" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">kfold</span>(data, k, <span class="at">by =</span> data<span class="sc">$</span>occurrencestatus)</span></code></pre></div>
 <p>The model is run for each of the 5 random subset (with a 20% of the observations) and indicators are then computed using the remaining 80% of the observations. Indicators are the averaged across folds.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="model-validation.html#cb145-1" tabindex="-1"></a><span class="co"># Initialise the confusion matrix and the accuracy table: </span></span>
-<span id="cb145-2"><a href="model-validation.html#cb145-2" tabindex="-1"></a>myCM <span class="ot">&lt;-</span> <span class="cn">NULL</span> </span>
-<span id="cb145-3"><a href="model-validation.html#cb145-3" tabindex="-1"></a>myACC <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb145-4"><a href="model-validation.html#cb145-4" tabindex="-1"></a>  </span>
-<span id="cb145-5"><a href="model-validation.html#cb145-5" tabindex="-1"></a><span class="co"># Get the formula of the selected model  </span></span>
-<span id="cb145-6"><a href="model-validation.html#cb145-6" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">summary</span>(selected_model)[[<span class="st">&quot;formula&quot;</span>]]</span>
-<span id="cb145-7"><a href="model-validation.html#cb145-7" tabindex="-1"></a>  </span>
-<span id="cb145-8"><a href="model-validation.html#cb145-8" tabindex="-1"></a><span class="co"># Get the smoothing parameters of the selected model  </span></span>
-<span id="cb145-9"><a href="model-validation.html#cb145-9" tabindex="-1"></a>sp <span class="ot">&lt;-</span> selected_model<span class="sc">$</span>sp</span>
-<span id="cb145-10"><a href="model-validation.html#cb145-10" tabindex="-1"></a></span>
-<span id="cb145-11"><a href="model-validation.html#cb145-11" tabindex="-1"></a><span class="co"># Loop for each group k</span></span>
-<span id="cb145-12"><a href="model-validation.html#cb145-12" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
-<span id="cb145-13"><a href="model-validation.html#cb145-13" tabindex="-1"></a>  <span class="co"># Preparation of Training Sites</span></span>
-<span id="cb145-14"><a href="model-validation.html#cb145-14" tabindex="-1"></a>  p_Training <span class="ot">&lt;-</span> data[groups <span class="sc">!=</span> j,]</span>
-<span id="cb145-15"><a href="model-validation.html#cb145-15" tabindex="-1"></a>  </span>
-<span id="cb145-16"><a href="model-validation.html#cb145-16" tabindex="-1"></a>  <span class="co"># Model fit</span></span>
-<span id="cb145-17"><a href="model-validation.html#cb145-17" tabindex="-1"></a>  selected_model.sp.j <span class="ot">&lt;-</span> <span class="fu">scam</span> (formula, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>),<span class="at">data=</span>p_Training, <span class="at">sp=</span><span class="fu">c</span>(sp))</span>
-<span id="cb145-18"><a href="model-validation.html#cb145-18" tabindex="-1"></a>  </span>
-<span id="cb145-19"><a href="model-validation.html#cb145-19" tabindex="-1"></a>  <span class="co"># Predict Model</span></span>
-<span id="cb145-20"><a href="model-validation.html#cb145-20" tabindex="-1"></a>  p_validacion<span class="ot">&lt;-</span>data[groups <span class="sc">==</span> j,]</span>
-<span id="cb145-21"><a href="model-validation.html#cb145-21" tabindex="-1"></a>  </span>
-<span id="cb145-22"><a href="model-validation.html#cb145-22" tabindex="-1"></a>  selected_model.sp.j.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model.sp.j, <span class="at">newdata=</span>p_validacion, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
-<span id="cb145-23"><a href="model-validation.html#cb145-23" tabindex="-1"></a>  p_validacion<span class="sc">$</span>Pred <span class="ot">&lt;-</span> selected_model.sp.j.pred</span>
-<span id="cb145-24"><a href="model-validation.html#cb145-24" tabindex="-1"></a>    </span>
-<span id="cb145-25"><a href="model-validation.html#cb145-25" tabindex="-1"></a>  <span class="co"># Confussion matrix and accuracy table for fold j</span></span>
-<span id="cb145-26"><a href="model-validation.html#cb145-26" tabindex="-1"></a>  obs <span class="ot">&lt;-</span> p_validacion<span class="sc">$</span>occurrenceStatus</span>
-<span id="cb145-27"><a href="model-validation.html#cb145-27" tabindex="-1"></a>  predSCGAM <span class="ot">&lt;-</span> p_validacion<span class="sc">$</span>Pred</span>
-<span id="cb145-28"><a href="model-validation.html#cb145-28" tabindex="-1"></a>  myCM <span class="ot">&lt;-</span> <span class="fu">rbind</span>(myCM, <span class="fu">as.numeric</span>(<span class="fu">confusion.matrix</span>(obs, predSCGAM, <span class="at">threshold=</span>myThreshold)))</span>
-<span id="cb145-29"><a href="model-validation.html#cb145-29" tabindex="-1"></a>  myACC <span class="ot">&lt;-</span> <span class="fu">rbind</span>(myACC, <span class="fu">accuracy</span>(obs, predSCGAM, <span class="at">threshold=</span>myThreshold))</span>
-<span id="cb145-30"><a href="model-validation.html#cb145-30" tabindex="-1"></a>  } </span>
-<span id="cb145-31"><a href="model-validation.html#cb145-31" tabindex="-1"></a>  </span>
-<span id="cb145-32"><a href="model-validation.html#cb145-32" tabindex="-1"></a><span class="co"># Mean values across k-folds</span></span>
-<span id="cb145-33"><a href="model-validation.html#cb145-33" tabindex="-1"></a>validation_summary<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="at">Threshold=</span>myThreshold,</span>
-<span id="cb145-34"><a href="model-validation.html#cb145-34" tabindex="-1"></a>                            <span class="at">mean_AUC=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>AUC),</span>
-<span id="cb145-35"><a href="model-validation.html#cb145-35" tabindex="-1"></a>                            <span class="at">mean_Omision=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>omission.rate),</span>
-<span id="cb145-36"><a href="model-validation.html#cb145-36" tabindex="-1"></a>                            <span class="at">mean_sensitivity=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>sensitivity),</span>
-<span id="cb145-37"><a href="model-validation.html#cb145-37" tabindex="-1"></a>                            <span class="at">mean_specificity=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>specificity),</span>
-<span id="cb145-38"><a href="model-validation.html#cb145-38" tabindex="-1"></a>                            <span class="at">mean_Prop.Corr=</span><span class="fu">mean</span>(myACC<span class="sc">$</span>prop.correct))</span>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="model-validation.html#cb145-1" tabindex="-1"></a><span class="co"># Initialise the confusion matrix and</span></span>
+<span id="cb145-2"><a href="model-validation.html#cb145-2" tabindex="-1"></a><span class="co"># the accuracy table:</span></span>
+<span id="cb145-3"><a href="model-validation.html#cb145-3" tabindex="-1"></a>myCM <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb145-4"><a href="model-validation.html#cb145-4" tabindex="-1"></a>myACC <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb145-5"><a href="model-validation.html#cb145-5" tabindex="-1"></a></span>
+<span id="cb145-6"><a href="model-validation.html#cb145-6" tabindex="-1"></a><span class="co"># Get the formula of the selected model</span></span>
+<span id="cb145-7"><a href="model-validation.html#cb145-7" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">summary</span>(selected_model)[[<span class="st">&quot;formula&quot;</span>]]</span>
+<span id="cb145-8"><a href="model-validation.html#cb145-8" tabindex="-1"></a></span>
+<span id="cb145-9"><a href="model-validation.html#cb145-9" tabindex="-1"></a><span class="co"># Get the smoothing parameters of the</span></span>
+<span id="cb145-10"><a href="model-validation.html#cb145-10" tabindex="-1"></a><span class="co"># selected model</span></span>
+<span id="cb145-11"><a href="model-validation.html#cb145-11" tabindex="-1"></a>sp <span class="ot">&lt;-</span> selected_model<span class="sc">$</span>sp</span>
+<span id="cb145-12"><a href="model-validation.html#cb145-12" tabindex="-1"></a></span>
+<span id="cb145-13"><a href="model-validation.html#cb145-13" tabindex="-1"></a><span class="co"># Loop for each group k</span></span>
+<span id="cb145-14"><a href="model-validation.html#cb145-14" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="cb145-15"><a href="model-validation.html#cb145-15" tabindex="-1"></a>    <span class="co"># Preparation of Training Sites</span></span>
+<span id="cb145-16"><a href="model-validation.html#cb145-16" tabindex="-1"></a>    p_Training <span class="ot">&lt;-</span> data[groups <span class="sc">!=</span> j, ]</span>
+<span id="cb145-17"><a href="model-validation.html#cb145-17" tabindex="-1"></a></span>
+<span id="cb145-18"><a href="model-validation.html#cb145-18" tabindex="-1"></a>    <span class="co"># Model fit</span></span>
+<span id="cb145-19"><a href="model-validation.html#cb145-19" tabindex="-1"></a>    selected_model.sp.j <span class="ot">&lt;-</span> <span class="fu">scam</span>(formula,</span>
+<span id="cb145-20"><a href="model-validation.html#cb145-20" tabindex="-1"></a>        <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb145-21"><a href="model-validation.html#cb145-21" tabindex="-1"></a>        <span class="at">data =</span> p_Training, <span class="at">sp =</span> <span class="fu">c</span>(sp))</span>
+<span id="cb145-22"><a href="model-validation.html#cb145-22" tabindex="-1"></a></span>
+<span id="cb145-23"><a href="model-validation.html#cb145-23" tabindex="-1"></a>    <span class="co"># Predict Model</span></span>
+<span id="cb145-24"><a href="model-validation.html#cb145-24" tabindex="-1"></a>    p_validacion <span class="ot">&lt;-</span> data[groups <span class="sc">==</span> j, ]</span>
+<span id="cb145-25"><a href="model-validation.html#cb145-25" tabindex="-1"></a></span>
+<span id="cb145-26"><a href="model-validation.html#cb145-26" tabindex="-1"></a>    selected_model.sp.j.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model.sp.j,</span>
+<span id="cb145-27"><a href="model-validation.html#cb145-27" tabindex="-1"></a>        <span class="at">newdata =</span> p_validacion, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb145-28"><a href="model-validation.html#cb145-28" tabindex="-1"></a>    p_validacion<span class="sc">$</span>Pred <span class="ot">&lt;-</span> selected_model.sp.j.pred</span>
+<span id="cb145-29"><a href="model-validation.html#cb145-29" tabindex="-1"></a></span>
+<span id="cb145-30"><a href="model-validation.html#cb145-30" tabindex="-1"></a>    <span class="co"># Confussion matrix and accuracy</span></span>
+<span id="cb145-31"><a href="model-validation.html#cb145-31" tabindex="-1"></a>    <span class="co"># table for fold j</span></span>
+<span id="cb145-32"><a href="model-validation.html#cb145-32" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> p_validacion<span class="sc">$</span>occurrenceStatus</span>
+<span id="cb145-33"><a href="model-validation.html#cb145-33" tabindex="-1"></a>    predSCGAM <span class="ot">&lt;-</span> p_validacion<span class="sc">$</span>Pred</span>
+<span id="cb145-34"><a href="model-validation.html#cb145-34" tabindex="-1"></a>    myCM <span class="ot">&lt;-</span> <span class="fu">rbind</span>(myCM, <span class="fu">as.numeric</span>(<span class="fu">confusion.matrix</span>(obs,</span>
+<span id="cb145-35"><a href="model-validation.html#cb145-35" tabindex="-1"></a>        predSCGAM, <span class="at">threshold =</span> myThreshold)))</span>
+<span id="cb145-36"><a href="model-validation.html#cb145-36" tabindex="-1"></a>    myACC <span class="ot">&lt;-</span> <span class="fu">rbind</span>(myACC, <span class="fu">accuracy</span>(obs, predSCGAM,</span>
+<span id="cb145-37"><a href="model-validation.html#cb145-37" tabindex="-1"></a>        <span class="at">threshold =</span> myThreshold))</span>
+<span id="cb145-38"><a href="model-validation.html#cb145-38" tabindex="-1"></a>}</span>
 <span id="cb145-39"><a href="model-validation.html#cb145-39" tabindex="-1"></a></span>
-<span id="cb145-40"><a href="model-validation.html#cb145-40" tabindex="-1"></a>validation_summary</span></code></pre></div>
+<span id="cb145-40"><a href="model-validation.html#cb145-40" tabindex="-1"></a><span class="co"># Mean values across k-folds</span></span>
+<span id="cb145-41"><a href="model-validation.html#cb145-41" tabindex="-1"></a>validation_summary <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Threshold =</span> myThreshold,</span>
+<span id="cb145-42"><a href="model-validation.html#cb145-42" tabindex="-1"></a>    <span class="at">mean_AUC =</span> <span class="fu">mean</span>(myACC<span class="sc">$</span>AUC), <span class="at">mean_Omision =</span> <span class="fu">mean</span>(myACC<span class="sc">$</span>omission.rate),</span>
+<span id="cb145-43"><a href="model-validation.html#cb145-43" tabindex="-1"></a>    <span class="at">mean_sensitivity =</span> <span class="fu">mean</span>(myACC<span class="sc">$</span>sensitivity),</span>
+<span id="cb145-44"><a href="model-validation.html#cb145-44" tabindex="-1"></a>    <span class="at">mean_specificity =</span> <span class="fu">mean</span>(myACC<span class="sc">$</span>specificity),</span>
+<span id="cb145-45"><a href="model-validation.html#cb145-45" tabindex="-1"></a>    <span class="at">mean_Prop.Corr =</span> <span class="fu">mean</span>(myACC<span class="sc">$</span>prop.correct))</span>
+<span id="cb145-46"><a href="model-validation.html#cb145-46" tabindex="-1"></a></span>
+<span id="cb145-47"><a href="model-validation.html#cb145-47" tabindex="-1"></a>validation_summary</span></code></pre></div>
 <pre><code>##      Threshold  mean_AUC mean_Omision mean_sensitivity mean_specificity
 ## [1,]      0.43 0.7396357    0.1912325        0.8087675        0.6705039
 ##      mean_Prop.Corr

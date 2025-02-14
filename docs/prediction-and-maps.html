@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-10" />
+<meta name="date" content="2025-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -241,31 +241,36 @@ div.csl-indent {
 <span id="cb148-13"><a href="prediction-and-maps.html#cb148-13" tabindex="-1"></a>  <span class="st">&quot;ggpubr&quot;</span></span>
 <span id="cb148-14"><a href="prediction-and-maps.html#cb148-14" tabindex="-1"></a>  )</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="prediction-and-maps.html#cb149-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
-<span id="cb149-2"><a href="prediction-and-maps.html#cb149-2" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
-<span id="cb149-3"><a href="prediction-and-maps.html#cb149-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
-<span id="cb149-4"><a href="prediction-and-maps.html#cb149-4" tabindex="-1"></a>    <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb149-5"><a href="prediction-and-maps.html#cb149-5" tabindex="-1"></a>  <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb149-6"><a href="prediction-and-maps.html#cb149-6" tabindex="-1"></a>}</span>
-<span id="cb149-7"><a href="prediction-and-maps.html#cb149-7" tabindex="-1"></a></span>
-<span id="cb149-8"><a href="prediction-and-maps.html#cb149-8" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="prediction-and-maps.html#cb149-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg) {</span>
+<span id="cb149-2"><a href="prediction-and-maps.html#cb149-2" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,</span>
+<span id="cb149-3"><a href="prediction-and-maps.html#cb149-3" tabindex="-1"></a>        <span class="st">&quot;Package&quot;</span>])]</span>
+<span id="cb149-4"><a href="prediction-and-maps.html#cb149-4" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
+<span id="cb149-5"><a href="prediction-and-maps.html#cb149-5" tabindex="-1"></a>        <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb149-6"><a href="prediction-and-maps.html#cb149-6" tabindex="-1"></a>    <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb149-7"><a href="prediction-and-maps.html#cb149-7" tabindex="-1"></a>}</span>
+<span id="cb149-8"><a href="prediction-and-maps.html#cb149-8" tabindex="-1"></a></span>
+<span id="cb149-9"><a href="prediction-and-maps.html#cb149-9" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
 <pre><code>##         here   rstudioapi      ggplot2    tidyverse       raster         maps 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
 ## RColorBrewer         scam       ggpubr 
 ##         TRUE         TRUE         TRUE</code></pre>
 <p>We define some overall settings.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="prediction-and-maps.html#cb151-1" tabindex="-1"></a><span class="co"># General settings for ggplot (black-white background, larger base_size)</span></span>
-<span id="cb151-2"><a href="prediction-and-maps.html#cb151-2" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="prediction-and-maps.html#cb151-1" tabindex="-1"></a><span class="co"># General settings for ggplot</span></span>
+<span id="cb151-2"><a href="prediction-and-maps.html#cb151-2" tabindex="-1"></a><span class="co"># (black-white background, larger</span></span>
+<span id="cb151-3"><a href="prediction-and-maps.html#cb151-3" tabindex="-1"></a><span class="co"># base_size)</span></span>
+<span id="cb151-4"><a href="prediction-and-maps.html#cb151-4" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
 <div id="prepare-environmental-data" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Prepare environmental data<a href="prediction-and-maps.html#prepare-environmental-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In previous steps (see Chapter 2), we have defined the study area that defines the extent of our spatial data. We load the <code>study_area</code> object that is a SpatialPolygonsDataFrame class:</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="prediction-and-maps.html#cb152-1" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;study_area.RData&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="prediction-and-maps.html#cb152-1" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;study_area.RData&quot;</span>))</span></code></pre></div>
 <p>And we load the rasterStack with the downloaded environmental data.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="prediction-and-maps.html#cb153-1" tabindex="-1"></a>mylayers<span class="ot">&lt;-</span><span class="fu">stack</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;env&quot;</span>, <span class="st">&quot;mylayers.tif&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="prediction-and-maps.html#cb153-1" tabindex="-1"></a>mylayers <span class="ot">&lt;-</span> <span class="fu">stack</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;env&quot;</span>,</span>
+<span id="cb153-2"><a href="prediction-and-maps.html#cb153-2" tabindex="-1"></a>    <span class="st">&quot;mylayers.tif&quot;</span>))</span></code></pre></div>
 <p>We transform the environmental data set first into a data frame, and then into a SpatialDataFrame.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="prediction-and-maps.html#cb154-1" tabindex="-1"></a>env_dataframe <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">as.data.frame</span>(mylayers, <span class="at">xy=</span><span class="cn">TRUE</span>)</span>
-<span id="cb154-2"><a href="prediction-and-maps.html#cb154-2" tabindex="-1"></a></span>
-<span id="cb154-3"><a href="prediction-and-maps.html#cb154-3" tabindex="-1"></a><span class="fu">summary</span>(env_dataframe)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="prediction-and-maps.html#cb154-1" tabindex="-1"></a>env_dataframe <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">as.data.frame</span>(mylayers,</span>
+<span id="cb154-2"><a href="prediction-and-maps.html#cb154-2" tabindex="-1"></a>    <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb154-3"><a href="prediction-and-maps.html#cb154-3" tabindex="-1"></a></span>
+<span id="cb154-4"><a href="prediction-and-maps.html#cb154-4" tabindex="-1"></a><span class="fu">summary</span>(env_dataframe)</span></code></pre></div>
 <pre><code>##        x                y            mylayers_1        mylayers_2     
 ##  Min.   :-97.79   Min.   :-82.96   Min.   :0.0       Min.   : 0.1     
 ##  1st Qu.:-56.23   1st Qu.:-39.73   1st Qu.:0.1       1st Qu.:33.8     
@@ -282,7 +287,8 @@ div.csl-indent {
 ##  3rd Qu.:0.1       3rd Qu.:24.1     
 ##  Max.   :1.0       Max.   :32.3     
 ##  NA&#39;s   :1652879   NA&#39;s   :1652879</code></pre>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="prediction-and-maps.html#cb156-1" tabindex="-1"></a><span class="fu">names</span>(env_dataframe) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span>, <span class="st">&quot;BO_sstmean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="prediction-and-maps.html#cb156-1" tabindex="-1"></a><span class="fu">names</span>(env_dataframe) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;BO2_chlomean_ss&quot;</span>,</span>
+<span id="cb156-2"><a href="prediction-and-maps.html#cb156-2" tabindex="-1"></a>    <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span>, <span class="st">&quot;BO_sstmean&quot;</span>)</span></code></pre></div>
 </div>
 <div id="projection" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Projection<a href="prediction-and-maps.html#projection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -290,13 +296,14 @@ div.csl-indent {
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="prediction-and-maps.html#cb157-1" tabindex="-1"></a><span class="co"># Load SC-GAM model</span></span>
 <span id="cb157-2"><a href="prediction-and-maps.html#cb157-2" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;models&quot;</span>, <span class="st">&quot;selected_model.Rdata&quot;</span>))</span>
 <span id="cb157-3"><a href="prediction-and-maps.html#cb157-3" tabindex="-1"></a></span>
-<span id="cb157-4"><a href="prediction-and-maps.html#cb157-4" tabindex="-1"></a><span class="co"># Predicting </span></span>
-<span id="cb157-5"><a href="prediction-and-maps.html#cb157-5" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model,<span class="at">newdata=</span>env_dataframe,<span class="at">type =</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit=</span>T)         </span>
-<span id="cb157-6"><a href="prediction-and-maps.html#cb157-6" tabindex="-1"></a></span>
-<span id="cb157-7"><a href="prediction-and-maps.html#cb157-7" tabindex="-1"></a>env_dataframe<span class="sc">$</span>fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>fit</span>
-<span id="cb157-8"><a href="prediction-and-maps.html#cb157-8" tabindex="-1"></a>env_dataframe<span class="sc">$</span>se.fit<span class="ot">&lt;-</span>predict<span class="sc">$</span>se.fit</span>
-<span id="cb157-9"><a href="prediction-and-maps.html#cb157-9" tabindex="-1"></a></span>
-<span id="cb157-10"><a href="prediction-and-maps.html#cb157-10" tabindex="-1"></a><span class="fu">save</span>(env_dataframe, <span class="at">file=</span><span class="st">&quot;results/projection.Rdata&quot;</span>)</span></code></pre></div>
+<span id="cb157-4"><a href="prediction-and-maps.html#cb157-4" tabindex="-1"></a><span class="co"># Predicting</span></span>
+<span id="cb157-5"><a href="prediction-and-maps.html#cb157-5" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(selected_model, <span class="at">newdata =</span> env_dataframe,</span>
+<span id="cb157-6"><a href="prediction-and-maps.html#cb157-6" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">se.fit =</span> T)</span>
+<span id="cb157-7"><a href="prediction-and-maps.html#cb157-7" tabindex="-1"></a></span>
+<span id="cb157-8"><a href="prediction-and-maps.html#cb157-8" tabindex="-1"></a>env_dataframe<span class="sc">$</span>fit <span class="ot">&lt;-</span> predict<span class="sc">$</span>fit</span>
+<span id="cb157-9"><a href="prediction-and-maps.html#cb157-9" tabindex="-1"></a>env_dataframe<span class="sc">$</span>se.fit <span class="ot">&lt;-</span> predict<span class="sc">$</span>se.fit</span>
+<span id="cb157-10"><a href="prediction-and-maps.html#cb157-10" tabindex="-1"></a></span>
+<span id="cb157-11"><a href="prediction-and-maps.html#cb157-11" tabindex="-1"></a><span class="fu">save</span>(env_dataframe, <span class="at">file =</span> <span class="st">&quot;results/projection.Rdata&quot;</span>)</span></code></pre></div>
 </div>
 <div id="mapping" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Mapping<a href="prediction-and-maps.html#mapping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -327,14 +334,12 @@ div.csl-indent {
 <span id="cb158-25"><a href="prediction-and-maps.html#cb158-25" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;latitude&quot;</span>, <span class="at">x =</span> <span class="st">&quot;longitude&quot;</span>)</span>
 <span id="cb158-26"><a href="prediction-and-maps.html#cb158-26" tabindex="-1"></a>  </span>
 <span id="cb158-27"><a href="prediction-and-maps.html#cb158-27" tabindex="-1"></a><span class="fu">print</span>(proj_map)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-93-1.png" width="1536" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-94-1.png" width="1536" /></p>
 <p>We finally save the projection map.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="prediction-and-maps.html#cb159-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename=</span> <span class="st">&quot;Thunnus_alalunga_proj_map.tif&quot;</span>, </span>
-<span id="cb159-2"><a href="prediction-and-maps.html#cb159-2" tabindex="-1"></a>        <span class="at">plot=</span>proj_map, </span>
-<span id="cb159-3"><a href="prediction-and-maps.html#cb159-3" tabindex="-1"></a>        <span class="at">device=</span><span class="st">&quot;tiff&quot;</span>,</span>
-<span id="cb159-4"><a href="prediction-and-maps.html#cb159-4" tabindex="-1"></a>        <span class="at">path=</span>here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;plots&quot;</span>, <span class="st">&quot;projections&quot;</span>), </span>
-<span id="cb159-5"><a href="prediction-and-maps.html#cb159-5" tabindex="-1"></a>        <span class="at">height=</span><span class="dv">22</span>, <span class="at">width=</span><span class="dv">30</span>,</span>
-<span id="cb159-6"><a href="prediction-and-maps.html#cb159-6" tabindex="-1"></a>        <span class="at">units=</span><span class="st">&quot;cm&quot;</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="prediction-and-maps.html#cb159-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;Thunnus_alalunga_proj_map.tif&quot;</span>,</span>
+<span id="cb159-2"><a href="prediction-and-maps.html#cb159-2" tabindex="-1"></a>    <span class="at">plot =</span> proj_map, <span class="at">device =</span> <span class="st">&quot;tiff&quot;</span>, <span class="at">path =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;plots&quot;</span>,</span>
+<span id="cb159-3"><a href="prediction-and-maps.html#cb159-3" tabindex="-1"></a>        <span class="st">&quot;projections&quot;</span>), <span class="at">height =</span> <span class="dv">22</span>, <span class="at">width =</span> <span class="dv">30</span>,</span>
+<span id="cb159-4"><a href="prediction-and-maps.html#cb159-4" tabindex="-1"></a>    <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div>
 
 <!-- 
 This file is part of a gitbook that should be cited as: 

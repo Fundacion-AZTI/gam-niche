@@ -19,21 +19,16 @@ In this chapter we first, extract environmental data associated to the presence/
 First, we load a list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
-  #GENERAL USE LIBRARIES --------#
-  "here", # Library for reproducible workflow
-  "rstudioapi",  # Library for reproducible workflow
-  
-  #EXTRACT ENVIRONMENTAL DATA AND PLOTS
-  "sp", # spatial data
-  "raster", #spatial data
+  "here", 
+  "rstudioapi",  
+  "sp", 
+  "raster", 
   "dplyr",
   "tidyr",
   "ggplot2",
   "ggcorrplot",
-  
-  #CORRELATION ANALYSIS
-  "GGally", #correlation analysis
-  "HH" #calculate VIF
+  "GGally", 
+  "HH" 
     )
 ```
 
@@ -95,8 +90,9 @@ summary(data)
 
 The new dataset has 29806 rows and 10 columns, and there are 139 NA's in the environmental dataset. We remove the points with NA's:
 ```{r, eval=T,message=FALSE,warning=FALSE}
+# we remove year column because pseudoabsences miss this info
 data <- data %>% 
-  dplyr::select (-YEAR) %>% #we remove year column because pseudoabsences miss this info
+  dplyr::select (-YEAR) %>% 
   na.omit()
 ```
 

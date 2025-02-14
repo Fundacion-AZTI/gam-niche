@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-10" />
+<meta name="date" content="2025-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -242,21 +242,24 @@ div.csl-indent {
 <span id="cb37-14"><a href="environmental-data.html#cb37-14" tabindex="-1"></a>  </span>
 <span id="cb37-15"><a href="environmental-data.html#cb37-15" tabindex="-1"></a>    )</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="environmental-data.html#cb38-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
-<span id="cb38-2"><a href="environmental-data.html#cb38-2" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
-<span id="cb38-3"><a href="environmental-data.html#cb38-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
-<span id="cb38-4"><a href="environmental-data.html#cb38-4" tabindex="-1"></a>    <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb38-5"><a href="environmental-data.html#cb38-5" tabindex="-1"></a>  <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb38-6"><a href="environmental-data.html#cb38-6" tabindex="-1"></a>}</span>
-<span id="cb38-7"><a href="environmental-data.html#cb38-7" tabindex="-1"></a></span>
-<span id="cb38-8"><a href="environmental-data.html#cb38-8" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="environmental-data.html#cb38-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg) {</span>
+<span id="cb38-2"><a href="environmental-data.html#cb38-2" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,</span>
+<span id="cb38-3"><a href="environmental-data.html#cb38-3" tabindex="-1"></a>        <span class="st">&quot;Package&quot;</span>])]</span>
+<span id="cb38-4"><a href="environmental-data.html#cb38-4" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
+<span id="cb38-5"><a href="environmental-data.html#cb38-5" tabindex="-1"></a>        <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-6"><a href="environmental-data.html#cb38-6" tabindex="-1"></a>    <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-7"><a href="environmental-data.html#cb38-7" tabindex="-1"></a>}</span>
+<span id="cb38-8"><a href="environmental-data.html#cb38-8" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="environmental-data.html#cb38-9" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
 <pre><code>##          here    rstudioapi       ggplot2         knitr    kableExtra 
 ##          TRUE          TRUE          TRUE          TRUE          TRUE 
 ##        raster         dplyr sdmpredictors 
 ##          TRUE          TRUE          TRUE</code></pre>
 <p>We define some overall settings.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="environmental-data.html#cb40-1" tabindex="-1"></a><span class="co"># General settings for ggplot (black-white background, larger base_size)</span></span>
-<span id="cb40-2"><a href="environmental-data.html#cb40-2" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="environmental-data.html#cb40-1" tabindex="-1"></a><span class="co"># General settings for ggplot</span></span>
+<span id="cb40-2"><a href="environmental-data.html#cb40-2" tabindex="-1"></a><span class="co"># (black-white background, larger</span></span>
+<span id="cb40-3"><a href="environmental-data.html#cb40-3" tabindex="-1"></a><span class="co"># base_size)</span></span>
+<span id="cb40-4"><a href="environmental-data.html#cb40-4" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
 <div id="download-from-public-repositories" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Download from public repositories<a href="environmental-data.html#download-from-public-repositories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Environmental data can be available from different sources. In this case, we used the Bio-ORACLE (ocean
@@ -264,12 +267,13 @@ rasters for analyses of climate and environment) database <span class="citation"
 <p>We can check the list of available datasets with the function <code>list_datasets</code> from <code>sdmpredictors</code> package, as follows:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="environmental-data.html#cb41-1" tabindex="-1"></a>mydat <span class="ot">&lt;-</span> <span class="fu">list_datasets</span>()</span>
 <span id="cb41-2"><a href="environmental-data.html#cb41-2" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="environmental-data.html#cb41-3" tabindex="-1"></a><span class="co"># to solve problems with encoding in column 5:</span></span>
-<span id="cb41-4"><a href="environmental-data.html#cb41-4" tabindex="-1"></a>mydat[,<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="fu">iconv</span>(mydat[,<span class="dv">5</span>], <span class="at">to=</span><span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb41-5"><a href="environmental-data.html#cb41-5" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="environmental-data.html#cb41-6" tabindex="-1"></a><span class="fu">kable</span>(mydat)<span class="sc">%&gt;%</span> </span>
-<span id="cb41-7"><a href="environmental-data.html#cb41-7" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-8"><a href="environmental-data.html#cb41-8" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">height=</span><span class="st">&quot;600px&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>)</span></code></pre></div>
+<span id="cb41-3"><a href="environmental-data.html#cb41-3" tabindex="-1"></a><span class="co"># to solve problems with encoding in</span></span>
+<span id="cb41-4"><a href="environmental-data.html#cb41-4" tabindex="-1"></a><span class="co"># column 5:</span></span>
+<span id="cb41-5"><a href="environmental-data.html#cb41-5" tabindex="-1"></a>mydat[, <span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="fu">iconv</span>(mydat[, <span class="dv">5</span>], <span class="at">to =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb41-6"><a href="environmental-data.html#cb41-6" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="environmental-data.html#cb41-7" tabindex="-1"></a><span class="fu">kable</span>(mydat) <span class="sc">%&gt;%</span></span>
+<span id="cb41-8"><a href="environmental-data.html#cb41-8" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-9"><a href="environmental-data.html#cb41-9" tabindex="-1"></a>    <span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">&quot;600px&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>)</span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:100%; ">
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -399,16 +403,18 @@ Domisch, S., Amatulli, G., and Jetz, W. (2015) Near-global freshwater-specific e
 </table>
 </div>
 <p>By default this function returns all the supported datasets. To return only marine datasets we can set the <code>marine</code> argument equal to <code>TRUE</code> or equivalently we could set the <code>terrestrial</code> and <code>freshwater</code> arguments equal to <code>FALSE</code>:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="environmental-data.html#cb42-1" tabindex="-1"></a>mydat <span class="ot">&lt;-</span> <span class="fu">list_datasets</span>(<span class="at">marine=</span>T)</span>
-<span id="cb42-2"><a href="environmental-data.html#cb42-2" tabindex="-1"></a><span class="co"># or equivalently: </span></span>
-<span id="cb42-3"><a href="environmental-data.html#cb42-3" tabindex="-1"></a><span class="co"># mydat &lt;- list_datasets(terrestrial=F, freshwater=F)</span></span>
-<span id="cb42-4"><a href="environmental-data.html#cb42-4" tabindex="-1"></a><span class="co"># mydat &lt;- list_datasets(marine=T, terrestrial=F, freshwater=F)</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="environmental-data.html#cb42-1" tabindex="-1"></a>mydat <span class="ot">&lt;-</span> <span class="fu">list_datasets</span>(<span class="at">marine =</span> T)</span>
+<span id="cb42-2"><a href="environmental-data.html#cb42-2" tabindex="-1"></a><span class="co"># or equivalently: mydat &lt;-</span></span>
+<span id="cb42-3"><a href="environmental-data.html#cb42-3" tabindex="-1"></a><span class="co"># list_datasets(terrestrial=F,</span></span>
+<span id="cb42-4"><a href="environmental-data.html#cb42-4" tabindex="-1"></a><span class="co"># freshwater=F) mydat &lt;-</span></span>
+<span id="cb42-5"><a href="environmental-data.html#cb42-5" tabindex="-1"></a><span class="co"># list_datasets(marine=T,</span></span>
+<span id="cb42-6"><a href="environmental-data.html#cb42-6" tabindex="-1"></a><span class="co"># terrestrial=F, freshwater=F)</span></span></code></pre></div>
 <p>There are two datasets (Bio-ORACLE and MARSPEC) that have marine data. The function <code>list_layers</code> returns information on the layers of one or more datasets. So, we can see the layers available in the Bio-ORACLE dataset as follows:</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="environmental-data.html#cb43-1" tabindex="-1"></a>mytab <span class="ot">&lt;-</span> <span class="fu">list_layers</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>)</span>
 <span id="cb43-2"><a href="environmental-data.html#cb43-2" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="environmental-data.html#cb43-3" tabindex="-1"></a><span class="fu">kable</span>(mytab)<span class="sc">%&gt;%</span> </span>
-<span id="cb43-4"><a href="environmental-data.html#cb43-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb43-5"><a href="environmental-data.html#cb43-5" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">height=</span><span class="st">&quot;600px&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>)</span></code></pre></div>
+<span id="cb43-3"><a href="environmental-data.html#cb43-3" tabindex="-1"></a><span class="fu">kable</span>(mytab) <span class="sc">%&gt;%</span></span>
+<span id="cb43-4"><a href="environmental-data.html#cb43-4" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-5"><a href="environmental-data.html#cb43-5" tabindex="-1"></a>    <span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">&quot;600px&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>)</span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:100%; ">
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -71180,23 +71186,22 @@ TRUE
 </table>
 </div>
 <p>Once we identify the dataset and the layers we are interested on, we can extract their details from the list. In this case, we download data on chlorophyll, salinity, diffuse attenuation coefficient and sea surface temperature.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="environmental-data.html#cb44-1" tabindex="-1"></a>target <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>,</span>
-<span id="cb44-2"><a href="environmental-data.html#cb44-2" tabindex="-1"></a>            <span class="st">&quot;BO2_salinitymean_ss&quot;</span>,</span>
-<span id="cb44-3"><a href="environmental-data.html#cb44-3" tabindex="-1"></a>            <span class="st">&quot;BO_damean&quot;</span>,</span>
-<span id="cb44-4"><a href="environmental-data.html#cb44-4" tabindex="-1"></a>            <span class="st">&quot;BO_sstmean&quot;</span>)</span>
-<span id="cb44-5"><a href="environmental-data.html#cb44-5" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="environmental-data.html#cb44-6" tabindex="-1"></a><span class="co"># Extrat details from the list</span></span>
-<span id="cb44-7"><a href="environmental-data.html#cb44-7" tabindex="-1"></a>myvars <span class="ot">&lt;-</span> mytab <span class="sc">%&gt;%</span> </span>
-<span id="cb44-8"><a href="environmental-data.html#cb44-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span> (mytab<span class="sc">$</span>layer_code <span class="sc">%in%</span> target)</span>
-<span id="cb44-9"><a href="environmental-data.html#cb44-9" tabindex="-1"></a></span>
-<span id="cb44-10"><a href="environmental-data.html#cb44-10" tabindex="-1"></a>myvars<span class="sc">$</span>name</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="environmental-data.html#cb44-1" tabindex="-1"></a>target <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>,</span>
+<span id="cb44-2"><a href="environmental-data.html#cb44-2" tabindex="-1"></a>    <span class="st">&quot;BO_damean&quot;</span>, <span class="st">&quot;BO_sstmean&quot;</span>)</span>
+<span id="cb44-3"><a href="environmental-data.html#cb44-3" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="environmental-data.html#cb44-4" tabindex="-1"></a><span class="co"># Extrat details from the list</span></span>
+<span id="cb44-5"><a href="environmental-data.html#cb44-5" tabindex="-1"></a>myvars <span class="ot">&lt;-</span> mytab <span class="sc">%&gt;%</span></span>
+<span id="cb44-6"><a href="environmental-data.html#cb44-6" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(mytab<span class="sc">$</span>layer_code <span class="sc">%in%</span> target)</span>
+<span id="cb44-7"><a href="environmental-data.html#cb44-7" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="environmental-data.html#cb44-8" tabindex="-1"></a>myvars<span class="sc">$</span>name</span></code></pre></div>
 <pre><code>## [1] &quot;Diffuse attenuation coefficient at 490 nm (mean)&quot;
 ## [2] &quot;Sea surface temperature (mean)&quot;                  
 ## [3] &quot;Chlorophyll concentration (mean)&quot;                
 ## [4] &quot;Sea surface salinity (mean)&quot;</code></pre>
 <p>And we can download them using the function <code>load_layers</code></p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="environmental-data.html#cb46-1" tabindex="-1"></a><span class="co"># Download layers</span></span>
-<span id="cb46-2"><a href="environmental-data.html#cb46-2" tabindex="-1"></a>myBioracle.layers <span class="ot">&lt;-</span> <span class="fu">load_layers</span>(<span class="fu">c</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span> ,<span class="st">&quot;BO_sstmean&quot;</span>)) </span></code></pre></div>
+<span id="cb46-2"><a href="environmental-data.html#cb46-2" tabindex="-1"></a>myBioracle.layers <span class="ot">&lt;-</span> <span class="fu">load_layers</span>(<span class="fu">c</span>(<span class="st">&quot;BO2_chlomean_ss&quot;</span>,</span>
+<span id="cb46-3"><a href="environmental-data.html#cb46-3" tabindex="-1"></a>    <span class="st">&quot;BO2_salinitymean_ss&quot;</span>, <span class="st">&quot;BO_damean&quot;</span>, <span class="st">&quot;BO_sstmean&quot;</span>))</span></code></pre></div>
 <p>Note that the resulting object is a <code>rasterStack</code>, where each variable is a layer</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="environmental-data.html#cb47-1" tabindex="-1"></a><span class="fu">class</span>(myBioracle.layers)</span></code></pre></div>
 <pre><code>## [1] &quot;RasterStack&quot;
@@ -71213,7 +71218,7 @@ TRUE
 ## max values :        5.394896,           40.651300,  0.972000,  32.918000</code></pre>
 <p>And we can plot it:</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="environmental-data.html#cb51-1" tabindex="-1"></a>raster<span class="sc">::</span><span class="fu">plot</span>(myBioracle.layers)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>Note that the functions <code>dataset_citations</code> and <code>layer_citations</code> provide the bibliographic entries of the datasets and layers for proper citation:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="environmental-data.html#cb52-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dataset_citations</span>(<span class="st">&quot;Bio-ORACLE&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] &quot;Assis J, Tyberghein L, Bosch S, Heroen V, Serrão E, De Clerck O, Tittensor D (2018). \&quot;Bio‐ORACLE v2.0: Extending marine data layers for\nbioclimatic modelling.\&quot; _Global Ecology and Biogeography_, *27*(3),\n277-284. doi:10.1111/geb.12693 &lt;https://doi.org/10.1111/geb.12693&gt;.&quot;                                 
@@ -71223,14 +71228,15 @@ TRUE
 ## [2] &quot;Tyberghein L, Heroen V, Pauly K, Troupin C, Mineur F, De Clerck O (2012). \&quot;Bio-ORACLE: a global environmental dataset for marine species\ndistribution modelling.\&quot; _Global Ecology and Biogeography_, *21*(2),\n272-281. doi:10.1111/j.1466-8238.2011.00656.x\n&lt;https://doi.org/10.1111/j.1466-8238.2011.00656.x&gt;.&quot;</code></pre>
 <p>In case we are not interested on the whole area, we can crop the raster objects to the area of interest.</p>
 <p>For example, we can load the <code>study_area</code> object that is a SpatialPolygonsDataFrame that has been created previously and defines the extent of our spatial data and we can crop the rasterStack to the same extent:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="environmental-data.html#cb56-1" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;study_area.RData&quot;</span>))</span>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="environmental-data.html#cb56-1" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;study_area.RData&quot;</span>))</span>
 <span id="cb56-2"><a href="environmental-data.html#cb56-2" tabindex="-1"></a></span>
 <span id="cb56-3"><a href="environmental-data.html#cb56-3" tabindex="-1"></a>mylayers <span class="ot">&lt;-</span> <span class="fu">crop</span>(myBioracle.layers, <span class="fu">extent</span>(study_area))</span>
 <span id="cb56-4"><a href="environmental-data.html#cb56-4" tabindex="-1"></a></span>
 <span id="cb56-5"><a href="environmental-data.html#cb56-5" tabindex="-1"></a><span class="fu">plot</span>(mylayers)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>To facilitate subsequent access, the rasterStack with the downloaded data is saved in a local folder:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="environmental-data.html#cb57-1" tabindex="-1"></a><span class="fu">writeRaster</span>(mylayers, <span class="at">filename=</span><span class="st">&quot;data/env/mylayers.tif&quot;</span>, <span class="at">options=</span><span class="st">&quot;INTERLEAVE=BAND&quot;</span>, <span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="environmental-data.html#cb57-1" tabindex="-1"></a><span class="fu">writeRaster</span>(mylayers, <span class="at">filename =</span> <span class="st">&quot;data/env/mylayers.tif&quot;</span>,</span>
+<span id="cb57-2"><a href="environmental-data.html#cb57-2" tabindex="-1"></a>    <span class="at">options =</span> <span class="st">&quot;INTERLEAVE=BAND&quot;</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 
 <!-- 
 This file is part of a gitbook that should be cited as: 

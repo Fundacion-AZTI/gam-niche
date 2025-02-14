@@ -21,21 +21,15 @@ Alternatively, the R package `mboost` fits SC-GAMs using boosting methods. We ar
 First, we load the list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
-  #GENERAL USE LIBRARIES --------#
-  "here", # Library for reproducible workflow
-  "rstudioapi",  # Library for reproducible workflow
+  "here", 
+  "rstudioapi",  
   "stringr",
   "RColorBrewer",  
   "ggplot2",
   "dplyr",
-  
-  #SPATIAL DATA --------#
-  #"rgdal",
   "fields",
   "maps" ,
   "raster",
-
-  #MODEL FIT --------#
   "scam",
   "plotmo",
   "pkgbuild",

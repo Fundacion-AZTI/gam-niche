@@ -2,7 +2,7 @@
 
 Welcome! 
 
-This is a short tutorial for constructing species distribution models in R using Shape-Constrained Generalized Additive Models, based on the development and application to marine fish by [Citores et al. 2020 Ecological Modelling 418:108926](https://doi.org/10.1016/j.ecolmodel.2019.108926).
+This is a short tutorial for constructing species distribution models in R using Shape-Constrained Generalized Additive Models [Pya and Wood, 2015](https://doi.org/10.1007/s11222-013-9448-7), based on the development and application to marine fish by [Citores et al. 2020](https://doi.org/10.1016/j.ecolmodel.2019.108926).
 
 The code is available in [AZTI's github repository](https://github.com/Fundacion-AZTI/gam-niche) and the book is readily available [here](https://fundacion-azti.github.io/gam-niche/). This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 

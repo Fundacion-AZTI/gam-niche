@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-10" />
+<meta name="date" content="2025-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -249,14 +249,15 @@ div.csl-indent {
 <span id="cb93-20"><a href="shape-constrained-generalized-additive-models.html#cb93-20" tabindex="-1"></a>  <span class="st">&quot;dismo&quot;</span></span>
 <span id="cb93-21"><a href="shape-constrained-generalized-additive-models.html#cb93-21" tabindex="-1"></a>  )</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="shape-constrained-generalized-additive-models.html#cb94-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
-<span id="cb94-2"><a href="shape-constrained-generalized-additive-models.html#cb94-2" tabindex="-1"></a>  new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
-<span id="cb94-3"><a href="shape-constrained-generalized-additive-models.html#cb94-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
-<span id="cb94-4"><a href="shape-constrained-generalized-additive-models.html#cb94-4" tabindex="-1"></a>    <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb94-5"><a href="shape-constrained-generalized-additive-models.html#cb94-5" tabindex="-1"></a>  <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb94-6"><a href="shape-constrained-generalized-additive-models.html#cb94-6" tabindex="-1"></a>}</span>
-<span id="cb94-7"><a href="shape-constrained-generalized-additive-models.html#cb94-7" tabindex="-1"></a></span>
-<span id="cb94-8"><a href="shape-constrained-generalized-additive-models.html#cb94-8" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="shape-constrained-generalized-additive-models.html#cb94-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg) {</span>
+<span id="cb94-2"><a href="shape-constrained-generalized-additive-models.html#cb94-2" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,</span>
+<span id="cb94-3"><a href="shape-constrained-generalized-additive-models.html#cb94-3" tabindex="-1"></a>        <span class="st">&quot;Package&quot;</span>])]</span>
+<span id="cb94-4"><a href="shape-constrained-generalized-additive-models.html#cb94-4" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
+<span id="cb94-5"><a href="shape-constrained-generalized-additive-models.html#cb94-5" tabindex="-1"></a>        <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb94-6"><a href="shape-constrained-generalized-additive-models.html#cb94-6" tabindex="-1"></a>    <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb94-7"><a href="shape-constrained-generalized-additive-models.html#cb94-7" tabindex="-1"></a>}</span>
+<span id="cb94-8"><a href="shape-constrained-generalized-additive-models.html#cb94-8" tabindex="-1"></a></span>
+<span id="cb94-9"><a href="shape-constrained-generalized-additive-models.html#cb94-9" tabindex="-1"></a><span class="fu">install_load_function</span>(requiredPackages)</span></code></pre></div>
 <pre><code>##         here   rstudioapi      stringr RColorBrewer      ggplot2        dplyr 
 ##         TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
 ##       fields         maps       raster         scam       plotmo     pkgbuild 
@@ -264,18 +265,23 @@ div.csl-indent {
 ##        dismo 
 ##         TRUE</code></pre>
 <p>We define some overall settings.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="shape-constrained-generalized-additive-models.html#cb96-1" tabindex="-1"></a><span class="co"># General settings for ggplot (black-white background, larger base_size)</span></span>
-<span id="cb96-2"><a href="shape-constrained-generalized-additive-models.html#cb96-2" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="shape-constrained-generalized-additive-models.html#cb96-1" tabindex="-1"></a><span class="co"># General settings for ggplot</span></span>
+<span id="cb96-2"><a href="shape-constrained-generalized-additive-models.html#cb96-2" tabindex="-1"></a><span class="co"># (black-white background, larger</span></span>
+<span id="cb96-3"><a href="shape-constrained-generalized-additive-models.html#cb96-3" tabindex="-1"></a><span class="co"># base_size)</span></span>
+<span id="cb96-4"><a href="shape-constrained-generalized-additive-models.html#cb96-4" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>))</span></code></pre></div>
 <div id="model-fit" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> Model fit<a href="shape-constrained-generalized-additive-models.html#model-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We set the working directory to the folder where the current script is located and we load the dataset (PAdata_with_env.Rdata) containing the presence-absence data together with the environmental data.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="shape-constrained-generalized-additive-models.html#cb97-1" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span> (<span class="st">&quot;data&quot;</span>, <span class="st">&quot;outputs_for_modelling&quot;</span>, <span class="st">&quot;PAdata_with_env.Rdata&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="shape-constrained-generalized-additive-models.html#cb97-1" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;outputs_for_modelling&quot;</span>,</span>
+<span id="cb97-2"><a href="shape-constrained-generalized-additive-models.html#cb97-2" tabindex="-1"></a>    <span class="st">&quot;PAdata_with_env.Rdata&quot;</span>))</span></code></pre></div>
 <p>To fit a logistic regression model in the SC-GAMs framework, we use the scam function, where we set the binomial family with the logit link function. Our response variable is the presence-absence data and the selected three explanatory variables are the SST, chlorophyll and salinity. Each variable is included in the model through an spline function where the concavity constraint is set using bs=“cv”. The details about this option can be found in the section “Constructor for concave P-splines in SCAMs” of the SCAM manual (<a href="https://cran.r-project.org/web/packages/scam/scam.pdf" class="uri">https://cran.r-project.org/web/packages/scam/scam.pdf</a>). The number of knots (k) is fixed at 8 in this example for a good balance between flexibility and computation time.</p>
 <p><strong>UNIVARIATE MODELS</strong></p>
 <p>Before fitting the model with the selected three environmental variables, we can fit univariate model as follows.</p>
 <p>We fit the univariate model for SST, we print the summary of the model fit, and look at the fitted curve in the response scale.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="shape-constrained-generalized-additive-models.html#cb98-1" tabindex="-1"></a>model_sst <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO_sstmean, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data)</span>
-<span id="cb98-2"><a href="shape-constrained-generalized-additive-models.html#cb98-2" tabindex="-1"></a><span class="fu">summary</span>(model_sst)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="shape-constrained-generalized-additive-models.html#cb98-1" tabindex="-1"></a>model_sst <span class="ot">&lt;-</span> <span class="fu">scam</span>(occurrenceStatus <span class="sc">~</span> <span class="fu">s</span>(BO_sstmean,</span>
+<span id="cb98-2"><a href="shape-constrained-generalized-additive-models.html#cb98-2" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">8</span>, <span class="at">bs =</span> <span class="st">&quot;cv&quot;</span>), <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb98-3"><a href="shape-constrained-generalized-additive-models.html#cb98-3" tabindex="-1"></a>    <span class="at">data =</span> data)</span>
+<span id="cb98-4"><a href="shape-constrained-generalized-additive-models.html#cb98-4" tabindex="-1"></a><span class="fu">summary</span>(model_sst)</span></code></pre></div>
 <pre><code>## 
 ## Family: binomial 
 ## Link function: logit 
@@ -297,11 +303,13 @@ div.csl-indent {
 ## 
 ## R-sq.(adj) =  0.2607   Deviance explained = 23.1%
 ## UBRE score = 0.066363  Scale est. = 1         n = 29661</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="shape-constrained-generalized-additive-models.html#cb100-1" tabindex="-1"></a><span class="fu">plotmo</span>(model_sst,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="1536" /></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="shape-constrained-generalized-additive-models.html#cb100-1" tabindex="-1"></a><span class="fu">plotmo</span>(model_sst, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col =</span> <span class="dv">8</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="1536" /></p>
 <p>We repeat the same steps for the rest of the variables.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="shape-constrained-generalized-additive-models.html#cb101-1" tabindex="-1"></a>model_chl <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO2_chlomean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data)</span>
-<span id="cb101-2"><a href="shape-constrained-generalized-additive-models.html#cb101-2" tabindex="-1"></a><span class="fu">summary</span>(model_chl)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="shape-constrained-generalized-additive-models.html#cb101-1" tabindex="-1"></a>model_chl <span class="ot">&lt;-</span> <span class="fu">scam</span>(occurrenceStatus <span class="sc">~</span> <span class="fu">s</span>(BO2_chlomean_ss,</span>
+<span id="cb101-2"><a href="shape-constrained-generalized-additive-models.html#cb101-2" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">8</span>, <span class="at">bs =</span> <span class="st">&quot;cv&quot;</span>), <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb101-3"><a href="shape-constrained-generalized-additive-models.html#cb101-3" tabindex="-1"></a>    <span class="at">data =</span> data)</span>
+<span id="cb101-4"><a href="shape-constrained-generalized-additive-models.html#cb101-4" tabindex="-1"></a><span class="fu">summary</span>(model_chl)</span></code></pre></div>
 <pre><code>## 
 ## Family: binomial 
 ## Link function: logit 
@@ -323,11 +331,13 @@ div.csl-indent {
 ## 
 ## R-sq.(adj) =  0.1546   Deviance explained = 12.4%
 ## UBRE score = 0.21423  Scale est. = 1         n = 29661</code></pre>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="shape-constrained-generalized-additive-models.html#cb103-1" tabindex="-1"></a><span class="fu">plotmo</span>(model_chl,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="1536" /></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="shape-constrained-generalized-additive-models.html#cb103-1" tabindex="-1"></a><span class="fu">plotmo</span>(model_chl, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col =</span> <span class="dv">8</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="1536" /></p>
 <p>Due to convergence issues, sometimes it is necessary to fix the smoothing parameter (sp) at small value, i.e. <span class="math inline">\(10^{-5}\)</span>, as here when introducing salinity as an explanatory variable. If no value is provided, the smoothing parameter is estimated within the model.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="shape-constrained-generalized-additive-models.html#cb104-1" tabindex="-1"></a>model_sal <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO2_salinitymean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data,<span class="at">sp=</span><span class="fl">0.00001</span>)</span>
-<span id="cb104-2"><a href="shape-constrained-generalized-additive-models.html#cb104-2" tabindex="-1"></a><span class="fu">summary</span>(model_sal)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="shape-constrained-generalized-additive-models.html#cb104-1" tabindex="-1"></a>model_sal <span class="ot">&lt;-</span> <span class="fu">scam</span>(occurrenceStatus <span class="sc">~</span> <span class="fu">s</span>(BO2_salinitymean_ss,</span>
+<span id="cb104-2"><a href="shape-constrained-generalized-additive-models.html#cb104-2" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">8</span>, <span class="at">bs =</span> <span class="st">&quot;cv&quot;</span>), <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb104-3"><a href="shape-constrained-generalized-additive-models.html#cb104-3" tabindex="-1"></a>    <span class="at">data =</span> data, <span class="at">sp =</span> <span class="fl">1e-05</span>)</span>
+<span id="cb104-4"><a href="shape-constrained-generalized-additive-models.html#cb104-4" tabindex="-1"></a><span class="fu">summary</span>(model_sal)</span></code></pre></div>
 <pre><code>## 
 ## Family: binomial 
 ## Link function: logit 
@@ -349,12 +359,16 @@ div.csl-indent {
 ## 
 ## R-sq.(adj) =  0.0514   Deviance explained = 4.38%
 ##   Scale est. = 1         n = 29661</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="shape-constrained-generalized-additive-models.html#cb106-1" tabindex="-1"></a><span class="fu">plotmo</span>(model_sal,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="1536" /></p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="shape-constrained-generalized-additive-models.html#cb106-1" tabindex="-1"></a><span class="fu">plotmo</span>(model_sal, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col =</span> <span class="dv">8</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="1536" /></p>
 <p><strong>MODEL WITH ALL VARIABLES</strong></p>
 <p>Now we fit the model including the three selected variables.</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="shape-constrained-generalized-additive-models.html#cb107-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">scam</span> (occurrenceStatus <span class="sc">~</span>  <span class="fu">s</span>(BO_sstmean, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>)<span class="sc">+</span> <span class="fu">s</span>(BO2_salinitymean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>)<span class="sc">+</span><span class="fu">s</span>(BO2_chlomean_ss, <span class="at">k=</span><span class="dv">8</span>,<span class="at">bs=</span><span class="st">&quot;cv&quot;</span>), <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>), <span class="at">data=</span>data,<span class="at">sp=</span><span class="fu">rep</span>(<span class="fl">0.00001</span>,<span class="dv">3</span>))</span>
-<span id="cb107-2"><a href="shape-constrained-generalized-additive-models.html#cb107-2" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="shape-constrained-generalized-additive-models.html#cb107-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">scam</span>(occurrenceStatus <span class="sc">~</span> <span class="fu">s</span>(BO_sstmean,</span>
+<span id="cb107-2"><a href="shape-constrained-generalized-additive-models.html#cb107-2" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">8</span>, <span class="at">bs =</span> <span class="st">&quot;cv&quot;</span>) <span class="sc">+</span> <span class="fu">s</span>(BO2_salinitymean_ss,</span>
+<span id="cb107-3"><a href="shape-constrained-generalized-additive-models.html#cb107-3" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">8</span>, <span class="at">bs =</span> <span class="st">&quot;cv&quot;</span>) <span class="sc">+</span> <span class="fu">s</span>(BO2_chlomean_ss,</span>
+<span id="cb107-4"><a href="shape-constrained-generalized-additive-models.html#cb107-4" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">8</span>, <span class="at">bs =</span> <span class="st">&quot;cv&quot;</span>), <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb107-5"><a href="shape-constrained-generalized-additive-models.html#cb107-5" tabindex="-1"></a>    <span class="at">data =</span> data, <span class="at">sp =</span> <span class="fu">rep</span>(<span class="fl">1e-05</span>, <span class="dv">3</span>))</span>
+<span id="cb107-6"><a href="shape-constrained-generalized-additive-models.html#cb107-6" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div>
 <pre><code>## 
 ## Family: binomial 
 ## Link function: logit 
@@ -377,15 +391,15 @@ div.csl-indent {
 ## 
 ## R-sq.(adj) =  0.3491   Deviance explained =   32%
 ##   Scale est. = 1         n = 29661</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="shape-constrained-generalized-additive-models.html#cb109-1" tabindex="-1"></a><span class="fu">plotmo</span>(model,<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col=</span><span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="shape-constrained-generalized-additive-models.html#cb109-1" tabindex="-1"></a><span class="fu">plotmo</span>(model, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">pt.col =</span> <span class="dv">8</span>)</span></code></pre></div>
 <pre><code>##  plotmo grid:    BO_sstmean BO2_salinitymean_ss BO2_chlomean_ss
 ##                    18.89921            35.42666       0.2452632</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="1536" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="1536" /></p>
 <p>We can see in the summary of the fit, that all included variables are statistically significant (with p&lt;0.05) and present a unimodal response curve.</p>
 <p>For a more detailed check of the fitting, we can use the scam.check function:</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="shape-constrained-generalized-additive-models.html#cb111-1" tabindex="-1"></a>old.par <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="shape-constrained-generalized-additive-models.html#cb111-1" tabindex="-1"></a>old.par <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb111-2"><a href="shape-constrained-generalized-additive-models.html#cb111-2" tabindex="-1"></a><span class="fu">scam.check</span>(model)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="1536" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-65-1.png" width="1536" /></p>
 <pre><code>## 
 ## Method: UBRE   Optimizer: NA newton
 ## The optimal smoothing parameter(s): 1e-05 1e-05 1e-05 .</code></pre>
@@ -395,11 +409,12 @@ div.csl-indent {
 <p>When several explanatory variables are available, a variable selection process can be carried out. Here we provide as an example, a function that performs forward variable selection (modsel.scam) based on the significance of variables and AIC values of the fits.</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="shape-constrained-generalized-additive-models.html#cb113-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;function/function_scam_selection_optimized.R&quot;</span>)</span></code></pre></div>
 <p>We save the names of the variables we want to introduce for the variable selection process as a vector:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="shape-constrained-generalized-additive-models.html#cb114-1" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BO_sstmean&quot;</span>,</span>
-<span id="cb114-2"><a href="shape-constrained-generalized-additive-models.html#cb114-2" tabindex="-1"></a>          <span class="st">&quot;BO2_salinitymean_ss&quot;</span>,</span>
-<span id="cb114-3"><a href="shape-constrained-generalized-additive-models.html#cb114-3" tabindex="-1"></a>          <span class="st">&quot;BO2_chlomean_ss&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="shape-constrained-generalized-additive-models.html#cb114-1" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BO_sstmean&quot;</span>, <span class="st">&quot;BO2_salinitymean_ss&quot;</span>,</span>
+<span id="cb114-2"><a href="shape-constrained-generalized-additive-models.html#cb114-2" tabindex="-1"></a>    <span class="st">&quot;BO2_chlomean_ss&quot;</span>)</span></code></pre></div>
 <p>The default AIC tolerance is 2 and there is not a limit on selected terms in this example. These options can be modified through aic.tol and vmax arguments in the function. The number of knots and the sp can be also modified.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="shape-constrained-generalized-additive-models.html#cb115-1" tabindex="-1"></a>model_SCGAM <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">modsel.scam</span>(<span class="at">basef=</span><span class="st">&quot;occurrenceStatus ~ 1&quot;</span>, <span class="at">vars=</span>vars, <span class="at">dat=</span>data,<span class="at">sp=</span><span class="fl">0.00001</span>), <span class="at">silent=</span>T)  </span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="shape-constrained-generalized-additive-models.html#cb115-1" tabindex="-1"></a>model_SCGAM <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">modsel.scam</span>(<span class="at">basef =</span> <span class="st">&quot;occurrenceStatus ~ 1&quot;</span>,</span>
+<span id="cb115-2"><a href="shape-constrained-generalized-additive-models.html#cb115-2" tabindex="-1"></a>    <span class="at">vars =</span> vars, <span class="at">dat =</span> data, <span class="at">sp =</span> <span class="fl">1e-05</span>),</span>
+<span id="cb115-3"><a href="shape-constrained-generalized-additive-models.html#cb115-3" tabindex="-1"></a>    <span class="at">silent =</span> T)</span></code></pre></div>
 <pre><code>## [1] &quot;Fitting models with 1 terms&quot;
 ##   occurrenceStatus ~ 1+s(BO_sstmean,m=2,bs=&#39;cv&#39;,k=8) 
 ##   occurrenceStatus ~ 1+s(BO2_salinitymean_ss,m=2,bs=&#39;cv&#39;,k=8) 
@@ -427,18 +442,18 @@ div.csl-indent {
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000019d143beeb0&gt;
+## &lt;environment: 0x000001d72e393348&gt;
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000019d143beeb0&gt;
+## &lt;environment: 0x000001d72e393348&gt;
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000019d143beeb0&gt;</code></pre>
+## &lt;environment: 0x000001d72e393348&gt;</code></pre>
 <p>Summaries of the fitted models:</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="shape-constrained-generalized-additive-models.html#cb125-1" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
 <pre><code>## $null
@@ -464,7 +479,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000019d143beeb0&gt;
+## &lt;environment: 0x000001d72e393348&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -490,7 +505,7 @@ div.csl-indent {
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000019d143beeb0&gt;
+## &lt;environment: 0x000001d72e393348&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -516,7 +531,7 @@ div.csl-indent {
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x0000019d143beeb0&gt;
+## &lt;environment: 0x000001d72e393348&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -535,7 +550,7 @@ div.csl-indent {
 <p>The last model of the list, is the selected one. Which in this case contains the considered three variables.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="shape-constrained-generalized-additive-models.html#cb127-1" tabindex="-1"></a>selected_model <span class="ot">&lt;-</span> model_SCGAM<span class="sc">$</span>smod[[<span class="fu">length</span>(model_SCGAM<span class="sc">$</span>smod)]]</span></code></pre></div>
 <p>We save the selected model</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="shape-constrained-generalized-additive-models.html#cb128-1" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list=</span><span class="st">&quot;selected_model&quot;</span>, <span class="at">file=</span><span class="st">&quot;models/selected_model.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="shape-constrained-generalized-additive-models.html#cb128-1" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list =</span> <span class="st">&quot;selected_model&quot;</span>, <span class="at">file =</span> <span class="st">&quot;models/selected_model.RData&quot;</span>)</span></code></pre></div>
 <p>Note that there are multiple options and criteria for model selection that are not reviewed here. Any model selection technique used for GAMs can be used also for SC-GAMs.</p>
 
 <!-- 

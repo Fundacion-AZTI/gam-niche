@@ -19,17 +19,15 @@ In this chapter we predict from the fitted model and produce final SDMs maps.
 First, we load a list of required libraries.
 ```{r, eval=T,message=FALSE,warning=FALSE}
 requiredPackages <- c(
-  #GENERAL USE LIBRARIES --------#
-  "here", # Library for reproducible workflow
-  "rstudioapi",  # Library for reproducible workflow
-  "ggplot2", #for plotting
+  "here", 
+  "rstudioapi", 
+  "ggplot2", 
   "tidyverse", 
-  # "rgdal", # to work with Spatial data
-  "raster", #spatial 
-  "maps", #world map
-  # "maptools", #plotting world map
-  "RColorBrewer", #color palette
-  "scam", #sdm models under the ecological niche theory framework
+  # "rgdal", 
+  "raster", 
+  "maps", 
+  "RColorBrewer", 
+  "scam", 
   "ggpubr"
   )
 ```
