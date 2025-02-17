@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-14" />
+<meta name="date" content="2025-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,21 +226,9 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 3</span> Environmental data<a href="environmental-data.html#environmental-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this chapter we first, download environmental data from a public repository; second, we crop the data to our area of interest, and we save it as raster stack.</p>
 <p>As in Chapter 2, first, we load a list of required libraries.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="environmental-data.html#cb37-1" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb37-2"><a href="environmental-data.html#cb37-2" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
-<span id="cb37-3"><a href="environmental-data.html#cb37-3" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb37-4"><a href="environmental-data.html#cb37-4" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>,  <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb37-5"><a href="environmental-data.html#cb37-5" tabindex="-1"></a>  <span class="co"># &quot;maptools&quot;, #plotting world map</span></span>
-<span id="cb37-6"><a href="environmental-data.html#cb37-6" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>, <span class="co">#for plotting</span></span>
-<span id="cb37-7"><a href="environmental-data.html#cb37-7" tabindex="-1"></a>  <span class="st">&quot;knitr&quot;</span>,  <span class="co"># format tables</span></span>
-<span id="cb37-8"><a href="environmental-data.html#cb37-8" tabindex="-1"></a>  <span class="st">&quot;kableExtra&quot;</span>, <span class="co"># format tables</span></span>
-<span id="cb37-9"><a href="environmental-data.html#cb37-9" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>, <span class="co"># to work with spatial data</span></span>
-<span id="cb37-10"><a href="environmental-data.html#cb37-10" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>,</span>
-<span id="cb37-11"><a href="environmental-data.html#cb37-11" tabindex="-1"></a>  </span>
-<span id="cb37-12"><a href="environmental-data.html#cb37-12" tabindex="-1"></a>  <span class="co">#DOWNLOAD FROM PUBLIC REPOSITORIES --------#</span></span>
-<span id="cb37-13"><a href="environmental-data.html#cb37-13" tabindex="-1"></a>  <span class="st">&quot;sdmpredictors&quot;</span> <span class="co">#to access Bio-ORACLE dataset</span></span>
-<span id="cb37-14"><a href="environmental-data.html#cb37-14" tabindex="-1"></a>  </span>
-<span id="cb37-15"><a href="environmental-data.html#cb37-15" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="environmental-data.html#cb37-1" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;here&quot;</span>, <span class="st">&quot;rstudioapi&quot;</span>,</span>
+<span id="cb37-2"><a href="environmental-data.html#cb37-2" tabindex="-1"></a>    <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;knitr&quot;</span>, <span class="st">&quot;kableExtra&quot;</span>, <span class="st">&quot;raster&quot;</span>,</span>
+<span id="cb37-3"><a href="environmental-data.html#cb37-3" tabindex="-1"></a>    <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;sdmpredictors&quot;</span>)</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="environmental-data.html#cb38-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg) {</span>
 <span id="cb38-2"><a href="environmental-data.html#cb38-2" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,</span>

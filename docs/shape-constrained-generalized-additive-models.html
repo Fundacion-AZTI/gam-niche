@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-14" />
+<meta name="date" content="2025-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -227,27 +227,10 @@ div.csl-indent {
 <p>In order to fit SDM in agreement with the ecological niche theory, the proposed Shape-Constrained Generalized Additive Models (SC-GAMs) in <span class="citation">(<a href="#ref-citores_etal_2020">Citores et al. 2020</a>)</span> are fitted in this section. SC-GAMs are based on Generalized Additive Models, allowing us to impose shape-constraints to the linear predictor function. The R package SCAM implements the general framework developed by <span class="citation">(<a href="#ref-pya_etal_2015">Pya and Wood 2015</a>)</span> using shape-constrained P-splines. Monotonicity and concavity/convexity constraints can be imposed on the sign of the first and/or the second derivatives of the smooth terms. For fitting Species Distribution Models in agreement with the ecological niche theory, we imposed concavity constraints (<span class="math inline">\(f&#39;&#39;(x) \le 0\)</span>), so that the response can presents at most a single mode.</p>
 <p>Alternatively, the R package <code>mboost</code> fits SC-GAMs using boosting methods. We are not going to develop this alternative here.</p>
 <p>First, we load the list of required libraries.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="shape-constrained-generalized-additive-models.html#cb93-1" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb93-2"><a href="shape-constrained-generalized-additive-models.html#cb93-2" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
-<span id="cb93-3"><a href="shape-constrained-generalized-additive-models.html#cb93-3" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb93-4"><a href="shape-constrained-generalized-additive-models.html#cb93-4" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>,  <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb93-5"><a href="shape-constrained-generalized-additive-models.html#cb93-5" tabindex="-1"></a>  <span class="st">&quot;stringr&quot;</span>,</span>
-<span id="cb93-6"><a href="shape-constrained-generalized-additive-models.html#cb93-6" tabindex="-1"></a>  <span class="st">&quot;RColorBrewer&quot;</span>,  </span>
-<span id="cb93-7"><a href="shape-constrained-generalized-additive-models.html#cb93-7" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>,</span>
-<span id="cb93-8"><a href="shape-constrained-generalized-additive-models.html#cb93-8" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>,</span>
-<span id="cb93-9"><a href="shape-constrained-generalized-additive-models.html#cb93-9" tabindex="-1"></a>  </span>
-<span id="cb93-10"><a href="shape-constrained-generalized-additive-models.html#cb93-10" tabindex="-1"></a>  <span class="co">#SPATIAL DATA --------#</span></span>
-<span id="cb93-11"><a href="shape-constrained-generalized-additive-models.html#cb93-11" tabindex="-1"></a>  <span class="co">#&quot;rgdal&quot;,</span></span>
-<span id="cb93-12"><a href="shape-constrained-generalized-additive-models.html#cb93-12" tabindex="-1"></a>  <span class="st">&quot;fields&quot;</span>,</span>
-<span id="cb93-13"><a href="shape-constrained-generalized-additive-models.html#cb93-13" tabindex="-1"></a>  <span class="st">&quot;maps&quot;</span> ,</span>
-<span id="cb93-14"><a href="shape-constrained-generalized-additive-models.html#cb93-14" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>,</span>
-<span id="cb93-15"><a href="shape-constrained-generalized-additive-models.html#cb93-15" tabindex="-1"></a></span>
-<span id="cb93-16"><a href="shape-constrained-generalized-additive-models.html#cb93-16" tabindex="-1"></a>  <span class="co">#MODEL FIT --------#</span></span>
-<span id="cb93-17"><a href="shape-constrained-generalized-additive-models.html#cb93-17" tabindex="-1"></a>  <span class="st">&quot;scam&quot;</span>,</span>
-<span id="cb93-18"><a href="shape-constrained-generalized-additive-models.html#cb93-18" tabindex="-1"></a>  <span class="st">&quot;plotmo&quot;</span>,</span>
-<span id="cb93-19"><a href="shape-constrained-generalized-additive-models.html#cb93-19" tabindex="-1"></a>  <span class="st">&quot;pkgbuild&quot;</span>,</span>
-<span id="cb93-20"><a href="shape-constrained-generalized-additive-models.html#cb93-20" tabindex="-1"></a>  <span class="st">&quot;dismo&quot;</span></span>
-<span id="cb93-21"><a href="shape-constrained-generalized-additive-models.html#cb93-21" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="shape-constrained-generalized-additive-models.html#cb93-1" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;here&quot;</span>, <span class="st">&quot;rstudioapi&quot;</span>,</span>
+<span id="cb93-2"><a href="shape-constrained-generalized-additive-models.html#cb93-2" tabindex="-1"></a>    <span class="st">&quot;stringr&quot;</span>, <span class="st">&quot;RColorBrewer&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>,</span>
+<span id="cb93-3"><a href="shape-constrained-generalized-additive-models.html#cb93-3" tabindex="-1"></a>    <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;fields&quot;</span>, <span class="st">&quot;maps&quot;</span>, <span class="st">&quot;raster&quot;</span>,</span>
+<span id="cb93-4"><a href="shape-constrained-generalized-additive-models.html#cb93-4" tabindex="-1"></a>    <span class="st">&quot;scam&quot;</span>, <span class="st">&quot;plotmo&quot;</span>, <span class="st">&quot;pkgbuild&quot;</span>, <span class="st">&quot;dismo&quot;</span>)</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="shape-constrained-generalized-additive-models.html#cb94-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg) {</span>
 <span id="cb94-2"><a href="shape-constrained-generalized-additive-models.html#cb94-2" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,</span>
@@ -442,18 +425,18 @@ div.csl-indent {
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x000001d72e393348&gt;
+## &lt;environment: 0x0000023a9db60af0&gt;
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x000001d72e393348&gt;
+## &lt;environment: 0x0000023a9db60af0&gt;
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x000001d72e393348&gt;</code></pre>
+## &lt;environment: 0x0000023a9db60af0&gt;</code></pre>
 <p>Summaries of the fitted models:</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="shape-constrained-generalized-additive-models.html#cb125-1" tabindex="-1"></a><span class="fu">lapply</span>(model_SCGAM<span class="sc">$</span>smod, summary)</span></code></pre></div>
 <pre><code>## $null
@@ -479,7 +462,7 @@ div.csl-indent {
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x000001d72e393348&gt;
+## &lt;environment: 0x0000023a9db60af0&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -505,7 +488,7 @@ div.csl-indent {
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x000001d72e393348&gt;
+## &lt;environment: 0x0000023a9db60af0&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
@@ -531,7 +514,7 @@ div.csl-indent {
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = &quot;cv&quot;, k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = &quot;cv&quot;, k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = &quot;cv&quot;, k = 8)
-## &lt;environment: 0x000001d72e393348&gt;
+## &lt;environment: 0x0000023a9db60af0&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)

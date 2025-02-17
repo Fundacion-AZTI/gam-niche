@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-14" />
+<meta name="date" content="2025-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -227,19 +227,17 @@ div.csl-indent {
 <p>In this chapter we predict from the fitted model and produce final SDMs maps.</p>
 <p>First, we load a list of required libraries.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="prediction-and-maps.html#cb148-1" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb148-2"><a href="prediction-and-maps.html#cb148-2" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
-<span id="cb148-3"><a href="prediction-and-maps.html#cb148-3" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb148-4"><a href="prediction-and-maps.html#cb148-4" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>,  <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb148-5"><a href="prediction-and-maps.html#cb148-5" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>, <span class="co">#for plotting</span></span>
-<span id="cb148-6"><a href="prediction-and-maps.html#cb148-6" tabindex="-1"></a>  <span class="st">&quot;tidyverse&quot;</span>, </span>
-<span id="cb148-7"><a href="prediction-and-maps.html#cb148-7" tabindex="-1"></a>  <span class="co"># &quot;rgdal&quot;, # to work with Spatial data</span></span>
-<span id="cb148-8"><a href="prediction-and-maps.html#cb148-8" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>, <span class="co">#spatial </span></span>
-<span id="cb148-9"><a href="prediction-and-maps.html#cb148-9" tabindex="-1"></a>  <span class="st">&quot;maps&quot;</span>, <span class="co">#world map</span></span>
-<span id="cb148-10"><a href="prediction-and-maps.html#cb148-10" tabindex="-1"></a>  <span class="co"># &quot;maptools&quot;, #plotting world map</span></span>
-<span id="cb148-11"><a href="prediction-and-maps.html#cb148-11" tabindex="-1"></a>  <span class="st">&quot;RColorBrewer&quot;</span>, <span class="co">#color palette</span></span>
-<span id="cb148-12"><a href="prediction-and-maps.html#cb148-12" tabindex="-1"></a>  <span class="st">&quot;scam&quot;</span>, <span class="co">#sdm models under the ecological niche theory framework</span></span>
-<span id="cb148-13"><a href="prediction-and-maps.html#cb148-13" tabindex="-1"></a>  <span class="st">&quot;ggpubr&quot;</span></span>
-<span id="cb148-14"><a href="prediction-and-maps.html#cb148-14" tabindex="-1"></a>  )</span></code></pre></div>
+<span id="cb148-2"><a href="prediction-and-maps.html#cb148-2" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, </span>
+<span id="cb148-3"><a href="prediction-and-maps.html#cb148-3" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>, </span>
+<span id="cb148-4"><a href="prediction-and-maps.html#cb148-4" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>, </span>
+<span id="cb148-5"><a href="prediction-and-maps.html#cb148-5" tabindex="-1"></a>  <span class="st">&quot;tidyverse&quot;</span>, </span>
+<span id="cb148-6"><a href="prediction-and-maps.html#cb148-6" tabindex="-1"></a>  <span class="co"># &quot;rgdal&quot;, </span></span>
+<span id="cb148-7"><a href="prediction-and-maps.html#cb148-7" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>, </span>
+<span id="cb148-8"><a href="prediction-and-maps.html#cb148-8" tabindex="-1"></a>  <span class="st">&quot;maps&quot;</span>, </span>
+<span id="cb148-9"><a href="prediction-and-maps.html#cb148-9" tabindex="-1"></a>  <span class="st">&quot;RColorBrewer&quot;</span>, </span>
+<span id="cb148-10"><a href="prediction-and-maps.html#cb148-10" tabindex="-1"></a>  <span class="st">&quot;scam&quot;</span>, </span>
+<span id="cb148-11"><a href="prediction-and-maps.html#cb148-11" tabindex="-1"></a>  <span class="st">&quot;ggpubr&quot;</span></span>
+<span id="cb148-12"><a href="prediction-and-maps.html#cb148-12" tabindex="-1"></a>  )</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="prediction-and-maps.html#cb149-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg) {</span>
 <span id="cb149-2"><a href="prediction-and-maps.html#cb149-2" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,</span>

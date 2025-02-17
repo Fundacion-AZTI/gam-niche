@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-14" />
+<meta name="date" content="2025-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,23 +226,9 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 4</span> Prepare the final dataset<a href="prepare-the-final-dataset.html#prepare-the-final-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this chapter we first, extract environmental data associated to the presence/pseudo-absence data, we explore the data we got, we check correlation between variables and we calculate the Variance Inflation Factor (VIF) to make a selection of the variables we are going to use in the model.</p>
 <p>First, we load a list of required libraries.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="prepare-the-final-dataset.html#cb58-1" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb58-2"><a href="prepare-the-final-dataset.html#cb58-2" tabindex="-1"></a>  <span class="co">#GENERAL USE LIBRARIES --------#</span></span>
-<span id="cb58-3"><a href="prepare-the-final-dataset.html#cb58-3" tabindex="-1"></a>  <span class="st">&quot;here&quot;</span>, <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb58-4"><a href="prepare-the-final-dataset.html#cb58-4" tabindex="-1"></a>  <span class="st">&quot;rstudioapi&quot;</span>,  <span class="co"># Library for reproducible workflow</span></span>
-<span id="cb58-5"><a href="prepare-the-final-dataset.html#cb58-5" tabindex="-1"></a>  </span>
-<span id="cb58-6"><a href="prepare-the-final-dataset.html#cb58-6" tabindex="-1"></a>  <span class="co">#EXTRACT ENVIRONMENTAL DATA AND PLOTS</span></span>
-<span id="cb58-7"><a href="prepare-the-final-dataset.html#cb58-7" tabindex="-1"></a>  <span class="st">&quot;sp&quot;</span>, <span class="co"># spatial data</span></span>
-<span id="cb58-8"><a href="prepare-the-final-dataset.html#cb58-8" tabindex="-1"></a>  <span class="st">&quot;raster&quot;</span>, <span class="co">#spatial data</span></span>
-<span id="cb58-9"><a href="prepare-the-final-dataset.html#cb58-9" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>,</span>
-<span id="cb58-10"><a href="prepare-the-final-dataset.html#cb58-10" tabindex="-1"></a>  <span class="st">&quot;tidyr&quot;</span>,</span>
-<span id="cb58-11"><a href="prepare-the-final-dataset.html#cb58-11" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>,</span>
-<span id="cb58-12"><a href="prepare-the-final-dataset.html#cb58-12" tabindex="-1"></a>  <span class="st">&quot;ggcorrplot&quot;</span>,</span>
-<span id="cb58-13"><a href="prepare-the-final-dataset.html#cb58-13" tabindex="-1"></a>  </span>
-<span id="cb58-14"><a href="prepare-the-final-dataset.html#cb58-14" tabindex="-1"></a>  <span class="co">#CORRELATION ANALYSIS</span></span>
-<span id="cb58-15"><a href="prepare-the-final-dataset.html#cb58-15" tabindex="-1"></a>  <span class="st">&quot;GGally&quot;</span>, <span class="co">#correlation analysis</span></span>
-<span id="cb58-16"><a href="prepare-the-final-dataset.html#cb58-16" tabindex="-1"></a>  <span class="st">&quot;HH&quot;</span> <span class="co">#calculate VIF</span></span>
-<span id="cb58-17"><a href="prepare-the-final-dataset.html#cb58-17" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="prepare-the-final-dataset.html#cb58-1" tabindex="-1"></a>requiredPackages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;here&quot;</span>, <span class="st">&quot;rstudioapi&quot;</span>,</span>
+<span id="cb58-2"><a href="prepare-the-final-dataset.html#cb58-2" tabindex="-1"></a>    <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;raster&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;tidyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>,</span>
+<span id="cb58-3"><a href="prepare-the-final-dataset.html#cb58-3" tabindex="-1"></a>    <span class="st">&quot;ggcorrplot&quot;</span>, <span class="st">&quot;GGally&quot;</span>, <span class="st">&quot;HH&quot;</span>)</span></code></pre></div>
 <p>We run a function to install the required packages that are not in our system and load all the required packages.</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="prepare-the-final-dataset.html#cb59-1" tabindex="-1"></a>install_load_function <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg) {</span>
 <span id="cb59-2"><a href="prepare-the-final-dataset.html#cb59-2" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,</span>
@@ -346,9 +332,11 @@ div.csl-indent {
 ##  Max.   :0.69655   Max.   :30.663  
 ##  NA&#39;s   :139       NA&#39;s   :139</code></pre>
 <p>The new dataset has 29806 rows and 10 columns, and there are 139 NA’s in the environmental dataset. We remove the points with NA’s:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="prepare-the-final-dataset.html#cb74-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
-<span id="cb74-2"><a href="prepare-the-final-dataset.html#cb74-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span> (<span class="sc">-</span>YEAR) <span class="sc">%&gt;%</span> <span class="co">#we remove year column because pseudoabsences miss this info</span></span>
-<span id="cb74-3"><a href="prepare-the-final-dataset.html#cb74-3" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="prepare-the-final-dataset.html#cb74-1" tabindex="-1"></a><span class="co"># we remove year column because</span></span>
+<span id="cb74-2"><a href="prepare-the-final-dataset.html#cb74-2" tabindex="-1"></a><span class="co"># pseudoabsences miss this info</span></span>
+<span id="cb74-3"><a href="prepare-the-final-dataset.html#cb74-3" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb74-4"><a href="prepare-the-final-dataset.html#cb74-4" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>YEAR) <span class="sc">%&gt;%</span></span>
+<span id="cb74-5"><a href="prepare-the-final-dataset.html#cb74-5" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span></code></pre></div>
 <p>We check again the dataset:</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="prepare-the-final-dataset.html#cb75-1" tabindex="-1"></a><span class="fu">dim</span>(data)</span></code></pre></div>
 <pre><code>## [1] 29661     9</code></pre>
