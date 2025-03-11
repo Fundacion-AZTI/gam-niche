@@ -136,7 +136,7 @@
 
 \title{GAM-NICHE: Shape-Constrained GAMs to build Species Distribution Models under the ecological niche theory}
 \author{AZTI}
-\date{2025-02-17}
+\date{2025-03-11}
 
 \begin{document}
 \maketitle
@@ -236,10 +236,10 @@ To do so, we first define a study area, in this case we select the Atlantic Ocea
 \CommentTok{\# we could download the shapefile with}
 \CommentTok{\# the FAO fishing areas from the url}
 \CommentTok{\# where FAO shapefile is stored}
-\CommentTok{\# uncommenting the next two lines:}
 
-\CommentTok{\# url\textless{}{-}\textquotesingle{}https://www.fao.org/fishery/geoserver/area/ows?service=WFS\&version=1.0.0\&request=GetFeature\&typeName=area\%3AFAO\_AREAS\&maxFeatures=50\&outputFormat=SHAPE{-}ZIP\textquotesingle{}}
-\CommentTok{\# download.file(url,\textquotesingle{}data/spatial/FAO\_AREAS.zip\textquotesingle{},mode=\textquotesingle{}wb\textquotesingle{})}
+\NormalTok{url }\OtherTok{\textless{}{-}} \StringTok{"https://www.fao.org/fishery/geoserver/fifao/ows?service=WFS\&version=1.0.0\&request=GetFeature\&typeName=fifao\%3AFAO\_AREAS\_ERASE\&maxFeatures=50\&outputFormat=SHAPE{-}ZIP"}
+\FunctionTok{download.file}\NormalTok{(url, }\StringTok{"data/spatial/FAO\_AREAS.zip"}\NormalTok{,}
+    \AttributeTok{mode =} \StringTok{"wb"}\NormalTok{)}
 
 \CommentTok{\# Unzip downloaded file}
 \FunctionTok{unzip}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"spatial"}\NormalTok{, }\StringTok{"FAO\_AREAS.zip"}\NormalTok{),}
@@ -3760,18 +3760,18 @@ Formulas of the fitted models:
 ## 
 ## $BO_sstmean
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
-## <environment: 0x0000028eeec32ac0>
+## <environment: 0x000001b9412a1690>
 ## 
 ## $BO2_chlomean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
-## <environment: 0x0000028eeec32ac0>
+## <environment: 0x000001b9412a1690>
 ## 
 ## $BO2_salinitymean_ss
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = "cv", k = 8)
-## <environment: 0x0000028eeec32ac0>
+## <environment: 0x000001b9412a1690>
 \end{verbatim}
 
 Summaries of the fitted models:
@@ -3806,7 +3806,7 @@ Summaries of the fitted models:
 ## 
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8)
-## <environment: 0x0000028eeec32ac0>
+## <environment: 0x000001b9412a1690>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
@@ -3832,7 +3832,7 @@ Summaries of the fitted models:
 ## Formula:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8)
-## <environment: 0x0000028eeec32ac0>
+## <environment: 0x000001b9412a1690>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)
@@ -3858,7 +3858,7 @@ Summaries of the fitted models:
 ## occurrenceStatus ~ 1 + s(BO_sstmean, m = 2, bs = "cv", k = 8) + 
 ##     s(BO2_chlomean_ss, m = 2, bs = "cv", k = 8) + s(BO2_salinitymean_ss, 
 ##     m = 2, bs = "cv", k = 8)
-## <environment: 0x0000028eeec32ac0>
+## <environment: 0x000001b9412a1690>
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)

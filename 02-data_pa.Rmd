@@ -69,10 +69,9 @@ In this section we download presence data from global public datasets.
 To do so, we first define a study area, in this case we select the Atlantic Ocean based on the The Food and Agriculture Organization (FAO) Major Fishing Areas for Statistical Purposes and we remove Black Sea subarea.   
 ```{r, eval=T,message=FALSE,warning=FALSE}
 # we could download the shapefile with the FAO fishing areas from the url where FAO shapefile is stored
-# uncommenting the next two lines: 
 
-# url<-"https://www.fao.org/fishery/geoserver/area/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=area%3AFAO_AREAS&maxFeatures=50&outputFormat=SHAPE-ZIP"
-# download.file(url,"data/spatial/FAO_AREAS.zip",mode="wb")
+url<-"https://www.fao.org/fishery/geoserver/fifao/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=fifao%3AFAO_AREAS_ERASE&maxFeatures=50&outputFormat=SHAPE-ZIP"
+download.file(url,"data/spatial/FAO_AREAS.zip",mode="wb")
 
 # Unzip downloaded file
 unzip(here::here ("data", "spatial", "FAO_AREAS.zip"),exdir="data/spatial")

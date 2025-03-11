@@ -23,7 +23,7 @@
 <meta name="author" content="AZTI" />
 
 
-<meta name="date" content="2025-02-17" />
+<meta name="date" content="2025-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -266,10 +266,10 @@ div.csl-indent {
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="presence-absence-data.html#cb5-1" tabindex="-1"></a><span class="co"># we could download the shapefile with</span></span>
 <span id="cb5-2"><a href="presence-absence-data.html#cb5-2" tabindex="-1"></a><span class="co"># the FAO fishing areas from the url</span></span>
 <span id="cb5-3"><a href="presence-absence-data.html#cb5-3" tabindex="-1"></a><span class="co"># where FAO shapefile is stored</span></span>
-<span id="cb5-4"><a href="presence-absence-data.html#cb5-4" tabindex="-1"></a><span class="co"># uncommenting the next two lines:</span></span>
-<span id="cb5-5"><a href="presence-absence-data.html#cb5-5" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="presence-absence-data.html#cb5-6" tabindex="-1"></a><span class="co"># url&lt;-&#39;https://www.fao.org/fishery/geoserver/area/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=area%3AFAO_AREAS&amp;maxFeatures=50&amp;outputFormat=SHAPE-ZIP&#39;</span></span>
-<span id="cb5-7"><a href="presence-absence-data.html#cb5-7" tabindex="-1"></a><span class="co"># download.file(url,&#39;data/spatial/FAO_AREAS.zip&#39;,mode=&#39;wb&#39;)</span></span>
+<span id="cb5-4"><a href="presence-absence-data.html#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="presence-absence-data.html#cb5-5" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.fao.org/fishery/geoserver/fifao/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=fifao%3AFAO_AREAS_ERASE&amp;maxFeatures=50&amp;outputFormat=SHAPE-ZIP&quot;</span></span>
+<span id="cb5-6"><a href="presence-absence-data.html#cb5-6" tabindex="-1"></a><span class="fu">download.file</span>(url, <span class="st">&quot;data/spatial/FAO_AREAS.zip&quot;</span>,</span>
+<span id="cb5-7"><a href="presence-absence-data.html#cb5-7" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
 <span id="cb5-8"><a href="presence-absence-data.html#cb5-8" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="presence-absence-data.html#cb5-9" tabindex="-1"></a><span class="co"># Unzip downloaded file</span></span>
 <span id="cb5-10"><a href="presence-absence-data.html#cb5-10" tabindex="-1"></a><span class="fu">unzip</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;FAO_AREAS.zip&quot;</span>),</span>
